@@ -1,0 +1,263 @@
+﻿@model Entities.TeaKart
+@{
+    ViewData["Title"] = "EditTeaKart";
+    Layout = null;
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Add TeaKart</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Menu</a></li>
+                        <li class="breadcrumb-item active">Add TeaKart</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <div class="container py-3">
+        <div>
+            <div class="card" id="snackbar">Data Saved Successfully</div>
+            <div class="card" id="snackbar2">Data Updated Successfully</div>
+            <div class="card" id="snackbar3">Deleted.</div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Add Tea Info</Strong></h5>
+            </div>
+            <div class="card-body" style="background-image: url('/img/signup_bg.jpg');">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tea Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="text" hidden asp-for="TeaId" class="form-control" />
+                                <input type="text" asp-for="TeaName" class="form-control" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tea Image</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="file" asp-for="TeaImage" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tea Category</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                </div>
+                                <select class="form-control" asp-for="TeaCategoryId">
+                                    <option value="">:: Select Tea Category ::</option>
+                                    <option value="1">:: Coffie ::</option>
+                                    <option value="2">:: Tea ::</option>
+                                    <option value="3">:: Cold Coffie ::</option>
+                                   @*  <option value="4">:: Eggs ::</option>
+                                    <option value="5">:: Paneer ::</option>
+                                    <option value="6">:: Veg ::</option> *@
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tea Type</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                </div>
+                                <select class="form-control" asp-for="TeaType">
+                                    <option value="">:: Select Tea Type ::</option>
+                                    <option value="1">:: Type1 ::</option>
+                                    <option value="2">:: Type2 ::</option>
+                                    <option value="3">:: Type3 ::</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Prize</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-rupee" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="number" asp-for="TeaPrize" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-sort-amount-up" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="number" asp-for="Quantity" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-info-circle" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="text" asp-for="TeaDescription" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                    <button type="button" id="btninsertupdate" onclick="AddOrUpdateTeaKart();" class="btn btn-primary">Save</button>
+                    <a href="/Menu/MenuIndex" class="btn btn-primary" style="text-align:right;">Back To List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+</div>
+
+<script>
+    function AddOrUpdateTeaKart() {
+        Show_Loader();
+        setTimeout(function () {
+            if (validateTeakart()) {
+        let param = {
+            TeaId: $("#TeaId").val(),
+            TeaCategoryId: $("#TeaCategoryId").val(),
+            TeaType: $("#TeaType").val(),
+            TeaName: $("#TeaName").val(),
+            TeaPrize: $("#TeaPrize").val(),
+            TeaDescription: $("#TeaDescription").val(),
+            Quantity: $("#Quantity").val(),
+        };
+        var Menu = new FormData();
+        Menu.append("TeaId", param.TeaId);
+        Menu.append("TeaCategoryId", param.TeaCategoryId);
+        Menu.append("TeaType", param.TeaType);
+        Menu.append("TeaName", param.TeaName);
+        Menu.append("TeaPrize", param.TeaPrize);
+        Menu.append("TeaDescription", param.TeaDescription);
+        Menu.append("Quantity", param.Quantity);
+        Menu.append("ImagePath", $("#TeaImage").prop('files')[0]);
+
+        $.ajax({
+            url: '/TeaKart/AddOrUpdateTeaKart',
+            type: 'POST',
+            data: Menu,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                        Hide_Loader();
+                        showinsertsuccess("TeaKart Details Add Successfully");
+                window.location.href = "/Menu/MenuIndex"
+            },
+            error: function () {
+                        Hide_Loader();
+                        showerrors("Sorry Something went wrong!!!");
+            }
+        });
+            }
+        }, 1500)
+    }
+
+    function validateTeakart() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#TeaName").val() === "") {
+            addError("Please enter name");
+        }
+        if ($("#TeaType").val() === "") {
+            addError("Please select Type");
+        }
+        if ($("#TeaCategoryId").val() === "") {
+            addError("Please select Category");
+        }
+        if ($("#TeaPrize").val() === "") {
+            addError("Please enter  Prize");
+        }
+        if ($("#TeaDescription").val() === "") {
+            addError("Please enter description");
+        }
+        if ($("#Quantity").val() === "") {
+            addError("Please enter quantity");
+        }
+
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            showerrors(msg);
+        }
+
+        return isvalidated;
+    }
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+
+</script>
+
+
+

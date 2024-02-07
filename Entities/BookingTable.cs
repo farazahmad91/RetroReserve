@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Entities
+{
+    public class BookingTable
+    {
+        public int TableBookingId { get; set; }
+        public int TableId { get; set; }
+        public string? UserId { get; set; }
+        public int People { get; set; }
+        public string? Email { get; set; }
+        public string? BookingTime { get; set; }
+        public string? description { get; set; }
+        public int Status { get; set; }
+        public DateTime BookingOn { get; set; }
+    }
+    public class BookingTableVM : BookingTable
+    {
+        public IEnumerable<TablesDetails> tablesDetails { get; set; }
+
+        public IEnumerable<BookingTable> BookTable { get; set; }
+    }
+}

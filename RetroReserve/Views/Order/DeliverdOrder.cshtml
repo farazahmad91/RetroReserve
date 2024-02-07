@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Entities.OnlineOrdersReport>
+@{
+    var count = 0;
+    ViewData["Title"] = "DeliverdOrder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Deliverd Order Report</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Order</a></li>
+                        <li class="breadcrumb-item active">Deliverd Order Report</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+         <div class="card">
+        <div class="table-responsive">
+        <table class="table table-striped">
+            <thead style="background-color:#17a2b8!important;">
+                <tr>
+                      <th>
+                       Sr No:
+                    </th>
+                    <th>
+                        Order Id
+                    </th>
+                    <th>
+                        Dish Name
+                    </th>
+                    <th>
+                        Dish Image
+                    </th>
+                    <th>
+                        Deliverd Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                  @if (Model == null || !Model.Any())
+                            {
+                                <tr>
+                                    <td colspan="12" style="text-align: center;">
+                                        <label><strong>Reacord Not Found</strong></label>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                @foreach (var item in Model)
+                {
+
+                    count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>
+                            <input type="text" hidden id="hdn_@item.OrderID" />
+                            @Html.DisplayFor(modelItem => item.OrderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DishName)
+                        </td>
+                        <td>
+                            <img class="img-fluid rounded-circle" src="@item.DishImage" alt="Dishes" style="width:110px;height:70px;">
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliverDate)
+                        </td>
+                        <td>
+                            @{
+
+                                if (@item.Status == 5)
+                                {
+                                        <h1 class="badge badge-success"><strong>Successfully Deliverd</strong></h1>
+                                   
+                                }
+
+                            }
+
+
+                        </td>
+                    </tr>
+                }
+                }
+            </tbody>
+        </table>
+         </div>
+         </div>
+    </div>
+</div>
+<script>
+    // Update the hidden field with the final count
+    document.getElementById("itemCountBadge").value = @count;
+
+    // Display the count wherever needed
+    document.getElementById("itemCountBadge").innerText = document.getElementById("itemCountBadge").value;
+
+
+
+ function UpdateOrderStatus(OrderId,selectedValue) {
+       let data = {
+           orderId : OrderId,
+        Status: selectedValue 
+    };
+
+    $.post('/Order/UpdateOrderStatus', data)
+        .done(function(res) {
+            window.location.href = "/Order/NewOrder";
+        })
+        .fail(function() {
+            // Handle the failure case
+            alert("Failed to add Dish");
+        });
+    
+}
+
+</script>
+
+
+

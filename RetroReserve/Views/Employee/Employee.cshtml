@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "Employee";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="EmployeePartialView">
+</div>
+@section Scripts{
+    <script>
+        function OnloadEmployee() {
+            $.post("/Employee/EmployeesList").done(function (res) {
+                $("#EmployeePartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        OnloadEmployee();
+     function EditEmployee(EmpId) {
+                let param = {
+         EmpId: EmpId,
+     };
+            $.post("/Employee/AddEmployee",param).done(function (res) {
+                $("#EmployeePartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+   function EmpStatus(EmpId) {
+    var id = $("#customSwitch3_" + EmpId).prop("checked");
+    if (id == true) {
+        id = 1;
+
+    }
+    else {
+        id = 0;
+    }
+    var param = {
+         EmpId: EmpId,
+         IsActive: id,
+    };
+    console.log(param);
+    $.post("/Employee/UpdateEmployeeStatus", param).done(function() {
+        alert("succrssfully update");
+
+    }).fail(function() {
+         alert("error");
+
+    })
+}
+ function EmployeeRoles() {
+            $.post("/Employee/RolesList").done(function (res) {
+                $("#EmployeePartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+ function EditEmployeeRoles(RoleId) {
+                let param = {
+         RoleId: RoleId,
+     };
+            $.post("/Employee/EditRoles",param).done(function (res) {
+                $("#EmployeePartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+
+
+    </script>
+ }
+
+

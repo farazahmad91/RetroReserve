@@ -1,0 +1,176 @@
+﻿@model IEnumerable<Entities.Contact>
+
+@{
+    string classbadge;
+    string disable;
+    string date;
+    ViewData["Title"] = "Inbox";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Inbox</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Message Box</a></li>
+                        <li class="breadcrumb-item active">Inbox</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+     
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Inbox</h3>
+                        <a href="/ContactUS/Compose" class="fa fa-arrow-circle-left btn btn-primary float-right"></a>
+                        @*<div class="card-tools">
+                        <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" placeholder="Search Mail">
+                        <div class="input-group-append">
+                        <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                        </div>
+                        </div>
+                        </div>
+                        </div>*@
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <input type="text" id="hdnname" hidden value="@item.UserName" />
+                                        <input type="text" id="hdnemail" hidden value="@item.Email" />
+                                        <tr>
+                                            <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
+                                            <td class="mailbox-name"><a href="read-mail.html">@item?.UserName</a></td>
+                                            <td class="mailbox-subject">
+                                                <b>@item?.subject</b> - Trying to find a solution to this problem...
+                                            </td>
+                                            <td class="mailbox-attachment" onclick="adduser(@item.ContactId);"><i class="fa fa-eye" aria-hidden="true"></i></td>
+                                            @if (item.ContactDate.Date == DateTime.Today)
+                                            {
+                                                date = "new";
+                                                classbadge = "badge badge-warning";
+                                            }
+                                            else
+                                            {
+                                                date = "old";
+                                                classbadge = "badge badge-primary";
+                                            }
+
+                                            <td class="mailbox-date">@item.ContactDate</td>
+                                            <td class="mailbox-name">
+
+                                                @{
+
+                                                    classbadge = "";
+                                                    if (@item.status == 0)
+                                                    {
+
+                                                        classbadge = "badge badge-danger";
+                                                    }
+                                                    else
+                                                    {
+
+                                                        classbadge = "badge badge-primary";
+                                                    }
+                                                    disable = "";
+                                                    if (@item.status == 1)
+                                                    {
+                                                        disable = "disabled";
+                                                    }
+                                                }
+                                                 <input type="datetime-local" hidden id="solvetime" />
+                                                <select id="msgstatus" class="@classbadge" @disable onchange="UpdateContactusStatus('@item.ContactId', '@item.UserName', '@item.Email', this.value);" asp-for="@item.status">
+                                                    <option value="0">Issue Solve Pending</option>
+                                                    <option value="1">Issue Solve</option>
+                                                </select>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="modalPartialView"></div>
+<script>
+   function adduser(id) {
+   
+    $.post("/ContactUS/ContactDetails", { id: id })
+        .done(function (res) {
+            $("#modalPartialView").html(res);
+             $("#myModal").modal("show");
+        })
+        .fail(function () {
+            alert("error");
+        });
+}
+   function formatDate(date) {
+      const options = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return new Intl.DateTimeFormat('en-US', options).format(date);
+    }
+
+    // Get the current date and time
+    const currentDate = new Date();
+
+    // Format the current date and time
+    const formattedDate = formatDate(currentDate);
+
+    // Set the value of the input element to the formatted date and time
+    document.getElementById("solvetime").value = formattedDate;
+
+
+
+
+    function UpdateContactusStatus(ContactId, name, email, selectedValue) {
+     debugger;
+        Show_Loader()
+        setTimeout(function () {
+       let data = {
+        ContactId : ContactId,
+        status: selectedValue, 
+         UserName : name,
+        Email: email, 
+        ProblemSolveDate:formattedDate
+    };
+
+    $.post('/ContactUS/UpdateContactUsStatus', data)
+        .done(function(res) {
+            window.location.href = "/ContactUS/ContactusList";
+        })
+        .fail(function() {
+            // Handle the failure case
+            alert("Failed update");
+        });
+        }, 1500)
+    
+}
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+</script>

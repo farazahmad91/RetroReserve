@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Entities.Foodkart>
+@{
+    ViewData["Title"] = "ListByPrizeWithCategory";
+     Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <input type="text" id="hdnvarientid" hidden value="@item.Id" />
+    <div class="col-lg-6 menu-item">
+        <img src="@item.DishImage" class="menu-img" alt="@item.DishName">
+        <div class="menu-content">
+            <a href="#">@item.DishName</a>@* <span><del>@item.MRP</del></span> *@<span>@item.DishPrize</span>
+            <!-- Add To Cart Button -->
+            <a class="social-info" onclick="GetVarientList('@item.DishId');">
+                <span class="fa fa-shopping-cart"></span>
+                <p class="hover-text"></p>
+            </a>
+        </div>
+        <div class="menu-ingredients">
+            @item.DishDescription
+        </div>
+    </div>
+}
+

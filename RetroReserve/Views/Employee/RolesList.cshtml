@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Entities.EmployeeRoleMaster>
+
+@{
+    ViewData["Title"] = "RolesList";
+    Layout = null;
+}
+
+ <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><strong>Employee Role Info</strong></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Employee Roles Details</a></li>
+                        <li class="breadcrumb-item active">Manage Employee</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+        <button type="button" class="btn btn-primary" onclick="EditEmployeeRoles(0);">Add New Roles</button>
+        <a href="/Employee/Employee" class="btn btn-warning float-right">Back To List</a>
+        <br /> <br />
+        <div class="card">
+            <div class="table-responsive">
+                <br /> 
+                <table class="table table-striped" style="margin:5px;">
+                    <thead style="background-color:#17a2b8!important;">
+        <tr>
+            <th>
+             RoleId
+            </th>
+            <th>
+                RoleName
+            </th>
+            <th>
+                Status
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+                 <td>
+                                    @{
+    var isactive = @item.Status == 1 ? "checked" : "";
+    var emp = isactive == "checked" ? "Active" : "Inactive";
+    var color = isactive == "checked" ? "green" : "red";
+}
+
+<div class="col-md-12">
+    <div class="form-group">
+        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+            <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.RoleId" @isactive onchange="EmpRoleStatus(@item.RoleId);">
+            <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.RoleId">@emp</label>
+        </div>
+    </div>
+</div>
+</td>
+            <td>
+                 <a class="dropdown-item" onclick="EditEmployeeRoles(@item.RoleId)"><span class="fas fa-edit" style="color: Blue"></span> Edit</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div></div></div></div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script>
+  function EmpRoleStatus(RoleId) {
+    var id = $("#customSwitch3_" + RoleId).prop("checked");
+    if (id == true) {
+        id = 1;
+
+    }
+    else {
+        id = 0;
+    }
+    var param = {
+         RoleId: RoleId,
+         Status: id,
+    };
+    console.log(param);
+    $.post("/Employee/AddOrUpdateRoles", param).done(function() {
+    }).fail(function() {
+         alert("error");
+
+    })
+}
+
+</script>

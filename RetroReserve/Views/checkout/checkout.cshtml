@@ -1,0 +1,264 @@
+﻿@model IEnumerable<Entities.Cart>
+@{
+    ViewData["Title"] = "Payment";
+    Layout = null;
+}
+
+    <link href="https://business.paytm.com/demo//static/css/style.css?v=1.9" rel="stylesheet">
+    <link href="https://staticpg.paytm.in/checkoutjs/2113/paytm.style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    @{
+        decimal total = 0;
+
+        foreach (var item in Model)
+        {
+            var price = item.SellingCost;
+            total += price;
+        }
+
+    }
+    <input type="text" hidden id="dp" value="RetroReserve Secure Payment !!" />
+
+    <div id="paytm-checkoutjs" class="ptm-own-element">
+        <div id="paytm-app" class="paytm-wrapper ptm-pos-r  " data-id="paytm-checkout-app-1707197692978">
+            <div id="checkout-home" class=" ptm-main 0 false">
+                <div class="ptm-errorstrip ptm-pos-a ptm-hidden">
+                    <div class="ptm-msg-red ptm-error-bold">You have not selected any option to pay</div>
+                </div>
+                <div class="payment-content-wrap ptm-body-bg   ptm-checkout-mode     ptm-nav-scrollable">
+                    <div id="ptm-checkout-header" class="ptm-header ptm-qr-header ptm-header-bg    ">
+                        <div class="ptm-hidden ptm-header-sotp">
+                            <span class="ptm-cross ptm-pos-r xs-ptm-hidden"
+                                  id="app-close-btn"></span>
+                            <div>
+                                <div class="ptm-select-txt ptm-select-sticky xs-ptm-hidden ptm-body-bg">
+                                    <div class="ptm-pd-8">
+                                        <div class="ptm-paytxtlbl ptm-body-color">Select an option to pay</div><span class="ptm-select-amount ptm-pos-r ptm-body-color">
+                                            <div class="rupee-symbol ptm-body-color">₹</div>@total
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ptm-header-top ptm-pos-r xs-header-top">
+                            <a href="/BookingTable/BookTable"> <span class="ptm-cross ptm-pos-r xs-ptm-hidden" id="app-close-btn"></span></a>
+                           
+                            <div class="ptm-hedrlogo ">
+                                <img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/logo-paytm.svg"
+                                     class=" ptm-logo false ">
+                            </div>
+                        </div>
+                        <div class="ptm-header-bottom xs-header-bottom   ">
+                            <div class="ptm-w100">
+                                <div class="dsktp-hidden xs-user-profile"></div>
+                            </div>
+                            <div class="ptm-pos-r ptm-subheading ptm-min-height ptm-w100-ib xs-ptm-hidden">
+                                <div class="ptm-merchnt-dtl">
+                                    <span class="ptm-name-txt ptm-header-color">
+                                        My
+                                        Restro
+                                    </span>
+                                    <div class="ptm-view-details ptm-header-color"></div>
+                                </div>
+                                <div class="ptm-logo-name ptm-pos-a ptm-fixheader-logo xs-mer-logo">
+                                    <div class="ptm-logobox ptm-pos-r">
+                                        <img class="ptm-brand-logo ptm-margin0 ptm-pos-a ptm-centralized"
+                                             src="https://business.paytm.com/demo//static/images/merchant-logo.png?v=1.4"
+                                             alt="merchant logo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ptm-notify-wrap ptm-pos-a xs-ptm-hidden"></div>
+                    </div>
+                    <div>
+                        <div class="ptm-select-txt ptm-select-sticky xs-ptm-hidden ptm-body-bg">
+                            <div class="ptm-pd-8">
+                                <div class="ptm-paytxtlbl ptm-body-color">
+                                    <span class="ptm-body-color"
+                                          style="font-size: 18px; letter-spacing: -0.41px; font-weight: 700;">
+                                        Select an
+                                        option to pay
+                                    </span>
+                                </div><span class="ptm-select-amount ptm-pos-r ptm-body-color">
+                                    <div class="rupee-symbol ptm-body-color">₹</div>@total
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-mode-warp xs-paymode-wrap  ">
+                        <div id="ptm-qr-container">
+                            <div class="ptm-qr-wrap ptm-body-color paytm-txt-center">
+                                <div class="ptm-qrcode-box paytm-txt-center ptm-border-color" style="margin-top: 0px;">
+                                    <div class="ptm-qrbox-left ptm-right">
+                                        <div class="ptm-qr-pay-text ptm-body-bg ptm-body-color ptm-qr-upi-pay-title"
+                                             style="margin-top: 15px;">
+                                            Scan QR with Paytm
+                                        </div>
+                                        <div class="ptm-body-color" style="margin: 0px auto 8px;">
+                                            <div class="ptm-txinfo ptm-upi-txinfo">Pay with UPI</div><span>
+                                                <a class="ptm-primary ptm-kno-link"> Know More</a>
+                                            </span>
+                                        </div>
+                                        <div class="ptm-pay-qr-upi-apps">
+                                            <span class="ptm-qr-pay-subtext">
+                                                or Scan with
+                                                any UPI app
+                                            </span><img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/paywithupiapps.svg"
+                                                        class="ptm-pay-with-upi">
+                                        </div>
+                                    </div>
+                                    <div class="ptm-qrbox-right ptm-left">
+                                        <div class="ptm-qr-img-container">
+                                            <div class="ptm-qr-scan" id="qrcode"></div>
+                                            @*  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAHgAQAAAABVr4M4AAAEgUlEQVR4Xu2aPXLkOgyEMeXA4RxBR9HRpKPpKDrChA62FovuBin/bTD7gldlAIFNkfigpKsByjb/D2GfN56Jhp+Mhp+Mhp+M/xU+TbHi+XdsHMvD7OZYKGm35fH6K1I2P+9vmX5vuBJ8V8aA9zh5jaVtRyx+3XzWJfP2wnRQDReCIZqA45mpgLEYMBRGADsBowqSGy4JQz0Tvspt7g/s0pgarg2bCUZGVrEXdi+jMTEarglzM+AvCotUozEtrl6FnRemN1wLZjpFA/Vklb8vMr3h71O/Ln4CPAMZLmExLoWtJzWHpvU+Gi4DD9Gs/qD7OEZbuQ8CzLGwRXH8HckN14KxIOP4kmL8pEIGXpPjC9vYxu8vHH+HhzVcAsa1h+PLSTg2wnRQTTs52bAuYVRBuYYLwWlDGxim0muGwsAo9Tdh+lE2rYbrwLw2Q08UFhhdpK9FbJNhFapweljDJWCERKMWZexVxvHl8eqcYyyn3kM7l8IaLgI/8LkN6jEecPzV4jS2MeTor4NHVMEju1fDhWDntVkZ6lUabWPh45v+sCG8CanH0nAxGDLa59Tip0FY1NP8pq/JGHUDxuPoVQ1XgJFqmYGDaEipOciI7uN5fw6FUWo49IYrwXn/sWAgLDYtuI+l5kJYplsTyrHuPhXWcBk4UjfXRdrhNUwFA81hx2dIYQd2Gi4D+xxfdBEKP5KwmJpN6w7GMNAoB69suA58SkbvF3f8RNN6cKDZw5gyFqcKFQ3XgUevMvmRFtQcggpbNNmMwFEqrOFc/GzYeeBUmHFqifEFu/vq7ExyH8Abxacdb7gSnL1qhdQ4x1zuoxvRFkloWrnzXaNr+GfDcRHKGcVSRp6ms0phaTqeDvVpoGm4ApwWwwP0qi2qQGEZN2BZLsbfDMix4UKw87tJtCjBOJg3InJhTIT58PEjS8M14FM3oh0tCrGxe1FYMCZVMezweAw9DdeDjbdlxQIQqQsnGxoTq0SMEedsuBY8epXNFiVhoQSZFStUyRe8t6GGS8D6lB/OYpf7uBSGJzkUXjCPMhquBL/M+w8Utp6sIq/5rDDXrNNwMZi9CvGYCmP3YhUcvVPYiANvargOrBkFMqJ6EEilnr4oTFX29Wy4EuyXej59dwuFYbKJVJ66YC1SYQ3XgZmBVFVJP0LGkFqKD1PvreGCMG5E8TtgT2EpI48Qd9gQ6kYVvCDKNVwKvhiOL2sa0x56gvgMwpL4wob4pp3lGi4Ey3R8wlrgamSoq3J4wXao3Ad5NlwAvhhepCk1pirkR/5m1FxG1JXCGq4Bzzjn+PLIcs45GONLllvBaKfhSvBpikhN2DT+UnNQWByxRRFGObQxFGu4DBxacdoQZaQDzjEr3Oc2dlCXyQ1XhN8s9YQM8LQhyo4LmA6F5Yc2Xa9suCacEy12yEhPIT5UCWEZjQlVGq4J24eGBNOx6yIkG8IdSUcN14Idsa+zM9ko52pawWj8HXW/aXQN/2zYFFCYFtmrwoZM/4V/YJt1l+sFDc/Fz4f/PRp+Mhp+Mhp+MirCfwAknnt5ZgZp2QAAAABJRU5ErkJggg=="
+                                            alt="" data-key="qr-code" class="ptm-qr-scan">  *@
+                                        </div><img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/paytm-upi-icon.png"
+                                                   class="ptm-qr-icon" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ptm-paymode-border"></div>
+                        <div class="ptm-grid-wrap ptm-w100-ib pd-0 ">
+                            <div class="ptm-grid-inner">
+                                <div class="ptm-other-paymode ptm-body-color ptm-semibold ">More Payment Options</div>
+                                <div class="card-main-div">
+                                    <div class="ptm-pay-method ptm-w100-ib ptm-noborder ptm-nav-selectable"
+                                         id="checkout-card">
+                                        <div class="ptm-radio-wrap ptm-pt11">
+                                            <label class="ptm-lbl ptm-centralized ptm-left0">
+                                                <input type="radio"
+                                                       name="verifyDEFAULT" class="ptm-margin0"><span class="ptm-checkmark"></span>
+                                                <div class="ptm-pay-method-cont" onclick="info();">
+                                                    <div>
+                                                        <p class="ptm-paymode-name ptm-lightbold ">
+                                                            Prepaid, Debit and
+                                                            Credit Cards
+                                                        </p>
+                                                        <div class="ptm-upi-paymodes-icwrap ptm-flex-row ptm-align-center ptm-justify-start">
+                                                            <img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/cc-rupay.png"
+                                                                 alt="upi-apps" class="ptm-cc-rupay-icon"><img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/cc-visa.png"
+                                                                                                               alt="upi-apps" class="ptm-cc-visa-icon"><img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/cc-mastercard.png"
+                                                                                                                                                            alt="upi-apps" class="ptm-cc-master-icon"><span class="ptm-more-upi-apps-txt ptm-body-color">
+                                                                &amp;
+                                                                more
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </label><img class="ptm-grid-icon ptm-pos-a  "
+                                                         src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/card-icon-new.svg"
+                                                         alt=""><span class="ptm-arrow-right ptm-arr-position ptm-pos-a"></span>
+                                        </div>
+                                        <p class="ptm-global-bottom-border"></p>
+                                    </div>
+                                </div>
+                                <div class="ptm-bhipupi-main">
+                                    <div class="ptm-pay-method ptm-w100-ib ptm-noborder  ptm-nav-selectable
+          " id="checkout-upi">
+                                        <div class="ptm-radio-wrap ptm-pt11">
+                                            <label class="ptm-lbl ptm-centralized ptm-left0">
+                                                <input type="radio"
+                                                       name="verifyDEFAULT" class="ptm-margin0"><span class="ptm-checkmark"></span>
+                                                <div class="ptm-pay-method-cont" onclick="info();">
+                                                    <p class="ptm-paymode-name ptm-lightbold ">UPI</p>
+                                                    <div class="ptm-upi-paymodes-icwrap ptm-flex-row ptm-align-center ptm-justify-start">
+                                                        <img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/upipayapps.svg"
+                                                             alt="upi-apps" class="ptm-diff-upi-apps"><span class="ptm-more-upi-apps-txt ptm-body-color">
+                                                            &amp;
+                                                            more
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </label><img class="ptm-grid-icon ptm-pos-a"
+                                                         src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/upi-icon-new.svg"
+                                                         alt=""><span class="ptm-arrow-right ptm-arr-position ptm-pos-a"></span>
+                                        </div>
+                                    </div>
+                                    <div class="ptm-ch-limit"></div>
+                                    <p class="ptm-global-bottom-border"></p>
+                                    <div class="ptm-el-limit"></div>
+                                </div>
+                                <div class=" ">
+                                    <div class="ptm-pay-method ptm-w100-ib ptm-nav-selectable" id="checkout-nb">
+                                        <div class="ptm-radio-wrap ptm-pt11 ">
+                                            <label class="ptm-lbl ptm-centralized ptm-left0">
+                                                <input type="radio"
+                                                       name="verifyDEFAULT" class="ptm-margin0"><span class="ptm-checkmark"></span>
+                                                <div class="ptm-pay-method-cont" onclick="info();">
+                                                    <p class="ptm-paymode-name ptm-lightbold">Net Banking</p>
+                                                    <div class="ptm-body-color ptm-more-upi-apps-txt">
+                                                        All major banks
+                                                        supported
+                                                    </div>
+                                                </div>
+                                            </label><img class="ptm-grid-icon ptm-pos-a"
+                                                         src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/nb-icon-new.svg"
+                                                         alt=""><span class="ptm-arrow-right ptm-arr-position ptm-pos-a"></span>
+                                            <p class="ptm-global-bottom-border"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div><button type="button" class="btn btn-primary" onclick="checkoutOrder();">Payment</button> </div>
+                    </div>
+                    <div class="ptm-footer ptm-white-bg xs-ptm-hidden" id="checkout-footer">
+                        <span id="footer-main-content-wrap">
+                            <img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/secure.png" alt="secure"
+                                 class="secure-img ptm-margin0"><span id="footer-text"
+                                                                      class="ptm-text-blue ptm-body-color">
+                                100% Secure Payments <span class="ptm-fw-700">Powered by</span>
+                            </span><img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/logo-paytm.svg" alt=""
+                                        class="ptm-pos-r ptm-ftr-logo "><img src="https://staticpg.paytm.in/checkoutjs/2113/assets/images/logo-blue.png" alt=""
+                                                                             class="ptm-pos-r ptm-ftr-logo ptm-directotp-darklogo">
+                        </span>
+                    </div>
+                </div><input class="ptm-hidden-input" id="ptm-hidden-input" type="tel">
+                <div id="checkout-overlay-box" class=""></div>
+                <div class="ptm-brand-lines ptm-pos-a ptm-brand-strip"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function info() {
+            alert("Apologies, but this service is currently unavailable. Please make payment using only the QR code method.");
+
+        }
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function CreateQR() {
+            var link = $("#dp").val();
+            var randomColor = getRandomColor();
+
+            var qrcode = new QRCode("qrcode", {
+                text: link,
+                width: 125,
+                height: 120,
+                colorDark: randomColor, // Change this to color: randomColor,
+            });
+            document.getElementById("qrcode").style.backgroundColor = randomColor;
+        }
+
+        CreateQR();
+        function showinsertsuccess(msg) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+            jQuery("#snackbar").html(msg);
+        }
+    </script>
+

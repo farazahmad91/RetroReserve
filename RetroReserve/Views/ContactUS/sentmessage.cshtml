@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Entities.MessageBox>
+@{
+    string classbadge;
+    string disable;
+    string date;
+    ViewData["Title"] = "sent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Inbox</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Message Box</a></li>
+                        <li class="breadcrumb-item active">Inbox</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Inbox</h3>
+                        <a href="/ContactUS/Compose" class="fa fa-arrow-circle-left btn btn-primary float-right"></a>
+                        @*<div class="card-tools">
+                        <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" placeholder="Search Mail">
+                        <div class="input-group-append">
+                        <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                        </div>
+                        </div>
+                        </div>
+                        </div>*@
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
+                                            <td class="mailbox-name"><a href="read-mail.html">@item?.Email</a></td>
+                                            <td class="mailbox-subject">
+                                                <b>@item?.Subject</b> - Trying to find a solution to this problem...
+                                            </td>
+                                            <td class="mailbox-attachment" onclick="GetSentMessageDetails(@item.MessageId);"><i class="fa fa-eye" aria-hidden="true"></i></td>
+                                            <td class=" badge-success float-right">@item.SentDate</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="modalPartialView"></div>
+<script>
+    function GetSentMessageDetails(id) {
+
+        $.post("/ContactUS/SentMessageDetail", { id: id })
+            .done(function (res) {
+                $("#modalPartialView").html(res);
+                $("#myModal").modal("show");
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+</script>

@@ -1,0 +1,310 @@
+﻿@model Entities.EmployeesVM
+
+
+@{
+    ViewData["Title"] = "AddEmployee";
+    Layout = null;
+    var Role = new SelectList(Model.employeeRoleMaster, "RoleId", "RoleName");
+}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><strong>Add Or Update Employee</strong></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Employee Details</a></li>
+              <li class="breadcrumb-item active">Manage Employee</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <div class="container mt-3">
+        <div>
+            <div class="card" id="snackbar">Data Saved Successfully</div>
+            <div class="card" id="snackbar2">Data Updated Successfully</div>
+            <div class="card" id="snackbar3">Deleted.</div>
+        </div>
+<div class="container py-3">
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Employee Info</Strong></h5>
+        </div>
+        <div class="card-body" style="background-image: url('/img/signup_bg.jpg');">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <div class="input-group">
+                            <input  type="text" hidden  asp-for="EmpId" class="form-control" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                            </div>
+                            <input  type="text"  asp-for="Name" class="form-control" />
+                          
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-envelope" style="font-size:23px;"></i></span>
+                            </div>
+                                    <input type="text" asp-for="Email" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-alt" style="font-size:23px;"></i></span>
+                            </div>
+                   <select class="form-control" asp-for="RoleId" asp-items="@Role">
+                                <option value="">:: Select Role ::</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Image </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-image" style="font-size:23px;"></i></span>
+                            </div>
+                            <input type="file"  asp-for="Image" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Salary</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-inr" style="font-size:23px;"></i></span>
+                            </div>
+                            <input  type="number"  asp-for="Salary" class="form-control" />
+                          
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Phone No.</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                            </div> 
+                            <input type="number"  asp-for="Phone" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                            </div>
+                   <select class="form-control" asp-for="Gender">
+                                <option value="">:: Select Gender ::</option>
+                                <option value="male"> Male </option>
+                                 <option value="female"> female </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>DOB </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt" style="font-size:23px;"></i></span>
+                            </div>
+                            <input type="date"  asp-for="DOB" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>AdharNo.</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-id-card-o" style="font-size:23px;"></i></span>
+                            </div>
+                            <input  type="number" asp-for="AdharNo" class="form-control" max-length="15" min-length="15" />
+                          
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-id-card-o" style="font-size:23px;"></i></span>
+                            </div>
+                            <input type="text" asp-for="Address" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+            <div class="form-group">
+                <button type="submit" id="btnubmit" onclick="AddOrUpdateEmployee();" class="btn btn-primary">Submit</button>
+                <a href="/Employee/Employee" class="btn btn-primary" style="text-align:right;">Back To List</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<script>
+    function AddOrUpdateEmployee() {
+        Show_Loader();
+        setTimeout(function () {
+            if (validateEmployee()) {
+                let param = {
+            EmpId: $("#EmpId").val(),
+            Name: $("#Name").val(),
+            Email: $("#Email").val(),
+            RoleId: $("#RoleId").val(),
+            Salary: $("#Salary").val(),
+            Phone: $("#Phone").val(),
+            Gender: $("#Gender").val(),
+            DOB: $("#DOB").val(),
+            AdharNo: $("#AdharNo").val(),
+            Address: $("#Address").val(),
+            IsActive: $("#IsActive").val(),
+        };
+        var Employee = new FormData();
+        Employee.append("EmpId", param.EmpId);
+        Employee.append("Name", param.Name);
+        Employee.append("Email", param. Email);
+        Employee.append("RoleId", param.RoleId);
+        Employee.append("Salary", param.Salary);
+        Employee.append("Phone", param.Phone);
+        Employee.append("Gender", param.Gender);
+        Employee.append("DOB", param.DOB);
+        Employee.append("AdharNo", param.AdharNo);
+        Employee.append("Address", param.Address);
+        Employee.append("IsActive", param.IsActive);
+        Employee.append("ImagePath", $("#Image").prop('files')[0]);
+
+        $.ajax({
+            url: '/Employee/AddOrUpdateEmployee',
+            type: 'POST',
+            data: Employee,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                Hide_Loader();
+                showinsertsuccess("Employee Add Successfully");
+            },
+            error: function () {
+                Hide_Loader();
+                showerrors("Something went wrong!!!");
+            }
+        });
+            }
+        }, 1500)
+    }
+    function validateEmployee() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#Name").val() === "") {
+            addError("Please enter name");
+        }
+        if ($("#Email").val() === "") {
+            addError("Please enter Email");
+        }
+        if ($("#RoleId").val() === "") {
+            addError("Please select role");
+        }
+        if ($("#Salary").val() === "") {
+            addError("Please enter  salary");
+        }
+        if ($("#Phone").val() === "") {
+            addError("Please enter Phone no.");
+        }
+        if ($("#Gender").val() === "") {
+            addError("Please select gender");
+        }
+        if ($("#DOB").val() === "") {
+            addError("Please enter DOB");
+        }
+        if ($("#AdharNo").val() === "") {
+            addError("Please enter adharno");
+        }
+        if ($("#Address").val() === "") {
+            addError("Please enter  address");
+        }
+
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            showerrors(msg);
+        }
+
+        return isvalidated;
+    }
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+
+</script>

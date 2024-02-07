@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Entities.Foodkart>
+@{
+    ViewData["Title"] = "MenuKart";
+    Layout = null;
+}
+@foreach (var item in Model)
+{
+    <input type="text" id="hdnvarientid" hidden value="@item.Id" />
+    <div class="col-lg-6 menu-item">
+        <img src="@item.DishImage" class="menu-img" alt="@item.DishName">
+        <div class="menu-content">
+            <a href="#">@item.DishName</a>@* <span><del>@item.MRP</del></span> *@<span>@item.DishPrize</span>
+            <!-- Add To Cart Button -->
+            <a class="social-info" onclick="GetVarientList('@item.DishId');">
+                <span class="fa fa-shopping-cart"></span>
+                <p class="hover-text"></p>
+            </a>
+        </div>
+        <div class="menu-ingredients">
+            @item.DishDescription
+        </div>
+    </div>
+}
+
+
+
+
+<script>
+    function AddCart(Id) {
+        let data = {
+            Id: Id,
+        };
+
+        $.post('/Cart/AddCart', data)
+            .done(function (res) {
+                if (res == -1) {
+                    errors("This dish is already in the cart");
+                } else {
+                    success("Dish added successfully to your cart.");
+                    cartstatus();
+                }
+            })
+            .fail(function (res) {
+                errors("Kindly log in before adding a dish to your cart.");
+               
+            });
+    }
+</script>

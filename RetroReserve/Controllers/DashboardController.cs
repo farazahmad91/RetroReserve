@@ -1,0 +1,29 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RetroReserve.Models;
+using Entities;
+using System.Diagnostics;
+
+namespace RetroReserve.Controllers
+{
+    [Authorize]
+    public class DashboardController : Controller
+    {
+        private readonly APIrequest apirequest;
+        public DashboardController(APIrequest apirequest)
+        {
+            this.apirequest = apirequest;
+        }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Admin()
+        {
+            var i = await apirequest.GetData<List<Status>>("Status/GetStatusList");
+            return View(i);
+        }
+        public async Task<IActionResult> Status()
+        {
+            var i = await apirequest.GetData<List<Status>>("Status/GetStatusList");
+            return Json(i);
+        }
+    }
+}

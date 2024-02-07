@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Entities.TeaKart>
+@{
+    ViewData["Title"] = "TeaKartDisplayList";
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <input type="text" id="hdnvarientid" hidden value="@item.TeaId" />
+    <div class="col-lg-6 menu-item">
+        <img src="@item.TeaImage" class="menu-img" alt="@item.TeaName">
+        <div class="menu-content">
+            <a href="#">@item.TeaName</a>@* <span><del>@item.MRP</del></span> *@<span>@item.TeaPrize</span>
+            <!-- Add To Cart Button -->
+            <a class="social-info" onclick="GetVarientList('@item.TeaId');">
+                <span class="fa fa-shopping-cart"></span>
+                <p class="hover-text"></p>
+            </a>
+        </div>
+        <div class="menu-ingredients">
+            @item.TeaDescription
+        </div>
+    </div>
+}
+

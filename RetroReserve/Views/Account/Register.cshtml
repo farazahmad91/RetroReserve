@@ -1,0 +1,190 @@
+﻿﻿@using RetroReserve.Models;
+@model RegisterVM
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+<div class="row d-flex align-items-center justify-content-center">
+    <div class="col-md-4 card p-3">
+        <div>
+            <div class="card" id="snackbar">Data Saved Successfully</div>
+            <div class="card" id="snackbar2">Data Updated Successfully</div>
+            <div class="card" id="snackbar3">Deleted.</div>
+        </div>
+        <h2 class="text-center text-info">Register</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-1">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="Role" class="control-label"></label>
+            <select class="form-control" asp-for="Role">
+                <option value="">:: Select Role ::</option>
+                <option value="super_admin">Super Admin </option>
+                <option value="admin"> Admin </option>
+                <option value="user"> User </option>
+            </select>
+            <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+        <div class="mb-1">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>            <div class="mb-1">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+            <div class="row">
+                <div class="col-8">
+                <a href="/Account/Login" class="text-decoration-none float-start mt-2">Have account?</a>
+                </div>
+                <div class="col-4">
+                <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                    <input type="submit" value="Register" onclick="RegisterUser();" class="btn btn-primary btn-sm float-end" />
+                </div>
+            </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+
+    function generateRandomPassword() {
+    var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+    var digitChars = "0123456789";
+    var specialChars = "#$%&*";
+
+        var getRandomChar = (charSet) => {
+            var index = Math.floor(Math.random() * charSet.length);
+        return charSet.charAt(index);
+    };
+
+    var password = [
+        getRandomChar(uppercaseChars),
+        getRandomChar(lowercaseChars),
+        getRandomChar(digitChars),
+        getRandomChar(specialChars),
+        getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
+        getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
+        getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
+    ].join('');
+
+    return password;
+}
+    function RegisterUser() {
+        var uname = $("#Name").val();
+        var email = $("#Email").val();
+        var password = $("#Password").val();
+        var confirmPassword = $("#ConfirmPassword").val();
+        var role = $("#Role").val();
+        const options = {
+            RequireDigit: true,
+            RequiredLength: 5,
+            RequireLowercase: true
+        };
+
+        const pass = generateRandomPassword();
+        console.log(pass);
+        Show_Loader();
+        setTimeout(function () {
+        if (validateUser()) {
+            var param = {
+                Name: uname,
+                Email: email,
+                Adhaar: pass,
+                Role: role,
+                Password: password,
+                ConfirmPassword: confirmPassword,
+            };
+            $.post("/Account/Register", param).done(function (res) {
+                    Hide_Loader();
+                    showinsertsuccess("Register Successful");
+                if (res == 1) {
+                    window.location.href = "/Account/Login";
+                }
+                else {
+                        Hide_Loader();
+                        showerrors("Invalid Email!!");
+                }
+
+
+            }).fail(function () {
+                    Hide_Loader();
+                    showerrors("Something went wrong!!");
+            });
+        }
+        }, 1500)
+
+    }
+
+    function validateUser() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#Name").val() === "") {
+            addError("Please enter name");
+        }
+        if ($("#Email").val() === "") {
+            addError("Please enter Email");
+        }
+        if ($("#Role").val() === "") {
+            addError("Please select role!!");
+        }
+        if ($("#Password").val() === "") {
+            addError("Please enter  Password!!");
+        }
+        if ($("#ConfirmPassword").val() === "") {
+            addError("Please enter  confirmPassword!!");
+        }
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            showerrors(msg);
+        }
+
+        return isvalidated;
+    }
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+</script>

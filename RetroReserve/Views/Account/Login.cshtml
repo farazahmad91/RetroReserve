@@ -1,0 +1,119 @@
+﻿@using RetroReserve.Controllers
+@model Login
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Account";
+}
+<div class="row d-flex justify-content-center">
+    <div class=" col-md-3 card p-3">
+        <div>
+            <div class="card" id="snackbar">Data Saved Successfully</div>
+            <div class="card" id="snackbar2">Data Updated Successfully</div>
+            <div class="card" id="snackbar3">Deleted.</div>
+        </div>
+        <h2 class="text-centre text-info">Login</h2>
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="mb-1">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="Password">Pasword</label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-1 form-check">
+                <label class="form-check-label">
+                    <input asp-for="RememberMe" class="form-check-input" />@Html.DisplayNameFor(a => a.RememberMe)
+                </label>
+
+            </div>
+            <div class="row">
+            <div class="col-sm-8"><a href="/Account/Register" class="text-decoration-none ">Dont Havent Account ?</a></div>
+            </div>
+            <div class="col-4">
+            <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                <button class="btn btn-primary btn-sm float-end" onclick="LoginUser();">Submit</button>
+            </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+      function LoginUser() {
+        var uname = $("#Email").val();
+        var password = $("#Password").val();
+        Show_Loader();
+        setTimeout(function () {
+        if (validateUser()) {
+            var param = {
+                Email: uname,
+                Password: password,
+            };
+            $.post("/Account/Login", param).done(function (res) {
+                    Hide_Loader();
+                    showinsertsuccess("Login Successful");
+                window.location.href = `${res}`;
+                console.log(res);
+
+            }).fail(function () {
+                    Hide_Loader();
+                    showerrors("Something went wrong!!!");
+            });
+          }
+        }, 1500)
+      }
+    function validateUser() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#Email").val() === "") {
+            addError("Please enter Email");
+        }
+        if ($("#Password").val() === "") {
+            addError("Please enter  Password!!");
+        }
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            showerrors(msg);
+        }
+
+        return isvalidated;
+    }
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+  </script>

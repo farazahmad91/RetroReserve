@@ -1,0 +1,260 @@
+﻿@model Entities.Foodkart
+@{
+    ViewData["Title"] = "EditMenu";
+    Layout = null;
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Add Menu</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Menu</a></li>
+                        <li class="breadcrumb-item active">Add Menu</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container py-3">
+        <div>
+            <div class="card" id="snackbar">Data Saved Successfully</div>
+            <div class="card" id="snackbar2">Data Updated Successfully</div>
+            <div class="card" id="snackbar3">Deleted.</div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Add Menu Info</Strong></h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Dish Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                </div>
+                                  <input type="text" hidden asp-for="DishId" class="form-control" />
+                                <input type="text" asp-for="DishName" class="form-control" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Dish Image</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="file" asp-for="DishImage" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Dish Category</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                </div>
+                                <select class="form-control" asp-for="DishCategoryId">
+                                    <option value="">:: SELECT Dish Category ::</option>
+                                    <option value="1">:: Meat ::</option>
+                                    <option value="2">:: Chicken ::</option>
+                                    <option value="3">:: Fish ::</option>
+                                    <option value="4">:: Eggs ::</option>
+                                    <option value="5">:: Paneer ::</option>
+                                    <option value="6">:: Veg ::</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Dish Type</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                </div>
+                                <select class="form-control" asp-for="DishType">
+                                    <option value="">:: SELECT Dish Type ::</option>
+                                    <option value="1">:: Type1 ::</option>
+                                    <option value="2">:: Type2 ::</option>
+                                    <option value="3">:: Type3 ::</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Prize</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-rupee" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="number" asp-for="DishPrize" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                                            <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-sort-amount-up" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="number" asp-for="Quantity" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-info-circle" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="text" asp-for="DishDescription" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                    <button type="button" id="btninsertupdate" onclick="AddOrUpdateMenu();" class="btn btn-primary">Save</button>
+                    <a href="/Menu/MenuIndex" class="btn btn-info float-right" style="text-align:right;">Back To List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="Index">Back to List</a>
+</div>
+
+<script>
+    function AddOrUpdateMenu() {
+        Show_Loader();
+        setTimeout(function () {
+            if (validateFoodkart()) {
+        let param = {
+            DishId: $("#DishId").val(),
+            DishCategoryId: $("#DishCategoryId").val(),
+            DishType: $("#DishType").val(),
+            DishName: $("#DishName").val(),
+            DishPrize: $("#DishPrize").val(),
+            DishDescription: $("#DishDescription").val(),
+             Quantity: $("#Quantity").val(),
+        };
+        var Menu = new FormData();
+        Menu.append("DishId", param.DishId);
+        Menu.append("DishCategoryId", param.DishCategoryId);
+        Menu.append("DishType", param.DishType);
+        Menu.append("DishName", param.DishName);
+        Menu.append("DishPrize", param.DishPrize);
+        Menu.append("DishDescription", param.DishDescription);
+         Menu.append("Quantity", param.Quantity);
+        Menu.append("ImagePath", $("#DishImage").prop('files')[0]);
+
+        $.ajax({
+            url: '/Menu/AddOrUpdateMenu',
+            type: 'POST',
+            data: Menu,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                        Hide_Loader();
+                        showinsertsuccess("New Menu Details Add Successfully");
+                window.location.href="/Menu/MenuIndex"
+            },
+            error: function () {
+                        Hide_Loader();
+                        showerrors("Sorry Something went wrong!!!");
+            }
+        });
+            }
+        }, 1500)
+    }
+    function validateFoodkart() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#DishName").val() === "") {
+            addError("Please enter name");
+        }
+        if ($("#DishType").val() === "") {
+            addError("Please select Type");
+        }
+        if ($("#DishCategoryId").val() === "") {
+            addError("Please select Category");
+        }
+        if ($("#DishPrize").val() === "") {
+            addError("Please enter  Prize");
+        }
+        if ($("#DishDescription").val() === "") {
+            addError("Please enter description");
+        }
+        if ($("#Quantity").val() === "") {
+            addError("Please enter quantity");
+        }
+
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            showerrors(msg);
+        }
+
+        return isvalidated;
+    }
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+
+</script>
+

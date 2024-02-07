@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Entities.OnlineOrdersReport>
+@{
+    ViewData["Title"] = "OrderPieChart";
+    Layout = null;
+}
+
+@{
+    // Define a dictionary to map month numbers to month names
+    var xValues = Model.Select(item => item.Month).ToArray();
+
+
+    var yValues = Model.Select(item => item.TotalOrder).ToArray();
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
+
+    <script>
+    const xValues = @Html.Raw(Json.Serialize(xValues));
+    const yValues = @Html.Raw(Json.Serialize(yValues));
+        const barColors = [
+            "#b91d47",
+            "#00aba9",
+            "#2b5797",
+            "#e8c3b9",
+            "#1e7145"
+        ];
+
+        new Chart("myChart1", {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                title: {
+                    display: false,
+                    text: "Total Order By Month"
+                }
+            }
+        });
+    </script>

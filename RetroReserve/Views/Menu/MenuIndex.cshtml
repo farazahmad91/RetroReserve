@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "MenuIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="PartialView">
+</div>
+@section Scripts{
+    <script>
+        function Onload() {
+            $.post("/Menu/AllItemList").done(function (res) {
+                $("#PartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        Onload();
+        function EditMenu() {
+            $.post("/Menu/EditMenu").done(function (res) {
+                $("#PartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+
+        function EditOrAdd(Id) {
+            $.post('Menu/foodkart', { EmpId: Id }).done(function (res) {
+                $("#PartialView").html(res);
+            }).fail(function () {
+                alert("Error");
+            })
+        }
+        function ViewDetails(Id) {
+            $.post('Home/Edit', { EmpId: Id }).done(function (res) {
+                $("#PartialView").html(res);
+            }).fail(function () {
+                alert("Error");
+            })
+        }
+        function TeaKart() {
+            $.post("/TeaKart/AllTeaKartList").done(function (res) {
+                $("#PartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+    </script>
+ }
+

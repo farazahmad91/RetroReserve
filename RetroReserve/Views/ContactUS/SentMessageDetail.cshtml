@@ -1,0 +1,68 @@
+﻿@model Entities.MessageBox
+@{
+    ViewData["Title"] = "SentMessageDetail";
+    Layout = null;
+}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Sent Message</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <section style="background-color: #eee;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0"></p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <label class="badge badge-success float-right">@Model.SentDate</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Email :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <label>@Model.Email</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Subject :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <label>@Model.Subject</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Comment :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <label>@Model.Description</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+

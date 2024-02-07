@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewData["Title"] = "ContactUS";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+<!------ Include the above in your HEAD tag ---------->
+
+<br />
+<br />
+  <main id="main">
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Contact</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+        <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+          <div>
+                <div class="card" id="snackbar">Data Saved Successfully</div>
+                <div class="card" id="snackbar2">Data Updated Successfully</div>
+                <div class="card" id="snackbar3">Deleted.</div>
+                </div>
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>Contact Us</p>
+        </div>
+      </div>
+      <div class="container" data-aos="fade-up">
+
+        <div class="row mt-5">
+
+          <div class="col-lg-4">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>A108 Adam Street, New York, NY 535022</p>
+              </div>
+
+              <div class="open-hours">
+                <i class="bi bi-clock"></i>
+                <h4>Open Hours:</h4>
+                <p>
+                  Monday-Saturday:<br>
+                  11:00 AM - 2300 PM
+                </p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>info@example.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>+1 5589 55488 55s</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <div class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control"  id="comment" rows="8" placeholder="Message" required></textarea>
+              </div>
+              <div class="my-3">
+              </div>
+              <div class="text-center"><button type="submit" onclick="contactus();">Send Message</button></div>
+            </div>
+             <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+          </div>
+
+        </div>
+                
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+
+<br />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+function contactus() {
+      Show_Loader();
+    setTimeout(function () {
+    if ( validateContact()) { 
+          var param = {
+        UserName: $("#name").val(),
+        Email: $("#email").val(),
+		subject:$("#subject").val(),
+        Comment: $("#comment").val()
+    };
+    $.post("/ContactUS/AddOrUpdateContact", param).done(function() {
+        Hide_Loader();
+        Swal.fire({
+                    title: 'Success',
+                    text: 'Your message has been sent. Thank you!',
+                    icon: 'success',
+                }).then(function () {
+                    window.location.href = "/User/Index";
+                });
+               }).fail(function() {
+            Swal.fire("Error", "message could not be Send!", "error");
+
+	        })
+    }
+    }, 1500)
+}
+
+function validateContact() {
+    let isvalidated = true;
+    let msg = "<ul>";
+
+    function addError(message) {
+        msg += `<li>${message}</li>`;
+        isvalidated = false;
+    }
+    if ($("#name").val() === "") {
+        addError("Please enter  Name");
+    }
+    if ($("#email").val() === "") {
+        addError("Please enter Email");
+    }
+    if ($("#comment").val() === "") {
+        addError("Please Write a comment");
+    }
+    if ($("#subject").val() === "") {
+        addError("Please enter subject");
+    }
+
+    if (!isvalidated) {
+        msg += "</ul>";
+        // Assuming Hide_Loader and showerrors functions are defined
+        Hide_Loader();
+        showerrors(msg);
+    }
+
+    return isvalidated;
+}
+
+function refresh() {
+    $("#name").val("");
+    $("#email").val("");
+    $("#comment").val("");
+    $("#subject").val("");
+}
+
+function Show_Loader() {
+    jQuery(".overlay-spinner").show();
+}
+
+function Hide_Loader() {
+    jQuery(".overlay-spinner").hide();
+}
+function showinsertsuccess(msg) {
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+    jQuery("#snackbar").html(msg);
+}
+
+function showupdatesuccess(msg) {
+    var x = document.getElementById("snackbar2");
+    x.className = "show2";
+    setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+    jQuery("#snackbar2").html(msg);
+}
+
+function showerrors(msg) {
+    var x = document.getElementById("snackbar3");
+    x.className = "show3";
+    setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+    jQuery("#snackbar3").html(msg);
+}
+
+</script>					

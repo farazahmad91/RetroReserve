@@ -1,0 +1,119 @@
+﻿@model Entities.BookingTableVM
+@{
+    ViewData["Title"] = "BookTable";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+     var tabledetails = new SelectList(Model.tablesDetails, "TableId", "Tablename");
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+</script>
+<br />
+<br />
+  <main id="main">
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <ol>
+                    <li><a href="/User/Index">Home</a></li>
+            <li>Book Table</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+ <!-- ======= Book A Table Section ======= -->
+    <section id="book-a-table" class="book-a-table">
+        <div class="container" data-aos="fade-up" style="border:solid white 2px;">
+             <div>
+                
+                <div class="card" id="snackbar2">Data Updated Successfully</div>
+                <div class="card" id="snackbar3">Deleted.</div>
+                </div>
+                <br />
+        <div class="section-title">
+          <h2>Reservation</h2>
+          <p>Book a Table</p>
+        </div>
+            <div>
+                <br />
+            <div role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+          <div class="row">
+           
+            <div class="row">
+                <div class="col-md-4">
+                     <div class="col-lg-12 col-md-12 form-group">
+               <select class="form-control" id="tableid" asp-items="@tabledetails">
+                                <option value="">:: Select Table ::</option>
+                            </select>
+            </div>
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="email" name="date" class="form-control" style="color:black; background-color:white;" id="email" placeholder="Email">
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="datetime-local" style="color:black; background-color:white;" name="date" min="@DateTime.Today.AddHours(10).ToString("yyyy-MM-ddTHH:mm")" max="@DateTime.Today.AddHours(23).ToString("yyyy-MM-ddTHH:mm")" class="form-control" id="date" placeholder="Date">
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="number" class="form-control" style="color:black; background-color:white;" name="people" id="people" placeholder="# of people" max="12" data-rule="minlen:1">
+            </div>
+          </div>
+          <div class="form-group mt-3">
+                    <textarea class="form-control" id="message" rows="3" style="color:black; background-color:white;" placeholder="Message"></textarea>
+          </div>
+          <div class="mb-3">
+          </div>
+                <div class="text-center"><button type="submit" onclick="onpayment();">Book a Table</button></div>
+        </div>
+                <br />
+            </div>
+          <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+      </div>
+    </section>
+    <div id="PaymentModalPV"></div>
+    </main>
+
+    <script>
+        function onpayment() {
+            if (validateTableBooking()) {
+            $.post("/checkout/checkout")
+                .done(function (res) {
+                    $("#PaymentModalPV").html(res);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+            }
+        }
+    function Orderbook() {
+        checkoutOrder();
+    }
+    function info() {
+        alert("Apologies, but this service is currently unavailable. Please make payment using only the QR code method.");
+
+    }
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function CreateQR() {
+        var link = $("#dp").val();
+        var randomColor = getRandomColor();
+
+        var qrcode = new QRCode("qrcode", {
+            text: link,
+            width: 125,
+            height: 120,
+            colorDark: randomColor, // Change this to color: randomColor,
+        });
+        document.getElementById("qrcode").style.backgroundColor = randomColor;
+    }
+
+    CreateQR();
+    </script>
+

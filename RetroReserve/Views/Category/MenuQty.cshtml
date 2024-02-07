@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Entities.Foodkart>
+@{
+    ViewData["Title"] = "MenuQty";
+    Layout = null;
+}
+
+
+<div class="container">
+    <div class="row">
+        <br />
+        <br />
+        <div class="modal fade" id="MyVarientModal" role="dialog" data-backdrop="static" data-keyboard="false" style="opacity:1;">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color:dimgray">
+                    <br />
+                    <div class="modal-body">
+                        <br /><br /><br />
+                        <div class="card mb-12">
+                            <div class="card-body">
+                                <br />
+                                <div>
+                                    <div class="card" id="snackbar4">Data Saved Successfully</div>
+                                    <div class="card" id="snackbar5">Deleted.</div>
+                                </div>
+                                <br />
+                                <div style="text-align:center;"><strong>@Model.FirstOrDefault()?.DishName</strong></div>
+                                <hr />
+                                @foreach (var item in Model)
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>@item.DishQuantity</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label><span><del>@item.MRP</del></span>&nbsp; &nbsp;  <span>@item.SellingCost</span></label>&nbsp;&nbsp; &nbsp; <span>
+                                                <a class="social-info" onclick="AddCart('@item.Id');">
+                                                    <span class="fa fa-shopping-cart"></span>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

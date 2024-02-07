@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewData["Title"] = "Compose";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Compose</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Message Box</a></li>
+                        <li class="breadcrumb-item active">Compose</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div>
+        <div class="card" id="snackbar">Data Saved Successfully</div>
+        <div class="card" id="snackbar3">Deleted.</div>
+    </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                        <h3 class="card-title">Folders</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item active">
+                                <a href="/ContactUS/ContactusList" class="nav-link">
+                                <i class="fas fa-inbox"></i> Inbox
+                                    <span class="badge bg-primary float-right nwbadge">12</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                                <a href="/ContactUS/sentmessage" class="nav-link">
+                                <i class="far fa-envelope"></i> Sent
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-file-alt"></i> Drafts
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+                <div class="col-md-9">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">Compose New Message</h3>
+                    <a href="/ContactUS/ContactusList" class="fa fa-arrow-circle-right btn btn-primary float-right"></a>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input class="form-control" id="Email" placeholder="To:">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="Subject" placeholder="Subject:">
+                            </div>
+                            <div class="form-group">
+                        <textarea id="EmailMsg" class="form-control" style="height: 300px;"> 
+                                  </textarea>     
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <div class="float-right">
+                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                @* <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Draft</button> *@
+                        <button type="button" class="far fa-envelope btn btn-primary" onclick="SendMsg();"> Send</button>
+                            </div>
+                            @* <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button> *@
+                        </div>
+                        <!-- /.card-footer -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function SendMsg() {
+            debugger;
+            Show_Loader();
+            setTimeout(function () {
+                if (validateMsg()) {
+                    let param = {
+                        Email: $("#Email").val(),
+                        Subject: $("#Subject").val(),
+                        Description: $("#EmailMsg").val()
+                    };
+                    $.post("/ContactUs/SendMsg", param).done(function (res) {
+                        Hide_Loader();
+                        showinsertsuccess("Message sent successfully");
+
+                    }).fail(function () {
+                        Hide_Loader();
+                        showerrors("Something went wrong!!!");
+                    })
+                }
+            }, 1500)
+        }
+
+        function validateMsg() {
+            let isvalidated = true;
+            let msg = "<ul>";
+
+            function addError(message) {
+                msg += `<li>${message}</li>`;
+                isvalidated = false;
+            }
+            if ($("#Email").val() === "") {
+                addError("Please enter email id");
+            }
+            if ($("#Subject").val() === "") {
+                addError("Please enter subject");
+            }
+            if ($("#EmailMsg").val() === "") {
+                addError("Please enter message");
+            }
+
+            if (!isvalidated) {
+                msg += "</ul>";
+                Hide_Loader();
+                showerrors(msg);
+            }
+
+            return isvalidated;
+        }
+        function Show_Loader() {
+            jQuery(".overlay-spinner").show();
+        }
+
+        function Hide_Loader() {
+            jQuery(".overlay-spinner").hide();
+        }
+        function showinsertsuccess(msg) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+            jQuery("#snackbar").html(msg);
+        }
+
+        function showupdatesuccess(msg) {
+            var x = document.getElementById("snackbar2");
+            x.className = "show2";
+            setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+            jQuery("#snackbar2").html(msg);
+        }
+
+        function showerrors(msg) {
+            var x = document.getElementById("snackbar3");
+            x.className = "show3";
+            setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+            jQuery("#snackbar3").html(msg);
+        }
+
+
+    </script>
+

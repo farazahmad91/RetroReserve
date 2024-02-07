@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Entities.Employees>
+
+@{
+    ViewData["Title"] = "EmployeesList";
+    Layout = null;
+}
+
+ <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><strong>Employee Info</strong></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Employee Details</a></li>
+                        <li class="breadcrumb-item active">Manage Employee</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+        <button type="button" class="btn btn-primary" onclick="EditEmployee(0);"> Add New Employee</button>
+         <button type="button" class="btn btn-warning float-right" onclick="EmployeeRoles();"> Employee Roles</button>
+        <br /> <br />
+        <div class="card">
+            <div class="table-responsive">
+                <br /> 
+                <table class="table table-striped" style="margin:5px;">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Image</th>
+                            <th>Salary</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>
+                                    <a class="fancybox" href="@item.Image" data-fancybox data-caption="@item.Name">
+                                        <img src="@item.Image" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="110px" height="50px" />
+                                    </a>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Salary)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                                <td>
+                                    @{
+    var isactive = @item.IsActive == 1 ? "checked" : "";
+    var emp = isactive == "checked" ? "Active" : "Inactive";
+    var color = isactive == "checked" ? "green" : "red";
+}
+
+<div class="col-md-12">
+    <div class="form-group">
+        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+            <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.EmpId" @isactive onchange="EmpStatus(@item.EmpId);">
+            <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.EmpId">@emp</label>
+        </div>
+    </div>
+</div>
+</td>
+
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" onclick="EditEmployee(@item.EmpId)"><span class="fas fa-edit" style="color: Blue"></span> Edit</a>
+                                            <a class="dropdown-item" onclick="EmpDetails(@item.EmpId)"><i class="fas fa-info-circle" style="color: darkgreen"></i> Details</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="mymodalPartialView"></div>
+<script>
+     function EmpDetails(id) {
+    $.post("/Employee/Details", { id: id })
+        .done(function (res) {
+            $("#mymodalPartialView").html(res);
+             $("#MyModal").modal("show");
+        })
+        .fail(function () {
+            alert("error");
+        });
+}
+</script>

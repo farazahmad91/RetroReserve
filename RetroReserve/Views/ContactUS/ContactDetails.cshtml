@@ -1,0 +1,104 @@
+﻿@model Entities.Contact
+
+@{
+    string classbadge;
+    string status;
+    ViewData["Title"] = "ContactDetails";
+    Layout = null;
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Message Info</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <section style="background-color: #eee;">
+                    <div class="container py-5">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                             <div class="row">
+                                            <div class="col-sm-9">
+                                                 @{
+
+                                                   
+                                                        @if (Model.status  == 0)
+                                                    {
+                                                        status = "Issue Solve Pending";
+                                                        classbadge = "badge badge-danger";
+                                                    }
+                                                    else
+                                                    {
+                                                        status = "Issue Solve";
+                                                        classbadge = "badge badge-primary";
+                                                    }
+                                                }
+                                                
+                                                 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Full Name :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" style="border:none;" disabled asp-for="UserName" />
+                                           
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Email :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                               <input type="text" style="border:none;" disabled asp-for="Email" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Subject :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" style="border:none;" disabled asp-for="subject" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Comment :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" style="border:none;" disabled asp-for="Comment" />
+                                            </div>
+                                        </div>
+                                         <hr>
+                                         <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">Status :</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                               <label style="text-align:center; width:120px;" class="@classbadge">@status</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+  

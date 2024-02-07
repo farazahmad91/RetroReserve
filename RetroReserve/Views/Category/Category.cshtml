@@ -1,0 +1,137 @@
+﻿@{
+    ViewData["Title"] = "Category";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- Start Banner Area -->
+<br />
+<br />
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Contact</li>
+                </ol>
+            </div>
+
+        </div>
+    </section>
+<br />
+<!-- End Banner Area -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-5">
+            <div class="sidebar-categories">
+                <div class="head">Dish Categories</div>
+                <ul class="main-categories">
+                    <li class="main-nav-list">
+						<br />
+                        <button type="button" onclick="GetCategoryValue(1);" class="btn btn-danger" style="width:150px;"> <strong>Mutton</strong> <span class="number"> (16)</span></button>
+
+                    </li>
+
+                    <li class="main-nav-list">
+						<br />
+                        <button type="button" onclick="GetCategoryValue(2);" class="btn btn-danger" style="width:150px;"> <strong>Chicken</strong> <span class="number"> (16)</span></button>
+                    </li>
+                    <li class="main-nav-list">
+						<br />
+                        <button type="button" onclick="GetCategoryValue(3);" class="btn btn-danger" style="width:150px;"> <strong>Fish</strong> <span class="number"> (16)</span></button>
+                    </li>
+                    <li class="main-nav-list">
+						<br />
+                        <button type="button" onclick="GetCategoryValue(4);" class="btn btn-danger" style="width:150px;"> <strong>EGGs</strong> <span class="number"> (16)</span></button>
+                    </li>
+                    <li class="main-nav-list">
+						<br />
+                        <button type="button" onclick="GetCategoryValue(5);" class="btn btn-success" style="width:150px;"> <strong>Paneer</strong> <span class="number"> (16)</span></button>
+                    </li>
+                    <li class="main-nav-list">
+						<br />
+                        <button type="button" onclick="GetCategoryValue(6);" class="btn btn-success" style="width:150px;"> <strong>VEG</strong> <span class="number"> (16)</span></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-7">
+            <section class="lattest-product-area pb-40 category-list">
+                <div id="ProductPartialView">
+                </div>
+            </section>
+            <!-- End Best Seller -->
+        </div>
+    </div>
+</div>
+</main>
+
+
+@section Scripts{
+    <script>
+        function Onload() {
+            $.post("/UserInterface/ShowProduct").done(function(res) {
+                $("#ProductPartialView").html(res);
+            }).fail(function() {
+                alert("errror");
+            })
+        }
+        Onload();
+function GetCategoryValue(DishCategoryId) {
+    let data = {
+        DishCategoryId: DishCategoryId,
+    };
+
+    $.post("/Category/AllDishCategoryList", data)
+        .done(function(res) {
+            $("#ProductPartialView").html(res);
+        })
+        .fail(function() {
+            alert("error");
+        });
+}
+
+        function AddCart(Id) {
+            let data = {
+                Id: Id,
+            };
+
+            $.post('/Cart/AddCart', data)
+                .done(function (res) {
+                    if (res === -2) {
+                        errors("Please log in to add items to your cart.");
+                    } else if (res === -1) {
+                        errors("This dish is already in the cart. Please choose a different dish.");
+                    } else {
+                        success("Dish added successfully to your cart.");
+                    }
+                })
+                .fail(function () {
+                    // Handle the failure case
+                    alert("Failed to add Dish");
+                });
+        }
+function getValues() {
+    var lowerValue = document.getElementById("lower-value").innerText;
+    var upperValue = document.getElementById("upper-value").innerText;
+    var hdnid = $("#hdncategoryid").val();
+    var param = {
+        DishCategoryId: hdnid,
+        MinPrize: lowerValue,
+        MaxPrize: upperValue
+    };
+
+    $.post("/Category/ListByPrizeWithCategory", param)
+        .done(function(res) {
+            $("#ProductPartialView").html(res);
+        })
+        .fail(function() {
+            alert("error");
+        });
+}
+
+
+document.getElementById("price-range").addEventListener("input", getValues);
+    </script>
+	} 

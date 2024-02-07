@@ -1,0 +1,186 @@
+﻿@model IEnumerable<Entities.Cart>
+
+@{
+   
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<style>
+    /* Style for the table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    /* Style for the table header */
+    .table th {
+        background-color: #f2f2f2;
+        padding: 12px;
+        text-align: left;
+    }
+
+    /* Style for alternating rows */
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Style for cart row */
+    .cartrow {
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Style for image in the media div */
+    .media img {
+        border-radius: 5px;
+        margin-right: 15px;
+    }
+
+    /* Style for the "Your Cart Is Empty" message */
+    .empty-cart-message {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Style for the "Back to Home" button */
+    .back-to-home-btn {
+        text-align: left;
+        margin-top: 20px;
+    }
+</style>
+
+
+<main id="main">
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Contact</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+<section class="cart_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="cart_inner shadow bg-white">
+                        <div class="table-responsive">
+                    <table class="table" style="background-color:black;">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model == null || !Model.Any())
+                            {
+                                <tr>
+                                    <td colspan="4" style="text-align:center;">
+                                        <img src="~/img/emptycart.png" alt="IMO Icon" style="width: 210px; height: 80px;">
+                                        <div style="text-align:center;"> <h3><strong>Your Cart Is Empty</strong></h3></div>
+                                        <br>
+
+                                           <div class="text-left"> <a class="btn btn-primary" href="/User/Index">back to home</a></div>
+                                        
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr class="cartrow">
+                                        <input type="text" id="userid" value="@item.UserID" hidden />
+                                        <input type="text" id="dishId" value="@item.Id" hidden />
+                                        <td>
+
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img src="@item.DishImage" class="img-fluid me-5 rounded-circle" style="height:60px;" alt="">
+                                                   &nbsp; <p><strong>@item.DishName</strong></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                                <label class="cart-prize"><strong>₹@item.SellingCost</strong></label>
+                                        </td>
+                                        <td>
+                                            <div class="product_count">
+                                                
+                                                        <input type="number" name="qty" min="1"  class="cart-qty" data-dish-id="@item.Id" id="cartqty_@item.Id" onchange="UpdateQtyCart(@item.Id);" value="1" title="Quantity">
+                                                        <a class="fa fa-trash-o" style="color: red" onclick="DeleteCart('@item.CartId');"></a>
+                                                    </div>
+                                        </td>
+                                        <td>
+                                            <label class="cart-total-prize"><strong>₹00.00</strong></label>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                    </div>
+            </div>
+            <div class="col-md-4 bg-dark">
+                <div class="right_side p-3 cart_inner shadow ">
+                    <h2 class="product_name mb-5">The Total Amount </h2>
+
+                    <div class="total-amt d-flex justify-content-between font-weight-bold">
+                        <p>Total amount</p>
+                        <label class="subtotal-prize">0.00</label>
+                    </div>
+                    <hr />
+                    <div class="text-center checkout_btn_inner d-flex">
+                    @*    <a class="btn btn-primary  hdn" href="/BookingTable/BookTable">Proceed to checkout</a>*@
+                            <a class="btn btn-primary  hdn" href="/BookingTable/BookTable">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+<!--================End Cart Area =================-->
+
+<script>
+    function DeleteCart(CartId) {
+        Swal.fire({
+            title: 'Are you sure you want to delete?',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Cart/DeleteCart',
+                    type: 'POST',
+                    data: { CartId: CartId },
+                    success: function (data) {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Deleted Successfully',
+                            icon: 'success',
+                        }).then((data) => {
+                            // Redirect to a different page after successful deletion
+                            window.location.href = "/Cart/Cart"; // Change the URL as needed
+                        });
+                    },
+                    error: function (error) {
+                        /*Swal.fire("Error", "Something went wrong!", "error");*/
+                        window.location.href = "/Cart/Cart";
+                    }
+                });
+            }
+        });
+    }
+</script>
