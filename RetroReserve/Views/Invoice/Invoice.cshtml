@@ -116,9 +116,9 @@ margin-top:20px;
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 text-right">
 						<div class="receipt-right">
-							<h5>My Cafe.</h5>
+								<h5>RetroReserve</h5>
 							<p>+1 3649-6589 <i class="fa fa-phone"></i></p>
-							<p>MyCafe@gmail.com <i class="fa fa-envelope-o"></i></p>
+								<p>RetroReserve@gmail.com <i class="fa fa-envelope-o"></i></p>
 							<p>USA <i class="fa fa-location-arrow"></i></p>
 						</div>
 					</div>
@@ -129,10 +129,9 @@ margin-top:20px;
 				<div class="receipt-header receipt-header-mid">
 					<div class="col-xs-8 col-sm-8 col-md-8 text-left">
 						<div class="receipt-right">
-							<h5>Faraz Ahmad </h5>
-							<p><b>Mobile :</b> +1 12345-4569</p>
-							<p><b>Email :</b> farazshaikh8960@gmail.com</p>
-							<p><b>Address :</b> New York, USA</p>
+								
+								<h4>@ViewBag.name.</h4>
+								<p><b>Email :</b> @Model.FirstOrDefault()?.UserId</p>
 							<p><b>Order Date :</b> @Model.FirstOrDefault()?.OrderDate</p>
 						</div>
 					</div>
@@ -197,7 +196,7 @@ margin-top:20px;
 					<div class="col-xs-8 col-sm-8 col-md-8 text-left">
 						<div class="receipt-right">
 							<p><b>Date :</b> @DateTime.Now</p>
-							<h5 style="color: rgb(140, 140, 140);">Thanks for Choosing MyCafe!</h5>
+								<h5 style="color: rgb(140, 140, 140);">Thanks for Choosing RetroReserve!</h5>
 						</div>
 					</div>
 					<div class="col-xs-4 col-sm-4 col-md-4">
@@ -241,7 +240,7 @@ function downloadinvoice() {
 
     html2pdf(receiptContent, {
         margin: 2,
-        filename: 'MyCafe-receipt.pdf',
+        filename: 'RetroReserve-receipt.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', width: 310 }

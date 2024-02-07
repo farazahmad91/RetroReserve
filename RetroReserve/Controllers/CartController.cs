@@ -18,7 +18,7 @@ namespace RetroReserve.Controllers
         [Authorize]
         public async Task<ActionResult> Cart(string id)
         {
-            var email = User.FindFirstValue(ClaimTypes.Name);
+            var email = User.FindFirstValue(ClaimTypes.Email);
             id = email;
             var i = await apirequest.GetData<List<Cart>>($"Cart/GetCartValueById?id={id}");
             return View(i);
@@ -32,7 +32,7 @@ namespace RetroReserve.Controllers
         }
         public async Task<IActionResult> GetNumberInCartItem()
         {
-            var email = User.FindFirstValue(ClaimTypes.Name);
+            var email = User.FindFirstValue(ClaimTypes.Email);
             if (email != null)
             {
                 var cart = await apirequest.GetMultipleDataById<Cart>("Cart/GetNumberInCartItem", email);
@@ -47,7 +47,7 @@ namespace RetroReserve.Controllers
         [Authorize]
         public async Task<ActionResult> AddCart(Cart cartValue)
         {
-            var Email = User.FindFirstValue(ClaimTypes.Name);
+            var Email = User.FindFirstValue(ClaimTypes.Email);
             cartValue.UserID = Email;
             if (Email != "")
             {

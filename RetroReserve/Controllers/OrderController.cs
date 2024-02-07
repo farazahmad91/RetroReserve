@@ -28,7 +28,7 @@ namespace RetroReserve.Controllers
 
         public async Task<IActionResult> AddOnlineOrder(BookingTables orders)
         {
-            var Email = User.FindFirstValue(ClaimTypes.Name);
+            var Email = User.FindFirstValue(ClaimTypes.Email);
             orders.UserId = Email;
             var i = await apirequest.Post("Orders/AddOnlineOrder", orders);
             return Json(i);
@@ -42,7 +42,7 @@ namespace RetroReserve.Controllers
         }
         public async Task<IActionResult> OrderHistory(string? id)
         {
-            var Email = User.FindFirstValue(ClaimTypes.Name);
+            var Email = User.FindFirstValue(ClaimTypes.Email);
           id = Email;
             var i = await apirequest.GetMultipleDataById<List<OnlineOrdersReport>>("Orders/OrderHistory", id);
             return View(i);

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RetroReserve.Models;
 using Entities;
+using System.Security.Claims;
 
 namespace RetroReserve.Controllers
 {
@@ -16,8 +17,10 @@ namespace RetroReserve.Controllers
         }
         public async Task<ActionResult> Invoice(int id)
         {
-            var i = await apirequest.GetMultipleDataById<List<OnlineOrdersReport>>("Orders/InvoiceByOrderId", id);
-            return View(i);
+			ViewBag.UserName = User.FindFirstValue(ClaimTypes.Name);
+			ViewBag.name = ViewBag.UserName?.Length > 0 ? char.ToUpper(ViewBag.UserName[0]) + ViewBag.UserName.Substring(1) : string.Empty;
+			var i = await apirequest.GetMultipleDataById<List<OnlineOrdersReport>>("Orders/InvoiceByOrderId", id);
+			return View(i);
         }
 
         // GET: ConfirmationController/Details/5

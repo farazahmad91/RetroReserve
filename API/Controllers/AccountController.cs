@@ -54,12 +54,6 @@ namespace API.Controllers
         [HttpPost(nameof(Login))]
         public async Task<IActionResult> Login(LoginRequest model)
         {
-            //if(ModelState.IsValid)
-            //{
-            //    var result = await _userService.LoginAsync(model); 
-            //    return Ok(result);
-            //}
-            //return BadRequest();
             var response = new Response<LoginResponse>();
 
             var userexists = await userManager.FindByEmailAsync(model.Email);
@@ -101,7 +95,7 @@ namespace API.Controllers
                 Email = userexists.Email,
                 UserId = userexists.Id,
                 UserName = userexists.UserName,
-                Name = userexists.UserName,
+                Name = userexists.Name,
                 Token = tokenAsString,
                 Role = roleDetails.FirstOrDefault(),
             };

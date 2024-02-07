@@ -56,8 +56,9 @@ namespace RetroReserve.Controllers
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim("Token", authenticateResponse.Result.Token));
                 identity.AddClaim(new Claim(ClaimTypes.Role, authenticateResponse.Result.Role));
-                identity.AddClaim(new Claim(ClaimTypes.Name, authenticateResponse.Result.Name));
-                identity.AddClaim(new Claim("UserId", authenticateResponse.Result.UserId.ToString()));
+                identity.AddClaim(new Claim(ClaimTypes.Email, authenticateResponse.Result.Email));
+				identity.AddClaim(new Claim(ClaimTypes.Name, authenticateResponse.Result.Name));
+				identity.AddClaim(new Claim("UserId", authenticateResponse.Result.UserId.ToString()));
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 

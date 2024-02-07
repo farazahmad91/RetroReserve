@@ -12,7 +12,7 @@ namespace Entities
         public int OrderDetailID { get; set; }
         public int TableId { get; set; }
         public string? UserId { get; set; }
-        public int OrderID { get; set; }
+		public int OrderID { get; set; }
         public int DishId { get; set; }
         public string? OrderDescription { get; set; }
         public int Quantity { get; set; }
