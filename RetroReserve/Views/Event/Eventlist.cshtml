@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Entities.Event>
+@{
+    ViewData["Title"] = "Eventlist";
+    Layout = null;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><strong>Event Info</strong></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Event Details</a></li>
+                        <li class="breadcrumb-item active">Manage Event</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+        <div class="card" id="snackbar">Data Saved Successfully</div>
+        <div class="card" id="snackbar2">Data Updated Successfully</div>
+        <div class="card" id="snackbar3">Deleted.</div>
+    </section>
+    <div class="container">
+        <button type="button" class="btn btn-primary" onclick="AddOrEditEvent(0);"> Add New Event</button>
+        <br /> <br />
+        <div class="card">
+            <div class="table-responsive">
+                <br />
+                <table class="table table-striped" style="margin:5px;">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th> <label> Name</label> </th>
+                            <th> <label> Image</label> </th>
+                            <th> <label> Price</label> </th>
+                            <th> <label> Off Price</label> </th>
+                            <th> <label> Location</label> </th>
+                            <th> <label> Organizer</label> </th>
+                            <th> <label> Date</label> </th>
+                            <th> <label> Status</label> </th>
+                            <th> <label>Action</label> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+
+                            <tr>
+                                <td colspan="12" style="text-align: center;">
+                                    <h3><strong>Oops! Not Data Avalaible.</strong></h3>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.eventName)</td>
+                                    <td>
+                                        <a class="fancybox" href="@item.eventImage" data-fancybox data-caption="@item.eventName">
+                                            <img src="@item.eventImage" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="110px" height="50px" />
+                                        </a>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.eventPrice)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.eventOffPrice)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.eventLocation)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.eventOrganizer)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                                    <td>
+                                        @{
+                                            var isactive = @item.eventStatus == 1 ? "checked" : "";
+                                            var emp = isactive == "checked" ? "Available" : "Not Available";
+                                            var color = isactive == "checked" ? "green" : "red";
+                                        }
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                    <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.eventID" @isactive onchange="EventStatus(@item.eventID);">
+                                                    <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.eventID">@emp</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="AddOrEditEvent(@item.eventID)"><span class="fas fa-edit" style="color: Blue"></span> Edit</a>
+                                                <a class="dropdown-item" onclick="EmpDetails(@item.eventID)"><i class="fas fa-info-circle" style="color: darkgreen"></i> Details</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

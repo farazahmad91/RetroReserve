@@ -1,0 +1,239 @@
+﻿@model Entities.Event
+@{
+    ViewData["Title"] = "Add Event";
+    Layout = null;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><strong>Add Or Update Event</strong></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Event Details</a></li>
+                        <li class="breadcrumb-item active">Manage Event</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container mt-3">
+        <div>
+            <div class="card" id="snackbar"></div>
+            <div class="card" id="snackbar2"></div>
+            <div class="card" id="snackbar3"></div>
+        </div>
+        <div class="container py-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Event Info</Strong></h5>
+                </div>
+                <div class="card-body" style="background-image: url('/img/signup_bg.jpg');">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Event Name</label>
+                                <div class="input-group">
+                                    <input type="text" hidden asp-for="eventID" class="form-control" />
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="text" asp-for="eventName" class="form-control" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Event Image</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-image" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="file" asp-for="eventImage" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Event Price</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-inr" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="number" asp-for="eventPrice" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Off Price</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-inr" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="number" asp-for="eventOffPrice" onchange="compareEventValue();" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Event Organizer</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="text" asp-for="eventOrganizer" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Event Location</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-map-marker" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="text" asp-for="eventLocation" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                    <div class="form-group">
+                        <button type="submit" id="btnubmit" onclick="AddOrUpdateEvents();" class="btn btn-primary">Submit</button>
+                        <a href="/Event/EventIndex" class="btn btn-primary" style="text-align:right;">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function compareEventValue() {
+        var ePrice = $("#eventPrice").val();
+        var eOffPrice = $("#eventOffPrice").val();
+
+        if (parseFloat(eOffPrice) >= parseFloat(ePrice)) {
+            $("#eventOffPrice").val("");
+            showerrors("The discounted price should be lower than the original event price. Please enter a valid discount.");
+
+        }
+    }
+
+    function AddOrUpdateEvents() {
+        Show_Loader();
+        setTimeout(function () {
+            if (validateEvent()) {
+                let param = {
+                    eventID: $("#eventID").val(),
+                    eventName: $("#eventName").val(),
+                    eventPrice: $("#eventPrice").val(),
+                    eventOffPrice: $("#eventOffPrice").val(),
+                    eventLocation: $("#eventLocation").val(),
+                    eventOrganizer: $("#eventOrganizer").val(),
+                    eventStatus: $("#eventStatus").val(),
+                };
+                var Event = new FormData();
+                Event.append("eventID", param.eventID);
+                Event.append("eventName", param.eventName);
+                Event.append("eventPrice", param.eventPrice);
+                Event.append("eventOffPrice", param.eventOffPrice);
+                Event.append("eventLocation", param.eventLocation);
+                Event.append("eventOrganizer", param.eventOrganizer);
+                Event.append("eventStatus", param.eventStatus);
+                Event.append("ImagePath", $("#eventImage").prop('files')[0]);
+
+                $.ajax({
+                    url: '/Event/AddOrUpdateEvent',
+                    type: 'POST',
+                    data: Event,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        Hide_Loader();
+                        showinsertsuccess("Event Add Successfully");
+                    },
+                    error: function () {
+                        Hide_Loader();
+                        showerrors("Something went wrong!!!");
+                    }
+                });
+            }
+        }, 1500)
+    }
+
+    function validateEvent() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#eventName").val() === "") {
+            addError("Please enter event name");
+        }
+        if ($("#eventPrice").val() === "") {
+            addError("Please enter price");
+        }
+        if ($("#eventOffPrice").val() === "") {
+            addError("Please select discount price");
+        }
+        if ($("#eventLocation").val() === "") {
+            addError("Please enter  location");
+        }
+        if ($("#eventOrganizer").val() === "") {
+            addError("Please enter Organizer");
+        }
+
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            showerrors(msg);
+        }
+
+        return isvalidated;
+    }
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+
+</script>

@@ -22,6 +22,16 @@
     </section>
 	<div class="product_image_area card">
 		<div class="container">
+			    @if (Model == null || !Model.Any())
+            {
+
+                <div style="text-align:center;">
+                    <h3><strong>Oops! Looks like you haven't made any orders yet.</strong></h3>
+                    <p>Start your shopping journey now and create your first order!</p>
+                </div>
+            }
+            else
+            {
 			 @foreach (var item in Model)
                     {
 						<input type="text" hidden id="@item.OrderID"/>
@@ -78,7 +88,7 @@
 			</div>
 			<hr />
 			}
-			
+			}
 		</div>
 	</div>
 	</main>
