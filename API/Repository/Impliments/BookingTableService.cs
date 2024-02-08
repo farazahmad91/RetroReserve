@@ -45,7 +45,7 @@ namespace API.Repository.Impliments
                 var returnedEmail = result.Email;
                string bookingEmail = returnedEmail;
               string subject = "Table Booking";
-             string body = $"Dear Valued Customer,\n\nWe are delighted to inform you that your table has been successfully booked. Your Booking ID is: {returnedTableBookingId}.\n\nWe look forward to serving you and providing an unforgettable dining experience. If you have any special requests or questions, feel free to reach out to us.\n\nThank you for choosing us. We appreciate your trust and can't wait to welcome you!\n\nBest regards,\nThe MyCafe Team";
+             string body = $"Dear Valued Customer,\n\nWe are delighted to inform you that your table has been successfully booked. Your Booking ID is: {returnedTableBookingId}.\n\nWe look forward to serving you and providing an unforgettable dining experience. If you have any special requests or questions, feel free to reach out to us.\n\nThank you for choosing us. We appreciate your trust and can't wait to welcome you!\n\nBest regards,\nThe RetroReserve Team";
 
                 emailSenderService.SendEmail(bookingEmail, subject, body);
                 return 1;

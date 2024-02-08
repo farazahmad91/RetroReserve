@@ -79,7 +79,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-rupee" style="font-size:23px;"></i></span>
                                 </div>
-                                <input type="number" asp-for="SellingCost" class="form-control" />
+                                <input type="number" asp-for="SellingCost" onchange="comparedishValue();" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -124,6 +124,17 @@
 </div>
 
 <script>
+    function comparedishValue() {
+        var mPrice = $("#MRP").val();
+        var sPrice = $("#SellingCost").val();
+
+        if (parseFloat(sPrice) >= parseFloat(mPrice)) {
+            $("#SellingCost").val("");
+            showerrors("The discounted price should be lower than the original dish price. Please enter a valid discount.");
+
+        }
+    }
+
     function AddOrUpdateVarient() {
         Show_Loader();
         setTimeout(function () {

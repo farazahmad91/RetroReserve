@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "EventIndex";
+}
+
+<div id="EventPartialView">
+</div>
+@section Scripts {
+    <script>
+        function OnloadEvent() {
+            $.post("/Event/Eventlist").done(function (res) {
+                $("#EventPartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        OnloadEvent();
+
+        function AddOrEditEvent(Id) {
+            let param = {
+                id: Id,
+            };
+            $.post("/Event/EditEvent", param).done(function (res) {
+                $("#EventPartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        function EventStatus(eventID) {
+            var id = $("#customSwitch3_" + eventID).prop("checked");
+            if (id == true) {
+                id = 1;
+
+            }
+            else {
+                id = 0;
+            }
+            var param = {
+                eventID: eventID,
+                eventStatus: id,
+            };
+            Swal.fire({
+                title: 'Are you sure you want to Update?',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Update it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Event/EventStatusUpdate',
+                        type: 'POST',
+                        data: param,
+                        success: function (data) {
+                            showinsertsuccess("Status Updated");
+                        },
+                    });
+                } else {
+                    showerror("Status Not Updated");
+                }
+            });
+            OnloadEvent();
+        }
+
+        function showinsertsuccess(msg) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+            jQuery("#snackbar").html(msg);
+        }
+
+        function showupdatesuccess(msg) {
+            var x = document.getElementById("snackbar2");
+            x.className = "show2";
+            setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+            jQuery("#snackbar2").html(msg);
+        }
+
+        function showerrors(msg) {
+            var x = document.getElementById("snackbar3");
+            x.className = "show3";
+            setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+            jQuery("#snackbar3").html(msg);
+        }
+    </script>
+}
+

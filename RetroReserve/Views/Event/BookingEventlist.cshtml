@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Entities.EventBooking>
+
+@{
+    var classbadge = "";
+    ViewData["Title"] = "BookingEventlist";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Event Booking List</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Manage Event Booking</a></li>
+                        <li class="breadcrumb-item active">Event</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div>
+        <div class="card" id="snackbar"></div>
+        <div class="card" id="snackbar2"></div>
+        <div class="card" id="snackbar3"></div>
+    </div>
+    <div class="container">
+        <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>
+                                <label>Event Name</label>
+
+                            </th>
+                            <th>
+                                <label>Total Guest</label>
+
+                            </th>
+                            <th>
+                                <label>Event Date</label>
+
+                            </th>
+                            <th>
+                                <label>Event Time</label>
+
+                            </th>
+                            <th>
+                                <label>Created Date</label>
+
+                            </th>
+                            <th>
+                                <label>Booking Status</label>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="12" style="text-align: center;">
+                                    <h3><strong>Oops! Not Data Avalaible.</strong></h3>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.eventName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalGuest)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.eventDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.eventTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingDate)
+                                    </td>
+                                    <td class="mailbox-name">
+
+                                        @{
+
+                                            classbadge = "";
+                                            if (@item.eventBookingStatus == 0)
+                                            {
+
+                                                classbadge = "badge badge-danger";
+                                                <label class="@classbadge"></label>
+                                            }
+                                            else
+                                            {
+
+                                                classbadge = "badge badge-primary";
+                                                <label class="@classbadge"></label>
+                                            }
+                                        }
+                                        
+                                    </td>
+                                </tr>
+                            }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
