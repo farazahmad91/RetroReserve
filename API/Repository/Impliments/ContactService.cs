@@ -81,21 +81,38 @@ namespace API.Repository.Impliments
         public async Task<int> UpdateContactUsStatus(Contact contact)
         {
             var sp = "sp_UpdateContactUsStatus";
-            var param = new
-            {
-                ContactId = contact.ContactId,
-                status = contact.status,
-                ProblemSolveDate = contact.ProblemSolveDate,
-            };
+
+            object param;
+
             if (contact.status == 1)
+            {
+                param = new
+                {
+                    ContactId = contact.ContactId,
+                    Status = contact.status,
+                    ProblemSolveDate = contact.ProblemSolveDate,
+                };
+            }
+            else
+            {
+                param = new
+                {
+                    ContactId = contact.ContactId,
+                    Status = contact.status,
+                    ProblemSolveDate = contact.ProblemSolveDate,
+                };
+            }
+
+            if (contact.status == 2)
             {
                 ResContactmessage(contact.UserName, contact.Email);
             }
-          
+
             var i = await dapper.Insert(param, sp);
-      
+
             return i;
         }
+
         private void ResContactmessage(string name, string email)
         {
             MailMessage mail = new MailMessage();
@@ -178,6 +195,13 @@ namespace API.Repository.Impliments
 
             };
             var i = dapper.GetById<MessageBox>(param, sp);
+            return i;
+        }
+
+        public IEnumerable<Contact> GetNewMessageNotification()
+        {
+            var sp = "sp_NewMessageNotify";
+            var i = dapper.GetAll<Contact>(sp);
             return i;
         }
     }

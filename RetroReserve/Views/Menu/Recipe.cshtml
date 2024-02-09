@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewData["Title"] = "Recipe";
+    Layout = "_UserLayout";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* Add your custom styles here */
+    .search-container {
+        margin-top: 20px;
+    }
+
+    /* Center the search box */
+    .search-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Orders</li>
+                </ol>
+            </div>
+
+        </div>
+    </section>
+    <div class="container">
+        <div class="card">
+            <div class="container search-container">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="search-box">
+                            <div class="input-group">
+                                <input type="text" id="res" class="form-control" placeholder="Search Recipe" />
+                                <div class="input-group-append">
+                                    <button type="button" id="btnsearch" class="btn btn-primary" onclick="Search();">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <br />
+                <div id="APIResult"></div>
+            </div>
+    </div>
+</div>
+</main>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function Search() {
+        debugger;
+
+        var sinput = $("#res").val();
+        $.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${sinput}`).done(function (result) {
+            console.log(result);
+
+            // Assuming mealDetailsDiv is an element, you need to create it before using it.
+            var mealDetailsDiv = document.createElement("div");
+
+            // Get the existing meal details container
+            var existingContainer = document.getElementById("mealDetailsContainer");
+
+            // If the container exists, hide it
+            if (existingContainer) {
+                existingContainer.style.display = "none";
+            }
+
+            // Create a new container for the current search results
+            mealDetailsDiv.id = "mealDetailsContainer";
+            mealDetailsDiv.className = "container mt-5";
+
+            if (result.meals && result.meals.length > 0) {
+                const meal = result.meals[0];
+
+                mealDetailsDiv.innerHTML = `
+                        <div class="container mt-5">
+                        <div class="row">
+                            <div class="col-md-12 card">
+                            <h3 class="display-4 mb-4" id="mealName">${meal.strMeal}</h1>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img class="img-fluid rounded" id="mealImage" width="300" src="${meal.strMealThumb}" alt="${meal.strMeal}">
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong id="categoryLabel">Category:</strong> <span id="category">${meal.strCategory}</span></p>
+                                    <p><strong id="areaLabel">Area:</strong> <span id="area">${meal.strArea}</span></p>
+                                    <p><strong id="ingredientsLabel">Ingredients:</strong></p>
+                                    <ul class="list-group" id="ingredientList">${getIngredientListHTML(meal)}</ul>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p><strong id="instructionsLabel">Instructions:</strong></p>
+                                <p id="instructions">${meal.strInstructions}</p>
+                                <p><strong id="videoLabel">Video:</strong> <a id="videoLink" href="${meal.strYoutube}" target="_blank">Watch Recipe</a></p>
+                                <p><strong id="tagsLabel">Tags:</strong> <span id="tags">${meal.strTags}</span></p>
+                            </div>
+                        </div>
+                            </div>
+                            </div>
+                    `;
+            } else {
+                mealDetailsDiv.innerHTML = "<p>No results found</p>";
+            }
+            //document.getElementById("APIResult").innerHTML = mealDetailsDiv;
+            $("#APIResult").html(mealDetailsDiv);
+            //document.body.appendChild(mealDetailsDiv);
+
+        }).fail(function () {
+            console.log("error");
+        });
+
+        function getIngredientListHTML(meal) {
+            if (meal.strIngredients && meal.strIngredients.trim() !== "") {
+                return meal.strIngredients.split(',').map(ingredient => `<li class="list-group-item">${ingredient.trim()}</li>`).join('');
+            } else {
+                return "<li class='list-group-item'>No ingredients available</li>";
+            }
+        }
+    }
+</script>
+
+
+
