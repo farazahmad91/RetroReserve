@@ -15,9 +15,10 @@ namespace RetroReserve.Controllers
             this.apirequest = apirequest;
         }
       
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var i = await apirequest.GetData<List<Foodkart>>("Foodkart/GetFoodkartList");
+            return View(i);
         }
 
         // GET: UserController/Details/5

@@ -1,4 +1,7 @@
-﻿#snackbar4 {
+﻿.nav-item.dropdown .dropdown-toggle::after {
+    display: none;
+}
+#snackbar4 {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
@@ -9,8 +12,8 @@
     padding: 0px;
     position: fixed;
     z-index: 1;
-    right: 26%;
-    margin-top: -5%;
+    right: 40%;
+    margin-top: 0%;
     font-size: 17px;
 }
 
