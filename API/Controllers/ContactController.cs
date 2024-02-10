@@ -88,12 +88,5 @@ namespace API.Controllers
             return Ok(i);
 
         }
-        [HttpGet(nameof(GetNewMessageNotification))]
-        public IActionResult GetNewMessageNotification()
-        {
-            var i = contactService.GetNewMessageNotification();
-            return Ok(i);
-
-        }
     }
 }

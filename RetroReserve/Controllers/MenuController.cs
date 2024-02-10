@@ -46,10 +46,6 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Foodkart>(($"Foodkart/GetFoodkartById?Id={DishId}"));
             return PartialView(i);
         }
-        public async Task<ActionResult> Recipe()
-        {
-            return View();
-        }
 
         public async Task<ActionResult> UpdateFoodKartStatus(Foodkart foodkart)
         {

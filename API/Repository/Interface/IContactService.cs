@@ -14,6 +14,5 @@ namespace API.Repository.Interface
         public int DeleteMessage(int id);
         public IEnumerable<MessageBox> GetSentMessageList();
         public MessageBox GetSentMessageById(int id);
-        public IEnumerable<Contact> GetNewMessageNotification();
     }
 }

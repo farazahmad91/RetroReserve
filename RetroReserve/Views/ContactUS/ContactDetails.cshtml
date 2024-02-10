@@ -19,7 +19,7 @@
             </div>
             <div class="modal-body">
                 <section style="background-color: #eee;">
-                    <div class="container">
+                    <div class="container py-5">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card mb-4">
@@ -49,7 +49,8 @@
                                                 <p class="mb-0">Full Name :</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <label>@Model.UserName</label>
+                                                <input type="text" style="border:none;" disabled asp-for="UserName" />
+                                           
                                             </div>
                                         </div>
                                         <hr>
@@ -58,7 +59,7 @@
                                                 <p class="mb-0">Email :</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <label>@Model.Email</label>
+                                               <input type="text" style="border:none;" disabled asp-for="Email" />
                                             </div>
                                         </div>
                                         <hr>
@@ -67,7 +68,7 @@
                                                 <p class="mb-0">Subject :</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <label>@Model.subject</label>
+                                                <input type="text" style="border:none;" disabled asp-for="subject" />
                                             </div>
                                         </div>
                                         <hr>
@@ -76,7 +77,7 @@
                                                 <p class="mb-0">Comment :</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <label>@Model.Comment</label>
+                                                <input type="text" style="border:none;" disabled asp-for="Comment" />
                                             </div>
                                         </div>
                                          <hr>

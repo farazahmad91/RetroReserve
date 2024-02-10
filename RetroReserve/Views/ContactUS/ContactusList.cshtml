@@ -1,16 +1,12 @@
 ﻿@model IEnumerable<Entities.Contact>
 
 @{
-    string classstatus;
     string classbadge;
     string disable;
     string date;
     ViewData["Title"] = "Inbox";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<style>
-
-</style>
 
 <div class="content-wrapper">
     <section class="content-header">
@@ -49,7 +45,6 @@
                         </div>*@
                         <!-- /.card-tools -->
                     </div>
-                    
                     <!-- /.card-header -->
                     <div class="card-body p-0">
                         <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
@@ -58,26 +53,10 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                       
                                         <input type="text" id="hdnname" hidden value="@item.UserName" />
                                         <input type="text" id="hdnemail" hidden value="@item.Email" />
                                         <tr>
-                                            @{
-                                                classstatus = "";
-                                                    @if (item.status == 0)
-                                                {
-                                                    classstatus = "fa fa-star blink";
-                                                }
-                                                else if (item.status == 1)
-                                                {
-                                                    classstatus = "fas fa-star text-danger";
-                                                }
-                                                else if (item.status == 2)
-                                                {
-                                                    classstatus = "fas fa-star text-success";
-                                                }
-                                            }
-                                            <td class="mailbox-star"><a href="#"><i class="@classstatus"></i></a></td>
+                                            <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
                                             <td class="mailbox-name"><a href="read-mail.html">@item?.UserName</a></td>
                                             <td class="mailbox-subject">
                                                 <b>@item?.subject</b> - Trying to find a solution to this problem...
@@ -98,26 +77,28 @@
                                             <td class="mailbox-name">
 
                                                 @{
-                                                    disable = "";
+
                                                     classbadge = "";
                                                     if (@item.status == 0)
                                                     {
-                                                        classbadge = "badge badge-warning";
-                                                    }
-                                                    else if (@item.status == 1)
-                                                    {
+
                                                         classbadge = "badge badge-danger";
                                                     }
-                                                    else if (@item.status == 2)
+                                                    else
                                                     {
+
                                                         classbadge = "badge badge-primary";
-                                                        
-                                                                                }
+                                                    }
+                                                    disable = "";
+                                                    if (@item.status == 1)
+                                                    {
+                                                        disable = "disabled";
+                                                    }
                                                 }
                                                  <input type="datetime-local" hidden id="solvetime" />
-                                                <select id="msgstatus" class="@classbadge"  onchange="UpdateContactusStatus('@item.ContactId', '@item.UserName', '@item.Email', this.value);" asp-for="@item.status">
-                                                    <option value="1">Issue Solve Pending</option>
-                                                    <option value="2">Issue Solve</option>
+                                                <select id="msgstatus" class="@classbadge" @disable onchange="UpdateContactusStatus('@item.ContactId', '@item.UserName', '@item.Email', this.value);" asp-for="@item.status">
+                                                    <option value="0">Issue Solve Pending</option>
+                                                    <option value="1">Issue Solve</option>
                                                 </select>
                                             </td>
 
@@ -135,17 +116,15 @@
 <div id="modalPartialView"></div>
 <script>
    function adduser(id) {
-        UpdateNewMessageNotify(id);
+   
     $.post("/ContactUS/ContactDetails", { id: id })
         .done(function (res) {
-                
             $("#modalPartialView").html(res);
              $("#myModal").modal("show");
         })
         .fail(function () {
             alert("error");
         });
-        
 }
    function formatDate(date) {
       const options = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };

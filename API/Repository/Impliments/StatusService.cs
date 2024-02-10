@@ -16,6 +16,5 @@ namespace API.Repository.Impliments
             var i = dapper.GetAll<Status>(sp);
             return i;
         }
-
     }
 }

@@ -1,16 +1,4 @@
-.blink {
-    animation: blinker 1.5s linear infinite;
-    color: #fd7e14;
-    font-size: 1.5em;
-    /* Larger, responsive font size */
-    margin-bottom: 20px;
-}
 
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
 #snackbar {
     visibility: hidden;
     min-width: 250px;

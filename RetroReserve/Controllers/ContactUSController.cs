@@ -65,10 +65,5 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<MessageBox>(($"Contact/GetSentMessageById?Id={id}"));
             return PartialView(i);
         }
-        public async Task<IActionResult> GetNewMessageNotification()
-        {
-            var i = await apirequest.GetData<List<Contact>>("Contact/GetNewMessageNotification");
-            return Json(i);
-        }
     }
 }

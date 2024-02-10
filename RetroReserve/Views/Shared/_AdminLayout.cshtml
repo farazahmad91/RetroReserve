@@ -55,9 +55,18 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge totalmessage">0</span>
+                        <span class="badge badge-warning navbar-badge" id="nwbadge">15</span>
                     </a>
-                    <div id="dropdownContainer"></div>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header nwbadge">15</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2 nwbadge" >  4 new messages</i>
+                            <span class="float-right text-muted text-sm" id="newdate">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="/ContactUS/ContactusList" class="dropdown-item dropdown-footer">See All Messages</a>
+                    </div>
                 </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -358,7 +367,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                                    <a href="/Menu/Recipe" class="nav-link">
+                <a href="/UserInterface/Table" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Profile</p>
                 </a>
