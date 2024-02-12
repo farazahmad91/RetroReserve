@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css\.DS_Store" />
     <None Include="wwwroot\img\.DS_Store" />
     <None Include="wwwroot\img\organic-food\.DS_Store" />
     <None Include="wwwroot\js\site.js" />

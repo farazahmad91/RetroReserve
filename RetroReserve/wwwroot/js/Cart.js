@@ -1,4 +1,7 @@
-﻿  document.addEventListener('DOMContentLoaded', function() {
+﻿
+
+
+document.addEventListener('DOMContentLoaded', function () {
         // Example: Attach the updateTotal function to the quantity input change event
         var quantityInputs = document.querySelectorAll('.cart-qty');
         quantityInputs.forEach(function(input) {
@@ -76,18 +79,16 @@
 
         // Call the updateCartBadge function initially to set the initial value
         updateCartBadge();
-
     });
 
 function UpdateQtyCart(Id) {
+    debugger;
     var cartqty = $("#cartqty_" + Id).val();
-    var UserId = $("#userid").val();
-
     var data = {
-        UserId: UserId,
-    Id: Id,
-        Quantity: cartqty
+        CartId: Id,
+        Quantity: cartqty,
     };
+    console.log("data", data);
 
     $.post('/Cart/DishQtyUpdateInCartValue', data)
         .done(function (res) {
@@ -129,6 +130,39 @@ function checkoutOrder() {
         });
         }
     }, 1500)
+}
+
+function DeleteCart(CartId) {
+    debugger;
+    Swal.fire({
+        title: 'Are you sure you want to delete?',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/Cart/DeleteCart',
+                type: 'POST',
+                data: { CartId: CartId },
+                success: function (data) {
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Deleted Successfully',
+                        icon: 'success',
+                    }).then((data) => {
+                        // Redirect to a different page after successful deletion
+                        window.location.href = "/Cart/Cart"; // Change the URL as needed
+                    });
+                },
+                error: function (error) {
+                    /*Swal.fire("Error", "Something went wrong!", "error");*/
+                    window.location.href = "/Cart/Cart";
+                }
+            });
+        }
+    });
 }
 function Getconfirmdatashow() {
     window.location.href = '/Invoice/Confirmation?Id=' + UserId;

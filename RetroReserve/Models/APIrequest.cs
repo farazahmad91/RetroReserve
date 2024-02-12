@@ -86,17 +86,25 @@ namespace RetroReserve.Models
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-
-                using (HttpResponseMessage response = await httpClient.PostAsync(relativeUrl, content))
+                try
                 {
-                    if (response.IsSuccessStatusCode)
+                    using (HttpResponseMessage response = await httpClient.PostAsync(relativeUrl, content))
                     {
-                        var responseContent = await response.Content.ReadAsStringAsync();
-                        return responseContent;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var responseContent = await response.Content.ReadAsStringAsync();
+                            return responseContent;
 
 
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+
+                }
+
+                
 
             }
             return ("Error");
