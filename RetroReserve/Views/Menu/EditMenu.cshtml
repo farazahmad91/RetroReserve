@@ -42,7 +42,7 @@
                                     <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
                                 </div>
                                   <input type="text" hidden asp-for="DishId" class="form-control" />
-                                <input type="text" asp-for="DishName" class="form-control" />
+                                <input type="text" asp-for="DishName" onchange="CountLetter();" class="form-control" />
 
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
                                 </div>
-                                <input type="file" asp-for="DishImage" class="form-control" />
+                                <input type="file" asp-for="DishImage"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-info-circle" style="font-size:23px;"></i></span>
                                 </div>
-                                <input type="text" asp-for="DishDescription" class="form-control" />
+                                <input type="text" asp-for="DishDescription" onchange="CountLetter();" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -149,6 +149,18 @@
 </div>
 
 <script>
+    // function CountLetter() {
+    //     if ($("#DishDescription").val().length <= 70) {
+    //         showerrors("Description Less Than 70 Letters!!!");
+    //         $("#DishDescription").val("");
+    //     }
+    //     if ($("#DishName").val().length <= 20) {
+    //         showerrors("Name Less Than 20 Letters!!!");
+    //         $("#DishName").val("");
+    //     }
+    // }
+
+
     function AddOrUpdateMenu() {
         Show_Loader();
         setTimeout(function () {
