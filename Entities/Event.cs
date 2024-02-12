@@ -27,13 +27,18 @@ namespace Entities
         public string? PhoneNo { get; set; }
         public int TotalGuest { get; set; }
         public string? BPersonName { get; set; }
-        public string? WCoupleName { get; set; }
-        public string? ACoupleName { get; set; }
+        public string? CoupleName { get; set; }
         public string? eventDate { get; set; } 
         public string? eventTime { get; set; }
         public int eventBookingStatus { get; set; }
         public DateTime eventCreateDate { get; set; }
         public string? BookingDate { get; set; }
         public string? eventCompleteDate { get; set; }
+    }
+    public class EventVM : EventBooking
+    {
+        public IEnumerable<Event> EventDetails { get; set; }
+
+        public IEnumerable<EventBooking> BookEvent { get; set; }
     }
 }

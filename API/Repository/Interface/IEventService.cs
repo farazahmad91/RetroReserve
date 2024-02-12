@@ -14,5 +14,8 @@ namespace API.Repository.Interface
         public EventBooking GetBookingEventById(int id);
         public int DeleteEvent(int id);
         public Task<int> UpdateBookingEventStatus(EventBooking eventBooking);
-    }
+        public EventVM GetEventdetailsList();
+        public EventVM GetEventPrice(int id);
+
+	}
 }

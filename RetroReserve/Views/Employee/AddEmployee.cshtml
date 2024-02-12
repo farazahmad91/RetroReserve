@@ -72,7 +72,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user-alt" style="font-size:23px;"></i></span>
                             </div>
-                   <select class="form-control" asp-for="RoleId" asp-items="@Role">
+                                    <select class="form-control" asp-for="RoleId" asp-items="@Role" onchange="OnRoleChange();">
                                 <option value="">:: Select Role ::</option>
 
                             </select>
@@ -99,7 +99,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-inr" style="font-size:23px;"></i></span>
                             </div>
-                            <input  type="number"  asp-for="Salary" class="form-control" />
+                            <input  type="number"  asp-for="Salary" disabled class="form-control" />
                           
                         </div>
                     </div>
@@ -233,6 +233,19 @@
             }
         }, 1500)
     }
+    function OnRoleChange() {
+        var param = {
+            id: $("#RoleId").val(),
+        };
+        $.get("/Employee/GetEmpSalary", param).done(function (res) {
+            $("#Salary").val(res.salary);
+
+        }).fail(function () {
+            showerrors("Invalid Salary!!!");
+        });
+
+    }
+
     function validateEmployee() {
         let isvalidated = true;
         let msg = "<ul>";

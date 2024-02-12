@@ -42,8 +42,14 @@ namespace API.Controllers
             var i = _eventService.GetEventById(id);
             return Ok(i);
         }
+		[HttpGet(nameof(GetEventPrice))]
+		public IActionResult GetEventPrice(int id)
+		{
+			var i = _eventService.GetEventPrice(id);
+			return Ok(i);
+		}
 
-        [HttpGet(nameof(GetBookingEventById))]
+		[HttpGet(nameof(GetBookingEventById))]
         public IActionResult GetBookingEventById(int id)
         {
             var i = _eventService.GetBookingEventById(id);
@@ -83,6 +89,13 @@ namespace API.Controllers
         {
             var i = await _eventService.UpdateBookingEventStatus(eventBooking);
             return Ok(i);
+        }
+        [HttpGet(nameof(GetEventdetailsList))]
+        public IActionResult GetEventdetailsList()
+        {
+            var i = _eventService.GetEventdetailsList();
+            return Ok(i);
+
         }
     }
 }

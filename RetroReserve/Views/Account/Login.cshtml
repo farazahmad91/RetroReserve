@@ -4,7 +4,53 @@
     ViewData["Title"] = "Login";
     Layout = "_Account";
 }
-<div class="row d-flex justify-content-center">
+
+<div class="video-container">
+    <video autoplay loop muted>
+        <source src="~/account/img/Delicious.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <!-- Your content goes here -->
+    <div>
+        <div id="accesspanel">
+            <h1 id="litheader">RetroReserve</h1>
+            <div>
+                <div class="card" id="snackbar"></div>
+                <div class="card" id="snackbar2"></div>
+                <div class="card" id="snackbar3"></div>
+            </div>
+            <div class="inset">
+                <p>
+                    <input type="text" name="username" asp-for="Email" placeholder="Email address">
+                </p>
+                <p>
+                    <input type="password" name="password" asp-for="Password" placeholder="Password">
+                </p>
+                <div>
+                    <div class="checkboxouter">
+                        <input type="checkbox" name="rememberme" id="remember" value="Remember">
+                        <label class="checkbox"></label>
+                    </div>
+                    <label for="remember">Remember me</label>
+                </div>
+                <div style="text-align: right; margin-top:-18px; color:white;"><a href="#" class="text-decoration-none text-muted" style="color:white;">Forgot Password</a></div>
+                <input class="loginLoginValue" type="hidden" name="service" value="login" />
+                <div style="margin-top:15px;">
+                    <div id="loader_spinner" style="display: none;" class="overlay-spinner">Restro</div>
+                    <input type="submit" name="Login" id="go" onclick="LoginUser();" value="Login">
+                </div>
+                <br />
+                <div style="margin-top:62px;">
+                    <a href="/Account/Register" class="text-decoration-none text-muted" style="color:white;">Don't Have an Account?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@* <div class="row d-flex justify-content-center">
     <div class=" col-md-3 card p-3">
         <div>
             <div class="card" id="snackbar">Data Saved Successfully</div>
@@ -40,11 +86,12 @@
 </div>
 <br />
 <br />
-<br />
+<br /> *@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
       function LoginUser() {
+        document.getElementById("litheader").className = "poweron";
         var uname = $("#Email").val();
         var password = $("#Password").val();
         Show_Loader();

@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             document.querySelector('.subtotal-prize').innerText = '₹' + subtotal.toFixed(2);
+            document.querySelector('.lastprice').innerHTML = '₹' + subtotal.toFixed(2);
+
         }
 
         // Function to update the total quantity in the navbar
@@ -90,7 +92,7 @@ function UpdateQtyCart(Id) {
     };
     console.log("data", data);
 
-    $.post('/Cart/DishQtyUpdateInCartValue', data)
+    $.post('/Cart/QtyUpdateInCart', data)
         .done(function (res) {
           
         })

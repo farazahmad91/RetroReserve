@@ -21,10 +21,10 @@ namespace API.Controllers
             return Ok(i);
 
         }
-        [HttpPost(nameof(DishQtyUpdateInCartValue))]
-        public async Task<IActionResult> DishQtyUpdateInCartValue(Cart cartValue)
+        [HttpPost(nameof(QtyUpdateInCart))]
+        public async Task<IActionResult> QtyUpdateInCart(Cart cart)
         {
-            var i = await cartValueService.DishQtyUpdateInCartValue(cartValue);
+            var i = await cartValueService.QtyUpdateInCart(cart);
             return Ok(i);
 
         }

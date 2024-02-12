@@ -6,27 +6,19 @@
     <title>@ViewBag.Title</title>
     <link href="~/css/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link href="~/account/account.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand">RetroReserve</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-            </div>
-        </nav>
-    </header>
-    <div>
+    <div style="min-height: 500px;">
         @RenderBody()
     </div>
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="text-align:center;">
         <div class="container">
-            &copy; 2024 - RetroReserve -
+
+            &copy; 2024 - RetroReserve All Right Reserve -
         </div>
     </footer>
+    <script src="~/account/account.js"></script>
 </body>
 </html>

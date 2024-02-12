@@ -23,13 +23,15 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<List<Cart>>($"Cart/GetCartValueById?id={id}");
             return View(i);
         }
-        [Authorize]
-        public async Task<IActionResult> DishQtyUpdateInCartValue(Cart cart)
+
+        public async Task<ActionResult> QtyUpdateInCart(Cart cart)
         {
-            var i = await apirequest.Post($"Cart/DishQtyUpdateInCartValue", cart);
-            return Json(i);
+         
+                var i = await apirequest.Post("Cart/QtyUpdateInCart", cart);
+                return Json(i);
 
         }
+
         public async Task<IActionResult> GetNumberInCartItem()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
