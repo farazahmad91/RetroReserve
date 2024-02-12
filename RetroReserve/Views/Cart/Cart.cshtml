@@ -5,57 +5,11 @@
     ViewData["Title"] = "Cart";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
-@* <style>
-    /* Style for the table */
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-    /* Style for the table header */
-    .table th {
-        background-color: #f2f2f2;
-        padding: 12px;
-        text-align: left;
-    }
-
-    /* Style for alternating rows */
-    .table tbody tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    /* Style for cart row */
-    .cartrow {
-        border-bottom: 1px solid #ddd;
-    }
-
-    /* Style for image in the media div */
-    .media img {
-        border-radius: 5px;
-        margin-right: 15px;
-    }
-
-    /* Style for the "Your Cart Is Empty" message */
-    .empty-cart-message {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    /* Style for the "Back to Home" button */
-    .back-to-home-btn {
-        text-align: left;
-        margin-top: 20px;
-    }
-</style> *@
-
-
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Cart</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item"><a href="/User/Index">Home</a></li>
         <li class="breadcrumb-item active text-white">Cart</li>
     </ol>
 </div>
@@ -96,7 +50,7 @@
                             <tr class="cartrow">
                                 <td>
                                     <input type="text" id="userid" value="@item.UserID" hidden />
-                                    <input type="text" id="dishId" value="@item.CartId" hidden />
+                                    <input type="text" id="cartId" value="@item.CartId" hidden />
                                     <div class="d-flex align-items-center">
                                         <img src="@item.DishImage" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                     </div>
@@ -114,8 +68,10 @@
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div> *@
-                                        <input type="number" name="qty" min="1" class="form-control form-control-sm text-center border-0 cart-qty" data-dish-id="@item.Id" id="cartqty_@item.Id" onchange="UpdateQtyCart(@item.Id);" value="@item.Quantity" title="Quantity">
-
+                                        <span> <strong>@item.DishQuantity</strong></span>
+                                        <input type="number" name="qty" min="1" class="form-control form-control-sm text-center border-0 cart-qty" data-dish-id="@item.CartId" id="cartqty_@item.CartId" onchange="UpdateQtyCart(@item.CartId);" value="@item.Quantity" title="Quantity" style="margin-top:-4px; font-weight:800;">
+                                           
+                                  
                                         @* <div class="input-group-btn">
                                             <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i class="fa fa-plus"></i>
@@ -153,18 +109,18 @@
                             <p class="mb-0 subtotal-prize">$96.00</p>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h5 class="mb-0 me-4">Shipping</h5>
+                            <h5 class="mb-0 me-4">Service Charge</h5>
                             <div class="">
-                                <p class="mb-0">Flat rate: $3.00</p>
+                                <p class="mb-0">Free</p>
                             </div>
                         </div>
-                        <p class="mb-0 text-end">Shipping to Ukraine.</p>
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">$99.00</p>
+                        <p class="mb-0 pe-4 lastprice">$99.00</p>
                     </div>
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                    <a class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4  hdn" href="/BookingTable/BookTable">Proceed to checkout</a>
+                   
                 </div>
             </div>
         </div>

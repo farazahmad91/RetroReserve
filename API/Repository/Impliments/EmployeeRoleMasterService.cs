@@ -15,9 +15,10 @@ namespace API.Repository.Impliments
             var sp = "sp_AddOrUpdateEmployeeRoleMaster";
             var param = new
             {
-                RoleId=employeeRoleMaster.RoleId,
-                RoleName=employeeRoleMaster.RoleName,
-                Status=employeeRoleMaster.Status,
+                RoleId = employeeRoleMaster.RoleId,
+                RoleName = employeeRoleMaster.RoleName,
+                Salary = employeeRoleMaster.Salary,
+                Status = employeeRoleMaster.Status,
             };
             var i = await dapper.Insert(param, sp);
             return i;
@@ -32,6 +33,17 @@ namespace API.Repository.Impliments
         public EmployeeRoleMaster GetEmployeeRoleById(int id)
         {
             var sp = "sp_GetEmployeeRoleById";
+            var param = new
+            {
+                RoleId = id,
+            };
+            var i = dapper.GetById<EmployeeRoleMaster>(param, sp);
+            return i;
+        }
+
+        public EmployeeRoleMaster GetEmpSalary(int id)
+        {
+            var sp = "sp_GetEmpSalary";
             var param = new
             {
                 RoleId = id,

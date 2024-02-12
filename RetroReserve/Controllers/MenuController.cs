@@ -19,7 +19,7 @@ namespace RetroReserve.Controllers
             this.uploadImage = uploadImage;
         }
 
-        public ActionResult MenuIndex()
+        public ActionResult MenuLoadData()
         {
             return View();
         }
@@ -73,6 +73,9 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Foodkart>(($"Foodkart/GetFoodkartById?Id={DishId}"));
             return PartialView(i);
         }
-
+        public ActionResult Menu()
+        {
+            return View();
+        }
     }
 }

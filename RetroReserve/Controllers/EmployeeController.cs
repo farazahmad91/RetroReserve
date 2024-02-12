@@ -59,6 +59,7 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<EmployeesVM>(($"Employee/GetEmployeeById?id={id}"));
             return PartialView(i);
         }
+
         public async Task<ActionResult> Chefs()
         {
             var i = await apirequest.GetData<List<Employees>>("Employee/GetChefs");
@@ -81,6 +82,11 @@ namespace RetroReserve.Controllers
         public async Task<ActionResult> AddOrUpdateRoles(EmployeeRoleMaster employeeRoleMaster)
         {
             var i = await apirequest.Post("EmployeeRoleMaster/AddOrUpdateEmployeeRoleMaster", employeeRoleMaster);
+            return Json(i);
+        }
+        public async Task<ActionResult> GetEmpSalary(int id)
+        {
+            var i = await apirequest.GetData<EmployeeRoleMaster>(($"EmployeeRoleMaster/GetEmpSalary?id={id}"));
             return Json(i);
         }
     }

@@ -110,8 +110,7 @@ namespace API.Repository.Impliments
               PhoneNo= eventBooking.PhoneNo,
               TotalGuest= eventBooking.TotalGuest,
               BPersonName= eventBooking.BPersonName,
-              WCoupleName = eventBooking.WCoupleName,
-              ACoupleName = eventBooking.ACoupleName,
+              CoupleName = eventBooking.CoupleName,
               eventDate= eventBooking.eventDate,
               eventTime= eventBooking.eventTime,
               eventPrice= eventBooking.eventPrice,
@@ -119,7 +118,27 @@ namespace API.Repository.Impliments
               eventCompleteDate= eventBooking.eventCompleteDate,
             };
             var i = await dapper.Insert(param, sp);
+            if(i == 1)
+            {
+                switch (eventBooking.eventID)
+                {
+                    case 1:
+                        occasions = "Birthday Celebration";
+                        break;
 
+                    case 2:
+                        occasions = "Wedding Ceremony";
+                        break;
+
+                    case 3:
+                        occasions = "Wedding Anniversary Commemoration";
+                        break;
+                }
+                string Email = eventBooking.UserID;
+                string subject = "Confirmation of Event Booking";
+                string body = $"Dear {eventBooking.UserName},\n\nWe are pleased to inform you that your reservation for the {occasions} Event at our establishment has been successfully confirmed. Your Booking ID is: {eventBooking.eventBookingId}, and the event is scheduled for: {eventBooking.eventDate}.\n\nWe eagerly anticipate the opportunity to provide you with an exceptional dining experience. Should you have any specific requests or queries, please feel free to reach out to us.\n\nThank you for choosing our services. Your trust is greatly appreciated, and we look forward to welcoming you!\n\nKind regards,\nThe RetroReserve Team";
+                _emailSenderService.SendEmail(Email,subject, body);
+            }
             return i;
         }
         public async Task<int> UpdateBookingEventStatus(EventBooking eventBooking)
@@ -172,5 +191,23 @@ namespace API.Repository.Impliments
 
             return i;
         }
-    }
+        public EventVM GetEventdetailsList()
+        {
+            var sp = "sp_GetEvent";
+            EventVM eventVM = new EventVM();
+            eventVM.EventDetails = (IEnumerable<Event>)dapper.GetAll<Event>(sp);
+            return eventVM;
+        }
+
+		public EventVM GetEventPrice(int id)
+		{
+			var sp = "sp_GetEventPrice";
+			var param = new
+			{
+				eventID = id,
+			};
+			var i = dapper.GetById<EventVM>(param, sp);
+			return i;
+		}
+	}
 }

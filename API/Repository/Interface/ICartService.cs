@@ -7,7 +7,7 @@ namespace API.Repository.Interface
         public IEnumerable<Cart> GetCartValueById(string id);
         public IEnumerable<Cart> GetCartValueList();
         public int DeleteCart(int id);
-        public Task<int> DishQtyUpdateInCartValue(Cart cartValue);
+        public Task<int> QtyUpdateInCart(Cart cart);
         public Cart GetNumberInCartItem(string id);
     }
 }

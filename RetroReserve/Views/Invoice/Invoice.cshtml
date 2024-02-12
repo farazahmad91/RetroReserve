@@ -5,211 +5,227 @@
 }
 <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
 <style>
-    body{
-background:#eee;
-margin-top:20px;
-}
-.text-danger strong {
-        	color: #9f181c;
-		}
-		.receipt-main {
-			background: #ffffff none repeat scroll 0 0;
-			border-bottom: 12px solid #333333;
-			border-top: 12px solid #9f181c;
-			margin-top: 50px;
-			margin-bottom: 50px;
-			padding: 40px 30px !important;
-			position: relative;
-			box-shadow: 0 1px 21px #acacac;
-			color: #333333;
-			font-family: open sans;
-		}
-		.receipt-main p {
-			color: #333333;
-			font-family: open sans;
-			line-height: 1.42857;
-		}
-		.receipt-footer h1 {
-			font-size: 15px;
-			font-weight: 400 !important;
-			margin: 0 !important;
-		}
-		.receipt-main::after {
-			background: #414143 none repeat scroll 0 0;
-			content: "";
-			height: 5px;
-			left: 0;
-			position: absolute;
-			right: 0;
-			top: -13px;
-		}
-		.receipt-main thead {
-			background: #414143 none repeat scroll 0 0;
-		}
-		.receipt-main thead th {
-			color:#fff;
-		}
-		.receipt-right h5 {
-			font-size: 16px;
-			font-weight: bold;
-			margin: 0 0 7px 0;
-		}
-		.receipt-right p {
-			font-size: 12px;
-			margin: 0px;
-		}
-		.receipt-right p i {
-			text-align: center;
-			width: 18px;
-		}
-		.receipt-main td {
-			padding: 9px 20px !important;
-		}
-		.receipt-main th {
-			padding: 13px 20px !important;
-		}
-		.receipt-main td {
-			font-size: 13px;
-			font-weight: initial !important;
-		}
-		.receipt-main td p:last-child {
-			margin: 0;
-			padding: 0;
-		}	
-		.receipt-main td h2 {
-			font-size: 20px;
-			font-weight: 900;
-			margin: 0;
-			text-transform: uppercase;
-		}
-		.receipt-header-mid .receipt-left h1 {
-			font-weight: 100;
-			margin: 34px 0 0;
-			text-align: right;
-			text-transform: uppercase;
-		}
-		.receipt-header-mid {
-			margin: 24px 0;
-			overflow: hidden;
-		}
-		
-		#container {
-			background-color: #dcdcdc;
-		}
+    body {
+        background: #eee;
+        margin-top: 20px;
+    }
+
+    .text-danger strong {
+        color: #9f181c;
+    }
+
+    .receipt-main {
+        background: #ffffff none repeat scroll 0 0;
+        border-bottom: 12px solid #333333;
+        border-top: 12px solid #9f181c;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding: 40px 30px !important;
+        position: relative;
+        box-shadow: 0 1px 21px #acacac;
+        color: #333333;
+        font-family: open sans;
+    }
+
+        .receipt-main p {
+            color: #333333;
+            font-family: open sans;
+            line-height: 1.42857;
+        }
+
+    .receipt-footer h1 {
+        font-size: 15px;
+        font-weight: 400 !important;
+        margin: 0 !important;
+    }
+
+    .receipt-main::after {
+        background: #414143 none repeat scroll 0 0;
+        content: "";
+        height: 5px;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: -13px;
+    }
+
+    .receipt-main thead {
+        background: #414143 none repeat scroll 0 0;
+    }
+
+        .receipt-main thead th {
+            color: #fff;
+        }
+
+    .receipt-right h5 {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0 0 7px 0;
+    }
+
+    .receipt-right p {
+        font-size: 12px;
+        margin: 0px;
+    }
+
+        .receipt-right p i {
+            text-align: center;
+            width: 18px;
+        }
+
+    .receipt-main td {
+        padding: 9px 20px !important;
+    }
+
+    .receipt-main th {
+        padding: 13px 20px !important;
+    }
+
+    .receipt-main td {
+        font-size: 13px;
+        font-weight: initial !important;
+    }
+
+        .receipt-main td p:last-child {
+            margin: 0;
+            padding: 0;
+        }
+
+        .receipt-main td h2 {
+            font-size: 20px;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+    .receipt-header-mid .receipt-left h1 {
+        font-weight: 100;
+        margin: 34px 0 0;
+        text-align: right;
+        text-transform: uppercase;
+    }
+
+    .receipt-header-mid {
+        margin: 24px 0;
+        overflow: hidden;
+    }
+
+    #container {
+        background-color: #dcdcdc;
+    }
 </style>
 <div class="container">
-	<div class="col-md-12">   
- <div class="row">
-		
-        <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
-            <div class="row">
-    			<div class="receipt-header">
-					<div class="receipt-left">
-							<h4>Order Id: @Model.FirstOrDefault()?.OrderID</h4>
+    <div class="col-md-12">
+        <div class="row">
 
-						</div>
-						<br />
-					<div class="col-xs-6 col-sm-6 col-md-6">
-						<div class="receipt-left">
-							<img class="img-responsive" alt="iamgurdeeposahan" src="https://bootdey.com/img/Content/avatar/avatar6.png" style="width: 71px; border-radius: 43px;">
-						</div>
-					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6 text-right">
-						<div class="receipt-right">
-								<h5>RetroReserve</h5>
-							<p>+1 3649-6589 <i class="fa fa-phone"></i></p>
-								<p>RetroReserve@gmail.com <i class="fa fa-envelope-o"></i></p>
-							<p>USA <i class="fa fa-location-arrow"></i></p>
-						</div>
-					</div>
-				</div>
+            <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+                <div class="row">
+                    <div class="receipt-header">
+                        <div class="receipt-left">
+                            <h4>Order Id: @Model.FirstOrDefault()?.OrderID</h4>
+
+                        </div>
+                        <br />
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="receipt-left">
+                                <img class="img-responsive" alt="iamgurdeeposahan" src="https://bootdey.com/img/Content/avatar/avatar6.png" style="width: 71px; border-radius: 43px;">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                            <div class="receipt-right">
+                                <h5>RetroReserve</h5>
+                                <p>+1 3649-6589 <i class="fa fa-phone"></i></p>
+                                <p>RetroReserve@gmail.com <i class="fa fa-envelope-o"></i></p>
+                                <p>USA <i class="fa fa-location-arrow"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="receipt-header receipt-header-mid">
+                        <div class="col-xs-8 col-sm-8 col-md-8 text-left">
+                            <div class="receipt-right">
+
+                                <h4>@ViewBag.name.</h4>
+                                <p><b>Email :</b> @Model.FirstOrDefault()?.UserId</p>
+                                <p><b>Order Date :</b> @Model.FirstOrDefault()?.OrderDate</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var orderid = @item.OrderID;
+                                <tr>
+                                    <td class="col-md-9">@item.DishName</td>
+                                    <td class="col-md-3"><i class="fa fa-inr"></i>@item.Quantity &nbsp;<span>@item.DishQuantity</span></td>
+                                    <td class="col-md-3"><i class="fa fa-inr"></i> @item.TotalAmount</td>
+                                </tr>
+                            }
+
+
+                            @{
+                                // Calculate total amount
+                                decimal totalAmount = Model.Sum(item => item.TotalAmount);
+                            }
+
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    <p><strong>Total Amount: </strong></p>
+                                    <p><strong>Service Charge: </strong></p>
+                                </td>
+                                <td>
+                                    <p><strong><i class="fa fa-inr"></i> @totalAmount.ToString("N2")</strong></p>
+                                    <p><strong><i class="fa fa-inr"></i> 00/-</strong></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right" colspan="2">
+                                    <h2><strong>Total: </strong></h2>
+                                </td>
+                                <td class="text-left text-danger">
+                                    <h2><strong><i class="fa fa-inr"></i> @totalAmount.ToString("N2")</strong></h2>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="row">
+                    <div class="receipt-header receipt-header-mid receipt-footer">
+                        <div class="col-xs-8 col-sm-8 col-md-8 text-left">
+                            <div class="receipt-right">
+                                <p><b>Date :</b> @DateTime.Now</p>
+                                <h5 style="color: rgb(140, 140, 140);">Thanks for Choosing RetroReserve!</h5>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="receipt-left">
+                                <h1>Stamp</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="downloadReceiptBtn" onclick="downloadinvoice();">Download</button>
             </div>
-			
-			<div class="row">
-				<div class="receipt-header receipt-header-mid">
-					<div class="col-xs-8 col-sm-8 col-md-8 text-left">
-						<div class="receipt-right">
-								
-								<h4>@ViewBag.name.</h4>
-								<p><b>Email :</b> @Model.FirstOrDefault()?.UserId</p>
-							<p><b>Order Date :</b> @Model.FirstOrDefault()?.OrderDate</p>
-						</div>
-					</div>
-					<div class="col-xs-4 col-sm-4 col-md-4">
-						
-					</div>
-				</div>
-            </div>
-			
-            <div>
-               <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Amount</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-							var	orderid = @item.OrderID;
-								<tr>
-            <td class="col-md-9">@item.DishName</td>
-            <td class="col-md-3"><i class="fa fa-inr"></i>@item.Quantity</td>
-            <td class="col-md-3"><i class="fa fa-inr"></i> @item.TotalAmount</td>
-        </tr>
-    }
-
-	
-    @{
-        // Calculate total amount
-        decimal totalAmount = Model.Sum(item => item.TotalAmount);
-    }
-
-    <tr>
-        <td colspan="2" class="text-right">
-            <p><strong>Total Amount: </strong></p>
-            <p><strong>Shipping Fee: </strong></p>
-        </td>
-        <td>
-            <p><strong><i class="fa fa-inr"></i> @totalAmount.ToString("N2")</strong></p>
-            <p><strong><i class="fa fa-inr"></i> 00/-</strong></p>
-        </td>
-    </tr>
-    <tr>
-        <td class="text-right" colspan="2">
-            <h2><strong>Total: </strong></h2>
-        </td>
-        <td class="text-left text-danger">
-            <h2><strong><i class="fa fa-inr"></i> @totalAmount.ToString("N2")</strong></h2>
-        </td>
-    </tr>
-</tbody>
-
-</table>
-
-            </div>
-			
-			<div class="row">
-				<div class="receipt-header receipt-header-mid receipt-footer">
-					<div class="col-xs-8 col-sm-8 col-md-8 text-left">
-						<div class="receipt-right">
-							<p><b>Date :</b> @DateTime.Now</p>
-								<h5 style="color: rgb(140, 140, 140);">Thanks for Choosing RetroReserve!</h5>
-						</div>
-					</div>
-					<div class="col-xs-4 col-sm-4 col-md-4">
-						<div class="receipt-left">
-							<h1>Stamp</h1>
-						</div>
-					</div>
-				</div>
-            </div>
-			<button type="button" id="downloadReceiptBtn" onclick="downloadinvoice();">Download</button>
-        </div>    
-	</div>
-</div>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
@@ -232,20 +248,20 @@ margin-top:20px;
         $('#grandtotal').text('₹' + grandtotal.toFixed(2));
 
 
-});
-
-function downloadinvoice() {
-
-    var receiptContent = document.querySelector('.receipt-main');
-
-    html2pdf(receiptContent, {
-        margin: 2,
-        filename: 'RetroReserve-receipt.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', width: 310 }
     });
-}
+
+    function downloadinvoice() {
+
+        var receiptContent = document.querySelector('.receipt-main');
+
+        html2pdf(receiptContent, {
+            margin: 2,
+            filename: 'RetroReserve-receipt.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', width: 310 }
+        });
+    }
 </script>
 
 

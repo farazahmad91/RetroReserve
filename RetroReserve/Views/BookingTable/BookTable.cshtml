@@ -6,37 +6,24 @@
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
 </script>
-<br />
-<br />
-  <main id="main">
-    <section class="breadcrumbs">
-      <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-          <ol>
-                    <li><a href="/User/Index">Home</a></li>
-            <li>Book Table</li>
-          </ol>
-        </div>
-
-      </div>
-    </section>
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Table Reservation</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/User/Index">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Book a Table</a></li>
+    </ol>
+</div>
  <!-- ======= Book A Table Section ======= -->
     <section id="book-a-table" class="book-a-table">
-        <div class="container" data-aos="fade-up" style="border:solid white 2px;">
+    <div class="container" data-aos="fade-up">
              <div>
                 
                 <div class="card" id="snackbar2">Data Updated Successfully</div>
                 <div class="card" id="snackbar3">Deleted.</div>
                 </div>
-                <br />
-        <div class="section-title">
-          <h2>Reservation</h2>
-          <p>Book a Table</p>
-        </div>
             <div>
                 <br />
-            <div role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+            <div role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" style="border:solid #9ad039 2px; border-radius:50px 0px 50px 0px; padding:35px;">
           <div class="row">
            
             <div class="row">
@@ -52,7 +39,7 @@
                         <input type="email" name="date" class="form-control" style="color:black; background-color:white;" id="email" placeholder="Email">
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="datetime-local" style="color:black; background-color:white;" name="date" min="@DateTime.Today.AddHours(10).ToString("yyyy-MM-ddTHH:mm")" max="@DateTime.Today.AddHours(23).ToString("yyyy-MM-ddTHH:mm")" class="form-control" id="date" placeholder="Date">
+                        <input type="datetime-local" style="color:black; background-color:white;" name="date" min="@DateTime.Today.AddHours(10).ToString("yyyy-MM-ddTHH:mm")"  class="form-control" id="date" placeholder="Date">
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
                         <input type="number" class="form-control" style="color:black; background-color:white;" name="people" id="people" placeholder="# of people" max="12" data-rule="minlen:1">
@@ -63,15 +50,14 @@
           </div>
           <div class="mb-3">
           </div>
-                <div class="text-center"><button type="submit" onclick="onpayment();">Book a Table</button></div>
+                    <div class="text-center"><button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" onclick="onpayment();">Book a Table</button></div>
         </div>
-                <br />
             </div>
           <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
       </div>
     </section>
     <div id="PaymentModalPV"></div>
-    </main>
+
 
     <script>
         function onpayment() {

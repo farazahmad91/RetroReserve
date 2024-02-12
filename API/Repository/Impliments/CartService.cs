@@ -63,13 +63,13 @@ namespace API.Repository.Impliments
         }
 
 
-        public async Task<int> DishQtyUpdateInCartValue(Cart cartValue)
+        public async Task<int> QtyUpdateInCart(Cart cart)
         {
             var sp = "sp_DishQtyUpdateInCartValue";
             var param = new
             {
-                CartId = cartValue.CartId,
-             Quantity = cartValue.Quantity,
+                CartId = cart.CartId,
+             Quantity = cart.Quantity,
             };
             var i = await dapper.Insert(param, sp);
             return i;

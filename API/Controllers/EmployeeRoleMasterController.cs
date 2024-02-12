@@ -38,5 +38,12 @@ namespace API.Controllers
             return Ok(i);
         }
 
+        [HttpGet(nameof(GetEmpSalary))]
+        public IActionResult GetEmpSalary(int id)
+        {
+            var i = employeeRoleMasterService.GetEmpSalary(id);
+            return Ok(i);
+        }
+
     }
 }

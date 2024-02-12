@@ -10,6 +10,7 @@ namespace Entities
     {
         public int RoleId { get; set; }
         public string? RoleName { get; set; }
+        public decimal Salary { get; set; }
         public DateTime CreateDate { get; set; }
         public int Status { get; set; }
     }

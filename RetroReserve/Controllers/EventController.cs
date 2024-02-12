@@ -50,9 +50,10 @@ namespace RetroReserve.Controllers
             var i = await apirequest.Post("Event/AddOrUpdateEvent", _event);
             return Json(i);
         }
-        public ActionResult Event()
+        public async Task<ActionResult> Event()
         {
-            return View();
+            var i = await apirequest.GetData<EventVM>("Event/GetEventdetailsList");
+            return View(i);
         }
         public async Task<ActionResult> BookingEvent(EventBooking eventBooking)
         {
@@ -80,6 +81,10 @@ namespace RetroReserve.Controllers
         {
             return View();
         }
-
-    }
+		public async Task<ActionResult> EventPrice(int id)
+		{
+			var i = await apirequest.GetData<Event>(($"Event/GetEventPrice?id={id}"));
+			return Json(i);
+		}
+	}
 }

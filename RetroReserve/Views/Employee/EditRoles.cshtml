@@ -27,60 +27,74 @@
             <div class="card" id="snackbar2">Data Updated Successfully</div>
             <div class="card" id="snackbar3">Deleted.</div>
         </div>
-<div class="container py-3">
-    <div class="card">
-        <div class="card-header bg-info text-white">
-            <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Roles Info</Strong></h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Role Name</label>
-                        <div class="input-group">
-                            <input  type="text" hidden asp-for="RoleId" class="form-control" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+        <div class="container py-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Roles Info</Strong></h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role Name</label>
+                                <div class="input-group">
+                                    <input type="text" hidden asp-for="RoleId" class="form-control" />
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="text" asp-for="RoleName" class="form-control" />
+
+                                </div>
                             </div>
-                            <input  type="text"  asp-for="RoleName" class="form-control" />
-                          
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Salary</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">&#8377;</span>
+                                    </div>
+                                    <input type="number" asp-for="Salary" class="form-control" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                        <button type="submit" id="btnubmit" onclick="AddOrUpdateEmployeeRoles();" class="btn btn-primary">Submit</button>
+                        <a href="/Employee/Employee" class="btn btn-primary" style="text-align:right;">Back To List</a>
                     </div>
                 </div>
             </div>
-            <br />
-            <div class="form-group">
-                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-                <button type="submit" id="btnubmit" onclick="AddOrUpdateEmployeeRoles();" class="btn btn-primary">Submit</button>
-                <a href="/Employee/Employee" class="btn btn-primary" style="text-align:right;">Back To List</a>
-            </div>
         </div>
-    </div>
-</div>
 </div>
 </div>
 
 <script>
-  function AddOrUpdateEmployeeRoles() {
+    function AddOrUpdateEmployeeRoles() {
+
         Show_Loader();
         setTimeout(function () {
             if (validateEmpRole()) {
-    let param = {
-        RoleId: $("#RoleId").val(),
-        RoleName: $("#RoleName").val(),
-        Status: $("#Status").val(),
-    };
-      $.post("/Employee/AddOrUpdateRoles", param).done(function(res) {
+                let param = {
+                    RoleId: $("#RoleId").val(),
+                    RoleName: $("#RoleName").val(),
+                    Salary: $("#Salary").val(),
+                    Status: $("#Status").val(),
+                };
+                $.post("/Employee/AddOrUpdateRoles", param).done(function (res) {
                     Hide_Loader();
                     showinsertsuccess("Role Add Successfully");
 
-      }).fail(function() {
+                }).fail(function () {
                     Hide_Loader();
                     showerrors("Something went wrong!!!");
-      })
+                })
             }
         }, 1500)
-}
+    }
     function validateEmpRole() {
         let isvalidated = true;
         let msg = "<ul>";
@@ -92,7 +106,9 @@
         if ($("#RoleName").val() === "") {
             addError("Please enter name");
         }
-
+        if ($("#Salary").val() === "") {
+            addError("Please enter salary");
+        }
         if (!isvalidated) {
             msg += "</ul>";
             Hide_Loader();
