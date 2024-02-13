@@ -1,0 +1,132 @@
+﻿@model IEnumerable<Entities.DishCategory>
+
+@{
+    ViewData["Title"] = "CategoryList";
+}
+<div class="content-wrapper">
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Inbox</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Menu</a></li>
+                    <li class="breadcrumb-item active">Menu</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div>
+    <div class="card" id="snackbar"></div>
+    <div class="card" id="snackbar2"></div>
+    <div class="card" id="snackbar3"></div>
+</div>
+<div class="container">
+        <button type="button" class="btn btn-primary" onclick="AddOrUpdateCategory(0);">Create New Menu</button>
+    <br />  <br />
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead style="background-color:#17a2b8!important;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DishCategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Icon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DishCategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Icon)
+            </td>
+                            <td>
+                                @{
+                                    var ckb = @item.Status == 0 ? "unchecked" : "checked";
+                                }
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.DishCategoryId" onclick="UpdateCategoryStatus(@item.DishCategoryId);" @ckb>
+                                            <label class="custom-control-label" for="customSwitch3_@item.DishCategoryId">Available</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+            <td>
+            <a class="dropdown-item" onclick="AddOrUpdateCategory(@item.DishCategoryId)"><span class="fas fa-edit" style="color: Blue"></span> Edit Menu</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+        </div>
+    </div>
+</div>
+    <div id="PartialView"></div>
+</div>
+<script>
+    function AddOrUpdateCategory(Id) {
+
+        let param = {
+            DishCategoryId: Id,
+        };
+        $.post("/Category/AddDishCategoryMenu", param).done(function (res) {
+            console.log(res);
+            $("#PartialView").html(res);
+            $("#Modaldishcategory").modal("show");
+        }).fail(function () {
+            alert("errror");
+        })
+    }
+
+    function UpdateCategoryStatus(Id) {
+        var id = $("#customSwitch3_" + Id).prop("checked");
+        if (id == true) {
+            id = 1;
+        } else {
+            id = 0;
+        }
+        var param = {
+            DishCategoryId: Id,
+            Status: id,
+        };
+        Swal.fire({
+            title: 'Are you sure you want to Update?',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Update it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Category/UpdateCategoryStatus',
+                    type: 'POST',
+                    data: param,
+                    success: function (data) {
+
+                        showinsertsuccess("Status Update Successfully");
+                    },
+                });
+            } else {
+
+                showerror("Status Not Updated");
+            }
+        });
+    }
+
+</script>
