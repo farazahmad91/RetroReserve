@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewData["Title"] = "Menu";
+    Layout = "_UserLayout";
+}
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Menu</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/User/Index">Home</a></li>
+        <li class="breadcrumb-item active text-white">Menu</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+<!-- Fruits Shop Start-->
+<div class="container-fluid fruite py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Search Delicious Food</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <div class="col-xl-3">
+                        <div class="input-group w-100 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" id="namesearch" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search" onclick="OnSerchName();"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+                            <div class="col-lg-12" id="CategoryPartialView">
+                                
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4 class="mb-2">Price</h4>
+                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" onchange="GetDishListByPrize();" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
+                                    <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Additional</h4>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
+                                        <label for="Categories-1"> Organic</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
+                                        <label for="Categories-2"> Fresh</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
+                                        <label for="Categories-3"> Sales</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
+                                        <label for="Categories-4"> Discount</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
+                                        <label for="Categories-5"> Expired</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4 class="mb-3">Special Dish</h4>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div id="SpecialDishPartialView"></div>
+                                </div>
+                                <div class="d-flex justify-content-center my-4">
+                                    <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="position-relative">
+                                    <img src="~/Uimg/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
+                                    <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center" id="OnCategoryListPartialView">
+                            
+
+
+
+                            <div class="col-12">
+                                <div class="pagination d-flex justify-content-center mt-5">
+                                    <a href="#" class="rounded">&laquo;</a>
+                                    <a href="#" class="active rounded">1</a>
+                                    <a href="#" class="rounded">2</a>
+                                    <a href="#" class="rounded">3</a>
+                                    <a href="#" class="rounded">4</a>
+                                    <a href="#" class="rounded">5</a>
+                                    <a href="#" class="rounded">6</a>
+                                    <a href="#" class="rounded">&raquo;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalVarientPartialView"></div>
+</div>
+<!-- Fruits Shop End-->
+@section Scripts {
+    <script>
+        function OnFormLoad() {
+            $.post("/User/MenuKart").done(function (res) {
+                $("#OnCategoryListPartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        OnFormLoad();
+        function Categoryload() {
+            $.post("/Category/Category").done(function (res) {
+                $("#CategoryPartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        Categoryload();
+        function GetCategoryValue(DishCategoryId) {
+            debugger;
+            let data = {
+                DishCategoryId: DishCategoryId,
+            };
+
+            $.post("/Category/AllDishCategoryList", data)
+                .done(function (res) {
+                    $("#OnCategoryListPartialView").html(res);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        }
+
+        function GetDishListByPrize() {
+            debugger;
+            let data = {
+                price: $("#amount").val(),
+            };
+
+            $.post("/Category/DishOnPrize", data)
+                .done(function (res) {
+                    $("#OnCategoryListPartialView").html(res);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        }
+
+        function OnSerchName() {
+            debugger;
+            let data = {
+                name: $("#namesearch").val(),
+            };
+
+            $.post("/Category/DishOnSearch", data)
+                .done(function (res) {
+                    $("#OnCategoryListPartialView").html(res);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        }
+        function AddCart(Id) {
+            let data = {
+                Id: Id,
+            };
+
+            $.post('/Cart/AddCart', data)
+                .done(function (res) {
+                    if (res === -2) {
+                        errors("Please log in to add items to your cart.");
+                    } else if (res === -1) {
+                        errors("This dish is already in the cart. Please choose a different dish.");
+                    } else {
+                        success("Dish added successfully to your cart.");
+                    }
+                })
+                .fail(function () {
+                    // Handle the failure case
+                    alert("Failed to add Dish");
+                });
+        }
+        function SpecialDishFormLoad() {
+            $.post("/Category/SpecialDish").done(function (res) {
+                $("#SpecialDishPartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        SpecialDishFormLoad();
+        function getValues() {
+            var lowerValue = document.getElementById("lower-value").innerText;
+            var upperValue = document.getElementById("upper-value").innerText;
+            var hdnid = $("#hdncategoryid").val();
+            var param = {
+                DishCategoryId: hdnid,
+                MinPrize: lowerValue,
+                MaxPrize: upperValue
+            };
+
+            $.post("/Category/ListByPrizeWithCategory", param)
+                .done(function (res) {
+                    $("#ProductPartialView").html(res);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        }
+
+
+        document.getElementById("price-range").addEventListener("input", getValues);
+    </script>
+}
+

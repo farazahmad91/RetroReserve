@@ -70,6 +70,8 @@ namespace API.Repository.Impliments
             {
                 CartId = cartValue.CartId,
              Quantity = cartValue.Quantity,
+             CartId = cart.CartId,
+             Quantity = cart.Quantity,
             };
             var i = await dapper.Insert(param, sp);
             return i;

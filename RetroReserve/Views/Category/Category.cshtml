@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Entities.DishCategory>
+@{
     ViewData["Title"] = "Category";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
@@ -130,6 +131,20 @@ function getValues() {
             alert("error");
         });
 }
+<div class="mb-3">
+    <h4>Categories</h4>
+    <ul class="list-unstyled fruite-categorie">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="d-flex justify-content-between fruite-name">
+                    <a onclick="GetCategoryValue(@item.DishCategoryId);"><i class="@item.Icon me-2"></i>@item.DishCategoryName</a>
+                    <span>(3)</span>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
 
 
 document.getElementById("price-range").addEventListener("input", getValues);

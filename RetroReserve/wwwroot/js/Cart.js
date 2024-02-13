@@ -98,7 +98,6 @@ function UpdateQtyCart(Id) {
             alert("Failed Quantity Update");
         });
 
-}
 
 function checkoutOrder() {
     Show_Loader();
@@ -258,4 +257,17 @@ function cartstatus() {
     });
 }
 cartstatus();
+
+function GetVarientList(DishId) {
+    debugger;
+    $.post("/Category/MenuQty", { DishId: DishId })
+        .done(function (res) {
+            console.log(res);
+            $("#modalVarientPartialView").html(res);
+            $("#MyVarientModal").modal("show");
+        })
+        .fail(function () {
+            alert("error");
+        });
+}
 

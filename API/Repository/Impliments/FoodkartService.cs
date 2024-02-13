@@ -101,6 +101,8 @@ namespace API.Repository.Impliments
             var i = dapper.GetAll<Foodkart>(sp);
             return i;
         }
+
+
     }
 
 

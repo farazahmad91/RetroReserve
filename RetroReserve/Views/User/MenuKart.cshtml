@@ -1,48 +1,24 @@
 ﻿@model IEnumerable<Entities.Foodkart>
 @{
-    ViewData["Title"] = "MenuKart";
+    ViewData["Title"] = "Menu";
     Layout = null;
 }
 @foreach (var item in Model)
 {
-    <input type="text" id="hdnvarientid" hidden value="@item.Id" />
-    <div class="col-lg-6 menu-item">
-        <img src="@item.DishImage" class="menu-img" alt="@item.DishName">
-        <div class="menu-content">
-            <a href="#">@item.DishName</a>@* <span><del>@item.MRP</del></span> *@<span>@item.DishPrize</span>
-            <!-- Add To Cart Button -->
-            <a class="social-info" onclick="GetVarientList('@item.DishId');">
-                <span class="fa fa-shopping-cart"></span>
-                <p class="hover-text"></p>
-            </a>
-        </div>
-        <div class="menu-ingredients">
-            @item.DishDescription
+    <div class="col-md-6 col-lg-6 col-xl-4">
+        <div class="rounded position-relative fruite-item">
+            <div class="fruite-img">
+                <img src="@item.DishImage" class="img-fluid w-100 rounded-top" alt="">
+            </div>
+            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.DishCategoryName</div>
+            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                <h4>@item.DishName</h4>
+                <p>@item.DishDescription</p>
+                <div class="d-flex justify-content-between flex-lg-wrap">
+                    <p class="text-dark fs-5 fw-bold mb-0">&nbsp;&nbsp;&#8377; @item.DishPrize</p>
+                    <a onclick="GetVarientList('@item.DishId');" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                </div>
+            </div>
         </div>
     </div>
 }
-
-
-
-
-<script>
-    function AddCart(Id) {
-        let data = {
-            Id: Id,
-        };
-
-        $.post('/Cart/AddCart', data)
-            .done(function (res) {
-                if (res == -1) {
-                    errors("This dish is already in the cart");
-                } else {
-                    success("Dish added successfully to your cart.");
-                    cartstatus();
-                }
-            })
-            .fail(function (res) {
-                errors("Kindly log in before adding a dish to your cart.");
-               
-            });
-    }
-</script>

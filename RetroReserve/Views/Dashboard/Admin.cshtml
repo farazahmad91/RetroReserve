@@ -161,14 +161,14 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 @section Scripts{
 <script>
-    function Onloaded1() {
+    function OnFormLoad() {
         $.post("/Order/OrderChart").done(function (res) {
             $("#ChartPartialView").html(res);
         }).fail(function () {
             alert("errror");
         })
     }
-        Onloaded1();
+        OnFormLoad();
         function PieChart() {
             $.post("/Order/OrderPieChart").done(function (res) {
                 $("#PieChartPartialView").html(res);

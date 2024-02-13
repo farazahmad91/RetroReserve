@@ -23,6 +23,9 @@ namespace API.Controllers
         }
         [HttpPost(nameof(DishQtyUpdateInCartValue))]
         public async Task<IActionResult> DishQtyUpdateInCartValue(Cart cartValue)
+        [HttpPost(nameof(QtyUpdateInCart))]
+
+        public async Task<IActionResult> QtyUpdateInCart(Cart cart)
         {
             var i = await cartValueService.DishQtyUpdateInCartValue(cartValue);
             return Ok(i);

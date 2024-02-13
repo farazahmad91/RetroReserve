@@ -28,6 +28,9 @@ namespace RetroReserve.Controllers
         {
             var i = await apirequest.Post($"Cart/DishQtyUpdateInCartValue", cart);
             return Json(i);
+         
+         var i = await apirequest.Post("Cart/QtyUpdateInCart", cart);
+         return Json(i);
 
         }
         public async Task<IActionResult> GetNumberInCartItem()

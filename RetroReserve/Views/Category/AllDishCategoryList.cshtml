@@ -6,20 +6,18 @@
 
 @foreach (var item in Model)
 {
-    <div class="col-md-6 col-lg-4 col-xl-3">
+    <div class="col-md-6 col-lg-6 col-xl-4">
         <div class="rounded position-relative fruite-item">
             <div class="fruite-img">
-                <img src="@item.DishImage" class="img-fluid  rounded-top" width="500" height="500" alt="">
+                <img src="@item.DishImage" class="img-fluid w-100 rounded-top" alt="">
             </div>
             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                 <h4>@item.DishName</h4>
                 <p>@item.DishDescription</p>
                 <div class="d-flex justify-content-between flex-lg-wrap">
-                    <p class="text-dark fs-5 fw-bold mb-0"> &nbsp;&nbsp;&#8377; @item.DishPrize</p>
-                    <a onclick="GetVarientList('@item.DishId');" class="btn border border-secondary rounded-pill px-3 text-primary">
-                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                    </a>
+                    <p class="text-dark fs-5 fw-bold mb-0">&nbsp;&nbsp;&#8377; @item.DishPrize</p>
+                    <a onclick="GetVarientList('@item.DishId');" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                 </div>
             </div>
         </div>

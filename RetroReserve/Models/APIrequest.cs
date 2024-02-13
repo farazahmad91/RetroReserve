@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -40,9 +41,9 @@ namespace RetroReserve.Models
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                string queryString = string.Join("&", parameters.Select(p => $"id={Uri.EscapeDataString(p.ToString())}"));
+                // string queryString = string.Join("&", parameters.Select(p => $"id={Uri.EscapeDataString(p.ToString())}"));
 
-                HttpResponseMessage response = await httpClient.GetAsync($"{relativeUrl}?{queryString}");
+                HttpResponseMessage response = await httpClient.GetAsync(relativeUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
