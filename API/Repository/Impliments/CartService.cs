@@ -68,7 +68,7 @@ namespace API.Repository.Impliments
             var sp = "sp_DishQtyUpdateInCartValue";
             var param = new
             {
-                CartId = cart.CartId,
+             CartId = cart.CartId,
              Quantity = cart.Quantity,
             };
             var i = await dapper.Insert(param, sp);

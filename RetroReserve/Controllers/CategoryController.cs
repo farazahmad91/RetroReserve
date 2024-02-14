@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RetroReserve.Models;
 using Entities;
+using System.Security.Claims;
 
 namespace RetroReserve.Controllers
 {
@@ -15,9 +16,10 @@ namespace RetroReserve.Controllers
             this.apirequest = apirequest;
         }
         
-        public ActionResult Category()
+        public async Task<ActionResult> Category()
         {
-            return View();
+            var i = await apirequest.GetData<IEnumerable<DishCategory>>("Category/GetdishcategoryList");
+            return PartialView(i);
         }
         
         public async Task<ActionResult> AllDishCategoryList(int DishCategoryId)
@@ -26,23 +28,66 @@ namespace RetroReserve.Controllers
             return PartialView(i);
         }
 
+        public async Task<ActionResult> UpdateCategoryStatus(DishCategory dishCategory)
+        {
+            var i = await apirequest.Post("Category/UpdateCategoryStatus", dishCategory);
+            return Json(i);
+        }
         public async Task<ActionResult> MenuQty(int DishId)
         {
-            var i = await apirequest.GetMultipleDataById<List<Foodkart>>("Category/GetDishVarientListByDishId", DishId);
+            var i = await apirequest.GetData<List<Foodkart>>($"Category/GetDishVarientListByDishId?id={DishId}");
             return PartialView(i);
         }
     
-        public async Task<ActionResult> ListByPrizeWithCategory(int DishCategoryId, decimal MinPrize, decimal MaxPrize)
+        public async Task<ActionResult> DishOnSearch(string name)
         {
-            var i = await apirequest.GetMultipleParameter<List<Foodkart>>("Category/GetDishCategoryListByPrizeWithCategory", DishCategoryId, MinPrize, MaxPrize);
+            var i = await apirequest.GetData<IEnumerable<Foodkart>>($"Category/GetFoodOnSearch?name={name}");
             return PartialView(i);
         }
-        //public async Task<ActionResult> ListByPrize(decimal MinPrize, decimal MaxPrize)
-        //{
-        //    var i = await apirequest.GetMultipleDataById<List<Foodkart>>("Category/GetDishCategoryListByPrize", MinPrize, MaxPrize);
-        //    return PartialView(i);
-        //}
+        public async Task<ActionResult> DishOnPrize(decimal price)
+        {
+            var i = await apirequest.GetData<IEnumerable<Foodkart>>($"Category/GetDishByPrize?price={price}");
+            return PartialView(i);
+        }
 
+        public async Task<ActionResult> SpecialDish()
+        {
+            var i = await apirequest.GetData<IEnumerable<Foodkart>>("Category/SpecialDish");
+            return PartialView(i);
+        }
+
+        public async Task<ActionResult> RecentView()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await apirequest.GetMultipleDataById<List<Foodkart>>("Category/GetDishCategoryListByPrize", email);
+            return PartialView(i);
+        }
+        public async Task<ActionResult> Itemdetail(int id)
+        {
+            var i = await apirequest.GetData<List<DishCategory>>("Category/GetdishcategoryList");
+            return PartialView(i);
+        }
+        public async Task<ActionResult> AddRecentViewDetail(Foodkart foodkart)
+        {
+            var i = await apirequest.Post("Category/AddRecentViewDetail", foodkart);
+            return PartialView(i);
+        }
+        public async Task<ActionResult> AddOrUpdateDishCategory(DishCategory dishcategory)
+        {
+            var i = await apirequest.Post("Category/AddOrUpdateDishCategory", dishcategory);
+            return Json(i);
+        }
+
+        public async Task<ActionResult> CategoryList()
+        {
+            var i = await apirequest.GetData<List<DishCategory>>(("Category/GetdishcategoryList"));
+            return View(i);
+        }
+        public async Task<ActionResult> AddDishCategoryMenu(int DishCategoryId)
+        {
+            var i = await apirequest.GetData<DishCategory>(($"Category/GetDishCategoryById?Id={DishCategoryId}"));
+            return PartialView(i);
+        }
     }
 }
 

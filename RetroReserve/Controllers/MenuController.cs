@@ -51,6 +51,13 @@ namespace RetroReserve.Controllers
             return View();
         }
 
+        public async Task<ActionResult> UpdateQtyInCart(Cart cart)
+        {
+
+            var i = await apirequest.Post($"Cart/QtyUpdateInCart", cart);
+            return Json(i);
+
+        }
         public async Task<ActionResult> UpdateFoodKartStatus(Foodkart foodkart)
         {
             var i = await apirequest.Post("Foodkart/UpdateFoodKartStatus", foodkart);
