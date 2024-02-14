@@ -66,7 +66,7 @@ namespace RetroReserve.Controllers
         {
             var i = await apirequest.GetData<Foodkart>($"Foodkart/GetDishDetailById?id={id}");
             return View(i);
-        }
+        }  
         public async Task<ActionResult> AddRecentViewDetail(Foodkart foodkart)
         {
             var i = await apirequest.Post("Category/AddRecentViewDetail", foodkart);
