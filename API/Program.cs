@@ -23,6 +23,7 @@ builder.Services.AddScoped<IDishCategorySevice, DishCategorySevice>();
 builder.Services.AddScoped<IBookingTableService, BookingTableService>();
 builder.Services.AddScoped<IEmailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IBannersService, BannersService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

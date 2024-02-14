@@ -11,6 +11,7 @@ namespace API.Repository.Interface
         public IEnumerable<Foodkart> GetFullDetailsFoodkartList();
         public IEnumerable<Foodkart> GetFoodkartDisplayList();
         public int DeleteFoodkart(int id);
+        public Foodkart GetDishDetailById(int id);
     }
     public interface ITeaKartService
     {

@@ -1,0 +1,203 @@
+﻿@model Entities.Banners
+@{
+    ViewData["Title"] = "EditBanner";
+}
+
+<div class="modal fade" id="Modalbanner" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div>
+                        <div class="card" id="snackbar"></div>
+                        <div class="card" id="snackbar2"></div>
+                        <div class="card" id="snackbar3"></div>
+                    </div>
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Banner Info</Strong></h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Banner Name</label>
+                                            <div class="input-group">
+                                                <input type="text" hidden asp-for="BannerId" class="form-control" />
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                                </div>
+                                                <input type="text" asp-for="BannerName" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Banner Image</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">&#8377;</span>
+                                                </div>
+                                                <input type="file" asp-for="BannerImage" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Offer</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-gift" style="font-size:23px;"></i></span>
+                                                </div>
+                                                <input type="text" asp-for="Offer" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ProductLink</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">&#8377;</span>
+                                                </div>
+                                                <input type="text" asp-for="ProductLink" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                                </div>
+                                                <input type="text" asp-for="Description" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                    <button type="submit" id="btnubmit" onclick="AddOrUpdateBanner();" class="btn btn-primary">Submit</button>
+                                    <a href="/Banners/BannerList" class="btn btn-primary" style="text-align:right;">Back To List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function AddOrUpdateBanner() {
+        Show_Loader();
+        debugger;
+        setTimeout(function () {
+            if (validatebanner()) {
+                let param = {
+                    BannerId: $("#BannerId").val(),
+                    BannerName: $("#BannerName").val(),
+                    Offer: $("#Offer").val(),
+                    ProductLink: $("#ProductLink").val(),
+                    Description: $("#Description").val(),
+                };
+                var banner = new FormData();
+                banner.append("BannerId", param.BannerId);
+                banner.append("BannerName", param.BannerName);
+                banner.append("Offer", param.Offer);
+                banner.append("ProductLink", param.ProductLink);
+                banner.append("Description", param.Description);
+                banner.append("ImagePath", $("#BannerImage").prop('files')[0]);
+
+                $.ajax({
+                    url: '/Banners/AddOrUpdateBanner',
+                    type: 'POST',
+                    data: banner,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        Hide_Loader();
+                        if (result.statusCode == -1) {
+                            showerrors(result.responseText);
+
+                        }
+                        showinsertsuccess(result.responseText);
+                    },
+                   
+             
+                });
+            }
+        }, 1500)
+    }
+
+    function validatebanner() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#BannerName").val() === "") {
+            addError("Please enter banner name");
+        }
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            showerrors(msg);
+        }
+
+        return isvalidated;
+    }
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+</script>
+
+

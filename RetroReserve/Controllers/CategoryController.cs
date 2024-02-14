@@ -24,7 +24,7 @@ namespace RetroReserve.Controllers
         
         public async Task<ActionResult> AllDishCategoryList(int DishCategoryId)
         {
-            var i = await apirequest.GetMultipleDataById<List<Foodkart>>("Category/GetDishByCategoryId", DishCategoryId);
+            var i = await apirequest.GetData<List<Foodkart>>($"Category/GetDishByCategoryId?id={DishCategoryId}");
             return PartialView(i);
         }
 
@@ -62,10 +62,10 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetMultipleDataById<List<Foodkart>>("Category/GetDishCategoryListByPrize", email);
             return PartialView(i);
         }
-        public async Task<ActionResult> Itemdetail(int id)
+        public async Task<IActionResult> Itemdetail(int id)
         {
-            var i = await apirequest.GetData<List<DishCategory>>("Category/GetdishcategoryList");
-            return PartialView(i);
+            var i = await apirequest.GetData<Foodkart>($"Foodkart/GetDishDetailById?id={id}");
+            return View(i);
         }
         public async Task<ActionResult> AddRecentViewDetail(Foodkart foodkart)
         {

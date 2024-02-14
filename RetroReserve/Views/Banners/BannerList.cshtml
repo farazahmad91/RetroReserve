@@ -1,0 +1,224 @@
+﻿@model IEnumerable<Entities.Banners>
+@{
+    string statustext = "";
+    string statuscolor = "";
+    ViewData["Title"] = "BannerList";
+}
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Banner</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Menu</a></li>
+                        <li class="breadcrumb-item active">Manage Banner</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+        <button type="button" class="btn btn-primary" onclick="EditBanner(0);">Add New Banner</button>
+        <br />  <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BannerName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BannerImage)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AddOn)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                               <th>
+                                @Html.DisplayNameFor(model => model.Offer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductLink)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UpdateOn)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                          
+                        
+                        @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td>
+                                    <div style="text-align:center;"> <h3><strong>Oops! Record Not Found.</strong></h3></div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BannerName)
+                                </td>
+                                <td>
+                                        <a class="fancybox" href="@item.BannerImage" data-fancybox data-caption="@item.BannerName">
+                                            <img src="@item.BannerImage" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="100" height="50" />
+                                        </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AddOn)
+                                </td>
+                                    <td>
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Offer)
+                                    </td>
+                                    <td>
+                                                                @Html.DisplayFor(modelItem => item.ProductLink)
+                                    </td>
+                                    <td>
+                                            @if (item.UpdateOn == "")
+                                            {
+                                                <label>not update</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.UpdateOn)
+                                            }
+                                            
+                                </td>
+                                <td>
+                                  
+                                    @{
+                                        var ckb = @item.Status == 0 ? "unchecked" : "checked";
+                                        if (@item.Status == 0)
+                                        {
+                                            statuscolor = "color:red";
+                                            statustext = "deactive";
+                                        }
+                                        else
+                                        {
+                                            statuscolor = "color:Green";
+                                            statustext = "active";
+                                        }
+
+                                    }
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                    <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.BannerId" onclick="UpdateBannerStatus(@item.BannerId);" @ckb>
+                                                <label class="custom-control-label" for="customSwitch3_@item.BannerId" style="@statuscolor">@statustext</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                        <a class="dropdown-item" onclick="EditBanner(@item.BannerId)"><span class="fas fa-edit" style="color: Blue"></span> Edit Menu</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="BannerPartialView"></div>
+</div>
+<script>
+    function EditBanner(Id) {
+
+        let param = {
+            id: Id,
+        };
+        $.post("/Banners/EditBanner", param).done(function (res) {
+            $("#BannerPartialView").html(res);
+            $("#Modalbanner").modal("show");
+        }).fail(function () {
+            alert("errror");
+        })
+    }
+
+    function UpdateBannerStatus(Id) {
+        var id = $("#customSwitch3_" + Id).prop("checked");
+        if (id == true) {
+            id = 1;
+        } else {
+            id = 0;
+        }
+        var param = {
+            BannerId: Id,
+            Status: id,
+        };
+        Swal.fire({
+            title: 'Are you sure you want to Update?',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Update it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Banners/UpdateStatus',
+                    type: 'POST',
+                    data: param,
+                    success: function (data) {
+                        showinsertsuccess("Banner Updated Successfully");
+                        window.location.href = "/Banners/BannerList";
+                    },
+                });
+            } else {
+               
+                showerror("Status Not Updated");
+                window.location.href = "/Banners/BannerList";
+            }
+        });
+    }
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        jQuery("#snackbar").html(msg);
+    }
+
+    function showupdatesuccess(msg) {
+        var x = document.getElementById("snackbar2");
+        x.className = "show2";
+        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+        jQuery("#snackbar2").html(msg);
+    }
+
+    function showerrors(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+        jQuery("#snackbar3").html(msg);
+    }
+
+</script>
+
+

@@ -102,6 +102,18 @@ namespace API.Repository.Impliments
             return i;
         }
 
+        public Foodkart GetDishDetailById(int id)
+        {
+            var sp = "sp_GetDishDetailById";
+            var param = new
+            {
+                DishId = id,
+
+            };
+            var i = dapper.GetById<Foodkart>(param, sp);
+            return i;
+        }
+
 
     }
 

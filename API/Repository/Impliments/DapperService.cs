@@ -35,6 +35,7 @@ namespace API.Repository.Impliments
         public async Task<T> GetAsync<T>(string sp, object parms = null, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
+
             try
             {
                 using (IDbConnection db = new SqlConnection(Constr))
@@ -45,7 +46,6 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-               
                 throw ex;
             }
             return result;
