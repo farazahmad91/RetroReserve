@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Inbox</h1>
+                    <h1>Menu List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,9 +24,9 @@
         </div><!-- /.container-fluid -->
     </section>
     <div>
-        <div class="card" id="snackbar">Data Saved Successfully</div>
-        <div class="card" id="snackbar2">Data Updated Successfully</div>
-        <div class="card" id="snackbar3">Deleted.</div>
+        <div class="card" id="snackbar"></div>
+        <div class="card" id="snackbar2"></div>
+        <div class="card" id="snackbar3"></div>
     </div>
     <div class="container">
     <button type="button" class="btn btn-primary" onclick="EditMenu();">Create New Menu</button>
@@ -136,6 +136,8 @@ function EditFoodKart(DishId) {
                 alert("errror");
             })
 }
+
+
     function EditVarient(DishId) {
         let param = {
             DishId: DishId,

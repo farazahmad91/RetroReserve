@@ -83,24 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateCartBadge();
     });
 
-function UpdateQtyCart(Id) {
-    debugger;
-    var cartqty = $("#cartqty_" + Id).val();
-    var data = {
-        CartId: Id,
-        Quantity: cartqty,
-    };
-    console.log("data", data);
 
-    $.post('/Cart/QtyUpdateInCart', data)
-        .done(function (res) {
-          
-        })
-        .fail(function () {
-            alert("Failed Quantity Update");
-        });
-
-}
 
 function checkoutOrder() {
     Show_Loader();
@@ -260,4 +243,17 @@ function cartstatus() {
     });
 }
 cartstatus();
+
+function GetVarientList(DishId) {
+    debugger;
+    $.post("/Category/MenuQty", { DishId: DishId })
+        .done(function (res) {
+            console.log(res);
+            $("#modalVarientPartialView").html(res);
+            $("#MyVarientModal").modal("show");
+        })
+        .fail(function () {
+            alert("error");
+        });
+}
 

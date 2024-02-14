@@ -10,6 +10,42 @@ namespace API.Repository.Impliments
         {
             this.dapper = dapper;
         }
+        public async Task<int> AddOrUpdateDishCategory(DishCategory dishCategory)
+        {
+
+            var sp = "sp_AddOrUpdateDishCategory";
+            var param = new
+            {
+                DishCategoryId = dishCategory.DishCategoryId,
+                DishCategoryName = dishCategory.DishCategoryName,
+                Icon = dishCategory.Icon,
+                Status = dishCategory.Status,
+            };
+            var i = await dapper.Insert(param, sp);
+            return i;
+        }
+        public DishCategory GetDishCategoryById(int Id)
+        {
+            var sp = "sp_GetCategoryById";
+            var param = new
+            {
+                DishCategoryId = Id,
+            };
+            var i = dapper.GetById<DishCategory>(param, sp);
+            return i;
+        }
+        public async Task<int> UpdateCategoryStatus(DishCategory dishCategory)
+        {
+            var sp = "sp_UpdateCategoryStatus";
+            var param = new
+            {
+                DishCategoryId = dishCategory.DishCategoryId,
+                 Status = dishCategory.Status,
+            };
+            var i = await dapper.Insert(param, sp);
+            return i;
+        }
+
         public IEnumerable<Foodkart> GetDishCategoryListById(int id)
         {
             var sp = "sp_GetDishCategoryList";
@@ -32,13 +68,12 @@ namespace API.Repository.Impliments
             return i;
         }
 
-        public IEnumerable<Foodkart> GetDishCategoryListByPrize(params object[] parameters)
+        public IEnumerable<Foodkart> GetDishByPrize(decimal price)
         {
-            var sp = "sp_GetDishCategoryListByPrize";
+            var sp = "sp_GetDishListByPrize";
             var param = new
             {
-                MinValue = (decimal)parameters[0],
-                MaxValue = (decimal)parameters[1],
+                SellingCost = price,
             };
             var i = dapper.GetItemsById<Foodkart>(param, sp);
             return i;
@@ -54,6 +89,29 @@ namespace API.Repository.Impliments
                 MaxPrize = (decimal)parameters[2],
             };
             var i = dapper.GetItemsById<Foodkart>(param, sp);
+            return i;
+        }
+
+        public IEnumerable<DishCategory> GetdishcategoryList()
+        {
+            var sp = "sp_GetAllDishCategoryList";
+            var i = dapper.GetAll<DishCategory>(sp);
+            return i;
+        }
+
+        public IEnumerable<Foodkart> GetFoodOnSearch(string name)
+        {
+            var sp = "sp_GetFoodOnSearch";
+            var param = new {
+                DishName = name,
+            };
+            var i = dapper.GetItemsById<Foodkart>(param, sp);
+            return i;
+        }
+        public IEnumerable<Foodkart> SpecialDish()
+        {
+            var sp = "sp_GetSpecialDish";
+            var i = dapper.GetAll<Foodkart>(sp);
             return i;
         }
     }

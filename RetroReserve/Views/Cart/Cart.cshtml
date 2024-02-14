@@ -129,7 +129,27 @@
 <!-- Cart Page End -->
 
 
+<script>
+    function UpdateQtyCart(Id) {
+        debugger;
+        var cartqty = $("#cartqty_" + Id).val();
+        var data = {
+            CartId: Id,
+            Quantity: cartqty,
+        };
+        console.log("data", data);
 
+        $.post('/Menu/UpdateQtyInCart', data)
+            .done(function (res) {
+
+            })
+            .fail(function () {
+                alert("Failed Quantity Update");
+            });
+
+    }
+
+</script>
 
 
 

@@ -58,12 +58,12 @@ namespace API.Repository.Impliments
                 return connection.QueryFirstOrDefault<T>(query,id);
             }
         }
-        public IEnumerable<T> GetItemsById<T>(object id, string query)
+        public IEnumerable<T> GetItemsById<T>(object parms, string query)
         {
             using (var connection = new SqlConnection(Constr))
             {
                 connection.Open();
-                return connection.Query<T>(query,id );
+                return connection.Query<T>(query, parms);
             }
         }
 

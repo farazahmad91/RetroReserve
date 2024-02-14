@@ -2,6 +2,7 @@
 using API.Repository.Interface;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
+using API.Repository.Impliments;
 
 namespace API.Controllers
 {
@@ -14,6 +15,28 @@ namespace API.Controllers
         {
             this.dishCategorySevice = dishCategorySevice;
         }
+        [HttpGet(nameof(GetDishCategoryById))]
+        public IActionResult GetDishCategoryById(int Id)
+        {
+            var i = dishCategorySevice.GetDishCategoryById(Id);
+            return Ok(i);
+
+        }
+        [HttpPost(nameof(AddOrUpdateDishCategory))]
+        public IActionResult AddOrUpdateDishCategory(DishCategory dishCategory)
+        {
+            var i = dishCategorySevice.AddOrUpdateDishCategory(dishCategory);
+            return Ok(i);
+
+        }
+        [HttpPost(nameof(UpdateCategoryStatus))]
+        public IActionResult UpdateCategoryStatus(DishCategory dishCategory)
+        {
+            var i = dishCategorySevice.UpdateCategoryStatus(dishCategory);
+            return Ok(i);
+
+        }
+
         [HttpGet(nameof(GetDishByCategoryId))]
         public IActionResult GetDishByCategoryId(int id)
         {
@@ -35,10 +58,32 @@ namespace API.Controllers
             return Ok(i);
 
         }
-        [HttpGet(nameof(GetDishCategoryListByPrize))]
-        public IActionResult GetDishCategoryListByPrize(decimal MinPrize, decimal MaxPrize)
+        [HttpGet(nameof(GetDishByPrize))]
+        public IActionResult GetDishByPrize(decimal price)
         {
-            var i = dishCategorySevice.GetDishCategoryListByPrize(MinPrize, MaxPrize);
+            var i = dishCategorySevice.GetDishByPrize(price);
+            return Ok(i);
+
+        }
+        [HttpGet(nameof(GetdishcategoryList))]
+        public IActionResult GetdishcategoryList()
+        {
+            var i = dishCategorySevice.GetdishcategoryList();
+            return Ok(i);
+
+        }
+        [HttpGet(nameof(GetFoodOnSearch))]
+        public IActionResult GetFoodOnSearch(string name)
+        {
+            var i = dishCategorySevice.GetFoodOnSearch(name);
+            return Ok(i);
+
+        }
+
+        [HttpGet(nameof(SpecialDish))]
+        public IActionResult SpecialDish()
+        {
+            var i = dishCategorySevice.SpecialDish();
             return Ok(i);
 
         }

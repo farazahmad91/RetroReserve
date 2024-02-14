@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Entities.Foodkart>
+@{
+    ViewData["Title"] = "SpecialDish";
+    Layout = null;
+}
+@foreach(var item in Model){
+    <div class="rounded me-4" style="width: 100px; height: 100px;">
+        <img src="@item.DishImage" class="img-fluid rounded" alt="">
+    </div>
+    <div>
+        <h6 class="mb-2">@item.DishName</h6>
+        <div class="d-flex mb-2">
+            <i class="fa fa-star text-secondary"></i>
+            <i class="fa fa-star text-secondary"></i>
+            <i class="fa fa-star text-secondary"></i>
+            <i class="fa fa-star text-secondary"></i>
+            <i class="fa fa-star text-secondary"></i>
+        </div>
+        <div class="d-flex mb-2">
+            <h5 class="fw-bold me-2">@item.SellingCost</h5>
+            <h5 class="text-danger text-decoration-line-through">&nbsp;&#8377;@item.MRP</h5>
+        </div>
+    </div>
+
+}
+
