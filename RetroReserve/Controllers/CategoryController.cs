@@ -88,6 +88,12 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<DishCategory>(($"Category/GetDishCategoryById?Id={DishCategoryId}"));
             return PartialView(i);
         }
+
+        public async Task<ActionResult> RelatedProducts(int id)
+        {
+          var i = await apirequest.GetData<List<Foodkart>>(($"Category/RelatedProducts?Id={id}"));
+            return PartialView(i);
+        }
     }
 }
 

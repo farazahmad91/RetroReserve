@@ -32,12 +32,12 @@ namespace RetroReserve.Controllers
 
         }
 
-        public async Task<IActionResult> GetNumberInCartItem()
+        public async Task<IActionResult> GetQtyInCart()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             if (email != null)
             {
-                var cart = await apirequest.GetMultipleDataById<Cart>("Cart/GetNumberInCartItem", email);
+                var cart = await apirequest.GetData<Cart>($"Cart/GetQtyInCart?id={email}");
                 return Json(cart);
             }
             else

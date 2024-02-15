@@ -44,10 +44,17 @@ namespace API.Controllers
             return Ok(i);
 
         }
-        [HttpGet(nameof(GetNumberInCartItem))]
-        public IActionResult GetNumberInCartItem(string id)
+        [HttpGet(nameof(GetQtyInCart))]
+        public IActionResult GetQtyInCart(string id)
         {
-            var i = cartValueService.GetNumberInCartItem(id);
+            var i = cartValueService.GetQtyInCart(id);
+            return Ok(i);
+
+        }
+        [HttpGet(nameof(GetCartCheckOutPrice))]
+        public IActionResult GetCartCheckOutPrice(string id)
+        {
+            var i = cartValueService.GetCartCheckOutPrice(id);
             return Ok(i);
 
         }

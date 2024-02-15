@@ -235,7 +235,7 @@ function success(msg) {
     jQuery("#snackbar4").html(msg);
 }
 function cartstatus() {
-    $.get("/Cart/GetNumberInCartItem").done(function (res) {
+    $.get("/Cart/GetQtyInCart").done(function (res) {
         var i = $("#cbadge").html(res.quantity);
         console.log(i);
     }).fail(function () {

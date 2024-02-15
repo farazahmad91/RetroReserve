@@ -14,6 +14,7 @@ namespace API.Repository.Interface
         public IEnumerable<DishCategory> GetdishcategoryList();
         public IEnumerable<Foodkart> GetFoodOnSearch(string name);
         public IEnumerable<Foodkart> SpecialDish();
+        public IEnumerable<Foodkart> RelatedProducts(int id);
 
     }
 }

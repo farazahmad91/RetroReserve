@@ -44,7 +44,7 @@ namespace API.Repository.Impliments
             var i = dapper.GetItemsById<Cart>(param, sp);
             return i;
         }
-        public Cart GetNumberInCartItem(string id)
+        public Cart GetQtyInCart(string id)
         {
             var sp = "sp_GetNumberInCartItem";
             var param = new
@@ -62,6 +62,16 @@ namespace API.Repository.Impliments
             return i;
         }
 
+        public IEnumerable<Cart> GetCartCheckOutPrice(string id)
+        {
+            var sp = "sp_CartCheckOutById";
+            var param = new
+            {
+                UserID = id,
+            };
+            var i = dapper.GetItemsById<Cart>(param, sp);
+            return i;
+        }
 
         public async Task<int> QtyUpdateInCart(Cart cart)
         {
