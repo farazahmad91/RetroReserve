@@ -14,7 +14,7 @@ namespace RetroReserve.Controllers
         {
             this.apirequest = apirequest;
         }
-     
+        [Route("/TableBooking")]
         public async Task<ActionResult> BookTable()
         {
             var i = await apirequest.GetData<BookingTableVM>("BookingTable/GetTabledetailsList");

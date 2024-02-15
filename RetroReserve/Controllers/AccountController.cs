@@ -69,7 +69,7 @@ namespace RetroReserve.Controllers
                 }
                 else if(authenticateResponse.Result.Role == "user")
                 {
-                    string Url = "/User/Index";
+                    string Url = "/Home";
                     return Json(Url);
                 }
                 else

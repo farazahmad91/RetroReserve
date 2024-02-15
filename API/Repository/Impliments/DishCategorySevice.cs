@@ -117,10 +117,10 @@ namespace API.Repository.Impliments
 
         public IEnumerable<Foodkart> RelatedProducts(int id)
         {
-            var sp = "sp_GetDishVarientListByDishId";
+            var sp = "sp_GetRelatedProduct";
             var param = new
             {
-                DishId = id,
+                DishCategoryId = id,
             };
             var i = dapper.GetItemsById<Foodkart>(param, sp);
             return i;

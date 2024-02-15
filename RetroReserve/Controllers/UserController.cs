@@ -14,7 +14,8 @@ namespace RetroReserve.Controllers
         {
             this.apirequest = apirequest;
         }
-      
+
+        [Route("/Home")]
         public async Task<ActionResult> Index()
         {
             var i = await apirequest.GetData<List<Foodkart>>("Foodkart/GetFoodkartList");

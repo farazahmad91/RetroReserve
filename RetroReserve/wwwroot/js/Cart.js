@@ -106,7 +106,7 @@ function checkoutOrder() {
             setTimeout(function () {
                 Hide_Loader();
                 alert('Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!');
-                window.location.href = "/User/Index";
+                window.location.href = "/Home";
             }, 4500)
         })
         .fail(function () {
@@ -149,6 +149,27 @@ function DeleteCart(CartId) {
         }
     });
 }
+function AddCart(Id) {
+    debugger;
+    let data = {
+        Id: Id,
+    };
+
+    $.post('/Cart/AddCart', data)
+        .done(function (res) {
+            if (res == -1) {
+                errors("This dish is already in the cart");
+            } else {
+                success("Dish added successfully to your cart.");
+                cartstatus();
+            }
+        })
+        .fail(function (res) {
+            errors("Kindly log in before adding a dish to your cart.");
+
+        });
+}
+
 function Getconfirmdatashow() {
     window.location.href = '/Invoice/Confirmation?Id=' + UserId;
 }

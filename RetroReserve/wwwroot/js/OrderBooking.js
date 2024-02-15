@@ -33,7 +33,7 @@ function BookTable() {
                         icon: 'success'
                     }).then(function () {
                         Hide_Loader();
-                        window.location.href = "/User/Index";
+                        window.location.href = "/Home";
                     });
                 })
                 .fail(function () {

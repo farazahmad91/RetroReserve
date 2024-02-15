@@ -16,6 +16,7 @@ namespace RetroReserve.Controllers
             this.apirequest = apirequest;
         }
         [Authorize]
+        [Route("/Cart")]
         public async Task<ActionResult> Cart(string id)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
