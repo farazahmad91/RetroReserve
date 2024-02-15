@@ -114,5 +114,16 @@ namespace API.Repository.Impliments
             var i = dapper.GetAll<Foodkart>(sp);
             return i;
         }
+
+        public IEnumerable<Foodkart> RelatedProducts(int id)
+        {
+            var sp = "sp_GetDishVarientListByDishId";
+            var param = new
+            {
+                DishId = id,
+            };
+            var i = dapper.GetItemsById<Foodkart>(param, sp);
+            return i;
+        }
     }
 }

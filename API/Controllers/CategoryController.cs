@@ -87,5 +87,12 @@ namespace API.Controllers
             return Ok(i);
 
         }
+        [HttpGet(nameof(RelatedProducts))]
+        public IActionResult RelatedProducts(int id)
+        {
+            var i = dishCategorySevice.RelatedProducts(id);
+            return Ok(i);
+
+        }
     }
 }

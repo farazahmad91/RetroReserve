@@ -5,7 +5,7 @@
 }
 @foreach(var item in Model){
     <div class="rounded me-4" style="width: 100px; height: 100px;">
-        <img src="@item.DishImage" class="img-fluid rounded" alt="">
+        <img src="@item.DishImage" class="img-fluid rounded" onclick="OnItemDetail(@item.DishId)" alt="">
     </div>
     <div>
         <h6 class="mb-2">@item.DishName</h6>

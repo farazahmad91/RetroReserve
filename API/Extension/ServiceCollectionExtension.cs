@@ -58,7 +58,7 @@ namespace API.Extension
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "jwts", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RetroReserve", Version = "v1" });
 
                 // Configure Swagger to use JWT for authorization
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

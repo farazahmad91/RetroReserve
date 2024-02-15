@@ -12,8 +12,8 @@
                 <h4 class="mb-3 text-secondary">100% Testy Flavorful Foods</h4>
                 <h1 class="mb-5 display-3 text-primary">Delicious Veg & Non-Veg Foods</h1>
                 <div class="position-relative mx-auto">
-                    <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="number" placeholder="Search">
-                    <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100" style="top: 0; right: 25%;">Submit Now</button>
+                    <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-relative rounded-pill text-white">Order Now</button>
+                    <a href="/bookingTable/BookTable" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 10%;">Book Table Now</a>
                 </div>
             </div>
             <div class="col-md-12 col-lg-5">
@@ -129,7 +129,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                } 
+                                }
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,6 @@
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4" id="Menucategory">
-                                
                             </div>
                         </div>
                     </div>
@@ -329,23 +328,23 @@
 <!-- Banner Section End -->
 <!-- End Specials Section -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-@section Scripts{
-			
-		<script>
-      function OnItemDetail(Id) {
-    var Url = "/Category/Itemdetail?Id=" + Id;
-    window.location.href = Url;
-}
+@section Scripts {
 
+    <script>
+        function OnItemDetail(Id) {
+            var Url = "/Category/Itemdetail?Id=" + Id;
+            window.location.href = Url;
+        }
 
-		function Onload() {
-			$.post("/User/MenuKart").done(function (res) {
-				$("#MenuPartialView").html(res);
-			}).fail(function () {
-				alert("errror");
-			})
-		}	
-		Onload();
+        function Onload() {
+
+            $.post("/User/MenuKart").done(function (res) {
+                $("#MenuPartialView").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        Onload();
 
         function ShowBanner() {
             $.post("/Banners/ShowBanner").done(function (res) {
@@ -377,31 +376,31 @@
                 });
         }
 
-function ViewFoodKart(DishId) {
-                let param = {
-         DishId: DishId,
-     };
-            $.post("/Menu/Detail",param).done(function (response) {
+        function ViewFoodKart(DishId) {
+            let param = {
+                DishId: DishId,
+            };
+            $.post("/Menu/Detail", param).done(function (response) {
                 $("#PartialViewprodct").html(response);
-				  alert(response);
+                alert(response);
             }).fail(function () {
                 alert("errror");
             })
         }
 
-function GetCategoryValue(DishCategoryId) {
-    let data = {
-        DishCategoryId: DishCategoryId,
-    };
+        function GetCategoryValue(DishCategoryId) {
+            let data = {
+                DishCategoryId: DishCategoryId,
+            };
 
-    $.post("/Category/AllDishCategoryList", data)
-        .done(function(res) {
-            $("#Menucategory").html(res);
-        })
-        .fail(function() {
-            alert("error");
-        });
-}
+            $.post("/Category/AllDishCategoryList", data)
+                .done(function (res) {
+                    $("#Menucategory").html(res);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        }
 
         function GetVarientList(DishId) {
             debugger;
@@ -422,5 +421,5 @@ function GetCategoryValue(DishCategoryId) {
                 alert("errror");
             })
         }
-		</script>
-	} 
+    </script>
+}

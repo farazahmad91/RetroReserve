@@ -8,6 +8,7 @@ namespace API.Repository.Interface
         public IEnumerable<Cart> GetCartValueList();
         public int DeleteCart(int id);
         public Task<int> QtyUpdateInCart(Cart cart);
-        public Cart GetNumberInCartItem(string id);
+        public Cart GetQtyInCart(string id);
+        public IEnumerable<Cart> GetCartCheckOutPrice(string id);
     }
 }
