@@ -42,6 +42,7 @@
                         <br />
                         <a onclick="GetVarientList(@Model.DishId);" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                     </div>
+                    <input type="text" hidden id="dishcategoryid" value="@Model.DishCategoryId" />
                     <div class="col-lg-12">
                         <nav>
                             <div class="nav nav-tabs mb-3">
@@ -229,11 +230,8 @@
             </div>
         </div>
         <h1 class="fw-bold mb-0">Related products</h1>
-        <div class="vesitable">
-            <div class="owl-carousel vegetable-carousel justify-content-center">
-                
-            </div>
-        </div>
+        <br />
+        <div id="RelatedProductPV"></div>
     </div>
     <div id="modalVarientPartialView"></div>
 </div>
@@ -241,9 +239,23 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function OnItemDetail(Id) {
-        var Url = "/Category/Itemdetail?Id=" + Id;
+        var Url = "/Details?Id=" + Id;
         window.location.href = Url;
     }
+    function RelatedProducts() {
+        var param = {
+            Id: $("#dishcategoryid").val(),
+        };
+        $.post("/Category/RelatedProducts", param).done(function (res) {
+            $("#RelatedProductPV").html(res);
+        }).fail(function () {
+            alert("Related Products not found");
+        });
+    }
+    window.onload = function () {
+        RelatedProducts();
+    };
+    
     function Categoryload() {
         $.post("/Category/Category").done(function (res) {
             $("#CategoryPartialView").html(res);

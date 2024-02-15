@@ -40,6 +40,7 @@ namespace RetroReserve.Controllers
             return Json(i);
 
         }
+        [Route("/OrderHistory")]
         public async Task<IActionResult> OrderHistory(string? id)
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);

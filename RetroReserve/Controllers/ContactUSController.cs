@@ -29,6 +29,7 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Contact>(($"Contact/GetContactUsById?Id={id}"));
             return PartialView(i);
         }
+        [Route("/Contact")]
         public ActionResult ContactUS()
         {
             return View();

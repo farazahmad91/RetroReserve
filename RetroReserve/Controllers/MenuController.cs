@@ -50,6 +50,7 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Foodkart>(($"Foodkart/GetFoodkartById?Id={DishId}"));
             return PartialView(i);
         }
+        [Route("/Recipe")]
         public async Task<ActionResult> Recipe()
         {
             return View();
@@ -77,6 +78,7 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Foodkart>(($"Foodkart/GetFoodkartById?Id={DishId}"));
             return PartialView(i);
         }
+        [Route("/menu-card")]
         public ActionResult Menu()
         {
             return View();

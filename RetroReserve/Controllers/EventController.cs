@@ -50,6 +50,7 @@ namespace RetroReserve.Controllers
             var i = await apirequest.Post("Event/AddOrUpdateEvent", _event);
             return Json(i);
         }
+        [Route("/Event")]
         public async Task<ActionResult> Event()
         {
             var i = await apirequest.GetData<EventVM>("Event/GetEventdetailsList");

@@ -58,10 +58,10 @@ namespace RetroReserve.Controllers
 
         public async Task<ActionResult> RecentView()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            var i = await apirequest.GetMultipleDataById<List<Foodkart>>("Category/GetDishCategoryListByPrize", email);
+            var i = await apirequest.GetData<List<Foodkart>>("Foodkart/GetFoodkartList");
             return PartialView(i);
         }
+        [Route("/Details")]
         public async Task<IActionResult> Itemdetail(int id)
         {
             var i = await apirequest.GetData<Foodkart>($"Foodkart/GetDishDetailById?id={id}");
@@ -89,9 +89,9 @@ namespace RetroReserve.Controllers
             return PartialView(i);
         }
 
-        public async Task<ActionResult> RelatedProducts(int id)
+        public async Task<ActionResult> RelatedProducts(int Id)
         {
-          var i = await apirequest.GetData<List<Foodkart>>(($"Category/RelatedProducts?Id={id}"));
+          var i = await apirequest.GetData<List<Foodkart>>(($"Category/RelatedProducts?Id={Id}"));
             return PartialView(i);
         }
     }
