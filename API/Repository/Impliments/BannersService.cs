@@ -24,6 +24,7 @@ namespace API.Repository.Impliments
                 {
                     BannerId = banners.BannerId,
                     BannerName = banners.BannerName,
+                    BannerOfferName = banners.BannerOfferName,
                     BannerImage = banners.BannerImage,
                     Description = banners.Description,
                     Offer = banners.Offer,
@@ -71,10 +72,27 @@ namespace API.Repository.Impliments
             var i = await _dapper.Insert(param, sp);
             return i;
         }
-
-        public IEnumerable<Banners> ShowBanner()
+        public IEnumerable<Banners> ShowBanner1()
         {
-            var sp = "sp_GetShowBannerData";
+            var sp = "sp_GetBanner1";
+            var i = _dapper.GetAll<Banners>(sp);
+            return i;
+        }
+        public IEnumerable<Banners> ShowBanner2()
+        {
+            var sp = "sp_GetBanner2";
+            var i = _dapper.GetAll<Banners>(sp);
+            return i;
+        }
+        public IEnumerable<Banners> ShowBanner3()
+        {
+            var sp = "sp_GetBanner3";
+            var i = _dapper.GetAll<Banners>(sp);
+            return i;
+        }
+        public IEnumerable<Banners> EventBanner()
+        {
+            var sp = "sp_GetEventBanner";
             var i = _dapper.GetAll<Banners>(sp);
             return i;
         }

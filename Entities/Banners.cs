@@ -11,6 +11,7 @@ namespace Entities
     {
         public int BannerId { get; set; }
         public string? BannerName { get; set; }
+        public string? BannerOfferName { get; set; }
         public string? BannerImage { get; set; }
         public string? Description { get; set; }
         public string? Offer { get; set; }

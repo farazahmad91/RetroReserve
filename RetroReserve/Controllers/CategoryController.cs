@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RetroReserve.Models;
 using Entities;
 using System.Security.Claims;
+using System.Web.Providers.Entities;
 
 namespace RetroReserve.Controllers
 {
@@ -58,7 +59,8 @@ namespace RetroReserve.Controllers
 
         public async Task<ActionResult> RecentView()
         {
-            var i = await apirequest.GetData<List<Foodkart>>("Foodkart/GetFoodkartList");
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await apirequest.GetData<List<Foodkart>>($"Category/GetRecentView?email={email}");
             return PartialView(i);
         }
         [Route("/Details")]
@@ -67,10 +69,12 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Foodkart>($"Foodkart/GetDishDetailById?id={id}");
             return View(i);
         }  
-        public async Task<ActionResult> AddRecentViewDetail(Foodkart foodkart)
+        public async Task<ActionResult> AddRecentViewDetail(RecentView recentView)
         {
-            var i = await apirequest.Post("Category/AddRecentViewDetail", foodkart);
-            return PartialView(i);
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            recentView.UserID = email;
+            var i = await apirequest.Post("Category/RecentView", recentView);
+            return Json(i);
         }
         public async Task<ActionResult> AddOrUpdateDishCategory(DishCategory dishcategory)
         {

@@ -42,10 +42,32 @@ namespace API.Controllers
             return Ok(i);
         }
 
-        [HttpGet(nameof(ShowBanner))]
-        public IActionResult ShowBanner()
+        [HttpGet(nameof(ShowBanner1))]
+        public IActionResult ShowBanner1()
         {
-            var i = _bannersService.ShowBanner();
+            var i = _bannersService.ShowBanner1();
+            return Ok(i);
+
+        }
+
+        [HttpGet(nameof(ShowBanner2))]
+        public IActionResult ShowBanner2()
+        {
+            var i = _bannersService.ShowBanner2();
+            return Ok(i);
+        }
+
+        [HttpGet(nameof(ShowBanner3))]
+        public IActionResult ShowBanner3()
+        {
+            var i = _bannersService.ShowBanner3();
+            return Ok(i);
+        }
+
+        [HttpGet(nameof(EventBanner))]
+        public IActionResult EventBanner()
+        {
+            var i = _bannersService.EventBanner();
             return Ok(i);
         }
     }

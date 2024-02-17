@@ -15,6 +15,7 @@ namespace RetroReserve.Controllers
         {
             this.apirequest = apirequest;
         }
+        [Route("/Checkout")]
         public async Task<ActionResult> checkout()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
@@ -22,9 +23,11 @@ namespace RetroReserve.Controllers
             return PartialView(i);
         }
 
-        public ActionResult Payment()
+        public async Task<ActionResult> Payment()
         {
-            return View();
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await apirequest.GetData<List<Cart>>($"Cart/GetCartCheckOutPrice?id={email}");
+            return PartialView(i);
         }
 
     }

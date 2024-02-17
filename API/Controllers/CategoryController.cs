@@ -94,5 +94,20 @@ namespace API.Controllers
             return Ok(i);
 
         }
+        [HttpPost(nameof(RecentView))]
+        public IActionResult RecentView(RecentView recentView)
+        {
+            var i = dishCategorySevice.RecentView(recentView);
+            return Ok(i);
+
+        }
+
+        [HttpGet(nameof(GetRecentView))]
+        public IActionResult GetRecentView(string email)
+        {
+            var i = dishCategorySevice.GetRecentView(email);
+            return Ok(i);
+
+        }
     }
 }

@@ -8,6 +8,9 @@ namespace API.Repository.Interface
         public IEnumerable<Banners> BannersList();
         public Task<int> UpdateBannerStatus(Banners banners);
         public Banners BannersListById(int id);
-        public IEnumerable<Banners> ShowBanner();
+        public IEnumerable<Banners> ShowBanner1();
+        public IEnumerable<Banners> ShowBanner2();
+        public IEnumerable<Banners> ShowBanner3();
+        public IEnumerable<Banners> EventBanner();
     }
 }

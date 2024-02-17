@@ -15,6 +15,8 @@ namespace API.Repository.Interface
         public IEnumerable<Foodkart> GetFoodOnSearch(string name);
         public IEnumerable<Foodkart> SpecialDish();
         public IEnumerable<Foodkart> RelatedProducts(int id);
+        public Task<int> RecentView(RecentView recentView);
+        public IEnumerable<Foodkart> GetRecentView(string email);
 
     }
 }
