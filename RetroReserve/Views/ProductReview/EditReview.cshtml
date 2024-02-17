@@ -1,0 +1,106 @@
+﻿@model Entities.ProductReview
+@{
+    ViewData["Title"] = "EditReview";
+}
+<style>
+    .stars {
+        justify-content: space-between;
+    }
+
+        .stars i {
+            color: #fff;
+            font-size: 25px;
+            align-items: center;
+            text-shadow: 1px 1px 0.2px black;
+            cursor: pointer;
+        }
+
+    .active {
+        color: #679d06 !important;
+        transform: scale(1.2) !important;
+    }
+</style>
+
+<div style="border: 2px solid #679d06; border-radius: 20px 0px; padding:20px;">
+    <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="border-bottom rounded">
+                <input type="text" class="form-control border-0 me-4" asp-for="Name" placeholder="Yur Name *">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="border-bottom rounded">
+                <input type="email" class="form-control border-0" asp-for="Email" placeholder="Your Email *">
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="border-bottom rounded my-4">
+                <textarea name="" asp-for="Comment" class="form-control border-0" cols="30" rows="3" placeholder="Your Review *" spellcheck="false"></textarea>
+            </div>
+        </div>
+        
+    </div>
+    <div class="float-right" style="text-align:center;">
+        <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4  rounded-pill text-white" onclick="OnReview();">Sent Review</button>
+   </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="ReviewModal" role="dialog" data-backdrop="static" data-keyboard="false" style="opacity:1;">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+
+                        <div class="card mb-12">
+                            <div class="card-body">
+                                <div>
+                                    <div class="card" id="snackbar4">Data Saved Successfully</div>
+                                    <div class="card" id="snackbar5">Deleted.</div>
+                                </div>
+                                <div class="container" style="text-align:center;">
+                                    <h2><strong>Enjoying it ?</strong></h2>
+                                    <div class="stars">
+                                        <i class="fa fa-star" data-value="1" onclick="AddProductReview(1);"></i>
+                                        <i class="fa fa-star" data-value="2" onclick="AddProductReview(2);"></i>
+                                        <i class="fa fa-star" data-value="3" onclick="AddProductReview(3);"></i>
+                                        <i class="fa fa-star" data-value="4" onclick="AddProductReview(4);"></i>
+                                        <i class="fa fa-star" data-value="5" onclick="AddProductReview(5);"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const stars = document.querySelectorAll(".stars  i");
+console.log(stars);
+
+stars.forEach((star, index1) => {
+  star.addEventListener("mouseover", () => {
+    stars.forEach((star, index2) => {
+      index1 >= index2
+        ? (star.style.transform = "scale(1.2)")
+        : (star.style.transform = "scale(1)");
+    });
+    // star.style.transform = "scale(1.5)";
+  });
+  star.addEventListener("mouseout", () => {
+    star.style.transform = "scale(1)";
+  });
+  star.addEventListener("click", () => {
+    stars.forEach((star, index2) => {
+      index1 >= index2
+        ? star.classList.add("active")
+        : star.classList.remove("active");
+    });
+  });
+});
+
+    
+</script>

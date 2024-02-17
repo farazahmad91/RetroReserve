@@ -40,7 +40,7 @@ namespace API.Repository.Impliments
             var param = new
             {
                 DishCategoryId = dishCategory.DishCategoryId,
-                 Status = dishCategory.Status,
+                Status = dishCategory.Status,
             };
             var i = await dapper.Insert(param, sp);
             return i;
@@ -102,7 +102,8 @@ namespace API.Repository.Impliments
         public IEnumerable<Foodkart> GetFoodOnSearch(string name)
         {
             var sp = "sp_GetFoodOnSearch";
-            var param = new {
+            var param = new
+            {
                 DishName = name,
             };
             var i = dapper.GetItemsById<Foodkart>(param, sp);
@@ -121,6 +122,31 @@ namespace API.Repository.Impliments
             var param = new
             {
                 DishCategoryId = id,
+            };
+            var i = dapper.GetItemsById<Foodkart>(param, sp);
+            return i;
+        }
+
+        public async Task<int> RecentView(RecentView recentView)
+        {
+
+            var sp = "sp_AddRecentViewdata";
+            var param = new
+            {
+                DishId = recentView.DishId,
+                UserID = recentView.UserID,
+            };
+            var i = await dapper.Insert(param, sp);
+            return i;
+
+        }
+
+        public IEnumerable<Foodkart> GetRecentView(string email)
+        {
+            var sp = "sp_GetRecentViewById";
+            var param = new
+            {
+                UserID = email,
             };
             var i = dapper.GetItemsById<Foodkart>(param, sp);
             return i;

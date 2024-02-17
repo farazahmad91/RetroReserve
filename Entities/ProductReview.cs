@@ -10,11 +10,12 @@ namespace Entities
     {
         public int ReviewId { get; set; }
         public int DishId { get; set; }
-        public int UserID { get; set; }
-        public int Name { get; set; }
-        public int Email { get; set; }
-        public int Comment { get; set; }
+        public string? UserID { get; set; }
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Comment { get; set; }
         public int Rating { get; set; }
-        public int ReviewDate { get; set; }
+        public int Status { get; set; }
+        public DateTime ReviewDate { get; set; }
     }
 }

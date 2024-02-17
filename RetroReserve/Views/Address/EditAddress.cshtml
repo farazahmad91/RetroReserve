@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "EditAddress";
+    Layout = null;
+}
+
+
+
+<div class="modal fade" id="AddressModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Address Info</h3>
+                <a href="/Address" class="btn btn-primary border-2 border-secondary">&times;</a>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div>
+                        <div class="card" id="snackbar"></div>
+                        <div class="card" id="snackbar2"></div>
+                        <div class="card" id="snackbar3"></div>
+                    </div>
+                    <div class="col-md-12" style="border:solid #9ad039 2px; border-radius:10px; padding:35px;">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3">Receiver's name<sup>*</sup></label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3">Receiver's contact<sup>*</sup></label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <label class="form-label my-3">Address <sup>*</sup></label>
+                            <input type="text" class="form-control" placeholder="House Number Street Name">
+                        </div>
+                        <div class="form-item">
+                            <label class="form-label my-3">Nearby landmark<sup>*</sup></label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-item">
+                            <label class="form-label my-3">City<sup>*</sup></label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-item">
+                            <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <br />
+                        <div class="form-item text-center">
+                            <a href="/TableBooking" class="btn btn-primary border-2 border-secondary py-3 px-4  text-white">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

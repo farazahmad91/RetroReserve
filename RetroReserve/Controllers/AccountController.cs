@@ -150,6 +150,13 @@ namespace RetroReserve.Controllers
                 throw new Exception("Error sending email", ex);
             }
         }
+        [Route("/Register")]
+        [HttpGet]
+        public IActionResult AdminRegister()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Register()
         {

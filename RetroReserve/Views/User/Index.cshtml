@@ -18,16 +18,7 @@
             </div>
             <div class="col-md-12 col-lg-5">
                 <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
-                    <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active rounded">
-                            <img src="~/img/non-veg.jpg" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">NON-VEG FOOD</a>
-                        </div>
-                        <div class="carousel-item rounded">
-                            <img src="~/img/vegfood.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">VEG-FOOD</a>
-                        </div>
-                    </div>
+                    <div id="PVBannerShow1"></div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
@@ -102,7 +93,7 @@
             {
                 <div class="border border-primary rounded position-relative vesitable-item">
                     <div class="vesitable-img">
-                        <img src="@item.DishImage" class="img-fluid rounded-top" style="width:300px;height:200px;" alt="">
+                        <img src="@item.DishImage" class="img-fluid rounded-top" style="width:300px;height:200px;" onclick="OnItemDetail(@item.DishId);AddRecentView(@item.DishId);" alt="">
                     </div>
                     <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.DishCategoryName</div>
                     <div class="p-4 rounded-bottom">
@@ -110,7 +101,7 @@
                         <p>@item.DishDescription</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">@item.DishPrize</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <a onclick="GetVarientList(@item.DishId);" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -121,71 +112,16 @@
 <!-- Featurs Start -->
 <div class="container-fluid service py-5">
     <div class="container py-5">
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <a href="#">
-                    <div class="service-item bg-secondary rounded border border-secondary">
-                        <img src="~/Uimg/featur-1.jpg" class="img-fluid rounded-top w-100" alt="">
-                        <div class="px-4 rounded-bottom">
-                            <div class="service-content bg-primary text-center p-4 rounded">
-                                <h5 class="text-white">Fresh Apples</h5>
-                                <h3 class="mb-0">20% OFF</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <a href="#">
-                    <div class="service-item bg-dark rounded border border-dark">
-                        <img src="~/Uimg/featur-2.jpg" class="img-fluid rounded-top w-100" alt="">
-                        <div class="px-4 rounded-bottom">
-                            <div class="service-content bg-light text-center p-4 rounded">
-                                <h5 class="text-primary">Tasty Fruits</h5>
-                                <h3 class="mb-0">Free delivery</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <a href="#">
-                    <div class="service-item bg-primary rounded border border-primary">
-                        <img src="~/Uimg/featur-3.jpg" class="img-fluid rounded-top w-100" alt="">
-                        <div class="px-4 rounded-bottom">
-                            <div class="service-content bg-secondary text-center p-4 rounded">
-                                <h5 class="text-white">Exotic Vegitable</h5>
-                                <h3 class="mb-0">Discount 30$</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Featurs End -->
-<div class="container-fluid fruite py-5">
-    <div class="container py-5">
-        <div class="tab-class text-center">
-            <h2><strong>Recently Viewed</strong></h2>
-            <br />
-            <div class="tab-content">
-                <div id="tab-1" class="tab-pane fade show p-0 active">
-                    <div class="row g-4">
-                        <div class="col-lg-12" id="RecentView">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div id="PVBannerShow2"></div>
     </div>
 </div>
 
+<div class="col-lg-12" id="RecentView">
+</div>
 <!-- Banner Section Start-->
 <div class="container-fluid banner bg-secondary my-5">
     <div class="container py-5">
-        <div id="BannerPartialView"></div>
+        <div id="PVBannerShow3"></div>
     </div>
     <div id="modalVarientPartialView"></div>
 </div>
@@ -208,15 +144,32 @@
             })
         }
         Onload();
-
-        function ShowBanner() {
-            $.post("/Banners/ShowBanner").done(function (res) {
-                $("#BannerPartialView").html(res);
+        function ShowBanner1() {
+            $.post("/Banners/ShowBanner1").done(function (res) {
+                $("#PVBannerShow1").html(res);
             }).fail(function () {
                 alert("errror");
             })
         }
-        ShowBanner();
+        ShowBanner1();
+        function ShowBanner2() {
+            $.post("/Banners/ShowBanner2").done(function (res) {
+                $("#PVBannerShow2").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        ShowBanner2();
+
+        function ShowBanner3() {
+            $.post("/Banners/ShowBanner3").done(function (res) {
+                $("#PVBannerShow3").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        ShowBanner3();
+
 
         function AddCart(Id) {
             debugger;
@@ -277,6 +230,17 @@
                     alert("error");
                 });
         }
+        function AddRecentView(DishId) {
+            let param = {
+                DishId: DishId,
+            };
+            $.post("/Category/AddRecentViewDetail", param).done(function (response) {
+                alert("done recentview");
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+
         function TeaKart() {
             $.post("/TeaKart/TeaKartDisplayList").done(function (res) {
                 $("#MenuPartialView").html(res);
@@ -284,5 +248,7 @@
                 alert("errror");
             })
         }
+
+
     </script>
 }

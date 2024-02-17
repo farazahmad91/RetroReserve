@@ -158,6 +158,7 @@
                         errors("This dish is already in the cart. Please choose a different dish.");
                     } else {
                         success("Dish added successfully to your cart.");
+                        cartstatus();
                     }
                 })
                 .fail(function () {
@@ -192,8 +193,17 @@
                 });
         }
 
-
-        document.getElementById("price-range").addEventListener("input", getValues);
+        function GetVarientList(DishId) {
+            $.post("/Category/MenuQty", { DishId: DishId })
+                .done(function (res) {
+                    console.log(res);
+                    $("#modalVarientPartialView").html(res);
+                    $("#MyVarientModal").modal("show");
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        }
     </script>
 }
 

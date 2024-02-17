@@ -83,6 +83,11 @@
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
                             @if (User.Identity.IsAuthenticated)
                             {
+                                <a href="cart.html" class="dropdown-item">Profile</a>
+                                <a href="/Address" class="dropdown-item">Address</a>
+                                <a href="404.html" class="dropdown-item">Your table</a>
+                                <a href="testimonial.html" class="dropdown-item">Your event</a>
+                                <a href="testimonial.html" class="dropdown-item">help</a>
                                 <a href="/Account/Logout" class="fa fa-sign-out dropdown-item">
                                     Log Out
                                 </a>
@@ -176,9 +181,7 @@
                         <a class="btn-link" href="">My Account</a>
                         <a class="btn-link" href="/ContactUS/ContactUS">Contact Us</a>
                         <a class="btn-link" href="/Cart/Cart">Shopping Cart</a>
-                        <a class="btn-link" href="">Wishlist</a>
-                        <a class="btn-link" href="/Order/OrderHistory">Order History</a>
-                        <a class="btn-link" href="">International Orders</a>
+                        <a class="btn-link" href="/OrderHistory">Order History</a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -208,7 +211,6 @@
     <!-- Copyright End -->
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

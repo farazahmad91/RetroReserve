@@ -8,16 +8,7 @@
 </script>
 <div class="page-header col-md-12">
     <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active rounded">
-                <img src="~/Uimg/hero-img-1.png" class="img-fluid w-100 bg-secondary" style="height:400px;" alt="First slide">
-                <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a>
-            </div>
-            <div class="carousel-item rounded">
-                <img src="~/Uimg/hero-img-2.jpg" class="img-fluid w-100" style="height:400px;" alt="Second slide">
-                <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a>
-            </div>
-        </div>
+       <div id="EventBannerPV"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -34,8 +25,8 @@
     <div class="container" data-aos="fade-up">
         <div>
 
-            <div class="card" id="snackbar2">Data Updated Successfully</div>
-            <div class="card" id="snackbar3">Deleted.</div>
+            <div class="card" id="snackbar2"></div>
+            <div class="card" id="snackbar3"></div>
         </div>
         <div>
             <br />
@@ -45,8 +36,8 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="col-lg-12 col-md-12 form-group">
-                                <select class="form-control" id="eventid" asp-items="@eventdetails" onchange="hideInputBox();">
-                                    <option value="">:: Select Event ::</option>
+                                <select class="form-control" id="eventid" asp-items="@eventdetails"  onchange="hideInputBox();">
+                                    <option value="" style="text-align:center;">&#8678; Select Event &#x21E8;</option>
                                 </select>
                             </div>
                         </div>
@@ -86,6 +77,14 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    function EventBanner() {
+        $.post("/Banners/EventBanner").done(function (res) {
+            $("#EventBannerPV").html(res);
+        }).fail(function () {
+            alert("errror");
+        })
+    }
+    EventBanner();
     function hideInputBox() {
         debugger;
         var selectedValue = $("#eventid").val();

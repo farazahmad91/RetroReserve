@@ -39,12 +39,34 @@ namespace RetroReserve.Controllers
             var i = await _apirequest.Post("Banners/UpdateBannerStatus", banners);
             return Json(i);
         }
-
-        public async Task<IActionResult> ShowBanner()
+        public async Task<IActionResult> ShowBanner1()
         {
 
-            var i = await _apirequest.GetData<List<Banners>>("Banners/ShowBanner");
+            var i = await _apirequest.GetData<List<Banners>>("Banners/ShowBanner1");
             return PartialView(i);
+        }
+        public async Task<IActionResult> ShowBanner2()
+        {
+
+            var i = await _apirequest.GetData<List<Banners>>("Banners/ShowBanner2");
+            return PartialView(i);
+        }
+        public async Task<IActionResult> ShowBanner3()
+        {
+
+            var i = await _apirequest.GetData<List<Banners>>("Banners/ShowBanner3");
+            return PartialView(i);
+        }
+        public async Task<IActionResult> EventBanner()
+        {
+
+            var i = await _apirequest.GetData<List<Banners>>("Banners/EventBanner");
+            return PartialView(i);
+        }
+
+        public IActionResult OfferBanner(int id)
+        {
+            return View();
         }
     }
 }

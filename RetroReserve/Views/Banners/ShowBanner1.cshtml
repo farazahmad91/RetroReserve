@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Entities.Banners>
+    @{
+    ViewData["Title"] = "ShowBanner1";
+    }
+
+
+<div class="carousel-inner" role="listbox">
+    @foreach (var item in Model)
+    {
+        <div class="carousel-item @(item == Model.First() ? "active" : "") rounded">
+            <img src="@item.BannerImage" class="img-fluid w-100 h-100 bg-secondary rounded" alt="Slide Image">
+            <a href="@item.ProductLink" class="btn px-4 py-2 text-white rounded">@item.BannerOfferName</a>
+        </div>
+    }
+</div>
+
+
+
+
+

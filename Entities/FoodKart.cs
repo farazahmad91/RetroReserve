@@ -25,13 +25,6 @@
         public int Status { get; set; }
     }
     
-    public class RecentView : Foodkart
-    {
-        public int RecentViewId { get; set; }
-        public string? UserID { get; set; }
-        public int DishId { get; set; }
-        public DateTime CreatedDate { get; set; }
-    }
         public class TeaKart
     {
         public int TeaId { get; set; }
@@ -44,5 +37,13 @@
         public int Quantity { get; set; }
         public DateTime CreateDate { get; set; }
         public int Status { get; set; }
+    }
+
+    public class RecentView
+    {
+        public int RecentViewId { get; set; }
+        public int DishId { get; set; }
+        public string? UserID { get; set; }
+        public DateTime ViewDate { get; set; }
     }
 }
