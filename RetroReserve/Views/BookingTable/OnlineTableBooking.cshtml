@@ -1,0 +1,13 @@
+﻿<div id="partialView">
+
+</div>
+@section Scripts{
+    <script>
+        function loadData() {
+            $.post("/BookingTable/AllTableBooking").done(function (result) {
+                $("#partialView").html(result);
+            });
+        }
+        loadData();
+    </script>
+}

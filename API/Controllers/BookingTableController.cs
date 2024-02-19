@@ -43,5 +43,19 @@ namespace API.Controllers
         }
 
 
+        [HttpPost(nameof(TableBookByUser))]
+        public async Task<IActionResult> TableBookByUser(BookingTableByUser bookingTable)
+        {
+            var i = await bookingTableService.TableBookByUser(bookingTable);
+            return Ok(i);
+        }
+
+        [HttpGet(nameof(AllOnlineTable))]
+        public async Task<IActionResult> AllOnlineTable()
+        {
+            var i = await bookingTableService.AllBookedTable();
+            return Ok(i);
+        }
+
     }
 }

@@ -1,8 +1,8 @@
-﻿@model Entities.BookingTableVM
+﻿@model IEnumerable<Entities.BookingTableVM2>
 @{
     ViewData["Title"] = "BookTable";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-     var tabledetails = new SelectList(Model.tablesDetails, "TableId", "Tablename");
+    // var tabledetails = new SelectList(Model.tablesDetails, "TableId", "Tablename");
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
 </script>
@@ -13,94 +13,142 @@
         <li class="breadcrumb-item"><a href="#">Book a Table</a></li>
     </ol>
 </div>
- <!-- ======= Book A Table Section ======= -->
-    <section id="book-a-table" class="book-a-table">
+<!-- ======= Book A Table Section ======= -->
+<section id="book-a-table" class="book-a-table">
     <div class="container" data-aos="fade-up">
-             <div>
-                
-                <div class="card" id="snackbar2">Data Updated Successfully</div>
-                <div class="card" id="snackbar3">Deleted.</div>
-                </div>
-            <div>
-                <br />
-            <div role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" style="border:solid #9ad039 2px; border-radius:50px 0px 50px 0px; padding:35px;">
-          <div class="row">
-           
-            <div class="row">
-                <div class="col-md-4">
-                     <div class="col-lg-12 col-md-12 form-group">
-               <select class="form-control" id="tableid" asp-items="@tabledetails">
-                                <option value="">:: Select Table ::</option>
-                            </select>
-            </div>
-                </div>
-            </div>
-             <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="email" name="date" class="form-control" style="color:black; background-color:white;" id="email" placeholder="Email">
-            </div>
-            <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="datetime-local" style="color:black; background-color:white;" name="date" min="@DateTime.Today.AddHours(10).ToString("yyyy-MM-ddTHH:mm")"  class="form-control" id="date" placeholder="Date">
-            </div>
-            <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="number" class="form-control" style="color:black; background-color:white;" name="people" id="people" placeholder="# of people" max="12" data-rule="minlen:1">
-            </div>
-          </div>
-          <div class="form-group mt-3">
-                    <textarea class="form-control" id="message" rows="3" style="color:black; background-color:white;" placeholder="Message"></textarea>
-          </div>
-          <div class="mb-3">
-          </div>
-                    <div class="text-center"><button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" onclick="onpayment();">Book a Table</button></div>
+        <div>
+
+            <div class="card" id="snackbar2">Data Updated Successfully</div>
+            <div class="card" id="snackbar3">Deleted.</div>
         </div>
+        <div>
+            <br />
+            <div role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" style="border:solid #9ad039 2px; border-radius:50px 0px 50px 0px; padding:35px;">
+                <div class="row">
+                    <div class="container-fluid vesitable py-5">
+                        <div class="container py-5">
+                            <h1 class="mb-0">Available Table</h1>
+                            <div class="owl-carousel vegetable-carousel justify-content-center ">
+                                @foreach (var item in Model)
+                                {
+                                    // Check if the item is active
+                                    if (item.IsActive == 1)
+                                    {
+                                        <div class="border border-primary rounded position-relative vesitable-item" @(item == Model.First() ? "IsActive" : "") >
+                                            <!-- Item image -->
+                                            <div class="vesitable-img">
+                                                <img src="@item.Image" class="img-fluid rounded-top" style="width:300px;height:200px;" onclick="OnItemDetail(@item.TableId);AddRecentView(@item.TableId);" alt="">
+                                            </div>
+                                            <!-- Availability label -->
+                                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Available Table No. @item.TableId</div>
+                                            <!-- Item description -->
+                                            <div class="p-4 rounded-bottom">
+                                                <h5 style="width:auto;font:bolder ;font-size:large;font-weight:800;"><strong>@item.TableName</strong></h5>
+                                                <p class="text-nowrap">@item.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <!-- Add to cart button -->
+                                                    <button onclick="tableView(@item.TableId)" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-order me-2 text-primary"></i>Book Now</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div id="AddressPV"></div>
+                    </div>
+                    <div class="mb-3">
+                    </div>
+                    <div class="text-center"><button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" onclick="onpayment();">Book a Table</button></div>
+                </div>
             </div>
-          <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-      </div>
-    </section>
-    <div id="PaymentModalPV"></div>
+            <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+        </div>
+</section>
+<div id="PaymentModalPV"></div>
+
+<div id="tableviewPartial">
+</div>
 
 
-    <script>
-
+ <script>
+        var TableId=0;
+        function tableView(Id) {
+            debugger;
+            $.post("/BookingTable/BookTableSchedule").done(function (result) {
+                $("#tableviewPartial").html(result);
+                $("#MyTableBookModal").modal("show");
+                TableId = Id;
+            }).fail(function () {
+                alert("error");
+            });
+        }
         function onpayment() {
             if (validateTableBooking()) {
-            $.post("/checkout/checkout")
-                .done(function (res) {
-                    $("#PaymentModalPV").html(res);
-                })
-                .fail(function () {
-                    alert("error");
-                });
+                $.post("/checkout/checkout")
+                    .done(function (res) {
+                        $("#PaymentModalPV").html(res);
+                    })
+                    .fail(function () {
+                        alert("error");
+                    });
             }
         }
-    function Orderbook() {
-        checkoutOrder();
-    }
-    function info() {
-        alert("Apologies, but this service is currently unavailable. Please make payment using only the QR code method.");
-
-    }
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+        function Orderbook() {
+            checkoutOrder();
         }
-        return color;
-    }
+        function info() {
+            alert("Apologies, but this service is currently unavailable. Please make payment using only the QR code method.");
 
-    function CreateQR() {
-        var link = $("#dp").val();
-        var randomColor = getRandomColor();
+        }
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
 
-        var qrcode = new QRCode("qrcode", {
-            text: link,
-            width: 125,
-            height: 120,
-            colorDark: randomColor, // Change this to color: randomColor,
-        });
-        document.getElementById("qrcode").style.backgroundColor = randomColor;
-    }
+        function CreateQR() {
+            var link = $("#dp").val();
+            var randomColor = getRandomColor();
 
-    CreateQR();
+            var qrcode = new QRCode("qrcode", {
+                text: link,
+                width: 125,
+                height: 120,
+                colorDark: randomColor, // Change this to color: randomColor,
+            });
+            document.getElementById("qrcode").style.backgroundColor = randomColor;
+        }
+
+        CreateQR();
+
+
+     function Booktable() {
+        Show_Loader();
+        setTimeout(function () {
+            let obj = {
+                TableId: TableId,
+                NoOfPeople: $("#people").val(),
+                BookingDate: $("#date").val(),
+                BookingTime: $("#time").val(),
+                Email: $("#email").val(),
+                Name: $("#name").val()
+            }
+            $.post("/BookingTable/TableBookByUser", obj).done(function (result) {
+                Hide_Loader();
+                alert(result.responseText);
+
+            }).fail(function () {
+                //showerrors(result.responseText);
+            })
+        }, 1000)
+     
+     }
     </script>
+
+
+
 

@@ -5,6 +5,7 @@ using RetroReserve.Models;
 using Entities;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
+using Entities.Extension;
 
 namespace RetroReserve.Controllers
 {
@@ -22,13 +23,21 @@ namespace RetroReserve.Controllers
             this.uploadImage = uploadImage;
         }
         //[Route("/TableBooking")]
-        //public async Task<ActionResult> BookTable()
+        public async Task<ActionResult> BookTable()
+        {
+            var list = await apirequest.GetData<List<BookingTableVM2>>("BookingTable/AllTable");
+            return View(list);
+        }
 
         public IActionResult Index()
         {
             return View();
         }
 
+        public IActionResult BookTableSchedule()
+        {
+            return PartialView();
+        }
        
         public async Task<IActionResult> BookingTable()
         {
@@ -49,7 +58,7 @@ namespace RetroReserve.Controllers
             return Json(res);
         }
 
-       public async Task<IActionResult>ChangeStatusTable(BookingTableVM2 bookingTable)
+        public async Task<IActionResult>ChangeStatusTable(BookingTableVM2 bookingTable)
         {
             bookingTable.TableName="";
             bookingTable.Description="";
@@ -59,6 +68,23 @@ namespace RetroReserve.Controllers
             var res = JsonConvert.DeserializeObject<API.Data.Response>(i);
             return Json(res);
         }
-        
+
+        public async Task<IActionResult> TableBookByUser(BookingTableByUser tableByUser)
+        {
+            
+            var apiRes = await apirequest.Post("BookingTable/TableBookByUser", tableByUser);
+            var res = JsonConvert.DeserializeObject<API.Data.Response>(apiRes);
+            return Json(res);
+        }
+
+        public IActionResult OnlineTableBooking()
+        {
+            return View();
+        }
+        public async Task<IActionResult> AllTableBooking()
+        {
+            var list = await apirequest.GetData<List<BookingTableVM2>>("BookingTable/AllOnlineTable");
+            return PartialView(list);
+        }
     }
 }
