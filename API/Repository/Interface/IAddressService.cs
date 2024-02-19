@@ -7,7 +7,7 @@ namespace API.Repository.Interface
         public Task<Response> AddOrUpdateUserAddress(Address address);
         public IEnumerable<Address> UserAddressList();
         public Task<int> UpdatePostalCodeStatus(PostalCodes postalCodes);
-        public Address GetAddressByUserId(string email);
+        public IEnumerable<Address> GetAddressByUserId(string email);
         public Address GetAddressById(int id);
         public IEnumerable<State> StateList();
         public IEnumerable<City> CityList();

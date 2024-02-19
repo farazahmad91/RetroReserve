@@ -53,14 +53,14 @@ namespace API.Repository.Impliments
             return i;
         }
 
-        public Address GetAddressByUserId(string email)
+        public IEnumerable<Address> GetAddressByUserId(string email)
         {
             var sp = "sp_GetAllAddressByUserId";
             var param = new
             {
                 UserId = email,
             };
-            var i = _dapper.GetById<Address>(param, sp);
+            var i = _dapper.GetItemsById<Address>(param, sp);
             return i;
         }
 
