@@ -4,12 +4,12 @@ namespace API.Repository.Interface
 {
     public interface IBookingTableService
     {
-        public Task<int> BookTable(BookingTable bookingTable);
-        public BookingTable GetBookTableById(int CartValueID);
-        public IEnumerable<BookingTable> GetBookTableList();
-        public BookingTableVM GetTabledetailsList();
-        public int DeleteBookTable(int id);
-        public Task<int> UpdateTable(BookingTable cartValue);
+        public Task<Data.Response> SaveOrUpdateTable(BookingTableVM2 bookingTable);
+        public Task<BookingTableVM2> GetByIdTable(int Id);
+        public Task<IEnumerable<BookingTableVM2>> AllTable();
+        public Task<Data.Response> _ChangeStatusTable(BookingTableVM2  bookingTableVM);
+
+
     }
 
 
