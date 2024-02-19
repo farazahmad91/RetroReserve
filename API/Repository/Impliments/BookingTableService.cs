@@ -1,13 +1,10 @@
-﻿using API.Repository.Interface;
+﻿using API.Data;
+using API.Repository.Interface;
 using Entities;
 
 namespace API.Repository.Impliments
 {
-    public class result
-    {
-        public string Email { get; set; }
-        public int TableBookingId { get; set; }
-    }
+
     public class BookingTableService : IBookingTableService
     {
         public readonly IDapperService dapperService;
@@ -17,74 +14,88 @@ namespace API.Repository.Impliments
             this.dapperService = dapperService;
             this.emailSenderService = emailSenderService;
         }
-        
-        public async Task<int> BookTable(BookingTable bookingTable)
+
+        public async Task<Data.Response> SaveOrUpdateTable(BookingTableVM2 bookingTable)
         {
-
-            var sp = "sp_TableBooking";
-            var param = new
+            var res = new Data.Response()
             {
-                TableBookingId = 0, // Initialize as 0 for OUTPUT parameter
-                TableId = bookingTable.TableId,
-                UserId = bookingTable.UserId,
-                People = bookingTable.People,
-                Email = bookingTable.Email,
-                BookingTime = bookingTable.BookingTime,
-                description = bookingTable.description,
-                Status = bookingTable.Status,
+                ResponseText="Failed To Add Table",
+                StatusCode= ResponseStatus.FAILED
             };
-
-           
 
             try
             {
-
-                result result =await  dapperService.GetAsync<result>( sp, param);
-               var returnedTableBookingId = result.TableBookingId;
-                    
-                var returnedEmail = result.Email;
-               string bookingEmail = returnedEmail;
-              string subject = "Table Booking";
-             string body = $"Dear Valued Customer,\n\nWe are delighted to inform you that your table has been successfully booked. Your Booking ID is: {returnedTableBookingId}.\n\nWe look forward to serving you and providing an unforgettable dining experience. If you have any special requests or questions, feel free to reach out to us.\n\nThank you for choosing us. We appreciate your trust and can't wait to welcome you!\n\nBest regards,\nThe RetroReserve Team";
-
-                emailSenderService.SendEmail(bookingEmail, subject, body);
-                return 1;
+                res = await dapperService.GetAsync<Data.Response>("Proc_SaveOrUpdateTable", new
+                {
+                    bookingTable.TableId,
+                    bookingTable.TableName,
+                    bookingTable.Image,
+                    bookingTable.Description,
+                    bookingTable.IsActive
+                });
+                return res;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error sending email");
-                return 0;
+                res.ResponseText = ex.Message;
+                res.StatusCode = ResponseStatus.FAILED;
+                return res;
+                throw;
             }
         }
 
-
-
-        public int DeleteBookTable(int id)
+        public async Task<BookingTableVM2> GetByIdTable(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await dapperService.GetAsync<BookingTableVM2>("SELECT * FROM  TBL_TABLEBYADMIN WHERE TableId=@Id", new
+                {
+                    Id = Id
+                }, System.Data.CommandType.Text);
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
-        public BookingTable GetBookTableById(int CartValueID)
+        public async Task<IEnumerable<BookingTableVM2>> AllTable()
         {
-            throw new NotImplementedException();
+            var res = new Data.Response();
+            try
+            {
+
+                var list = dapperService.GetAll<BookingTableVM2>("SELECT * FROM TBL_TABLEBYADMIN");
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
-        public IEnumerable<BookingTable> GetBookTableList()
+        public async Task<Data.Response> _ChangeStatusTable(BookingTableVM2 bookingTableVM)
         {
-            throw new NotImplementedException();
-        }
+            var res = new Data.Response();
 
-        public BookingTableVM GetTabledetailsList()
-        {
-            var sp = "sp_GetTabledetails";
-            BookingTableVM bookingTableVM = new BookingTableVM();
-            bookingTableVM.tablesDetails = (IEnumerable<TablesDetails>)dapperService.GetAll<TablesDetails>(sp);
-            return bookingTableVM;
-        }
+            try
+            {
+                res = await dapperService.GetAsync<Data.Response>("Proc_ChangeStatusTable", new
+                {
+                    ID = bookingTableVM.TableId
+                });
+                res.StatusCode = ResponseStatus.SUCCESS;
+             
+                return res;
+            }
+            catch (Exception ex)
+            {
 
-        public Task<int> UpdateTable(BookingTable cartValue)
-        {
-            throw new NotImplementedException();
+                throw;
+            }
         }
     }
 }

@@ -24,4 +24,19 @@ namespace Entities
 
         public IEnumerable<BookingTable> BookTable { get; set; }
     }
+
+    public class BookingTableVM2
+    {
+        public int TableId { get; set; }
+
+        public string TableName { get; set; }
+
+        public string Image { get; set; }
+
+        public string Description { get; set; }
+        public int IsActive { get; set; }
+    }
 }
+
+
+

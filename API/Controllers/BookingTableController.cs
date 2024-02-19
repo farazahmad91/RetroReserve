@@ -14,19 +14,34 @@ namespace API.Controllers
         {
             this.bookingTableService = bookingTableService;
         }
-        [HttpPost(nameof(BookTable))]
-        public  IActionResult BookTable(BookingTable bookingTable)
-        {
-            var i =  bookingTableService.BookTable(bookingTable);
-            return Ok(i);
 
-        }
-        [HttpGet(nameof(GetTabledetailsList))]
-        public IActionResult GetTabledetailsList()
+        [HttpPost(nameof(SaveOrUpdateTable))]
+        public async Task<IActionResult> SaveOrUpdateTable(BookingTableVM2 bookingTable)
         {
-            var i = bookingTableService.GetTabledetailsList();
-            return Ok(i);
-
+            var i =await bookingTableService.SaveOrUpdateTable(bookingTable);
+            return Ok(i);   
         }
+
+        [HttpGet(nameof(GetByIdTable)+"/{Id}")]
+        public async Task<IActionResult> GetByIdTable(int Id)
+        {
+            var i = await bookingTableService.GetByIdTable(Id);
+            return Ok(i);
+        }
+        [HttpGet(nameof(AllTable))]
+        public async Task<IActionResult> AllTable()
+        {
+            var i = await bookingTableService.AllTable();
+            return Ok(i);
+        }
+
+        [HttpPost(nameof(ChangeStatusTable))]
+        public async Task<IActionResult> ChangeStatusTable(BookingTableVM2 bookingTable)
+        {
+            var i = await bookingTableService._ChangeStatusTable(bookingTable);
+            return Ok(i);
+        }
+
+
     }
 }
