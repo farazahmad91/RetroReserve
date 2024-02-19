@@ -1,4 +1,4 @@
-﻿
+﻿@model Entities.Address
 @{
     ViewData["Title"] = "EditAddress";
     Layout = null;
@@ -17,44 +17,61 @@
             <div class="modal-body">
                 <div class="container">
                     <div>
-                        <div class="card" id="snackbar"></div>
-                        <div class="card" id="snackbar2"></div>
-                        <div class="card" id="snackbar3"></div>
+                        <div class="card" id="snackbar4">gfdgdfg</div>
+                        <div class="card" id="snackbar5">dfgfdgfgdf</div>
                     </div>
                     <div class="col-md-12" style="border:solid #9ad039 2px; border-radius:10px; padding:35px;">
                         <div class="row">
                             <div class="col-md-12 col-lg-6">
                                 <div class="form-item w-100">
                                     <label class="form-label my-3">Receiver's name<sup>*</sup></label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" asp-for="AddressId" hidden class="form-control">
+                                    <input type="text" asp-for="RecipientName" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-6">
                                 <div class="form-item w-100">
                                     <label class="form-label my-3">Receiver's contact<sup>*</sup></label>
-                                    <input type="text" class="form-control">
+                                    <input type="tel" asp-for="RecipientContact" maxlength="10" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="form-item">
                             <label class="form-label my-3">Address <sup>*</sup></label>
-                            <input type="text" class="form-control" placeholder="House Number Street Name">
+                            <input type="text" class="form-control" asp-for="StreetAddress" placeholder="House Number Street Name">
                         </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Nearby landmark<sup>*</sup></label>
-                            <input type="text" class="form-control">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item">
+                                    <label class="form-label my-3">Nearby landmark<sup>*</sup></label>
+                                    <input type="text" asp-for="Landmark" class="form-control">
+                                </div>
+                                </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item">
+                                    <label class="form-label my-3">State<sup>*</sup></label>
+                                    <input type="text" asp-for="State" class="form-control">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">City<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
-                            <input type="text" class="form-control">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item">
+                                    <label class="form-label my-3">City<sup>*</sup></label>
+                                    <input type="text" asp-for="City" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item">
+                                    <label class="form-label my-3">Postalcode/Zip<sup>*</sup></label>
+                                    <input type="tel" asp-for="PostalCode" maxlength="6" class="form-control">
+                                </div>
+                            </div>
                         </div>
                         <br />
                         <div class="form-item text-center">
-                            <a href="/TableBooking" class="btn btn-primary border-2 border-secondary py-3 px-4  text-white">Save</a>
+                            <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                            <button type="button" onclick="AddOrUpdateAddress();" class="btn btn-primary border-2 border-secondary py-3 px-4  text-white">Save</button>
                         </div>
                     </div>
                 </div>

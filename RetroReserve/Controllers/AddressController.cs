@@ -28,7 +28,7 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> UserAddress()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
-            var i = await _apirequest.GetData<Address>($"Address/GetAddressByUserId?email={email}");
+            var i = await _apirequest.GetData<List<Address>>($"Address/GetAddressByUserId?email={email}");
             return PartialView(i);
         }
 
@@ -37,9 +37,12 @@ namespace RetroReserve.Controllers
             var i = await _apirequest.GetData<Banners>($"Address/GetAddressById?id={id}");
             return PartialView(i);
         }
-        public async Task<IActionResult> AddOrUpdateBanner(Address address)
+        [HttpPost]
+        public async Task<IActionResult> AddOrUpdateAddress(Address address)
         {
-            var i = await _apirequest.Post("Address/AddOrUpdateAddress", address);
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            address.UserId = email;
+            var i = await _apirequest.Post("Address/AddOrUpdateUserAddress", address);
             var res = JsonConvert.DeserializeObject<Entities.Response>(i);
             return Json(res);
         }

@@ -251,9 +251,8 @@
                 DishId: DishId,
             };
             $.post("/Category/AddRecentViewDetail", param).done(function (response) {
-                alert("done recentview");
             }).fail(function () {
-                alert("errror");
+                alert("recent errror");
             })
         }
 

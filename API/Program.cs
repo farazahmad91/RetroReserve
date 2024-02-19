@@ -25,6 +25,7 @@ builder.Services.AddScoped<IEmailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IBannersService, BannersService>();
 builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
