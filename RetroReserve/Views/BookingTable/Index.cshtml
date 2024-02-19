@@ -1,0 +1,111 @@
+﻿
+@{
+    Layout = "_AdminLayout";
+}
+<div id="PartialView">
+
+
+</div>
+
+@section Scripts{
+    <script>
+        var loadData = () => {
+            $.post("/BookingTable/BookingTable").done((result) => {
+                $("#PartialView").html(result)
+            })
+        }
+        loadData();
+
+
+
+        var AddOrEditTable=(Id)=>{
+            debugger
+            $.post("/BookingTable/AddOrEditTable", {Id}).done((res) => {
+                $("#PartialView").html(res);
+            })
+        }
+
+        var SaveOrUpdateTable = () => {
+            debugger
+            let obj = {
+                TableId: $("#TableId").val(),
+                TableName: $("#TableName").val(),
+                Description: $("#Description").val(),
+            };
+            var TableData = new FormData();
+            TableData.append("TableId",obj.TableId)
+            TableData.append("TableName", obj.TableName)
+            TableData.append("Description", obj.Description)
+            TableData.append("ImagePath", $("#Image").prop('files')[0]);
+
+
+            $.ajax({
+                url: '/BookingTable/SaveOrUpdateTable',
+                type: 'POST',
+                data: TableData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.statusCode == -1) {
+                        showerrors(result.responseText);
+                    }
+                    showinsertsuccess(result.responseText);
+                    loadData();
+                },
+                error: function () {
+                    showerrors("Something went wrong!!!");
+                }
+            });
+      
+        }
+
+        function TableStatus(TableId) {
+            debugger;
+            var id = $("#customSwitch3_" + TableId).prop("checked");
+            if (id == true) {
+                id = 1;
+
+            }
+            else {
+                id = 0;
+            }
+            var param = {
+                TableId: TableId,
+                IsActive: id,
+            };
+            console.log(param);
+            $.post("/BookingTable/ChangeStatusTable", param).done(function (result) {
+                loadData();
+                 setTimeout(function () {
+                     showinsertsuccess(result.responseText);
+                }, 100); 
+               
+            }).fail(function () {
+                alert("error");
+
+            })
+        }
+        
+
+        function showinsertsuccess(msg) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+            jQuery("#snackbar").html(msg);
+        }
+
+        function showupdatesuccess(msg) {
+            var x = document.getElementById("snackbar2");
+            x.className = "show2";
+            setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+            jQuery("#snackbar2").html(msg);
+        }
+
+        function showerrors(msg) {
+            var x = document.getElementById("snackbar3");
+            x.className = "show3";
+            setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+            jQuery("#snackbar3").html(msg);
+        }
+    </script>
+}

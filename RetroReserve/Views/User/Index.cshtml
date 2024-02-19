@@ -13,9 +13,12 @@
                 <h1 class="mb-5 display-3 text-primary">Delicious Veg & Non-Veg Foods</h1>
                 <div class="position-relative mx-auto">
                     <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-relative rounded-pill text-white">Order Now</button>
+                    <button class="btn btn-primary border-2 border-secondary py-3 px-4 position-relative rounded-pill text-white" onclick="tableView()" style="top: 0; right: -25%;">Book Table Now</button>
+             
                     <a href="/TableBooking" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 10%;">Book Table Now</a>
                 </div>
             </div>
+         
             <div class="col-md-12 col-lg-5">
                 <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                     <div id="PVBannerShow1"></div>
@@ -34,6 +37,7 @@
 </div>
 <!-- Hero End -->
 <!-- Featurs Section Start -->
+<div id="tableviewPartial"></div>
 <div class="container-fluid featurs py-5">
     <div class="container py-5">
         <div class="row g-4">
@@ -124,6 +128,7 @@
         <div id="PVBannerShow3"></div>
     </div>
     <div id="modalVarientPartialView"></div>
+
 </div>
 <!-- Banner Section End -->
 <!-- End Specials Section -->
@@ -131,6 +136,17 @@
 @section Scripts {
 
     <script>
+
+        var tableView = () => {
+  
+            $.post("/BookTable").done((result) => {
+                $("#tableviewPartial").html(result);
+                $("#MyTableBookModal").modal("show");
+            }).fail(function () {
+                alert("error");
+            });
+        }
+
         function OnItemDetail(Id) {
             var Url = "/Details?Id=" + Id;
             window.location.href = Url;

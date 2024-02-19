@@ -30,9 +30,10 @@ namespace RetroReserve.Controllers
         }
 
 
-        public ActionResult TableBooking()
+        [Route("/BookTable")]
+        public IActionResult TableBooking()
         {
-            return View();
+            return PartialView();
         }
     }
 }
