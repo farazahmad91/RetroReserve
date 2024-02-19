@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace RetroReserve.Controllers
 {
-    [Authorize]
+   
     public class BookingTableController : Controller
     {
 
@@ -21,8 +21,8 @@ namespace RetroReserve.Controllers
             this.webHostEnvironment = webHostEnvironment;
             this.uploadImage = uploadImage;
         }
-        [Route("/TableBooking")]
-        public async Task<ActionResult> BookTable()
+        //[Route("/TableBooking")]
+        //public async Task<ActionResult> BookTable()
 
         public IActionResult Index()
         {
