@@ -8,7 +8,7 @@ namespace API.Repository.Interface
         public Task<BookingTableVM2> GetByIdTable(int Id);
         public Task<IEnumerable<BookingTableVM2>> AllTable();
         public Task<Data.Response> _ChangeStatusTable(BookingTableVM2  bookingTableVM);
-        public Task<Data.Response> TableBookByUser(BookingTableByUser tableByUser);
+        public Task<Data.Response<int>> TableBookByUser(BookingTableByUser tableByUser);
         public Task<IEnumerable<BookingTableByUser>> AllBookedTable();
 
 

@@ -10,7 +10,7 @@
     {
 
         SUCCESS = 1,
-        FAILED = 2,
+        FAILED = -1,
     }
 
     public class RespnseToken :Response

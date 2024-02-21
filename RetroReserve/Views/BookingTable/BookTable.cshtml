@@ -169,11 +169,21 @@
                 $.post("/BookingTable/TableBookByUser", obj)
                     .done(function (result) {
                         Hide_Loader();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: result.responseText
-                        });
+                        if (result.statusCode == 1) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: result.responseText
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: result.responseText
+                            });
+                        }
+                    
                         $("#MyTableBookModal").modal("hide");
                     })
                     .fail(function (result) {
