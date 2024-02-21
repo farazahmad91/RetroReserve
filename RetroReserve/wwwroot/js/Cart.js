@@ -83,38 +83,46 @@ document.addEventListener('DOMContentLoaded', function () {
         updateCartBadge();
     });
 
-
-
 function checkoutOrder() {
-    Show_Loader();
-    setTimeout(function () {
-        if (validateTableBooking()) { 
-    let param = {
+    debugger;
+    var selectedAddress = document.querySelector('input[name="address"]:checked');
 
-        TableId: $("#tableid").val(),
-        Email: $("#email").val(),
-        BookingTime: $("#date").val(),
-        People: $("#people").val(),
-        description: $("#message").val(),
+    if (!selectedAddress) {
+        alert("Please select an address before checking out.");
+        return;
+    }
+
+    var param = {
+        AddressId: selectedAddress.value
     };
 
-    $.post('/Order/AddOnlineOrder', param)
-        .done(function (res) {
-            Hide_Loader();
-            alert("Payment Successfully Completed!");
-            Show_Loader();
-            setTimeout(function () {
+    Show_Loader();
+
+    setTimeout(function () {
+        $.post('/Order/BookingOrder', param)
+            .done(function (res) {
                 Hide_Loader();
-                alert('Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!');
-                window.location.href = "/Home";
-            }, 4500)
-        })
-        .fail(function () {
-            Hide_Loader();
-            Swal.fire("Error", "Table could not be booked successfully!", "error");
-        });
-        }
-    }, 1500)
+                alert("Payment Successfully Completed!");
+
+                Show_Loader();
+
+                setTimeout(function () {
+                    Hide_Loader();
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Order Placed',
+                        icon: 'success',
+                    }).then((data) => {
+                        // Redirect to a different page after successful order placement
+                        window.location.href = "/Cart"; // Change the URL as needed
+                    });
+                }, 1500);
+            })
+            .fail(function () {
+                Hide_Loader();
+                Swal.fire("Error", "Order could not be placed !!", "error");
+            });
+    }, 1500);
 }
 
 function DeleteCart(CartId) {
@@ -138,12 +146,12 @@ function DeleteCart(CartId) {
                         icon: 'success',
                     }).then((data) => {
                         // Redirect to a different page after successful deletion
-                        window.location.href = "/Cart/Cart"; // Change the URL as needed
+                        window.location.href = "/Cart"; // Change the URL as needed
                     });
                 },
                 error: function (error) {
                     /*Swal.fire("Error", "Something went wrong!", "error");*/
-                    window.location.href = "/Cart/Cart";
+                    window.location.href = "/Cart";
                 }
             });
         }

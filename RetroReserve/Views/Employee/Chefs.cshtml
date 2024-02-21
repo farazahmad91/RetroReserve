@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Entities.Employees>
 @{
     ViewData["Title"] = "Chefs";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    Layout = "_UserLayout";
 }
 
 
@@ -13,21 +13,25 @@
     </ol>
 </div>
 <br />
-<div class="col-lg-12">
-    <div class="row g-4">
+<div class="container-fluid vesitable py-5">
+    <div class="container py-5">
+        <h1 class="mb-0">Meet Our Super Specialist Chefs</h1>
+        <div class="owl-carousel vegetable-carousel justify-content-center">
             @foreach (var item in Model)
             {
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="rounded position-relative fruite-item">
-                        <div class="fruite-img">
-                            <img src="@item.Image" class="img-fluid w-100 rounded-top" alt="" style="width:50%;height:230px;">
-                        </div>
-                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                        <h4><strong>@item.Name</strong></h4>
-                        <span class="text-white bg-secondary px-3 py-1 rounded">@item.RoleName</span>
-                        </div>
+                <div class="border border-primary rounded position-relative vesitable-item">
+                    <div class="vesitable-img">
+                        <img src="@item.Image" class="img-fluid rounded-top" style="width:300px;height:200px;" alt="">
+                    </div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.RoleName</div>
+                    <div class="p-4 rounded-bottom">
+                        <h5 style="width:auto;font:bolder ;font-size:large;font-weight:800;"><strong>@item.Name</strong></h5>
+                        <p>A chef is a skilled culinary professional who specializes in the art and science of food preparation. </p>
                     </div>
                 </div>
             }
-            </div></div>
+        </div>
+    </div>
+</div>
+
 

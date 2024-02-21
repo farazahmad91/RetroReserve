@@ -13,17 +13,12 @@ namespace API.Controllers
         {
                 this.orderService = orderService;
         }
-        [HttpPost(nameof(AddTableOrder))]   
-        public async Task<IActionResult> AddTableOrder(orders orders)
-        {
-           var i = await  orderService.AddTableOrder(orders);
-            return Ok(i);
-        }
 
-        [HttpPost(nameof(AddOnlineOrder))]
-        public async Task<IActionResult> AddOnlineOrder(BookingTables orders)
+
+        [HttpPost(nameof(BookingOrder))]
+        public async Task<IActionResult> BookingOrder(Orders orders)
         {
-            var i = await orderService.AddOnlineOrder(orders);
+            var i = await orderService.BookingOrder(orders);
             return Ok(i);
         }
 
@@ -45,21 +40,21 @@ namespace API.Controllers
             var i = orderService.InvoiceByOrderId(id);
             return Ok(i);
         }
-        [HttpGet(nameof(GetOnlineOrderList))]
-        public IActionResult GetOnlineOrderList()
+        [HttpGet(nameof(GetOrderList))]
+        public IActionResult GetOrderList()
         {
-            var i = orderService.GetOnlineOrderList();
+            var i = orderService.GetOrderList();
             return Ok(i);
         }
-        [HttpGet(nameof(DeliverdOnlineOrderReport))]
-        public IActionResult DeliverdOnlineOrderReport()
+        [HttpGet(nameof(DeliverdOrderReport))]
+        public IActionResult DeliverdOrderReport()
         {
-            var i = orderService.DeliverdOnlineOrderReport();
+            var i = orderService.DeliverdOrderReport();
             return Ok(i);
         }
 
         [HttpPost(nameof(UpdateOrderStatus))]
-        public async Task<IActionResult> UpdateOrderStatus(BookingTables orders)
+        public async Task<IActionResult> UpdateOrderStatus(Orders orders)
         {
             var i = await orderService.UpdateOrderStatus(orders);
             return Ok(i);

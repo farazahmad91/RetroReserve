@@ -11,39 +11,39 @@
     }, 5500)
 }
 
-function BookTable() {
-    Show_Loader();
-    setTimeout(function () {
-        if (validateTableBooking()) {
-            let param = {
+//function BookTable() {
+//    Show_Loader();
+//    setTimeout(function () {
+//        if (validateTableBooking()) {
+//            let param = {
 
-                TableId: $("#tableid").val(),
-                Email: $("#email").val(),
-                BookingTime: $("#date").val(),
-                People: $("#people").val(),
-                description: $("#message").val(),
+//                TableId: $("#tableid").val(),
+//                Email: $("#email").val(),
+//                BookingTime: $("#date").val(),
+//                People: $("#people").val(),
+//                description: $("#message").val(),
 
-            };
-            $.post("/BookingTable/BookingTable", param)
-                .done(function () {
-                    Hide_Loader();
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!',
-                        icon: 'success'
-                    }).then(function () {
-                        Hide_Loader();
-                        window.location.href = "/Home";
-                    });
-                })
-                .fail(function () {
-                    Hide_Loader();
-                    Swal.fire("Error", "Table could not be booked successfully!", "error");
-                });
+//            };
+//            $.post("/BookingTable/BookingTable", param)
+//                .done(function () {
+//                    Hide_Loader();
+//                    Swal.fire({
+//                        title: 'Success',
+//                        text: 'Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!',
+//                        icon: 'success'
+//                    }).then(function () {
+//                        Hide_Loader();
+//                        window.location.href = "/Home";
+//                    });
+//                })
+//                .fail(function () {
+//                    Hide_Loader();
+//                    Swal.fire("Error", "Table could not be booked successfully!", "error");
+//                });
 
-        }
-    }, 1500)
-}
+//        }
+//    }, 1500)
+//}
 
 function validateTableBooking() {
     let isvalidated = true;

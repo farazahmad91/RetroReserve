@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RetroReserve.Models;
 using Entities;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace RetroReserve.Controllers
 {

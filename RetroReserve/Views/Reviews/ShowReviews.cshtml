@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Entities.Reviews>
+@{
+    ViewData["Title"] = "ShowReviews";
+}
+<br />
+ @foreach (var item in Model)
+    {
+    DateTime reviewDate = item.ReviewDate;
+
+    string formattedDate = reviewDate.ToString("dd MMM yyyy h:mm tt");
+<div class="d-flex">
+        <img src="~/Uimg/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+        <div class="">
+            <p class="mb-2" style="font-size: 14px;"></p>
+            <div class="d-flex justify-content-between">
+                <h5>@item.Name</h5>
+                <div class="d-flex mb-3">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <i class="fa fa-star @(i <= @item.Rating ? "text-secondary" : "")"></i>
+                    }
+                </div>
+            </div>
+            <p>
+                @item.Comment
+            </p>
+            <br />
+            <p>
+
+                @formattedDate
+            </p>
+        </div>
+</div>
+    <hr />
+}

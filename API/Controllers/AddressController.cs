@@ -41,5 +41,12 @@ namespace API.Controllers
             var i = _addressService.GetAddressByUserId(email);
             return Ok(i);
         }
+
+        [HttpGet(nameof(GetAddressById))]
+        public IActionResult GetAddressById(int id)
+        {
+            var i = _addressService.GetAddressById(id);
+            return Ok(i);
+        }
     }
 }

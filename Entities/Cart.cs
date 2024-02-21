@@ -16,6 +16,11 @@ namespace Entities
         public DateTime CreatedAt { get; set; }
 
     }
+    public class CartQTY
+    {
+        public int CartId { get; set; }
+        public int Quantity { get; set; }
+    }
     public class DynamicCartValue
     {
         public int Status { get; set; }

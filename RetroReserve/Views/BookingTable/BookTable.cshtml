@@ -24,6 +24,34 @@
         <div>
             <br />
             <div role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" style="border:solid #9ad039 2px; border-radius:50px 0px 50px 0px; padding:35px;">
+          <div class="row">
+           
+            <div class="row">
+                <div class="col-md-4">
+                     <div class="col-lg-12 col-md-12 form-group">
+               <select class="form-control" id="tableid" asp-items="@tabledetails">
+                                <option value="">:: Select Table ::</option>
+                            </select>
+            </div>
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="email" name="date" class="form-control" style="color:black; background-color:white;" id="email" placeholder="Email">
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="datetime-local" style="color:black; background-color:white;" name="date" min="@DateTime.Today.AddHours(10).ToString("yyyy-MM-ddTHH:mm")"  class="form-control" id="date" placeholder="Date">
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+                        <input type="number" class="form-control" style="color:black; background-color:white;" name="people" id="people" placeholder="# of people" max="12" data-rule="minlen:1">
+            </div>
+          </div>
+          <div class="form-group mt-3">
+                    <textarea class="form-control" id="message" rows="3" style="color:black; background-color:white;" placeholder="Message"></textarea>
+          </div>
+          <div class="mb-3">
+          </div>
+                
+        </div>
                 <div class="row">
                     <div class="container-fluid vesitable py-5">
                         <div class="container py-5">
