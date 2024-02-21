@@ -25,10 +25,8 @@
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    imageFile.CopyToAsync(stream)
-;
+                    imageFile.CopyToAsync(stream);
                 }
-
                 return "/img/" + uniqueFileName;
             }
 
