@@ -149,7 +149,7 @@
             $.post('/Event/UpdateBookingEventStatus', data)
                 .done(function (res) {
                     showinsertsuccess("Status Updated");
-                    window.location.href = "/Event/NewBookingEventlist";
+                    window.location.href = "/New-Event-Booking";
                 })
                 .fail(function () {
                     // Handle the failure case

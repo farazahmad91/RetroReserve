@@ -17,11 +17,13 @@ namespace RetroReserve.Controllers
         {
             this.apirequest = apirequest;
         }
+        [Route("/NewOrder")]
         public async Task<ActionResult> NewOrder()
         {
             var i = await apirequest.GetData<List<OrdersReport>>("Orders/GetOrderList");
             return View(i);
         }
+        [Route("/DeliverdOrder")]
         public async Task<ActionResult> DeliverdOrder()
         {
             var i = await apirequest.GetData<List<OrdersReport>>("Orders/DeliverdOrderReport");

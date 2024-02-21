@@ -53,9 +53,9 @@ namespace API.Controllers
         }
 
         [HttpPost(nameof(UpdateFoodVarientStatus))]
-        public IActionResult UpdateFoodVarientStatus(Foodkart foodkart)
+        public async Task<IActionResult> UpdateFoodVarientStatus(Foodkart foodkart)
         {
-            var i = foodKartService.UpdateFoodVarientStatus(foodkart);
+            var i =await foodKartService.UpdateFoodVarientStatus(foodkart);
             return Ok(i);
 
         }

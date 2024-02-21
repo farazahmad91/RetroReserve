@@ -1,3 +1,13 @@
+#clock {
+    font-size: 2em;
+    letter-spacing: 4px;
+    background-color: #17a2b8;
+    color:white;
+    margin-top: -15px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
 .blink {
     animation: blinker 1.5s linear infinite;
     color: #fd7e14;

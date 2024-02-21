@@ -18,6 +18,7 @@ namespace RetroReserve.Controllers
             this.webHostEnvironment = webHostEnvironment; 
             this.uploadImage = uploadImage;
         }
+        [Route("/Inbox")]
         public async Task<IActionResult> ContactusList()
         {
             var i = await apirequest.GetData<List<Contact>>("Contact/GetContactusList");
@@ -46,6 +47,7 @@ namespace RetroReserve.Controllers
             return Json(i);
 
         }
+        [Route("/Compose")]
 		public ActionResult Compose()
 		{
 			return View();
@@ -56,6 +58,7 @@ namespace RetroReserve.Controllers
             return Json(i);
 
         }
+        [Route("/Sent")]
         public async Task<IActionResult> sentmessage()
         {
             var i = await apirequest.GetData<List<MessageBox>>("Contact/GetSentMessageList");

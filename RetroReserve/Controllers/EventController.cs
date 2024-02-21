@@ -17,6 +17,7 @@ namespace RetroReserve.Controllers
             this.webHostEnvironment = webHostEnvironment;
             this.uploadImage = uploadImage;
         }
+        [Route("/Event-Details")]
         public ActionResult EventIndex()
         {
             return View();
@@ -26,12 +27,13 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<List<Event>>("Event/GetEventList");
             return PartialView(i);
         }
-
+        [Route("/AllEvent-Booking")]
         public async Task<ActionResult> BookingEventlist()
         {
             var i = await apirequest.GetData<List<EventBooking>>("Event/GetBookingEventList");
             return View(i);
         }
+        [Route("/New-Event-Booking")]
         public async Task<ActionResult> NewBookingEventlist()
         {
             var i = await apirequest.GetData<List<EventBooking>>("Event/NewBookingEventlist");
