@@ -1,0 +1,163 @@
+﻿@model IEnumerable<Entities.BookingTableByUser>
+@{
+    ViewData["Title"] = "BookingDetails";
+    Layout = null;
+}
+<style>
+
+
+    #search-wrapper {
+        display: flex;
+        border: 1px solid rgba(0, 0, 0, 0.276);
+        align-items: stretch;
+        border-radius: 50px;
+        background-color: #fff;
+        overflow: hidden;
+        max-width: 400px;
+        box-shadow: 2px 1px 5px 1px rgba(0, 0, 0, 0.273);
+    }
+
+    #search {
+        border: none;
+        width: 350px;
+        font-size: 15px;
+    }
+
+        #search:focus {
+            outline: none;
+        }
+
+    .search-icon {
+        margin: 10px;
+        color: rgba(0, 0, 0, 0.564);
+    }
+
+    #search-button {
+        border: none;
+        cursor: pointer;
+        color: #fff;
+        background-color: #17a2b8;
+        padding: 0px 10px;
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Booking Details</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Booking Details</a></li>
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div>
+        <div class="card" id="snackbar"></div>
+        <div class="card" id="snackbar2"></div>
+        <div class="card" id="snackbar3"></div>
+    </div>
+    <div class="container">
+        <div id="search-wrapper" class="float-right" style="align-content:center;">
+            <i class="search-icon fas fa-search"></i>
+            <input type="text" id="search" placeholder="Search booking id ">
+            <button id="search-button" onclick="OnSearch();">Search</button>
+        </div>
+        <br />  <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped" id="tbl">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr class="text-nowrap">
+                            <th>Sr No:</th>
+                            <th>
+                                BookingId
+                            </th>
+                            <th>
+                                TableId
+                            </th>
+                            <th>
+                                Customer Name
+                            </th>
+                            <th>
+                                Customer Email
+                            </th>
+                            <th>
+                                Booking Date
+                            </th>
+                            <th>
+                                Booking Time
+                            </th>
+                            <th>
+                                No. of Peoples
+                            </th>
+                            <th>
+                                EntryOn
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr style="text-align: center;">
+                                <td colspan="12" style="text-align: center;">
+                                    <label><strong>Reacord Not Found</strong></label>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            var count = 0;
+                            @foreach (var item in Model)
+                            {
+
+                                var i = 0;
+                                count++;
+                                <tr class="text-nowrap">
+
+                                    <td>
+                                        @count
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TableId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NoOfPeople)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Entryon)
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

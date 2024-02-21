@@ -63,5 +63,19 @@ namespace API.Controllers
             var i = await bookingTableService.UpdateStatusBookedTable(BookingId);
             return Ok(i);
         }
+
+        [HttpGet(nameof(BookingDetails))]
+        public IActionResult BookingDetails()
+        {
+            var i =  bookingTableService.BookingDetails();
+            return Ok(i);
+        }
+
+        [HttpGet(nameof(DetailsOnSearch))]
+        public IActionResult DetailsOnSearch(int id)
+        {
+            var i = bookingTableService.DetailsOnSearch(id);
+            return Ok(i);
+        }
     }
 }
