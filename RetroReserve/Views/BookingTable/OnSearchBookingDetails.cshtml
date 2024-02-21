@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Entities.BookingTableByUser>
+@{
+    ViewData["Title"] = "OnSearchBookingDetails";
+    Layout = null;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Booking Details</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Booking Details</a></li>
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div>
+        <div class="card" id="snackbar"></div>
+        <div class="card" id="snackbar2"></div>
+        <div class="card" id="snackbar3"></div>
+    </div>
+    <div class="container">
+        <br />  <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped" id="tbl">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr class="text-nowrap">
+                            <th>Sr No:</th>
+                            <th>
+                                BookingId
+                            </th>
+                            <th>
+                                TableId
+                            </th>
+                            <th>
+                                Customer Name
+                            </th>
+                            <th>
+                                Customer Email
+                            </th>
+                            <th>
+                                Booking Date
+                            </th>
+                            <th>
+                                Booking Time
+                            </th>
+                            <th>
+                                No. of Peoples
+                            </th>
+                            <th>
+                                EntryOn
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr style="text-align: center;">
+                                <td colspan="12" style="text-align: center;">
+                                    <label><strong>Reacord Not Found</strong></label>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            var count = 0;
+                            @foreach (var item in Model)
+                            {
+
+                                var i = 0;
+                                count++;
+                                <tr class="text-nowrap">
+
+                                    <td>
+                                        @count
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TableId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NoOfPeople)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Entryon)
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

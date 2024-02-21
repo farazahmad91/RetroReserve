@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Entities.BookingTableByUser>
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_AdminLayout";
+}
+
+<div id="partialView">
+</div>
+@section Scripts {
+    <script>
+
+        function loadData() {
+            debugger;
+            $.post("/BookingTable/BookingDetails").done(function (result) {
+                $("#partialView").html(result);
+            });
+        }
+        loadData();
+
+        function OnSearch() {
+            var param = {
+                Id: $("#search").val(),
+            };
+            $.post("/BookingTable/OnSearchBookingDetails", param).done(function (result) {
+                $("#partialView").html(result);
+            });
+        }
+
+        function showinsertsuccess(msg) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+            jQuery("#snackbar").html(msg);
+        }
+
+        function showupdatesuccess(msg) {
+            var x = document.getElementById("snackbar2");
+            x.className = "show2";
+            setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+            jQuery("#snackbar2").html(msg);
+        }
+
+        function showerrors(msg) {
+            var x = document.getElementById("snackbar3");
+            x.className = "show3";
+            setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+            jQuery("#snackbar3").html(msg);
+        }
+    </script>
+}
+
+
+
+
+
+

@@ -78,6 +78,8 @@ namespace API.Repository.Impliments
             }
         }
 
+
+
         public async Task<Data.Response> _ChangeStatusTable(BookingTableVM2 bookingTableVM)
         {
             var res = new Data.Response();
@@ -191,6 +193,39 @@ namespace API.Repository.Impliments
                     BookingId = BookingId
                 });
                 return res;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<BookingTableByUser> BookingDetails()
+        {
+            var res = new Data.Response();
+            try
+            {
+
+                var list =  dapperService.GetAll<BookingTableByUser>("SELECT * FROM tbl_BookingTableDetail");
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public BookingTableByUser DetailsOnSearch(int id)
+        {
+            var sp = "SELECT * FROM tbl_BookingTableDetail where BookingId=@id";
+            try
+            {
+                var param = new 
+                { id };
+                var list = dapperService.GetById<BookingTableByUser>(param,sp);
+                return list;
             }
             catch (Exception ex)
             {

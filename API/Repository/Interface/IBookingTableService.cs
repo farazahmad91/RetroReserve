@@ -11,6 +11,8 @@ namespace API.Repository.Interface
         public Task<Data.Response<int>> TableBookByUser(BookingTableByUser tableByUser);
         public Task<IEnumerable<BookingTableByUser>> AllBookedTable();
         public Task<Data.Response> UpdateStatusBookedTable(int BookingId);
+        public IEnumerable<BookingTableByUser> BookingDetails();
+        public BookingTableByUser DetailsOnSearch(int id);
 
 
     }
