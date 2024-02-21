@@ -94,6 +94,7 @@ namespace API.Repository.Impliments
                 {
                     AReviewId = aReview.AReviewId,
                     UserID = aReview.UserID,
+                    Name = aReview.Name,
                     Comment = aReview.Comment,
                     Status = aReview.Status,
                     Rating = aReview.Rating,

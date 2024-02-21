@@ -68,6 +68,13 @@ namespace API.Repository.Impliments
             return i;
         }
 
+        public IEnumerable<Foodkart> GetDishVarientList()
+        {
+            var sp = "sp_GetDishVarientList";
+            var i = dapper.GetAll<Foodkart>(sp);
+            return i;
+        }
+
         public IEnumerable<Foodkart> GetDishByPrize(decimal price)
         {
             var sp = "sp_GetDishListByPrize";

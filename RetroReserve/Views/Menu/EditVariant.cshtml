@@ -4,121 +4,118 @@
     Layout = null;
 }
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Add Menu Varient</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Menu Varient</a></li>
-                        <li class="breadcrumb-item active">Add Menu</li>
-                    </ol>
-                </div>
+
+<div class="modal fade" id="VModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Varient Info</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-        </div>
-    </div>
-    <div class="container py-3">
-        <div>
-            <div class="card" id="snackbar">Data Saved Successfully</div>
-            <div class="card" id="snackbar2">Data Updated Successfully</div>
-            <div class="card" id="snackbar3">Deleted.</div>
-        </div>
-        <div class="card">
-            <div class="card-header bg-info text-white">
-                <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Add Menu Info</Strong></h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Dish Name</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
-                                </div>
-                                <input type="text" hidden asp-for="DishId" class="form-control" />
-                                <input type="text" asp-for="DishName" class="form-control" />
+            <div class="modal-body">
+                <div class="container py-3">
+                    <div>
+                        <div class="card" id="snackbar">Data Saved Successfully</div>
+                        <div class="card" id="snackbar2">Data Updated Successfully</div>
+                        <div class="card" id="snackbar3">Deleted.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Add Menu Info</Strong></h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Dish Name</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                            </div>
+                                            <input type="text" hidden asp-for="DishId" class="form-control" />
+                                            <input type="text" asp-for="VName" class="form-control" />
 
-                            </div>
-                        </div>
-                    </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Dish Image</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Dish Image</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                            </div>
+                                            <input type="file" asp-for="DishImage" class="form-control" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="file" asp-for="DishImage" class="form-control" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>MRP</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-rupee" style="font-size:23px;"></i></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>MRP</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-rupee" style="font-size:23px;"></i></span>
+                                            </div>
+                                            <input type="number" asp-for="MRP" class="form-control" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="number" asp-for="MRP" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Selling Cost</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-rupee" style="font-size:23px;"></i></span>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Selling Cost</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-rupee" style="font-size:23px;"></i></span>
+                                            </div>
+                                            <input type="number" asp-for="SellingCost" class="form-control" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="number" asp-for="SellingCost" class="form-control" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Quantity</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-sort-amount-up" style="font-size:23px;"></i></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-sort-amount-up" style="font-size:23px;"></i></span>
+                                            </div>
+                                            <input type="text" asp-for="DishQuantity" class="form-control" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="text" asp-for="DishQuantity" class="form-control" />
-                            </div>
-                        </div>
-                    </div>                   
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Description</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-info-circle" style="font-size:23px;"></i></span>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-info-circle" style="font-size:23px;"></i></span>
+                                            </div>
+                                            <input type="text" asp-for="DishDescription" class="form-control" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="text" asp-for="DishDescription" class="form-control" />
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <br />
-                <div class="form-group">
-                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-                    <button type="button" id="btninsertupdate" onclick="AddOrUpdateVarient();" class="btn btn-primary">Save</button>
-                    <a href="/Menu" class="btn btn-info float-right" style="text-align:right;">Back To List</a>
+                            <br />
+                            <div class="form-group">
+                                <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                <button type="button" id="btninsertupdate" onclick="AddOrUpdateVarient();" class="btn btn-primary">Save</button>
+                                <a href="/Menu" class="btn btn-info float-right" style="text-align:right;">Back To List</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <div>
     <a href="Index">Back to List</a>
 </div>
@@ -130,15 +127,15 @@
             if (validateVarient()) {
                 let param = {
                     DishId: $("#DishId").val(),
-                    MRP: $("#DishName").val(),
-                    DishPrize: $("#MRP").val(),
+                    VName: $("#VName").val(),
+                    MRP: $("#MRP").val(),
                     SellingCost: $("#SellingCost").val(),
                     DishQuantity: $("#DishQuantity").val(),
                     DishDescription: $("#DishDescription").val(),
                 };
                 var Menu = new FormData();
                 Menu.append("DishId", param.DishId);
-                Menu.append("DishName", param.DishName);
+                Menu.append("VName", param.VName);
                 Menu.append("MRP", param.MRP);
                 Menu.append("SellingCost", param.SellingCost);
                 Menu.append("DishQuantity", param.DishQuantity);

@@ -46,8 +46,8 @@ namespace RetroReserve.Controllers
         [Route("/Testimonial")]
         public async Task<IActionResult> Testimonial()
         {
-            //var i = await _apirequest.GetData<List<ProductReview>>("ProductReview/GetProductReviewList");
-            return View();
+          var i = await _apirequest.GetData<List<AppReviews>>("Reviews/GetAReviewList");
+            return View(i);
         }
         [Route("/App_Review")]
         public async Task<IActionResult> InsertAReview()
@@ -58,7 +58,9 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> AddOrUpdateAReview(AppReviews appReviews)
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
+            var name = User.FindFirstValue(ClaimTypes.Name);
             appReviews.UserID = Email;
+            appReviews.Name = name;
             var i = await _apirequest.Post("Reviews/AddorUpdateAppReview", appReviews);
             var res = JsonConvert.DeserializeObject<Entities.Response>(i);
             return Json(res);

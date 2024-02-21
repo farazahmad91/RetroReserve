@@ -43,6 +43,23 @@ namespace API.Controllers
             return Ok(i);
 
         }
+
+        [HttpGet(nameof(GetFoodVarientById))]
+        public IActionResult GetFoodVarientById(int id)
+        {
+            var i = foodKartService.GetFoodVarientById(id);
+            return Ok(i);
+
+        }
+
+        [HttpPost(nameof(UpdateFoodVarientStatus))]
+        public IActionResult UpdateFoodVarientStatus(Foodkart foodkart)
+        {
+            var i = foodKartService.UpdateFoodVarientStatus(foodkart);
+            return Ok(i);
+
+        }
+
         [HttpGet(nameof(GetFoodkartList))]
         public IActionResult GetFoodkartList()
         {

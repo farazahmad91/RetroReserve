@@ -67,11 +67,22 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Foodkart>(($"Foodkart/GetFoodkartById?Id={DishId}"));
             return PartialView(i);
         }
-
-        public async Task<ActionResult> EditVariant(int DishId)
+        [Route("/VarientDetails")]
+        public async Task<ActionResult> VarientDetails()
         {
-            var i = await apirequest.GetData<Foodkart>(($"Foodkart/GetFoodkartById?Id={DishId}"));
+            var i = await apirequest.GetData<List<Foodkart>>("Category/GetDishVarientList");
             return PartialView(i);
+        }
+        public async Task<ActionResult> EditVariant(int Id)
+        {
+            var i = await apirequest.GetData<Foodkart>(($"Foodkart/GetFoodVarientById?Id={Id}"));
+            return PartialView(i);
+        }
+
+        public async Task<ActionResult> UpdateFoodVarientStatus(Foodkart foodkart)
+        {
+            var i = await apirequest.Post("Foodkart/UpdateFoodVarientStatus", foodkart);
+            return Json(i);
         }
         public async Task<ActionResult> AddVariant(int DishId)
         {
