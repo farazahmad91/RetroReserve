@@ -39,7 +39,7 @@ namespace Entities
 
     public class BookingTableByUser
     {
-        public int BookingId { get; set; }
+        public int? BookingId { get; set; }
         public int TableId { get; set;}
 
         public int NoOfPeople { get; set; }
@@ -49,6 +49,8 @@ namespace Entities
 
         public string Email { get; set; }
         public string  Name { get; set; }
+
+        public string? Entryon{ get; set; }
     }
 
    

@@ -57,5 +57,11 @@ namespace API.Controllers
             return Ok(i);
         }
 
+        [HttpPost(nameof(UpdateStatusBookedTable)+"/{BookingId}")]
+        public async Task<IActionResult> UpdateStatusBookedTable(int BookingId)
+        {
+            var i = await bookingTableService.UpdateStatusBookedTable(BookingId);
+            return Ok(i);
+        }
     }
 }
