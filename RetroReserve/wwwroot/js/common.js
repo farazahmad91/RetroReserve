@@ -35,3 +35,36 @@
     }
     return isValid;
 }
+
+
+function QAlert(statusCode, message) {
+    var type, typeText;
+    switch (statusCode) {
+        case 1:
+            type = 'success';
+            break;
+        case -1:
+            type = 'danger';
+            break;
+        case 2:
+            type = 'info';
+            break;
+        default:
+            type = 'primary';
+    }
+
+    var alertDiv = $('<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+        message +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">&times;</span>' +
+        '</button>' +
+        '</div>');
+
+    $('#alert-container').append(alertDiv);
+     alertDiv.fadeIn(1000);
+    setTimeout(function () {
+        alertDiv.fadeOut('slow', function () {
+            $(this).remove();
+        });
+    }, 1500);
+}
