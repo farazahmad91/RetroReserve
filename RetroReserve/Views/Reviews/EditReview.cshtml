@@ -1,4 +1,4 @@
-﻿@model Entities.ProductReview
+﻿@model Entities.Reviews
 @{
     ViewData["Title"] = "EditReview";
 }
@@ -20,7 +20,13 @@
         transform: scale(1.2) !important;
     }
 </style>
-
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Application Review</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+        <li class="breadcrumb-item active text-white">Review</li>
+    </ol>
+</div>
 <div style="border: 2px solid #679d06; border-radius: 20px 0px; padding:20px;">
     <h4 class="mb-5 fw-bold">Leave a Reply</h4>
     <div class="row g-4">

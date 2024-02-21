@@ -10,5 +10,6 @@ namespace Entities
     {
         public int StatusCode { get; set; }
         public string ResponseText { get; set; }
+        public int OrderID { get; set; }
     }
 }

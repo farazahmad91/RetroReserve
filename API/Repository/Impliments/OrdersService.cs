@@ -1,5 +1,6 @@
 ﻿using API.Repository.Interface;
 using Entities;
+using Microsoft.AspNetCore.Http;
 namespace API.Repository.Impliments
 {
     public class OrdersService : IOrderService
@@ -12,71 +13,48 @@ namespace API.Repository.Impliments
             this.emailSenderService = emailSenderService;
         }
 
-        // Table order Details Function
-        public async Task<int> AddTableOrder(orders orders)
-        {
-            var sp = "sp_AddTableOrders";
-            var param = new
-            {
-                OrderID = orders.OrderID,
-                TableId = orders.TableId,
-                DishId = orders.DishId,
-                Quantity = orders.Quantity,
-                TotalAmount = orders.TotalAmount,
-                Status = orders.Status
-
-            };
-       
-            var i = await dapper.Insert(param, sp);
-            return i;
-        }
-       
-        public int DeleteOrder(int id)
-        {
-            var sp = "";
-            return dapper.Delete(id, sp);
-        }
-        public orders GetTableOrderById(int id)
-        {
-            var sp = "sp_GetTableOrdersById";
-            var param = new
-            {
-                OrderID = id,
-
-            };
-            var i = dapper.GetById<orders>(param, sp);
-            return i;
-        }
-        public IEnumerable<orders> GetTableOrderList()
-        {
-            var sp = "sp_GetTableOrdersList";
-            var i = dapper.GetAll<orders>(sp);
-            return i;
-        }
-
        // Online order Details Function
 
-        public async Task<int> AddOnlineOrder(BookingTables orders)
+        public async Task<Response> BookingOrder(Orders orders)
         {
-            var sp = "sp_OrderBooking";
-            var param = new
+            var res = new Response()
             {
-                OrderID = orders.OrderID,
-                TableBookingId = orders.TableBookingId,
-                TableId = orders.TableId,
-                UserId = orders.UserId,
-                People = orders.People,
-                Email = orders.Email,
-                BookingTime = orders.BookingTime,
-                description = orders.description,
-                Status = orders.Status,
-
+                ResponseText = "Failed To Save",
+                StatusCode = -1,
             };
+            try
+            {
+                var sp = "sp_OrderBooking";
+                var param = new
+                {
+                    OrderID = orders.OrderID,
+                    AddressId = orders.AddressId,
+                    UserId = orders.UserId,
+                    Status = orders.Status,
 
-            var i = await dapper.Insert(param, sp);
-            return i;
+                };
+                string bookingEmail = orders.UserId;
+                string subject = "Order Placed";
+                
+               
+                res = await dapper.GetAsync<Response>(sp, param);
+                if (res.StatusCode == 1)
+                {
+                    string body = $"Dear Valued Customer,\n\nThank you for choosing RetroReserve! We are excited to confirm the successful placement of your new order. Your Order ID is: RR#{res.OrderID}.\n\nOur team is dedicated to ensuring your satisfaction, and we can't wait to prepare and deliver your items with care. We kindly request your patience as we aim to deliver within the next 30 minutes. If you have any specific preferences or questions regarding your order, please don't hesitate to contact us.\n\nWe appreciate your trust in RetroReserve and look forward to serving you with excellence.\n\nBest regards,\nThe RetroReserve Team";
+                    emailSenderService.SendEmail(bookingEmail, subject, body);
+
+                }
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                res.ResponseText = ex.Message;
+                res.StatusCode = -1;
+                return res;
+            }
         }
-        public orders Getconfirmdatashow(int id)
+        public Orders Getconfirmdatashow(int id)
         {
             var sp = "sp_confirmdatashow";
             var param = new
@@ -84,10 +62,10 @@ namespace API.Repository.Impliments
                 UserId = id,
 
             };
-            var i = dapper.GetById<orders>(param, sp);
+            var i = dapper.GetById<Orders>(param, sp);
             return i;
         }
-        public orders GetOnlineOrderById(int id)
+        public Orders GetOrderById(int id)
         {
             var sp = "sp_GetOnlineOrderById";
             var param = new
@@ -95,10 +73,10 @@ namespace API.Repository.Impliments
                 OrderID = id,
 
             };
-            var i = dapper.GetById<orders>(param, sp);
+            var i = dapper.GetById<Orders>(param, sp);
             return i;
         }
-        public IEnumerable<OnlineOrdersReport> OrderHistory(string id)
+        public IEnumerable<OrdersReport> OrderHistory(string id)
         {
             var sp = "sp_OrderHistory";
             var param = new
@@ -106,10 +84,10 @@ namespace API.Repository.Impliments
                 UserId = id,
 
             };
-            var i = dapper.GetItemsById <OnlineOrdersReport>(param, sp);
+            var i = dapper.GetItemsById <OrdersReport>(param, sp);
             return i;
         }
-        public IEnumerable<OnlineOrdersReport> InvoiceByOrderId(int id)
+        public IEnumerable<OrdersReport> InvoiceByOrderId(int id)
         {
             var sp = "sp_InvoiceByOrderId";
             var param = new
@@ -117,24 +95,24 @@ namespace API.Repository.Impliments
                 OrderID = id,
 
             };
-            var i = dapper.GetItemsById<OnlineOrdersReport>(param, sp);
+            var i = dapper.GetItemsById<OrdersReport>(param, sp);
             return i;
         }
-        public IEnumerable<BookingTables> GetOnlineOrderList()
+        public IEnumerable<OrdersReport> GetOrderList()
         {
             var sp = "sp_OrderReport";
-            var i = dapper.GetAll<BookingTables>(sp);
+            var i = dapper.GetAll<OrdersReport>(sp);
             return i;
         }
 
-        public IEnumerable<OnlineOrdersReport> DeliverdOnlineOrderReport()
+        public IEnumerable<OrdersReport> DeliverdOrderReport()
         {
             var sp = "sp_DeliverdOrderReport";
-            var i = dapper.GetAll<OnlineOrdersReport>(sp);
+            var i = dapper.GetAll<OrdersReport>(sp);
             return i;
         }
 
-        public async Task<int> UpdateOrderStatus(BookingTables orders)
+        public async Task<int> UpdateOrderStatus(Orders orders)
         {
             var sp = "sp_UpdateOrderStatus";
             var param = new
@@ -143,7 +121,7 @@ namespace API.Repository.Impliments
                 Status = orders.Status,
                 DeliverDate = orders.DeliverDate,
             };
-            string bookingEmail = orders.Email;
+            string bookingEmail = orders.UserId;
             string subject = "";
             string body = "";
 
@@ -151,7 +129,7 @@ namespace API.Repository.Impliments
             {
                 case 1:
                     subject = "Booking Confirmation";
-                    body = $"Dear Valued Customer,\n\nWe are delighted to inform you that your table has been successfully booked. Your Booking ID is: {orders.OrderID}. And Table No:{orders.TableId}. \n\nWe look forward to serving you and providing an unforgettable dining experience. If you have any special requests or questions, feel free to reach out to us.\n\nThank you for choosing us. We appreciate your trust and can't wait to welcome you!\n\nBest regards,\nThe RetroReserve Team";
+                    body = $"Dear Valued Customer,\n\nWe are delighted to inform you that your table has been successfully booked. Your Booking ID is: RR#{orders.OrderID}.\n\nWe look forward to serving you and providing an unforgettable dining experience. If you have any special requests or questions, feel free to reach out to us.\n\nThank you for choosing us. We appreciate your trust and can't wait to welcome you!\n\nBest regards,\nThe RetroReserve Team";
                     break;
 
                 case 2:
@@ -176,17 +154,22 @@ namespace API.Repository.Impliments
 
             return i;
         }
-        public IEnumerable<OnlineOrdersReport> GetOrderInChart()
+        public IEnumerable<OrdersReport> GetOrderInChart()
         {
             var sp = "sp_GetOrderInChart";
-            var i = dapper.GetAll<OnlineOrdersReport>(sp);
+            var i = dapper.GetAll<OrdersReport>(sp);
             return i;
         }
-        public IEnumerable<OnlineOrdersReport> GetOrderInPieChart()
+        public IEnumerable<OrdersReport> GetOrderInPieChart()
         {
             var sp = "sp_GettotalOrderByMonth";
-            var i = dapper.GetAll<OnlineOrdersReport>(sp);
+            var i = dapper.GetAll<OrdersReport>(sp);
             return i;
+        }
+
+        public Task<Response> AddOrder(Orders orders)
+        {
+            throw new NotImplementedException();
         }
     }
 }

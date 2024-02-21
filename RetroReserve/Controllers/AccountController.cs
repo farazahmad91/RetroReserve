@@ -14,10 +14,12 @@ namespace RetroReserve.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly APIrequest _apirequest;
         public string myIP, hostName;
         private readonly string _BaseUrl;
-        public AccountController()
+        public AccountController(APIrequest aPIrequest)
         {
+            this._apirequest = aPIrequest;
             _BaseUrl = "https://localhost:7291";
         }
         [HttpGet]
@@ -197,12 +199,38 @@ namespace RetroReserve.Controllers
                 return BadRequest("Invalid request! Please check the provided data.");
             }
         }
-        public async Task<IActionResult> Logout(string returnurl= "/Account/Login")
+        public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
-            HttpContext.Response.Cookies.Delete(".AspNetCore.Identity.Application");
-            return LocalRedirect(returnurl);
+            try
+            {
+                var email = User.FindFirstValue(ClaimTypes.Email);
+                var apiResponse = await _apirequest.GetData<Entities.Response>($"Reviews/CheckUserReview?email={email}");
+                
+
+                if (apiResponse.ResponseText == "Already Exist" & apiResponse != null)
+                {
+                    // User has a review, redirect to login
+                    string returnUrl = "/Account/Login";
+                    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
+                     HttpContext.Response.Cookies.Delete(".AspNetCore.Identity.Application");
+
+                    return LocalRedirect(returnUrl);
+                }
+                else
+                {
+                    string returnUrl = "/App_Review";
+                    return LocalRedirect(returnUrl);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (e.g., API request or JSON deserialization error)
+                // Log the exception for debugging or add proper error response
+                throw;
+            }
         }
+
+
     }
 }
