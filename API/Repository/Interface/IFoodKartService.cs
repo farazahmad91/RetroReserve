@@ -5,6 +5,8 @@ namespace API.Repository.Interface
     {
         public Task<int>AddOrUpdateFoodKart(Foodkart foodkart);
         public Task<int> AddOrUpdateVariant(Foodkart foodkart);
+        public Task<int> UpdateFoodVarientStatus(Foodkart foodkart);
+        public Foodkart GetFoodVarientById(int id);
         public Task<int> UpdateFoodKartStatus(Foodkart foodkart);
         public Foodkart GetFoodkartById(int id);
         public IEnumerable<Foodkart> GetFoodkartList();

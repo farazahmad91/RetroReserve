@@ -26,6 +26,7 @@ namespace Entities
     public class OrdersReport : Orders
     {
         public string? DishName { get; set; }
+        public string? VName { get; set; }
         public string? DishImage { get; set; }
         public int Total_Orders { get; set; }
         public string? Month { get; set; }

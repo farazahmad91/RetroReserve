@@ -1,0 +1,193 @@
+﻿@model IEnumerable<Entities.Foodkart>
+@{
+    var count = 0;
+    ViewData["Title"] = "VarientDetails";
+    Layout = "_AdminLayout";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Varient List</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Menu</a></li>
+                        <li class="breadcrumb-item active">Menu</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div>
+        <div class="card" id="snackbar"></div>
+        <div class="card" id="snackbar2"></div>
+        <div class="card" id="snackbar3"></div>
+    </div>
+    <div class="container">
+        <a href="/Menu" class="fa fa-arrow-circle-left btn btn-primary float-right"></a>
+        <br />  <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>Sr No:</th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Category
+                            </th>
+                            <th>
+                                Image
+                            </th>
+                            <th>
+                                DishQuantity
+                            </th>
+                            <th>
+                                MRP
+                            </th>
+                            <th>
+                                SellingCost
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="12" style="text-align: center;">
+                                    <label><strong>Reacord Not Found</strong></label>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <td>@count</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DishCategoryName)
+                                    </td>
+                                    <td>
+                                        <a class="fancybox" href="@item.VName" data-fancybox data-caption="@item.VName">
+                                            <img class="img-fluid rounded-circle" src="@item.DishImage" onerror="this.onerror=null;this.src='/images/noimage.jpg'" alt="No Image Found" style="width:85px;height:74px;">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DishQuantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MRP)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SellingCost)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var ckb = @item.DishStatus == 0 ? "unchecked" : "checked";
+                                        }
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                    <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.Id" onclick="UpdateFoodKartStatus(@item.Id);" @ckb>
+                                                    <label class="custom-control-label" for="customSwitch3_@item.Id">Available</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="EditVarient(@item.Id)"><span class="fas fa-edit" style="color: Blue"></span> Edit Varient</a>
+                                                <a class="dropdown-item" href="@Url.Action("Delete", new { id=item.Id })" onclick="deleteSubjectdata('@item.Id');"><i class="fas fa-trash-alt" style="color: red"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="VPartialView"></div>
+</div>
+<script>
+    function EditVarient(Id) {
+        let param = {
+            Id: Id,
+        };
+        $.post("/Menu/EditVariant", param).done(function (res) {
+            $("#VPartialView").html(res);
+            $("#VModal").modal("show");
+        }).fail(function () {
+            alert("errror");
+        })
+    }
+    function UpdateFoodKartStatus(Id) {
+        var id = $("#customSwitch3_" + Id).prop("checked");
+        if (id == true) {
+            id = 1;
+        } else {
+            id = 0;
+        }
+        var param = {
+            Id: Id,
+            DishStatus: id,
+        };
+        Swal.fire({
+            title: 'Are you sure you want to Update?',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Update it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Menu/UpdateFoodVarientStatus',
+                    type: 'POST',
+                    data: param,
+                    success: function (data) {
+
+                        showinsertsuccess("Status Update Successfully");
+                    },
+                });
+            } else {
+
+                showerror("Status Not Updated");
+            }
+        });
+    }
+    function showinsertsuccess(msg) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+        jQuery("#snackbar").html(msg);
+    }
+    function showerror(msg) {
+        var x = document.getElementById("snackbar3");
+        x.className = "show3";
+        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 3000);
+        jQuery("#snackbar3").html(msg);
+    }
+</script>

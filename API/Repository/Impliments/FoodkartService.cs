@@ -35,7 +35,7 @@ namespace API.Repository.Impliments
             {
                 DishId = foodkart.DishId,
                 Id = foodkart.Id,
-                DishName = foodkart.DishName,
+                VName = foodkart.VName,
                 DishImage = foodkart.DishImage,
                 MRP = foodkart.MRP,
                 SellingCost = foodkart.SellingCost,
@@ -46,6 +46,31 @@ namespace API.Repository.Impliments
             var i = await dapper.Insert(param, sp);
             return i;
         }
+
+        public Foodkart GetFoodVarientById(int id)
+        {
+            var sp = "Select * From tbl_Variant where Id = @id";
+            var param = new
+            {
+               Id = id,
+
+            };
+            var i = dapper.GetById<Foodkart>(param, sp);
+            return i;
+        }
+        public async Task<int> UpdateFoodVarientStatus(Foodkart foodkart)
+        {
+            var sp = "sp_UpdateFoodVarientStatus";
+            var param = new
+            {
+                Id = foodkart.Id,
+                DishStatus = foodkart.DishStatus,
+            };
+            var i = await dapper.Insert(param, sp);
+            return i;
+        }
+
+
         public async Task<int> UpdateFoodKartStatus(Foodkart foodkart)
         {
             var sp = "sp_UpdateFoodkartStatus";

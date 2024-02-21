@@ -51,6 +51,15 @@ namespace API.Controllers
             return Ok(i);
 
         }
+
+        [HttpGet(nameof(GetDishVarientList))]
+        public IActionResult GetDishVarientList()
+        {
+            var i = dishCategorySevice.GetDishVarientList();
+            return Ok(i);
+
+        }
+
         [HttpGet(nameof(GetDishCategoryListByPrizeWithCategory))]
         public IActionResult GetDishCategoryListByPrizeWithCategory(int id, decimal MinPrize, decimal MaxPrize)
         {
