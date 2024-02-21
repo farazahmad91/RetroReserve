@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Entities
 {
-    public class ProductReview
+    public class Reviews
     {
         public int ReviewId { get; set; }
         public int DishId { get; set; }
@@ -17,5 +19,14 @@ namespace Entities
         public int Rating { get; set; }
         public int Status { get; set; }
         public DateTime ReviewDate { get; set; }
+    }
+    public class AppReviews
+    {
+        public int AReviewId { get; set; }
+        public string? UserID { get; set; }
+        public string? Comment { get; set; }
+        public int Rating { get; set; }
+        public int Status { get; set; }
+        public DateTime AReviewDate { get; set; }
     }
 }

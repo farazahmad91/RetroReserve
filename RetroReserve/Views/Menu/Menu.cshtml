@@ -152,10 +152,8 @@
 
             $.post('/Cart/AddCart', data)
                 .done(function (res) {
-                    if (res === -2) {
-                        errors("Please log in to add items to your cart.");
-                    } else if (res === -1) {
-                        errors("This dish is already in the cart. Please choose a different dish.");
+                    if (res == -1) {
+                        errors("This dish is already in the cart");
                     } else {
                         success("Dish added successfully to your cart.");
                         cartstatus();

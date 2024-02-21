@@ -3,7 +3,6 @@ using API.Repository.Impliments;
 using API.Repository.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 var ConnectionString = builder.Configuration.GetConnectionString("Default");
 ServiceCollectionExtension.RegisterService(builder.Services, builder.Configuration);
@@ -24,7 +23,7 @@ builder.Services.AddScoped<IBookingTableService, BookingTableService>();
 builder.Services.AddScoped<IEmailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IBannersService, BannersService>();
-builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

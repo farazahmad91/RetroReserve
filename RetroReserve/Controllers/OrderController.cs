@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using RetroReserve.Models;
 using Entities;
 using System.Security.Claims;
+using Newtonsoft.Json;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace RetroReserve.Controllers
 {
@@ -17,47 +19,47 @@ namespace RetroReserve.Controllers
         }
         public async Task<ActionResult> NewOrder()
         {
-            var i = await apirequest.GetData<List<BookingTables>>("Orders/GetOnlineOrderList");
+            var i = await apirequest.GetData<List<OrdersReport>>("Orders/GetOrderList");
             return View(i);
         }
         public async Task<ActionResult> DeliverdOrder()
         {
-            var i = await apirequest.GetData<List<OnlineOrdersReport>>("Orders/DeliverdOnlineOrderReport");
+            var i = await apirequest.GetData<List<OrdersReport>>("Orders/DeliverdOrderReport");
             return View(i);
         }
 
-        public async Task<IActionResult> AddOnlineOrder(BookingTables orders)
+        public async Task<IActionResult> BookingOrder(Orders orders)
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
             orders.UserId = Email;
-            var i = await apirequest.Post("Orders/AddOnlineOrder", orders);
-            return Json(i);
+            var i = await apirequest.Post("Orders/BookingOrder", orders);
+            var res = JsonConvert.DeserializeObject<Entities.Response>(i);
+            return Json(res);
 
         }
-        public async Task<IActionResult> UpdateOrderStatus(BookingTables orders)
+        public async Task<IActionResult> UpdateOrderStatus(Orders orders)
         {
             var i = await apirequest.Post("Orders/UpdateOrderStatus", orders);
             return Json(i);
 
         }
         [Route("/OrderHistory")]
-        public async Task<IActionResult> OrderHistory(string? id)
+        public async Task<IActionResult> OrderHistory()
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
-          id = Email;
-            var i = await apirequest.GetMultipleDataById<List<OnlineOrdersReport>>("Orders/OrderHistory", id);
+            var i = await apirequest.GetData<List<OrdersReport>>($"Orders/OrderHistory?id={Email}");
             return View(i);
 
         }
 
         public async Task<IActionResult> OrderChart()
         {
-            var i = await apirequest.GetData<List<OnlineOrdersReport>>("Orders/GetOrderInChart");
+            var i = await apirequest.GetData<List<OrdersReport>>("Orders/GetOrderInChart");
             return PartialView(i);
         }
         public async Task<IActionResult> OrderPieChart()
         {
-            var i = await apirequest.GetData<List<OnlineOrdersReport>>("Orders/GetOrderInPieChart");
+            var i = await apirequest.GetData<List<OrdersReport>>("Orders/GetOrderInPieChart");
             return PartialView(i);
         }
     }

@@ -29,12 +29,17 @@ namespace RetroReserve.Controllers
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             var i = await _apirequest.GetData<List<Address>>($"Address/GetAddressByUserId?email={email}");
+            return View(i);
+        }
+        public async Task<IActionResult> CheckoutAddress()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await _apirequest.GetData<List<Address>>($"Address/GetAddressByUserId?email={email}");
             return PartialView(i);
         }
-
         public async Task<IActionResult> EditAddress(int id)
         {
-            var i = await _apirequest.GetData<Banners>($"Address/GetAddressById?id={id}");
+            var i = await _apirequest.GetData<Address>($"Address/GetAddressById?id={id}");
             return PartialView(i);
         }
         [HttpPost]

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Entities.Address>
+@{
+    ViewData["Title"] = "CheckoutAddress";
+    Layout = null;
+}
+
+@if (Model != null && Model.Any())
+{
+                @foreach (var item in Model)
+                {
+                    <div class="border border-primary rounded position-relative vesitable-item">
+            <div class="position-absolute" style="top: 10px; right: 10px;">
+                <input type="radio" class="form-check-input bg-primary border-0" name="address" id="ckb_@item.AddressId" value="@item.AddressId" />
+            </div>
+
+                        <div class="p-4 rounded-bottom">
+                            <h4>@item.RecipientName</h4>
+                <address style="width:200px;height:50px;">@item.StreetAddress</address>
+                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                <p class="text-dark fs-5 fw-bold mb-0">@item.PostalCode</p>
+                                <br />
+                                <p class="text-dark fs-5 fw-bold mb-0">@item.RecipientContact</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                }
+}
+else
+{
+    <br />
+    <div style="text-align:center;" class="card">
+        <br />
+        <h3><strong>Oops! Looks like you haven't Saved any address yet.</strong></h3>
+        <p>Start your shopping journey now and saved your address here!</p>
+        <div style="text-align:center;">
+            <a href="/Address" class="btn btn-primary border-2 border-secondary py-3 px-4 text-white">Create New</a>
+        </div>
+        <br />
+    </div>
+    <br />
+}
+

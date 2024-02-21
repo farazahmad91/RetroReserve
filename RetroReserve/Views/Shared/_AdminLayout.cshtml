@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -48,6 +50,17 @@
       <a href="/Dashboard/Admin" class="nav-link">Home</a>
       </li>
     </ul>
+            <ul class="navbar-nav  ml-auto">
+                <li class="nav-item d-none d-sm-inline-block">
+                    @{
+                        var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                        var name = nameClaim != null ? nameClaim.Value : "Guest";
+                    }
+                    <label class="nav-link">Welcome @name </label>
+                </li>
+
+
+            </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">

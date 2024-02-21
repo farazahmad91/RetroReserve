@@ -21,7 +21,7 @@ namespace API.Extension
             //servicess
             services.AddScoped<IUserService, UserService>();
 
-
+            
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(ch.ConnectionString);

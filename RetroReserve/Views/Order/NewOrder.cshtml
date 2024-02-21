@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Entities.BookingTables>
+﻿@model IEnumerable<Entities.OrdersReport>
 
 @{
     var count = 0;
@@ -35,9 +35,6 @@
                         User Id
                     </th>
                     <th>
-                        Table Id
-                    </th>
-                    <th>
                         Dish Name
                     </th>
                     <th>
@@ -71,17 +68,12 @@
                     count++;
                     <tr>
                            <input type="text" hidden id="hdn_@item.OrderID"/>
-                           <input type="text" hidden id="tableno" value="@item.TableId"/>
-                            <input type="text" hidden id="Email" value="@item.Email"/>
                           <td>
                            @count
                         </td>
                         <td>
                          
                             @Html.DisplayFor(modelItem => item.UserId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TableId)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DishName)

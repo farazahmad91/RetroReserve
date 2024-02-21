@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class orders
+    public class Orders
     {
 
         public int OrderDetailID { get; set; }
-        public int TableId { get; set; }
+        public int AddressId { get; set; }
         public string? UserId { get; set; }
 		public int OrderID { get; set; }
         public int DishId { get; set; }
@@ -23,7 +23,7 @@ namespace Entities
         public string? DeliverDate { get; set; }
     }
     
-    public class OnlineOrdersReport : orders
+    public class OrdersReport : Orders
     {
         public string? DishName { get; set; }
         public string? DishImage { get; set; }
@@ -31,15 +31,6 @@ namespace Entities
         public string? Month { get; set; }
         public string? TotalOrder { get; set; }
 
-    }
-    public class BookingTables: OnlineOrdersReport
-    {
-        public int TableBookingId { get; set; }
-        public int People { get; set; }
-        public string? Email { get; set; }
-        public string? BookingTime { get; set; }
-        public string? description { get; set; }
-        public DateTime BookingOn { get; set; }
     }
 }
 

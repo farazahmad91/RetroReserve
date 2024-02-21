@@ -23,9 +23,9 @@ namespace API.Controllers
         }
         [HttpPost(nameof(QtyUpdateInCart))]
 
-        public async Task<IActionResult> QtyUpdateInCart(Cart cart)
+        public async Task<IActionResult> QtyUpdateInCart(CartQTY cartQTY)
         {
-            var i = await cartValueService.QtyUpdateInCart(cart);
+            var i = await cartValueService.QtyUpdateInCart(cartQTY);
             return Ok(i);
 
         }
