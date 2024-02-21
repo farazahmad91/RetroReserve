@@ -34,7 +34,7 @@
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">Inbox</h3>
-                        <a href="/ContactUS/Compose" class="fa fa-arrow-circle-left btn btn-primary float-right"></a>
+                        <a href="/Compose" class="fa fa-arrow-circle-left btn btn-primary float-right"></a>
                         @*<div class="card-tools">
                         <div class="input-group input-group-sm">
                         <input type="text" class="form-control" placeholder="Search Mail">
@@ -176,7 +176,7 @@
 
     $.post('/ContactUS/UpdateContactUsStatus', data)
         .done(function(res) {
-            window.location.href = "/ContactUS/ContactusList";
+            window.location.href = "/Inbox";
         })
         .fail(function() {
             // Handle the failure case

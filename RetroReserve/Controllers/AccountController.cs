@@ -66,7 +66,7 @@ namespace RetroReserve.Controllers
 
                 if (authenticateResponse.Result.Role == "Admin")
                 {
-                    string redirectUrl = "/Dashboard/Admin";
+                    string redirectUrl = "/Dashboard";
                     return Json(redirectUrl);
                 }
                 else if(authenticateResponse.Result.Role == "User")

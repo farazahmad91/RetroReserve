@@ -81,7 +81,7 @@ namespace RetroReserve.Controllers
             var i = await apirequest.Post("Category/AddOrUpdateDishCategory", dishcategory);
             return Json(i);
         }
-
+        [Route("/CategoryList")]
         public async Task<ActionResult> CategoryList()
         {
             var i = await apirequest.GetData<List<DishCategory>>(("Category/GetdishcategoryList"));

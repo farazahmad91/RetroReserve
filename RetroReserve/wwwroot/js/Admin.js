@@ -19,7 +19,7 @@ function NewMessage1() {
         var dropdownMenu = $('<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"></div>');
 
         res.forEach(function (message) {
-            var dropdownItem = $('<a href="/ContactUS/ContactusList" class="dropdown-item"></a>');
+            var dropdownItem = $('<a href="/Inbox" class="dropdown-item"></a>');
             var envelopeIcon = $('<i class="fas fa-envelope mr-2" id="nbadge"></i>').text(' ' + message.userName);
             var dateSpan = $('<span class="float-right text-muted text-sm" id="newdate"></span>').text(message.newMessageDate);
 
@@ -32,7 +32,7 @@ function NewMessage1() {
        
         // Add the dropdown divider and "See All Messages" link
         dropdownMenu.append('<div class="dropdown-divider"></div>');
-        dropdownMenu.append('<a href="/ContactUS/ContactusList" class="dropdown-item dropdown-footer">See All Messages</a>');
+        dropdownMenu.append('<a href="/Inbox" class="dropdown-item dropdown-footer">See All Messages</a>');
 
         // Append the generated dropdown menu to a specific element, replace "#dropdownContainer" with the actual selector.
         $("#dropdownContainer").html(dropdownMenu);
@@ -59,3 +59,23 @@ function UpdateNewMessageNotify(ContactId) {
             });
 
 }
+
+function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const meridiem = hours >= 12 ? 'pm' : 'am';
+
+    // Convert hours to 12-hour format
+    hours = hours % 12 || 12;
+
+    const timeString = `${hours}:${minutes}`;
+    document.getElementById('clock').innerText = timeString;
+}
+
+
+// Update the clock every second
+setInterval(updateClock, 1000);
+
+// Initial call to display the clock immediately
+updateClock();

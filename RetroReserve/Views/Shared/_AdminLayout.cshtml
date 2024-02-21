@@ -47,7 +47,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-      <a href="/Dashboard/Admin" class="nav-link">Home</a>
+      <a href="/Dashboard" class="nav-link">Home</a>
       </li>
     </ul>
             <ul class="navbar-nav  ml-auto">
@@ -64,6 +64,12 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <div id="clock"></div>
+                    </a>
+                    <div id="dropdownContainer"></div>
+                </li>
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -101,7 +107,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-            <a href="/Dashboard/Admin" class="brand-link">
+            <a href="/Dashboard" class="brand-link">
 
                 <span class="brand-text font-weight-light"><h3><Strong> <i class='fas fa-utensils' style='color:red'></i> RetroReserve</h3></Strong></span>
     </a>
@@ -145,7 +151,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                                    <a href="/Dashboard/Admin" class="nav-link">
+                                    <a href="/Dashboard" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
@@ -162,13 +168,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/Order/NewOrder" class="nav-link">
+                <a href="/NewOrder" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>New Orders <span class="badge badge-warning" id="newobadge" style="padding:2px 4px;position:absolute;"></span></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/Order/DeliverdOrder" class="nav-link">
+                <a href="/DeliverdOrder" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                     <p>Manage Orders <span class="badge badge-warning" id="deliverdobadge" style="padding:2px 4px;position:absolute;"></span></p>
                 </a>
@@ -186,13 +192,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/Menu" class="nav-link">
+                                    <a href="/Menu" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Menu</p>
                 </a>
               </li>
                                 <li class="nav-item">
-                                    <a href="/Category/CategoryList" class="nav-link">
+                                    <a href="/CategoryList" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Manage Category</p>
                                     </a>
@@ -210,13 +216,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/ContactUS/ContactusList" class="nav-link">
+                <a href="/Inbox" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                  <p>Inbox <span class="badge badge-warning" id="newmessagebadge" style="padding:2px 4px;position:absolute;"></span></p>
                 </a>
               </li>
               <li class="nav-item">
-                                    <a href="/ContactUS/Compose" class="nav-link">
+                                    <a href="/Compose" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Compose</p>
                 </a>
@@ -234,19 +240,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                 <a href="/Event/EventIndex" class="nav-link">
+                 <a href="/Event-Details" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                     <p>Manage Event</p>
                 </a>
               </li>
               <li class="nav-item">
-              <a href="/Event/BookingEventlist" class="nav-link">
+              <a href="/AllEvent-Booking" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                  <p>Manage Event Booking<span class="badge badge-warning" id="newmessagebadge" style="padding:2px 4px;position:absolute;"></span></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/Event/NewBookingEventlist" class="nav-link">
+                <a href="/New-Event-Booking" class="nav-link">
                      <i class="far fa-circle nav-icon"></i>
                        <p>New Event Booking</p>
                       </a>

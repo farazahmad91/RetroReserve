@@ -211,7 +211,7 @@
 
     $.post('/Order/UpdateOrderStatus', data)
         .done(function(res) {
-            window.location.href = "/Order/NewOrder";
+            window.location.href = "/NewOrder";
         })
         .fail(function() {
             // Handle the failure case
