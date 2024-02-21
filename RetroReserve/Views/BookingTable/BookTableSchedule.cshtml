@@ -14,12 +14,12 @@
                                 <div class="row">
                                     <div class="col-sm-3">
                                             <label for="email" class="form-label">Email:</label>
-                                            <input class="form-control" type="email" placeholder="Enter Your Email" id="email" style="border-radius:unset" />
+                                            <input class="form-control" type="email" required placeholder="Enter Your Email" id="email" style="border-radius:unset" />
                                    
                                     </div>
                                     <div class="col-sm-3">
                                             <label for="name" class="form-label">Name:</label>
-                                            <input class="form-control" type="text" placeholder="Enter Your Name" id="name" style="border-radius:unset" />
+                                            <input class="form-control" type="text" placeholder="Enter Your Name" id="name" style="border-radius:unset" required/>
                                        
                                     </div>
                                 </div>
@@ -27,7 +27,8 @@
 
                                     <div class="col-sm-3">
                                         <label for="people" class="form-label">Number of people:</label>
-                                        <select class="form-select" id="people" name="people" style="border-radius:unset">
+                                        <select class="form-select" id="people" name="people" style="border-radius:unset" required>
+                                            <option value="">Select Person</option>
                                             <option value="1">1 person</option>
                                             <option value="2">2 people</option>
                                             <option value="3">3 people</option>
@@ -48,7 +49,8 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="time" class="form-label">Time:</label>
-                                        <select class="form-select" id="time" name="time" style="border-radius:unset">
+                                        <select class="form-select" id="time" name="time" style="border-radius:unset" required>
+                                            <option value="">Select Timing</option>
                                             <option value="11:00">11:00 am</option>
                                             <option value="11:30">11:30 am</option>
                                             <option value="12:00">12:00 pm</option>
