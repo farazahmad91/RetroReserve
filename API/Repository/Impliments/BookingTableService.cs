@@ -100,12 +100,13 @@ namespace API.Repository.Impliments
         }
 
 
-        public async Task<Data.Response> TableBookByUser(BookingTableByUser tableByUser)
+        public async Task<Data.Response<int>> TableBookByUser(BookingTableByUser tableByUser)
         {
-            var res = new Data.Response();
+            
+            var res = new Data.Response<int>();
             try
             {
-                var i = dapperService.GetAsync<Data.Response>("Proc_AddBookingForUser", new
+                var i = dapperService.GetAsync<Data.Response<int>>("Proc_AddBookingForUser", new
                 {
                     tableByUser.TableId,
                     tableByUser.BookingDate,
@@ -116,10 +117,13 @@ namespace API.Repository.Impliments
                 });
                 res.ResponseText= i.Result.ResponseText;
                 res.StatusCode = i.Result.StatusCode;
+                res.Result = i.Result.Result;
                 var name = tableByUser.Name.ToUpper();
                 var email = tableByUser.Email;
-                Contactmessage(name,email,tableByUser.NoOfPeople,tableByUser.BookingDate,tableByUser.BookingTime);
-
+                if (res.StatusCode==ResponseStatus.SUCCESS)
+                {
+                    Contactmessage(name, email, tableByUser.NoOfPeople, tableByUser.BookingDate, tableByUser.BookingTime,res.Result);
+                }
 				return res;
             }
             catch (Exception ex)
@@ -145,10 +149,10 @@ namespace API.Repository.Impliments
             }
         }
 
-		private void Contactmessage(string name, string email,int nop,string date , string time)
+		private void Contactmessage(string name, string email,int nop,string date , string time,int BookingId)
 		{
 			string content = $"Dear {name},\r\n\r\n" +
-                $"Thank you for choosing RestroReserve for your dining experience. We are delighted to confirm your table reservation for {nop} Peoples on {date} at {time}.\r\n\r\n" +
+                $"Thank you for choosing RestroReserve for your dining experience. We are delighted to confirm your table reservation for {nop} Peoples on {date} at {time} and BookingID : RRB#{BookingId}\r\n\r\n" +
                 $"We are eagerly anticipating your visit and assure you that we will do our utmost to make your dining experience memorable. If you have any special requests or dietary preferences, please feel free to let us know in advance, and we will be happy to accommodate them.\r\n\r\n" +
                 $"Should you have any questions or need to make any changes to your reservation, please do not hesitate to contact us at retroreserve@gmail.com.\r\n\r\n" +
                 $"Once again, thank you for choosing RestroReserve. We look forward to welcoming you to our restaurant and providing you with exceptional service and culinary delights.\r\n\r\n" +
