@@ -180,5 +180,24 @@ namespace API.Repository.Impliments
 				throw;
 			}
 		}
-	}
+
+        public async Task<Data.Response> UpdateStatusBookedTable(int BookingId)
+        {
+            var res = new Data.Response();
+            try
+            {
+                res = await dapperService.GetAsync<Data.Response>("Proc_UpdateStatusBookedTable", new
+                {
+                    BookingId = BookingId
+                });
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+    }
 }

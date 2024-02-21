@@ -1,13 +1,62 @@
-﻿<div id="partialView">
+﻿@{
+    Layout = "_AdminLayout";
+}
+<div id="partialView">
+
 
 </div>
 @section Scripts{
     <script>
+       
+              
         function loadData() {
             $.post("/BookingTable/AllTableBooking").done(function (result) {
                 $("#partialView").html(result);
             });
         }
         loadData();
+
+        var UpdateStatus = (Id) => {
+            $.post("/BookingTable/UpdateStatusBookedTable", { BookingId: Id }).done((result) => {
+                console.log(result);
+                setTimeout(function () {
+                    loadData();
+                },1500)
+                showinsertsuccess(result.responseText);
+            }).fail((result) => {
+                showerrors(result.responseText)
+            })
+        }
+
+
+
+
+
+
+
+
+
+
+
+        function showinsertsuccess(msg) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+            jQuery("#snackbar").html(msg);
+        }
+
+        function showupdatesuccess(msg) {
+            var x = document.getElementById("snackbar2");
+            x.className = "show2";
+            setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
+            jQuery("#snackbar2").html(msg);
+        }
+
+        function showerrors(msg) {
+            var x = document.getElementById("snackbar3");
+            x.className = "show3";
+            setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
+            jQuery("#snackbar3").html(msg);
+        }
     </script>
 }

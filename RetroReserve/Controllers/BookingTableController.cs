@@ -83,8 +83,15 @@ namespace RetroReserve.Controllers
         }
         public async Task<IActionResult> AllTableBooking()
         {
-            var list = await apirequest.GetData<List<BookingTableVM2>>("BookingTable/AllOnlineTable");
+            var list = await apirequest.GetData<List<BookingTableByUser>>("BookingTable/AllOnlineTable");
             return PartialView(list);
+        }
+        public async Task<IActionResult> UpdateStatusBookedTable(int BookingId)
+        {
+            var res = new API.Data.Response();
+            var apiRes = await apirequest.Post($"BookingTable/UpdateStatusBookedTable/{BookingId}",null);
+            res = JsonConvert.DeserializeObject<API.Data.Response>(apiRes);
+            return Json(res);
         }
     }
 }

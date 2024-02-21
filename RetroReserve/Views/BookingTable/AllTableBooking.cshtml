@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Entities.BookingTableVM2>
+﻿@model IEnumerable<Entities.BookingTableByUser>
 @{
 
     Layout = null;
@@ -10,16 +10,16 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Table List</h1>
+                    <h1>Online Booked Table</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Table Booking</a></li>
+                        <li class="breadcrumb-item"><a href="#">Online Booked Table</a></li>
                         <li class="breadcrumb-item active"></li>
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div><!-- /.container-fluid -->    
     </section>
     <div>
         <div class="card" id="snackbar"></div>
@@ -27,25 +27,36 @@
         <div class="card" id="snackbar3"></div>
     </div>
     <div class="container">
-        <button class="btn btn-primary" onclick="AddOrEditTable(0)">Add Table</button>
-        @* <button type="button" class="btn btn-info float-right" onclick="TeaKart();"> </button> *@
         <br />  <br />
         <div class="card">
             <div class="table-responsive">
                 <table class="table table-striped" id="tbl">
                     <thead style="background-color:#17a2b8!important;">
-                        <tr>
+                        <tr class="text-nowrap">
                             <th>Sr No:</th>
                             <th>
-                                Table Name
+                                BookingId
                             </th>
-
                             <th>
-                                Image
+                              TableId
                             </th>
-
                             <th>
-                                Status
+                             Customer Name
+                            </th>
+                            <th>
+                                Customer Email
+                            </th>
+                            <th>
+                               Booking Date
+                            </th>
+                            <th>
+                                Booking Time
+                            </th>
+                            <th>
+                                No. of Peoples
+                            </th>
+                            <th>
+                               EntryOn
                             </th>
                             <th>Action</th>
                         </tr>
@@ -64,49 +75,48 @@
                             var count = 0;
                             @foreach (var item in Model)
                             {
-                               
+                              
                                 var i = 0;
                                 count++;
-                                <tr>
+                                <tr class="text-nowrap">
 
                                     <td>
                                         @count
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TableName)
+                                        @Html.DisplayFor(modelItem => item.BookingId)
                                     </td>
                                     <td>
-                                        @* <img class="img-fluid rounded-circle" src="@item.Image" alt="Dishes" style="width:110px;height:70px;"> *@
-
-
-                                        <img src="@item.Image" class="img-fluid rounded-circle" alt="No Image Found" width="110px" height="50px" />
+                                        @Html.DisplayFor(modelItem => item.TableId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
 
                                     </td>
                                     <td>
-                                        @{
-                                            var isactive = @item.IsActive == 1 ? "checked" : "";
-                                            var emp = isactive == "checked" ? "Active" : "Inactive";
-                                            var color = isactive == "checked" ? "green" : "red";
-                                        }
-
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                                    <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.TableId" @isactive onchange="TableStatus(@item.TableId);">
-                                                    <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.TableId">@emp</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @Html.DisplayFor(modelItem => item.BookingDate)
                                     </td>
-
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookingTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NoOfPeople)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Entryon)
+                                    </td>
+                                
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Actions
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" onclick="AddOrEditTable(@item.TableId)"><span class="fas fa-edit" style="color: Blue"></span> Edit</a>
-                                                <a class="dropdown-item" onclick="EmpDetails(@item.TableId)"><i class="fas fa-info-circle" style="color: darkgreen"></i> Details</a>
+                                                <a class="dropdown-item" onclick="UpdateStatus(@item.BookingId)"><span class="fas fa-edit" style="color: Blue"></span>Completed</a>
+                                                @*<a class="dropdown-item" onclick="EmpDetails(@item.TableId)"><i class="fas fa-info-circle" style="color: darkgreen"></i></a>*@
                                             </div>
                                         </div>
                                     </td>
