@@ -1,0 +1,166 @@
+﻿@model Entities.UserProfile
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link href=".\css\profileimage.css" rel="stylesheet" />
+                   @if (@Model != null)
+                     {
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Profile</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+        <li class="breadcrumb-item active text-white">Profile</li>
+    </ol>
+</div>
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <div class="profile-pic">
+                            <label class="-label" for="file">
+                                <span class="glyphicon glyphicon-camera"></span>
+                                <span>Change Image</span>
+                            </label>
+                            <input id="file" type="file" onchange="uploadImage(event)" />
+                            @{
+                                if (@Model.Image != "")
+                                {
+                                    <img src="@Model.Image" id="output" width="200" />
+                                }
+                                else
+                                {
+                                    <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" />
+
+                                }
+                            }
+
+                        </div>
+                        <h5 class="my-3">@Model.Name</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Full Name:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@Model.Name</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email:</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="text-muted mb-0">@Model.Email</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3"> 
+                                <p class="mb-0">BirthDay:</p>
+                            </div>
+                            <div class="col-sm-6">
+                                    @{
+                                        @if (@Model.BirthDay != "")
+                                        {
+                                            <p class="text-muted mb-0">@Model.BirthDay</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-muted mb-0">Please add birthday</p>
+
+                                        }
+                                    }
+                               
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Phone:</p>
+                            </div>
+                            <div class="col-sm-9">
+                                    @{
+                                        if (@Model.Phone != "")
+                                        {
+                                            <p class="text-muted mb-0">@Model.Phone</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-muted mb-0">Please add Phone no.</p>
+
+                                        }
+                                    }
+                                    <i class="fa fa-edit float-end" style="font-size:28px;color:#9ad039;" onclick="EditProfile();"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="PartialView"></div>
+    </section>
+}
+else
+{
+    <br />
+    <br />
+    <div style="text-align:center; margin:120px;" class="card">
+        <br />
+        <h3><strong>Please log in to manage your profile.</strong></h3>
+        <p>Once logged in, you can access and update your account details. Start exploring now!</p>
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary border-2 border-secondary text-white" onclick="window.location.href='/Account/Login'">Login</a>
+        </div>
+        <br />
+    </div>
+
+
+
+}
+
+<script>
+    var loadFile = function (event) {
+        var image = document.getElementById("output");
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+    function uploadImage(event) {
+        var fileInput = event.target;
+        var file = fileInput.files[0];
+
+        var formData = new FormData();
+        formData.append('ImagePath', file);
+
+        fetch('/Account/UpdateUserProfileImg', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Image updated successfully:', data);
+                // Optionally update the image source on the client side
+                document.getElementById('output').src = `/uploads/${data.NewImagePath}`;
+            })
+            .catch(error => console.error('Error updating image:', error));
+    }
+
+    function EditProfile() {
+        $.post("/Account/EditProfile").done(function (res) {
+            $("#PartialView").html(res);
+            $("#MyProfileModal").modal("show");
+        }).fail(function () {
+            alert("errror");
+        })
+    }
+</script>
+
