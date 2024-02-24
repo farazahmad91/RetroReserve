@@ -42,6 +42,7 @@ namespace IdentityAPI.Services
                 Email = model.Email,
                 Name = model.Name,
                 Adhaar = model.Adhaar,
+
                 EmailConfirmed = true,
             };
             var result = await userManager.CreateAsync(user, model.Password);

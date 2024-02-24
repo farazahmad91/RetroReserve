@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Entities.Reviews>
+﻿@model IEnumerable<Entities.AppReviews>
 
 @{
     string classbadge;
     string statustext;
-    ViewData["Title"] = "ReviewList";
+    ViewData["Title"] = "AReviewList";
 }
 
 
@@ -29,9 +29,6 @@
                 <table class="table table-striped">
                     <thead style="background-color:#17a2b8!important;">
                         <tr>
-                            <th>
-                                <label>Dish Name</label>
-                            </th>
                             <th>
                                 <label>Name</label>
                             </th>
@@ -60,13 +57,10 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.DishId)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
+                                    @Html.DisplayFor(modelItem => item.UserID)
                                 </td>
                                 @*             <td>
                             @Html.DisplayFor(modelItem => item.Comment)
@@ -97,14 +91,14 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.ReviewId" onclick="UpdateEventStatus(@item.ReviewId);" @ckb @btndisabled>
-                                                <label class="custom-control-label @classbadge" style="color:white;" for="customSwitch3_@item.ReviewId">@stext</label>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.AReviewId" onclick="ApprovedAReviews(@item.AReviewId);" @ckb>
+                                                <label class="custom-control-label @classbadge" style="color:white;" for="customSwitch3_@item.AReviewId">@stext</label>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ReviewDate)
+                                    @Html.DisplayFor(modelItem => item.AReviewDate)
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -112,7 +106,7 @@
                                             Actions
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" onclick="EmpDetails(@item.ReviewId)"><i class="fas fa-info-circle" style="color: darkgreen"></i> Details</a>
+                                            <a class="dropdown-item" onclick="EmpDetails(@item.AReviewId)"><i class="fas fa-info-circle" style="color: darkgreen"></i> Details</a>
                                         </div>
                                     </div>
                                 </td>
@@ -125,7 +119,7 @@
     </div>
 </div>
 <script>
-    function ApprovedReviews(Id) {
+    function ApprovedAReviews(Id) {
         var id = $("#customSwitch3_" + Id).prop("checked");
         if (id == true) {
             id = 1;
@@ -133,7 +127,7 @@
             id = 0;
         }
         var param = {
-            ReviewId: Id,
+            AReviewId: Id,
             Status: id,
         };
         Swal.fire({
@@ -145,7 +139,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/Reviews/ApproveProductReview',
+                    url: '/Reviews/ApproveAReviewStatus',
                     type: 'POST',
                     data: param,
                     success: function (data) {
@@ -161,3 +155,4 @@
         });
     }
 </script>
+

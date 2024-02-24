@@ -38,6 +38,13 @@ namespace RetroReserve.Controllers
             var i = await _apirequest.Post("Reviews/ApproveProductReview", productReview);
             return Json(i);
         }
+
+        public async Task<IActionResult> ProdReviewDetails(int id)
+        {
+            var i = await _apirequest.GetData<Reviews>($"Reviews/GetProductReviewById?id={id}");
+            return View(i);
+        }
+
         public async Task<IActionResult> ShowReviews()
         {
             var i = await _apirequest.GetData<List<Reviews>>("Reviews/GetProductReviewList");
@@ -72,6 +79,23 @@ namespace RetroReserve.Controllers
             var i = await _apirequest.Post("Reviews/CheckUserReview", email);
             var res = JsonConvert.DeserializeObject<Entities.Response>(i);
             return Json(res);
+        }
+
+        public async Task<IActionResult> AReviewDetails(int id)
+        {
+            var i = await _apirequest.GetData<AppReviews>($"Reviews/GetAReviewById?id={id}");
+            return View(i);
+        }
+        public async Task<IActionResult> AReviewList()
+        {
+            var i = await _apirequest.GetData<List<AppReviews>>("Reviews/GetAReviewList");
+            return View(i);
+        }
+
+        public async Task<IActionResult> ApproveAReviewStatus(AppReviews appReviews)
+        {
+            var i = await _apirequest.Post("Reviews/ApproveAReviewStatus", appReviews);
+            return Json(i);
         }
     }
 }

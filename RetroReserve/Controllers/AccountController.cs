@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Entities;
 using Newtonsoft.Json;
 using API.Entities;
+using Microsoft.AspNetCore.Hosting;
 
 namespace RetroReserve.Controllers
 {
@@ -17,10 +18,14 @@ namespace RetroReserve.Controllers
         private readonly APIrequest _apirequest;
         public string myIP, hostName;
         private readonly string _BaseUrl;
-        public AccountController(APIrequest aPIrequest)
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly UploadImage uploadImage;
+        public AccountController(APIrequest aPIrequest, IWebHostEnvironment webHostEnvironment, UploadImage uploadImage)
         {
             this._apirequest = aPIrequest;
             _BaseUrl = "https://localhost:7291";
+            this.webHostEnvironment = webHostEnvironment; 
+            this.uploadImage = uploadImage;
         }
         [HttpGet]
         public IActionResult Login()
@@ -176,6 +181,7 @@ namespace RetroReserve.Controllers
                  
                     if (apiRes.Result != null)
                     {
+                        _apirequest.Post("UserProfile/AddUserProfileDetails", model);
                         SendEmail(model.Email, model.Password);
                         return Json(1);
 
@@ -230,7 +236,33 @@ namespace RetroReserve.Controllers
                 throw;
             }
         }
+        [Route("/Profile")]
+        public async Task<IActionResult> UserProfile()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await _apirequest.GetData<UserProfile>($"UserProfile/UserProfileListByEmail?email={email}");
+            return PartialView(i);
+        }
 
-
+        public async Task<IActionResult> UpdateUserProfileImg(UserProfile userProfile, IFormFile ImagePath)
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            userProfile.Image = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            userProfile.Email = email;
+            var i= await _apirequest.Post("UserProfile/UpdateUserProfileImg", userProfile);
+            return Json(i);
+        }
+        public async Task<IActionResult> EditProfile()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await _apirequest.GetData<UserProfile>($"UserProfile/UserProfileListByEmail?email={email}");
+            return PartialView(i);
+        }
+        public async Task<IActionResult> UpdateUserProfile(UserProfile userProfile)
+        {
+            var i = await _apirequest.Post("UserProfile/UpdateUserProfile", userProfile);
+            return Json(i);
+        }
     }
 }
+ 

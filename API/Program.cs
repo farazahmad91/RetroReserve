@@ -26,6 +26,7 @@ builder.Services.AddScoped<IBannersService, BannersService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IOffersService, OffersService>();	
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

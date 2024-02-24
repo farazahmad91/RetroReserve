@@ -7,5 +7,9 @@ namespace API.Data
         public string Name { get; set; }
 
         public string Adhaar { get; set; }
+
+
+
+
     }
 }

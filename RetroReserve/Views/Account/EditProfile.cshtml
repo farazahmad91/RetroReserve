@@ -1,0 +1,104 @@
+﻿@model Entities.UserProfile
+@{
+    ViewData["Title"] = "EditProfile";
+    Layout = null;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="MyProfileModal" role="dialog" data-backdrop="static" data-keyboard="false" style="opacity:1;">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="container py-3">
+                            <div>
+                                <div class="card" id="snackbar">Data Saved Successfully</div>
+                                <div class="card" id="snackbar2">Data Updated Successfully</div>
+                                <div class="card" id="snackbar3">Deleted.</div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header text-white" style="background-color:#94cd2d;">
+                                    <h6 class="card-title text-uppercase"><Strong><i class="fa fa-info-circle" style="font-size:18px;color:white;"></i> Update Info</Strong></h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <input type="text" hidden asp-for="UId" class="form-control" />
+                                        @{
+                                            if (Model.BirthDay == null)
+                                            {
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>DOB :</label>
+                                                            <div class="input-group">
+                                                                <input type="date" style="color:black; background-color:white;" asp-for="BirthDay" class="form-control rounded-pill" />
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Phone no:</label>
+                                                            <div class="input-group">
+                                                                <input type="tel" asp-for="Phone" maxlength="12" class="form-control rounded-pill" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            }
+                                            else
+                                            {
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Phone no:</label>
+                                                            <div class="input-group">
+                                                                <input type="tel" asp-for="Phone" maxlength="12" class="form-control rounded-pill" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            }
+                                        }
+
+
+                                    </div>
+                                    <br />
+                                    <div class="form-group" style="text-align:center; ">
+                                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                        <button type="button" onclick="UpdateProfile();" class="btn btn-primary w-25 rounded-pill">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function UpdateProfile() {
+        Show_Loader();
+        setTimeout(function () {
+        let data = {
+            UId: $("#UId").val(),
+            BirthDay: $("#BirthDay").val(),
+            Phone: $("#Phone").val(),
+        };
+
+        $.post('/Account/UpdateUserProfile', data)
+            .done(function (res) {
+                    Hide_Loader();
+                    success("Updated successfully!!.");
+                window.location.href = "/Profile";
+            })
+            .fail(function (res) {
+                    Hide_Loader();
+                errors("Something wrong!");
+                    window.location.href = "/Profile";
+
+            });
+        }, 1500)
+    }
+</script>
+
