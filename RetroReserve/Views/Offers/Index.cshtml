@@ -1,0 +1,71 @@
+﻿<div id="partialView">
+</div>
+
+@section Scripts {
+    <script>
+        var loadData = () => {
+            $.post("/Offers/CoupanList").done((result) => {
+                $("#partialView").html(result);
+            });
+        }
+        loadData();
+
+        function CoupanStatus(CoupanId) {
+            debugger;
+            var id = $("#customSwitch3_" + CoupanId).prop("checked");
+            if (id == true) {
+                id = 1;
+
+            }
+            else {
+                id = 0;
+            }
+            var param = {
+                CoupanId: CoupanId,
+                IsActive: id,
+            };
+            console.log(param);
+            $.post("/Offers/ChangeCoupanStatus", param).done(function (result) {
+                debugger;
+                console.log(result);
+                loadData();
+                QAlert(result.statusCode, result.responseText);
+
+
+            }).fail(function () {
+                QAlert(result.statusCode, result.responseText);
+            })
+        }
+        var AddOrEditCoupan = (Id) => {
+            $.post("/Offers/AddOrEditCoupan", { CoupanId: Id }).done((result) => {
+                $("#partialView").html(result);
+            })
+        }
+
+        var SaveOrUpdateCoupan = () => {
+            let obj = {
+                CoupanId: $("#CoupanId").val(),
+                CoupanName: $("#CoupanName").val(),
+                Description: $("#Description").val(),
+                ValidUpto: $("#ValidUpto").val()
+            };
+
+            $.post("/Offers/SaveOrUpdateCoupan", obj)
+                .done((result) => {
+                    loadData();
+                    setTimeout(function () {
+                        QAlert(result.statusCode, result.responseText);
+                    }, 1000);
+                })
+                .fail((xhr, status, error) => {
+                    // Handle specific error cases
+                    if (xhr.status === 404) {
+                        QAlert(404, "Resource not found");
+                    } else {
+                        QAlert(xhr.status, xhr.responseText);
+                    }
+                });
+        };
+
+    </script>
+}

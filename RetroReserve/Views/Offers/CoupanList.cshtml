@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Entities.Coupan>
+@{
+
+    Layout = null;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Online Booked Table</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Online Booked Table</a></li>
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div>
+        <div class="card" id="snackbar"></div>
+        <div class="card" id="snackbar2"></div>
+        <div class="card" id="snackbar3"></div>
+    </div>
+    <div class="container">
+        <button class="btn btn-primary" onclick="AddOrEditCoupan(0)">Add Coupan</button>
+        <br />  <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped" id="tbl">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr class="text-nowrap">
+                            <th>Sr No:</th>
+                            <th>
+                                CoupanName
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                ValidUpto
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr style="text-align: center;">
+                                <td colspan="12" style="text-align: center;">
+                                    <label><strong>Reacord Not Found</strong></label>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            var count = 0;
+                            @foreach (var item in Model)
+                            {
+
+                                var i = 0;
+                                count++;
+                                <tr class="text-nowrap">
+
+                                    <td>
+                                        @count
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CoupanName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ValidUpto)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var isactive = @item.IsActive == 1 ? "checked" : "";
+                                            var emp = isactive == "checked" ? "Active" : "Inactive";
+                                            var color = isactive == "checked" ? "green" : "red";
+                                        }
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                    <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.CoupanId" @isactive onchange="CoupanStatus(@item.CoupanId);">
+                                                    <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.CoupanId">@emp</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                 
+                               
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="UpdateStatus(@item.CoupanId)"><span class="fas fa-edit" style="color: Blue"></span>Completed</a>
+                                                @*<a class="dropdown-item" onclick="EmpDetails(@item.TableId)"><i class="fas fa-info-circle" style="color: darkgreen"></i></a>*@
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
