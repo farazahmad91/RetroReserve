@@ -1,4 +1,4 @@
-﻿@model Entities.EmployeesVM
+﻿@model Entities.Employees
 @{
    string status = "";
    string classbadge = "";
@@ -7,9 +7,9 @@
 }
  @{
  
-       @if (Model.IsActive  == 0)
+       @if (Model.IsActive== 0)
    {
-       status = "InActive";
+       status = "Deactive";
        classbadge = "badge badge-danger";
    }
    else
@@ -17,11 +17,16 @@
        status = "Active";
        classbadge = "badge badge-primary";
    }
-                                                }
+    <style>
+    
+    .border{
+        border:none;
+    }
+    </style>                                            }
                                                 
 <!-- Modal -->
 <div class="modal fade" id="MyModal" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -29,100 +34,114 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <section style="background-color: #eee;">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card mb-12">
-                                    <div>
-                                         <img src="@Model.Image" class="img-fluid rounded-circle" alt="No Image Found" width="110px" height="50px" />
+                <div class="main-container">
+                    <div class="pd-ltr-20 xs-pd-20-10">
+                        <div class="min-height-200px">
+                            <div class="card-box mb-30 pl-30 pr-30" style=" border:2px solid green; padding:15px;">
+                                <h2 class="h4 pd-20">Employee Info</h2>
+                                <hr />
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <input type="hidden" name="id" id="Id" />
+                                        <label for="photo" class="col-sm-6 input-form">Photo:</label>
+                                        <div class="col-sm-10">
+
+                                            <!-- Styled div acting as a button -->
+                                            <div id="selectImage" style="cursor: pointer; text-align:center;  border: 2px solid green; height: 150px; width: 150px; margin: 20px; padding:25px; ">
+                                                <!-- Hidden file input -->
+                                                <img src="@Model.Image" class="img-fluid me-5" style="position: absolute; top: 2px; left: 0; opacity: 1;margin-left:31px; width:146px; height:146px;" alt="">
+                                                
+                                            </div>
+
+                                        </div>
                                     </div>
-                                      <div style="text-align:right; width:150px;">
-                                       <label  class="@classbadge">@status</label>
+
+                                    <div class="col-sm-8 pt-30">
+                                        <div class="form-group col-sm-12">
+                                            <label for="name" class="col-sm-6 input-form">Name</label>
+                                            <div class="col-sm-11">
+                                                <input type="text" readonly class="form-control border" asp-for="@Model.Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12 ">
+                                            <label for="email" class="col-sm-6 input-form">Email:</label>
+                                            <div class="col-sm-11">
+                                                <input type="email" readonly class="form-control border" asp-for="@Model.Email">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Name :</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                  <label>@Model.Name </label>
-                                            </div>
-                                             <div class="col-sm-3">
-                                                <p class="mb-0">Role :</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                 <label>@Model.RoleId </label>
-                                            </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="gender" class="col-sm-4 control-label">Role:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.RoleName">
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                             <div class="col-sm-3">
-                                                <p class="mb-0">Email :</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                 <label>@Model.Email </label>
-                                                
-                                            </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="daetofbirth" class="col-sm-4 control-label">AdharNo:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.AdharNo">
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Salary :</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                 <label>@Model.Salary </label>
-                                                
-                                            </div>
-                                             <div class="col-sm-3">
-                                                <p class="mb-0">Phone :</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                 <label>@Model.Phone </label>
-                                            </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6 ">
+                                        <label for="parent" class="col-sm-4 input-form">Salary:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.Salary">
                                         </div>
-                                            <hr>
-                                              <div class="row">
-                                        
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Gender :</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                 <label>@Model.Gender </label>
-                                                
-                                            </div>
-                                             <div class="col-sm-3">
-                                                <p class="mb-0">DOB :</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                 <label>@Model.DOB </label>
-                                            </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label for="address" class="col-sm-4 input-form">Phone No:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.Phone" />
                                         </div>
-                                                <hr>
-                                               <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">AdharNo :</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                 <label>@Model.AdharNo </label>
-                                                
-                                            </div>
+                                    </div>
+
+
+                                    <div class="form-group col-sm-6 ">
+                                        <label for="class" class="col-sm-4 input-form">Gender:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.Gender" />
                                         </div>
-                                         <hr>
-                                         <div class="row">
-                                               <div class="col-sm-3">
-                                                <p class="mb-0">Address :</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                 <label>@Model.Address </label>
-                                            </div>                                           
+                                    </div>
+                                    <div class="form-group col-sm-6 ">
+                                        <label for="section" class="col-sm-4 input-form">DOB:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.DOB" />
                                         </div>
-                                    </div> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="session" class="col-sm-4 input-form">Session:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.DOB" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6 ">
+                                        <label for="createdDate" class="col-sm-4 input-form">AdharNo:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" readonly class="form-control border" asp-for="@Model.AdharNo" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6 ">
+                                        <label for="createdDate" class="col-sm-4 input-form">IsActive:</label>
+                                        <div class="col-sm-10">
+                                            <label class="form-control @classbadge" style="width:90px;">@status</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+
                     </div>
-                </section>
+                </div>
             </div>
         </div>
     </div>

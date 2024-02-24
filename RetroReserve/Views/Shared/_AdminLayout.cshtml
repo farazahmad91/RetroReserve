@@ -7,49 +7,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - RetroReserve</title>
     <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->            
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap ~/4 -->
-  <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- iCheck -->              
-  <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
-  <!-- JQVMap -->              
-  <link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
-  <!-- Theme style -->         
-  <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->   
-  <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->    
-  <link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->         
-  <link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap ~/4 -->
+    <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href="~/css/site.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
+    <div class="wrapper">
 
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="~/img/lodingimg.png" alt="RetroReserve" height="220" width="220">
-  </div>
+        </div>
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-      <a href="/Dashboard" class="nav-link">Home</a>
-      </li>
-    </ul>
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="/Dashboard" class="nav-link">Home</a>
+                </li>
+            </ul>
             <ul class="navbar-nav  ml-auto">
                 <li class="nav-item d-none d-sm-inline-block">
                     @{
@@ -62,8 +62,8 @@
 
             </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <div id="clock"></div>
@@ -78,16 +78,16 @@
                     </a>
                     <div id="dropdownContainer"></div>
                 </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-user-circle"></i>
@@ -99,226 +99,248 @@
                         </a>
                     </div>
                 </li>
-    </ul>
-  </nav>
+            </ul>
+        </nav>
 
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
             <a href="/Dashboard" class="brand-link">
 
                 <span class="brand-text font-weight-light"><h3><Strong> <i class='fas fa-utensils' style='color:red'></i> RetroReserve</h3></Strong></span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      @*<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>*@
-       <br/>
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <hr/>
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-         <li class="nav-item">
-            <a href="#" class="nav-link" style='background-color:#17a2b8!important'>
-              <i class="fa fa-dashboard"></i>
-              <p>
-              Dashboard
-                <i class="fas fa-angle-left right"></i>
-              </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                @*<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                <a href="#" class="d-block">Alexander Pierce</a>
+                </div>
+                </div>*@
+                <br />
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                             with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" style='background-color:#17a2b8!important'>
+                                <i class="fa fa-dashboard"></i>
+                                <p>
+                                    Dashboard
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
                                     <a href="/Dashboard" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-cart-plus"></i>
-              <p>
-                Orders Details
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/NewOrder" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>New Orders <span class="badge badge-warning" id="newobadge" style="padding:2px 4px;position:absolute;"></span></p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/DeliverdOrder" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                    <p>Manage Orders <span class="badge badge-warning" id="deliverdobadge" style="padding:2px 4px;position:absolute;"></span></p>
-                </a>
-              </li>
-            </ul>
-          </li>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboard</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-cart-plus"></i>
+                                <p>
+                                    Orders Details
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/NewOrder" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>New Orders <span class="badge badge-warning" id="newobadge" style="padding:2px 4px;position:absolute;"></span></p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/DeliverdOrder" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Orders <span class="badge badge-warning" id="deliverdobadge" style="padding:2px 4px;position:absolute;"></span></p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-hamburger"></i>
-              <p>
-                Menu Kart
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-hamburger"></i>
+                                <p>
+                                    Menu Kart
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
                                     <a href="/Menu" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Manage Menu</p>
-                </a>
-              </li>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Menu</p>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="/CategoryList" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Manage Category</p>
                                     </a>
                                 </li>
-            </ul>
-          </li>
+                            </ul>
+                        </li>
 
-           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa fa-envelope"></i>
-              <p>
-                Message Box
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/Inbox" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                 <p>Inbox <span class="badge badge-warning" id="newmessagebadge" style="padding:2px 4px;position:absolute;"></span></p>
-                </a>
-              </li>
-              <li class="nav-item">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-envelope"></i>
+                                <p>
+                                    Message Box
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Inbox" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Inbox <span class="badge badge-warning" id="newmessagebadge" style="padding:2px 4px;position:absolute;"></span></p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/Compose" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Compose</p>
-                </a>
-              </li> 
-            </ul>
-          </li>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Compose</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
                                 <i class="fa fa-calendar"></i>
-              <p>
-                 Event
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                 <a href="/Event-Details" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                    <p>Manage Event</p>
-                </a>
-              </li>
-              <li class="nav-item">
-              <a href="/AllEvent-Booking" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                 <p>Manage Event Booking<span class="badge badge-warning" id="newmessagebadge" style="padding:2px 4px;position:absolute;"></span></p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/New-Event-Booking" class="nav-link">
-                     <i class="far fa-circle nav-icon"></i>
-                       <p>New Event Booking</p>
-                      </a>
-                  </li>
-            </ul>
-          </li>
+                                <p>
+                                    Event
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Event-Details" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Event</p>
+                                    </a>
+                                </li>
+                                @*               <li class="nav-item">
+                                <a href="/AllEvent-Booking" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage Event Booking<span class="badge badge-warning" id="newmessagebadge" style="padding:2px 4px;position:absolute;"></span></p>
+                                </a>
+                                </li> *@
+                                <li class="nav-item">
+                                    <a href="/New-Event-Booking" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Event Booking Details</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-gift"></i>
+                                <p>
+                                    Offers Details
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Feedback/NewFeedback" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Offer</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Feedback/ManageFeedback" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>New Offer</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-comments-o"></i>
+                                <p>
+                                    Feedback Details
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Feedback/NewFeedback" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>New Feedback</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Reviews/ReviewList" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Feedback</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-       @*   <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa fa-comments-o"></i>
-              <p>
-                Feedback Details
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/Feedback/NewFeedback" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>New Feedback</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/Feedback/ManageFeedback" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Manage Feedback</p>
-                </a>
-              </li> 
-            </ul>
-          </li>*@
-         
-           <li class="nav-item">
-            <a href="#" class="nav-link">
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
                                 <i class="fa fa-image"></i>
-              <p>
-                Banner
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                 <a href="/Banners/BannerList" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Manage Banner</p>
-                </a>
-              </li> 
-            </ul>
-          </li>
+                                <p>
+                                    Banner
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Banners/BannerList" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Banner</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-user-friends"></i>
-              <p>
-                Employees
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/Employee/Employee" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Manage Employee</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user-friends"></i>
+                                <p>
+                                    Employees
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Employee/Employee" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Employee</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
 
                         <li class="nav-item">
@@ -351,164 +373,163 @@
                             </ul>
                         </li>
 
-          
-            @*<li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-users"></i>
-              <p>
-                Users
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/Employee/Chef" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>User Details</p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="/Employee/Waiter" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Lock Or Unlock User</p>
-                </a>
-              </li>
-            </ul>
-          </li>*@
-        @*  <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class='fas fa-file-invoice-dollar'></i>
-              <p>
-               Billing
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/Employee/Chef" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Manage Billing</p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="/Employee/Waiter" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Invoice</p>
-                </a>
-              </li>
-             <li class="nav-item">
-                <a href="/Employee/Waiter" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>FAQ</p>
-                </a>
-              </li>
-            </ul>
-          </li>*@
-                    <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa fa-gear fa-spin" style="font-size:24px"></i>
-              <p>
-               Account
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
+
+                        @*<li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <p>
+                        Users
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                        <a href="/Employee/Chef" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>User Details</p>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="/Employee/Waiter" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Lock Or Unlock User</p>
+                        </a>
+                        </li>
+                        </ul>
+                        </li>*@
+                        @*  <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class='fas fa-file-invoice-dollar'></i>
+                        <p>
+                        Billing
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                        <a href="/Employee/Chef" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Manage Billing</p>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="/Employee/Waiter" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Invoice</p>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="/Employee/Waiter" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>FAQ</p>
+                        </a>
+                        </li>
+                        </ul>
+                        </li>*@
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-gear fa-spin" style="font-size:24px"></i>
+                                <p>
+                                    Account
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
                                     <a href="/Menu/Recipe" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Profile</p>
-                </a>
-              </li>
-                            <li class="nav-item">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Profile</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/Home" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>UI</p>
-                </a>
-              </li>
-               <li class="nav-item">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>UI</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/Register" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add User</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-    <div>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add User</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+        <div>
             @RenderBody()
-    </div>
-  <footer class="main-footer">
+        </div>
+        <footer class="main-footer">
             <strong>Copyright &copy; @DateTime.Now.Year RetroReserve.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.1.0
-    </div>
-  </footer>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.1.0
+            </div>
+        </footer>
         <div id="alert-container" style="
     position: fixed;
     top: 65px;
     right: 4px;
     z-index: 1000"></div>
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
     <!-- jQuery -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script src="~/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
-<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="~/plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="~/plugins/sparklines/sparkline.js"></script>
-<!-- JQVMap -->
-<script src="~/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="~/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="~/plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="~/plugins/moment/moment.min.js"></script>
-<script src="~/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Summernote -->
-<script src="~/plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
-<script src="~/dist/js/adminlte.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="~/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/plugins/moment/moment.min.js"></script>
+    <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="~/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
     <!-- AdminLTE for demo purposes -->
     <script src="~/js/common.js"></script>
-<script src="~/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script>
-  $(function () {
-    //Add text editor
-      $('#compose-textarea').summernote();
+    <script src="~/dist/js/demo.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script>
+        $(function () {
+            //Add text editor
+            $('#compose-textarea').summernote();
 
-  })
-</script>
+        })
+    </script>
     <script src="~/js/admin.js"></script>
-<script src="~/dist/js/pages/dashboard.js"></script>
+    <script src="~/dist/js/pages/dashboard.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

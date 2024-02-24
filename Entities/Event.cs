@@ -11,12 +11,14 @@ namespace Entities
         public int eventID { get; set; }
         public string? eventName { get; set; }
         public string? eventImage { get; set; }
+        public string? eventDescription { get; set; }
         public decimal eventPrice { get; set; }
         public decimal eventOffPrice { get; set; }
         public string? eventLocation { get; set; }
         public string? eventOrganizer { get; set; }
         public int eventStatus { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int totalPeople { get; set;}
 
     }
     public class EventBooking : Event

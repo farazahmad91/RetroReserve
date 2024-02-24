@@ -31,6 +31,13 @@ namespace API.Controllers
             return Ok(i);
         }
 
+        [HttpGet(nameof(GetEmployeeDetailById))]
+        public IActionResult GetEmployeeDetailById(int id)
+        {
+            var i = employeeService.GetEmployeeDetailById(id);
+            return Ok(i);
+        }
+
         // POST api/<EmployeeController>
         [HttpPost(nameof(AddOrUpdateEmployee))]
         public async Task<IActionResult> AddOrUpdateEmployee(Employees employees)

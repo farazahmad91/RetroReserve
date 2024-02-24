@@ -4,8 +4,8 @@
     ViewData["Title"] = "EmployeesList";
     Layout = null;
 }
-
- <!-- Content Wrapper. Contains page content -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -25,12 +25,12 @@
     </section>
     <div class="container">
         <button type="button" class="btn btn-primary" onclick="EditEmployee(0);"> Add New Employee</button>
-         <button type="button" class="btn btn-warning float-right" onclick="EmployeeRoles();"> Employee Roles</button>
+        <button type="button" class="btn btn-warning float-right" onclick="EmployeeRoles();"> Employee Roles</button>
         <br /> <br />
         <div class="card">
             <div class="table-responsive">
-                <br /> 
-                <table class="table table-striped" style="margin:5px;">
+                <br />
+                <table class="table table-striped" style="margin:5px;" id="emptable">
                     <thead style="background-color:#17a2b8!important;">
                         <tr>
                             <th>Name</th>
@@ -51,7 +51,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                 <td>
                                     <a class="fancybox" href="@item.Image" data-fancybox data-caption="@item.Name">
-                                        <img src="@item.Image" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="110px" height="50px" />
+                                        <img src="@item.Image" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="90px" height="50px" />
                                     </a>
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Salary)</td>
@@ -59,20 +59,20 @@
                                 <td>@Html.DisplayFor(modelItem => item.Address)</td>
                                 <td>
                                     @{
-    var isactive = @item.IsActive == 1 ? "checked" : "";
-    var emp = isactive == "checked" ? "Active" : "Inactive";
-    var color = isactive == "checked" ? "green" : "red";
-}
+                                        var isactive = @item.IsActive == 1 ? "checked" : "";
+                                        var emp = isactive == "checked" ? "Active" : "Inactive";
+                                        var color = isactive == "checked" ? "green" : "red";
+                                    }
 
-<div class="col-md-12">
-    <div class="form-group">
-        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-            <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.EmpId" @isactive onchange="EmpStatus(@item.EmpId);">
-            <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.EmpId">@emp</label>
-        </div>
-    </div>
-</div>
-</td>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.EmpId" @isactive onchange="EmpStatus(@item.EmpId);">
+                                                <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.EmpId">@emp</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
 
                                 <td>
                                     <div class="dropdown">
@@ -93,16 +93,24 @@
         </div>
     </div>
 </div>
-<div id="mymodalPartialView"></div>
+<div id="mymodalPV"></div>
 <script>
-     function EmpDetails(id) {
-    $.post("/Employee/Details", { id: id })
-        .done(function (res) {
-            $("#mymodalPartialView").html(res);
-             $("#MyModal").modal("show");
-        })
-        .fail(function () {
-            alert("error");
-        });
-}
+    jQuery(document).ready(function ($) {
+        $("#emptable").DataTable();
+    });
+    function EmpDetails(Id) {
+        let param = {
+            id: Id,
+        };
+        $.post("/Employee/Details", param)
+            .done(function (res) {
+                $("#mymodalPV").html(res);
+                $("#MyModal").modal("show");
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+
+   
 </script>   

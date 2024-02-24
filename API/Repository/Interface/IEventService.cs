@@ -5,7 +5,7 @@ namespace API.Repository.Interface
     public interface IEventService
     {
         public Task<int> AddOrUpdateEvent(Event _event);
-        public Task<int> AddOrUpdateEventBooking(EventBooking eventBooking);
+        public Task<Response> AddOrUpdateEventBooking(EventBooking eventBooking);
         public Event GetEventById(int id);
         public IEnumerable<Event> GetEventList();
         public IEnumerable<EventBooking> GetBookingEventList();

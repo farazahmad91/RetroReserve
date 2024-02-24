@@ -1,8 +1,7 @@
-﻿@model Entities.EventVM
+﻿@model IEnumerable<Entities.Event>
 @{
     ViewData["Title"] = "Book Event";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    var eventdetails = new SelectList(Model.EventDetails, "eventID", "eventName");
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
 </script>
@@ -21,58 +20,58 @@
 </div>
 <br />
 <!-- ======= Book A Table Section ======= -->
-<section id="book-a-table" class="book-a-table">
-    <div class="container" data-aos="fade-up">
-        <div>
+@if (Model == null || !Model.Any())
+{
 
-            <div class="card" id="snackbar2"></div>
-            <div class="card" id="snackbar3"></div>
-        </div>
-        <div>
-            <br />
-            <div role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" style="border:solid #9ad039 2px; border-radius:0px 50px; padding:15px;">
-                <div class="row">
-                    <input type="text" id="eventBookingId" hidden />
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="col-lg-12 col-md-12 form-group">
-                                <select class="form-control" id="eventid" asp-items="@eventdetails"  onchange="hideInputBox();">
-                                    <option value="" style="text-align:center;">&#8678; Select Event &#x21E8;</option>
-                                </select>
+
+    <div style="text-align:center;">
+        <br />
+        <h3><strong>Oops! It seems there are no upcoming events available.</strong></h3>
+        <p>Explore our events and make sure to check back soon for upcoming opportunities!</p>
+    </div>
+
+}
+else
+{
+    <div class="container-fluid fruite py-5">
+        <div class="container py-5">
+            <div class="tab-class text-center">
+                <h2><strong>Recently Viewed</strong></h2>
+                <br />
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            <div class="row g-4">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="rounded position-relative fruite-item">
+                                            <div class="fruite-img">
+                                                <img src="@item.eventImage" class="img-fluid rounded-top" style="width:300px;height:200px;" onclick="OnItemDetail(@item.eventID);" alt="">
+                                            </div>
+                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Event Id: #@item.eventID</div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h5 style="width:auto;font:bolder ;font-size:large;font-weight:800;"><strong>@item.eventName</strong></h5>
+                                                <p>@item.eventDescription</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0"> &nbsp;&nbsp;&#8377; @item.eventOffPrice</p>
+                                                    <a onclick="EventAddPV('@item.eventID','@item.eventName','@item.totalPeople');" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                         Book Event Now
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 form-group mt-3 bname">
-                        <input type="text" class="form-control" style="color:black; background-color:white;" name="bname" id="bname" placeholder="birthday person name">
-                    </div>
-                    <div class="col-lg-4 col-md-6 form-group mt-3 cname" style="display:none;">
-                        <input type="text" class="form-control" style="color:black; background-color:white;" name="cname" id="cname" placeholder="couple name">
-                    </div>
-                    <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="text" name="PhoneNo" class="form-control" style="color:black; background-color:white;" id="PhoneNo" placeholder="phone no">
-                    </div>
-                    <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="number" class="form-control" style="color:black; background-color:white;" name="TotalGuest" id="TotalGuest" placeholder="no. of people" max="50" data-rule="minlen:1">
-                    </div>
-                    <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="date" style="color:black; background-color:white;" name="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" id="date" placeholder="Date">
-
-                    </div>
-                    <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="time" style="color:black; background-color:white;" name="time" min="10:00" max="23:00" class="form-control" id="time" placeholder="Time">
-                    </div>
-                    <div class="col-lg-4 col-md-6 form-group mt-3">
-                        <input type="text" name="Price" class="form-control" style="color:black; background-color:white;" disabled id="Price" placeholder="Price">
-                    </div>
                 </div>
-                <div class="mb-3">
-                </div>
-                <div class="text-center"><button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" onclick="BookEvents();">Book Event</button></div>
             </div>
         </div>
-        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
     </div>
-</section>
+}
+<div id="EventAddPV"></div>
 <div id="PaymentModalPV"></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -85,16 +84,29 @@
         })
     }
     EventBanner();
-    function hideInputBox() {
+
+    function EventAddPV(id, eventname,tg) {
+        $.post("/Event/BookEventSchedule").done(function (res) {
+            $("#EventAddPV").html(res);
+            $("#MyEventBookModal").modal("show");
+            $("#eventid").val(id);
+            $("#TotalGuest").val(tg);
+            OnEventPageload(id);
+            hideInputBox(eventname);
+        }).fail(function () {
+            alert("errror");
+        })
+    }
+    function hideInputBox(eventname) {
         debugger;
-        var selectedValue = $("#eventid").val();
-        OnEventChange(selectedValue);
-        if (selectedValue != "1") {
-            $(".bname").hide();
-            $(".cname").show();
-        } else {
+        if (eventname == "Birthday ") {
             $(".bname").show();
             $(".cname").hide();
+        } 
+        else 
+        {
+            $(".bname").hide();
+            $(".cname").show();
         }
     }
     function BookEvents() {
@@ -113,19 +125,24 @@
                     CoupleName: $("#cname").val(),
                     eventPrice: $("#Price").val(),
                 };
-                $.post('/Event/BookingEvent', param).done(function () {
+                $.post('/Event/BookingEvent', param).done(function (res) {
                     Hide_Loader();
-                    showinsertsuccess("Event Add Successfully");
+                    if (res.statusCode == -1) {
+                        alert(res.responseText);
+                    
+                    }
+                    alert(res.responseText);
                 }).fail(function () {
                     Hide_Loader();
-                    showerrors("Something went wrong!!!");
+                    alert("Something went wrong!!!");
                 });
             }
         }, 1500)
     }
-    function OnEventChange(id) {
+    function OnEventPageload(Id) {
+        debugger;
         var param = {
-            id: id,
+            id:Id,
         };
         $.post("/Event/EventPrice", param).done(function (res) {
             console.log(res);
@@ -136,6 +153,8 @@
         });
 
     }
+    
+
     function validateEventBooking() {
         var selectedValue = $("#eventid").val();
         let isvalidated = true;

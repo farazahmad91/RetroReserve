@@ -9,5 +9,6 @@ namespace API.Repository.Interface
         public IEnumerable<Employees> GetEmployeeList();
         public Task<int> UpdateEmployeeStatus(Employees employees);
         public int DeleteEmployee(int id);
+        public Employees GetEmployeeDetailById(int id);
     }
 }

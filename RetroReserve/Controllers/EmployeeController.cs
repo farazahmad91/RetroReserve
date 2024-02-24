@@ -56,7 +56,7 @@ namespace RetroReserve.Controllers
         }
         public async Task<ActionResult> Details(int id)
         {
-            var i = await apirequest.GetData<EmployeesVM>(($"Employee/GetEmployeeById?id={id}"));
+            var i = await apirequest.GetData<Employees>(($"Employee/GetEmployeeDetailById?id={id}"));
             return PartialView(i);
         }
         [Route("/Chefs")]
