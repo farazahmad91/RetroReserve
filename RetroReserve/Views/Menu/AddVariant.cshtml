@@ -42,7 +42,7 @@
                                     <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
                                 </div>
                                 <input type="text" hidden asp-for="DishId" class="form-control" />
-                                <input type="text" asp-for="VName" class="form-control" />
+                                <input type="text" asp-for="DishName" class="form-control" />
 
                             </div>
                         </div>
@@ -141,7 +141,7 @@
             if (validateVarient()) {
                 let param = {
                     DishId: $("#DishId").val(),
-                    VName: $("#VName").val(),
+                    DishName: $("#DishName").val(),
                     MRP: $("#MRP").val(),
                     SellingCost: $("#SellingCost").val(),
                     DishQuantity: $("#DishQuantity").val(),
@@ -149,7 +149,7 @@
                 };
                 var Menu = new FormData();
                 Menu.append("DishId", param.DishId);
-                Menu.append("VName", param.VName);
+                Menu.append("DishName", param.DishName);
                 Menu.append("MRP", param.MRP);
                 Menu.append("SellingCost", param.SellingCost);
                 Menu.append("DishQuantity", param.DishQuantity);

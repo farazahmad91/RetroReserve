@@ -108,6 +108,30 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Event Description</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="text" asp-for="eventDescription" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Total Guest</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-map-marker" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="text" asp-for="totalPeople" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <br />
                     <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
                     <div class="form-group">
@@ -144,6 +168,8 @@
                     eventLocation: $("#eventLocation").val(),
                     eventOrganizer: $("#eventOrganizer").val(),
                     eventStatus: $("#eventStatus").val(),
+                    eventDescription: $("#eventDescription").val(),
+                    totalPeople: $("#totalPeople").val(),
                 };
                 var Event = new FormData();
                 Event.append("eventID", param.eventID);
@@ -153,6 +179,8 @@
                 Event.append("eventLocation", param.eventLocation);
                 Event.append("eventOrganizer", param.eventOrganizer);
                 Event.append("eventStatus", param.eventStatus);
+                Event.append("eventDescription", param.eventDescription);
+                Event.append("totalPeople", param.totalPeople);
                 Event.append("ImagePath", $("#eventImage").prop('files')[0]);
 
                 $.ajax({

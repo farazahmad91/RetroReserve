@@ -5,78 +5,143 @@
 }
 
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ReviewId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DishId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReviewDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DishId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Banner</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Menu</a></li>
+                        <li class="breadcrumb-item active">Manage Dish Reviews</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>
+                                <label>Dish Name</label>
+                            </th>
+                            <th>
+                                <label>Name</label>
+                            </th>
+                            <th>
+                                <label>Email</label>
+                            </th>
+                            @*             <th>
+                            @Html.DisplayNameFor(model => model.Comment)
+                            </th> *@
+                            <th>
+                                <label>Rating</label>
+                            </th>
+                            <th>
+                                <label>Approved:Yes/No</label>
+                            </th>
+                            <th>
+                                <label>Review Date</label>
+                            </th>
+                            <th>
+                                <label>Action</label>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DishId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                @*             <td>
+                            @Html.DisplayFor(modelItem => item.Comment)
+                            </td> *@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Rating)
+                                </td>
+                                <td>
+                                    @{
+                                        var isactive = @item.Status == 1 ? "checked" : "";
+                                        var emp = isactive == "checked" ? "Yes " : "No";
+                                        var color = isactive == "checked" ? "green" : "red";
+                                    }
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.ReviewId" onchange="ApprovedReviews(@item.ReviewId); asp-for=" @item.Status" @isactive">
+                                                <label class="custom-control-label" style="color:@color;" for="customSwitch3_@item.ReviewId">@emp</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ReviewDate)
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" onclick="EmpDetails(@item.ReviewId)"><i class="fas fa-info-circle" style="color: darkgreen"></i> Details</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function ApprovedReviews(Id) {
+        var id = $("#customSwitch3_" + Id).prop("checked");
+        if (id == true) {
+            id = 1;
+        } else {
+            id = 0;
+        }
+        var param = {
+            ReviewId: Id,
+            Status: id,
+        };
+        Swal.fire({
+            title: 'Are you sure you want to Approved it?',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Approved it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Reviews/ApproveProductReview',
+                    type: 'POST',
+                    data: param,
+                    success: function (data) {
+                        showinsertsuccess("Review Approved Successfully");
+                        window.location.href = "/Reviews/ReviewList";
+                    },
+                });
+            } else {
+
+                showerror("Status Not Approved");
+                window.location.href = "/Reviews/ReviewList";
+            }
+        });
+    }
+</script>

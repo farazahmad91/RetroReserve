@@ -60,7 +60,26 @@ namespace API.Repository.Impliments
             }
         }
 
+        public Employees GetEmployeeDetailById(int id)
+        {
+            try
+            {
+                string sp = "sp_GetEmployeeDetailsById";
 
+                var param = new
+                {
+                    EmpId = id
+                };
+
+                var res = dapper.GetById<Employees>(param, sp);
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
         public async Task<int> UpdateEmployeeStatus(Employees employees)
         {
             var sp = "sp_UpdateEmployeeStatus";

@@ -35,7 +35,7 @@ namespace API.Repository.Impliments
             {
                 DishId = foodkart.DishId,
                 Id = foodkart.Id,
-                VName = foodkart.VName,
+                VName = foodkart.DishName,
                 DishImage = foodkart.DishImage,
                 MRP = foodkart.MRP,
                 SellingCost = foodkart.SellingCost,

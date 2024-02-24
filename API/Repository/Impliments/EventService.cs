@@ -2,6 +2,7 @@
 using Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel;
 using System.Security.Claims;
 using System.Web.Providers.Entities;
 
@@ -24,11 +25,13 @@ namespace API.Repository.Impliments
                 eventID = _event.eventID,
                 eventName= _event.eventName,
                 eventImage= _event.eventImage,
-                eventPrice= _event.eventPrice,
+                eventDescription= _event.eventDescription,
+                eventPrice = _event.eventPrice,
                 eventOffPrice= _event.eventOffPrice,
                 eventLocation= _event.eventLocation,
                 eventOrganizer= _event.eventOrganizer,
                 eventStatus= _event.eventStatus,
+                totalPeople= _event.totalPeople,
             };
             var i = await dapper.Insert(param, sp);
 
@@ -98,48 +101,63 @@ namespace API.Repository.Impliments
             var i = await dapper.Insert(param, sp);
             return i;
         }
-        public async Task<int> AddOrUpdateEventBooking(EventBooking eventBooking)
+        public async Task<Response> AddOrUpdateEventBooking(EventBooking eventBooking)
         {
-            var sp = "sp_AddOrUpdateEventBooking";
-            var param = new
+            var res = new Response()
             {
-              eventBookingId= eventBooking.eventBookingId,
-              UserID= eventBooking.UserID,
-              eventID= eventBooking.eventID,
-              UserName= eventBooking.UserName,
-              PhoneNo= eventBooking.PhoneNo,
-              TotalGuest= eventBooking.TotalGuest,
-              BPersonName= eventBooking.BPersonName,
-              CoupleName = eventBooking.CoupleName,
-              eventDate= eventBooking.eventDate,
-              eventTime= eventBooking.eventTime,
-              eventPrice= eventBooking.eventPrice,
-              eventBookingStatus = eventBooking.eventBookingStatus,
-              eventCompleteDate= eventBooking.eventCompleteDate,
+                ResponseText = "Failed To Save",
+                StatusCode = -1,
             };
-            var i = await dapper.Insert(param, sp);
-            if(i == 1)
+            try
             {
-                switch (eventBooking.eventID)
+                var sp = "sp_AddOrUpdateEventBooking";
+                var param = new
                 {
-                    case 1:
-                        occasions = "Birthday Celebration";
-                        break;
+                    eventBookingId = eventBooking.eventBookingId,
+                    UserID = eventBooking.UserID,
+                    eventID = eventBooking.eventID,
+                    UserName = eventBooking.UserName,
+                    PhoneNo = eventBooking.PhoneNo,
+                    TotalGuest = eventBooking.TotalGuest,
+                    BPersonName = eventBooking.BPersonName,
+                    CoupleName = eventBooking.CoupleName,
+                    eventDate = eventBooking.eventDate,
+                    eventTime = eventBooking.eventTime,
+                    eventPrice = eventBooking.eventPrice,
+                    eventBookingStatus = eventBooking.eventBookingStatus,
+                    eventCompleteDate = eventBooking.eventCompleteDate,
+                };
+                res = await dapper.GetAsync<Response>(sp, param);
+                if (res.StatusCode == 1)
+                {
+                    switch (eventBooking.eventID)
+                    {
+                        case 1:
+                            occasions = "Birthday Celebration";
+                            break;
 
-                    case 2:
-                        occasions = "Wedding Ceremony";
-                        break;
+                        case 2:
+                            occasions = "Wedding Ceremony";
+                            break;
 
-                    case 3:
-                        occasions = "Wedding Anniversary Commemoration";
-                        break;
+                        case 3:
+                            occasions = "Wedding Anniversary Commemoration";
+                            break;
+                    }
+                    string Email = eventBooking.UserID;
+                    string subject = "Confirmation of Event Booking";
+                    string body = $"Dear {eventBooking.UserName},\n\nWe are pleased to inform you that your reservation for the {occasions} Event at our establishment has been successfully confirmed. Your Booking ID is: {res.OrderID}, and the event is scheduled for: {eventBooking.eventDate}.\n\n We eagerly anticipate the opportunity to provide you with an exceptional dining experience. Should you have any specific requests or queries, please feel free to reach out to us.\n\nThank you for choosing our services. Your trust is greatly appreciated, and we look forward to welcoming you!\n\nKind regards,\nThe RetroReserve Team";
+                    _emailSenderService.SendEmail(Email, subject, body);
                 }
-                string Email = eventBooking.UserID;
-                string subject = "Confirmation of Event Booking";
-                string body = $"Dear {eventBooking.UserName},\n\nWe are pleased to inform you that your reservation for the {occasions} Event at our establishment has been successfully confirmed. Your Booking ID is: {eventBooking.eventBookingId}, and the event is scheduled for: {eventBooking.eventDate}.\n\nWe eagerly anticipate the opportunity to provide you with an exceptional dining experience. Should you have any specific requests or queries, please feel free to reach out to us.\n\nThank you for choosing our services. Your trust is greatly appreciated, and we look forward to welcoming you!\n\nKind regards,\nThe RetroReserve Team";
-                _emailSenderService.SendEmail(Email,subject, body);
+                return res;
             }
-            return i;
+            catch (Exception ex)
+            {
+
+                res.ResponseText = ex.Message;
+                res.StatusCode = -1;
+                return res;
+            }
         }
         public async Task<int> UpdateBookingEventStatus(EventBooking eventBooking)
         {
@@ -153,42 +171,13 @@ namespace API.Repository.Impliments
             string Email = eventBooking.UserID;
             string subject = "";
             string body = "";
-
-            switch (eventBooking.eventID)
-            {
-                case 1:
-                    occasions = "Birthday Celebration";
-                    break;
-
-                case 2:
-                    occasions = "Wedding Ceremony";
-                    break;
-
-                case 3:
-                    occasions = "Wedding Anniversary Commemoration";
-                    break;
-            }
-
-
-
-            switch (eventBooking.eventBookingStatus)
-            {
-                case 1:
-                    subject = "Confirmation of Event Booking";
-                    body = $"Dear {eventBooking.UserName},\n\nWe are pleased to inform you that your reservation for the {occasions} Event at our establishment has been successfully confirmed. Your Booking ID is: {eventBooking.eventBookingId}, and the event is scheduled for: {eventBooking.eventDate}.\n\nWe eagerly anticipate the opportunity to provide you with an exceptional dining experience. Should you have any specific requests or queries, please feel free to reach out to us.\n\nThank you for choosing our services. Your trust is greatly appreciated, and we look forward to welcoming you!\n\nKind regards,\nThe RetroReserve Team";
-                    break;
-
-                case 2:
                     subject = "Completion Notification for Your Event";
-                    body = $"Dear {eventBooking.UserName},\n\nWe are thrilled to share the delightful news that your {occasions} Event was successfully concluded on: {DateTime.Now}.\n\nAt RetroReserve, we take pride in delivering an exceptional event experience, with your satisfaction being our top priority. Should you have any specific requests or inquiries, please do not hesitate to contact us.\n\nWe genuinely appreciate your choice in selecting our services, and we express our gratitude for the trust you have placed in us. We eagerly look forward to the opportunity of welcoming you back to create more memorable moments.\n\nThank you for choosing RetroReserve. Your satisfaction is our ultimate success!\n\nWarm regards,\nThe RetroReserve Team";
-                    break;
-            }
-
-
-            _emailSenderService.SendEmail(Email, subject, body);
-
+                    body = $"Dear {eventBooking.UserName},\n\nWe are thrilled to share the delightful news that your  Event has been successfully done concluded on: {DateTime.Now}.\n\nAt RetroReserve, we take pride in delivering an exceptional event experience, with your satisfaction being our top priority. Should you have any specific requests or inquiries, please do not hesitate to contact us.\n\nWe genuinely appreciate your choice in selecting our services, and we express our gratitude for the trust you have placed in us. We eagerly look forward to the opportunity of welcoming you back to create more memorable moments.\n\nThank you for choosing RetroReserve. Your satisfaction is our ultimate success!\n\nWarm regards,\nThe RetroReserve Team";
+            
             var i = await dapper.Insert(param, sp);
-
+            if(i == 1) {
+                _emailSenderService.SendEmail(Email, subject, body);
+            }
             return i;
         }
         public EventVM GetEventdetailsList()

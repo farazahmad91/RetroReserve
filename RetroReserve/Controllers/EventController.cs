@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RetroReserve.Models;
 using System.Security.Claims;
 
@@ -55,21 +56,32 @@ namespace RetroReserve.Controllers
         [Route("/Event")]
         public async Task<ActionResult> Event()
         {
-            var i = await apirequest.GetData<EventVM>("Event/GetEventdetailsList");
+            var i = await apirequest.GetData<List<Event>>("Event/GetEventList");
             return View(i);
         }
+        public async Task<ActionResult> BookEventSchedule()
+        {
+            var i = await apirequest.GetData<EventVM>("Event/GetEventdetailsList");
+            return PartialView(i);
+        }
+
         public async Task<ActionResult> BookingEvent(EventBooking eventBooking)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             var name = User.FindFirstValue(ClaimTypes.Name);
             eventBooking.UserID = email;
             eventBooking.UserName = name;
-            var i = await apirequest.Post("Event/AddOrUpdateEventBooking", eventBooking);
-            return Json(i);
+            var apires = await apirequest.Post("Event/AddOrUpdateEventBooking", eventBooking);
+           var res = JsonConvert.DeserializeObject<Entities.Response>(apires);
+            return Json(res);
         }
 
         public async Task<ActionResult> UpdateBookingEventStatus(EventBooking eventBooking)
         {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var name = User.FindFirstValue(ClaimTypes.Name);
+            eventBooking.UserID = email;
+            eventBooking.UserName = name;
             var i = await apirequest.Post("Event/UpdateBookingEventStatus", eventBooking);
             return Json(i);
         }

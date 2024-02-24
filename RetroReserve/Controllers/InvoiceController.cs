@@ -19,7 +19,7 @@ namespace RetroReserve.Controllers
         {
 			ViewBag.UserName = User.FindFirstValue(ClaimTypes.Name);
 			ViewBag.name = ViewBag.UserName?.Length > 0 ? char.ToUpper(ViewBag.UserName[0]) + ViewBag.UserName.Substring(1) : string.Empty;
-			var i = await apirequest.GetMultipleDataById<List<OrdersReport>>("Orders/InvoiceByOrderId", id);
+			var i = await apirequest.GetData<List<OrdersReport>>($"Orders/InvoiceByOrderId?id={id}");
 			return View(i);
         }
 
