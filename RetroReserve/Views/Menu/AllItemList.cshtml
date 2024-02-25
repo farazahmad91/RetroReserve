@@ -33,8 +33,8 @@
         <button type="button" class="btn btn-info float-right" onclick="TeaKart();"> TeaKart</button>
     <br />  <br />
         <div class="card">
-        <div class="table-responsive">
-        <table class="table table-striped">
+            <div class="table-responsive" style="text-align:center;">
+        <table class="table table-striped" id="menutable">
             <thead style="background-color:#17a2b8!important;">
             <tr>
                 <th>Sr No:</th>
@@ -124,6 +124,9 @@
     </div>
     </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
 <script>
 function EditFoodKart(DishId) {
                 let param = {
@@ -136,7 +139,9 @@ function EditFoodKart(DishId) {
             })
 }
 
-
+    jQuery(document).ready(function ($) {
+        $("#menutable").DataTable();
+    });
     function EditVarient(DishId) {
         let param = {
             DishId: DishId,

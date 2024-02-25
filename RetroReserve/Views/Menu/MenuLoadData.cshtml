@@ -6,7 +6,8 @@
 
 <div id="PartialView">
 </div>
-@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function Onload() {
             $.post("/Menu/AllItemList").done(function (res) {
@@ -16,6 +17,7 @@
             })
         }
         Onload();
+
         function EditMenu() {
             $.post("/Menu/EditMenu").done(function (res) {
                 $("#PartialView").html(res);
@@ -46,5 +48,5 @@
             })
         }
     </script>
- }
+
 

@@ -6,7 +6,9 @@
 
 <div id="partialView">
 </div>
-@section Scripts {
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
         function loadData() {
@@ -16,6 +18,9 @@
             });
         }
         loadData();
+        $(document).ready(function () {
+            $("#btbl").DataTable();
+        });
 
         function OnSearch() {
             var param = {
@@ -47,7 +52,7 @@
             jQuery("#snackbar3").html(msg);
         }
     </script>
-}
+
 
 
 
