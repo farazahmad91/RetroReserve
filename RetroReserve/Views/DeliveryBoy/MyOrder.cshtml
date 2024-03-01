@@ -1,0 +1,182 @@
+﻿@model IEnumerable<Entities.DeliveredOrder>
+
+@{
+    string statustext;
+    string badge;
+    var count = 0;
+    string hide;
+    ViewData["Title"] = "MyOrder";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>New Order Report</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Order</a></li>
+                        <li class="breadcrumb-item active">New Orders</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped" id="AllOrder">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>
+                                <label>Name</label>
+                            </th>
+                            <th>
+                                <label>Order Assign</label>
+                            </th>
+                            <th>
+                                <label>DeliveredOrCancelled Date</label>
+                            </th>
+                            <th>
+                                <label>Status</label>
+                            </th>
+                            <th>
+                                <label>Action</label>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AssignOn)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DeliveredOrCancelledOn)
+                                </td>
+                                <td>
+                                    @{
+                                        statustext = "";
+                                        badge = "";
+                                        if (@item.Status == 2)
+                                        {
+
+                                            badge = "badge badge-warning";
+                                            statustext = "Shipped";
+                                        }
+                                        else if (@item.Status == 4)
+                                        {
+
+                                            badge = "badge badge-success";
+                                            statustext = "Delivered";
+                                        }
+                                        else if (@item.Status == 5)
+                                        {
+
+                                            badge = "badge badge-danger";
+                                            statustext = "Cancelled";
+                                        }
+                                    }
+                                    <label class="@badge">@statustext</label>
+                                </td>
+                                <td>
+                                    @{
+                                        string colorStyle = "";
+                                        string classbadge = "";
+                                        if (@item.Status ==2)
+                                        {
+
+                                            classbadge = "badge badge-info";
+                                        }
+                                        else if (@item.Status == 4)
+                                        {
+
+                                            classbadge = "badge badge-success";
+                                        }
+                                        else if (@item.Status == 5)
+                                        {
+
+                                            classbadge = "badge badge-danger";
+                                        }
+
+                                    }
+                                    <select id="or_Status" class="@classbadge" style="colorStyle" asp-for="@item.Status" onchange="OTPVerifyByDBoy(@item.OrderId,@item.EmpId,this.value);">
+                                        @{
+                                            if (@item.Status == 2)
+                                            {
+                                                        <option value="">Select it</option>
+                                                        <option value="4">Delivered</option>
+                                                        <option value="5">Cancelled</option>
+                                            }
+                                            else if (@item.Status == 4)
+                                            {
+                                                <option value="4" disabled style="color:red;">Delivered</option>
+                                            }
+                                            else if (@item.Status == 5)
+                                            {
+                                                <option value="5" disabled style="color:green;">Cancelled</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="OTPPV"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- DataTables CSS and JS -->
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $("#AllOrder").DataTable();
+    });
+
+
+    function onload() {
+        debugger;
+        var i = $("#selectedvalue").val();
+        if (i == 5) {
+            jQuery(".o-hide").hide();
+            jQuery(".c-hide").show();
+            jQuery("#btnverify").hide();
+            jQuery("#btndelivered").hide();
+            jQuery("#btncancelled").show();
+            jQuery("#V_otp").hide();
+            jQuery("#txtcancelled").show();
+        }
+    }
+
+    function OTPVerifyByDBoy(orderid,empid,status) {
+        debugger;
+        $.post("/DeliveryBoy/OTPVerify")
+            .done(function (res) {
+                $("#OTPPV").html(res);
+                $("#OTPVerifyModal").modal("show");
+                $("#orderid").val(orderid);
+                $("#selectedvalue").val(status);
+                $("#empid").val(empid);
+                onload();
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+
+</script>

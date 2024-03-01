@@ -66,5 +66,19 @@ namespace API.Controllers
             var i = employeeService.GetChefs();
             return Ok(i);
         }
+
+        [HttpGet(nameof(GetActiveDeliveryBoy))]
+        public IActionResult GetActiveDeliveryBoy()
+        {
+            var i = employeeService.GetActiveDeliveryBoy();
+            return Ok(i);
+        }
+
+        [HttpGet(nameof(GetOrderListByDboy))]
+        public IActionResult GetOrderListByDboy(string email)
+        {
+            var i = employeeService.GetOrderListByDboy(email);
+            return Ok(i);
+        }
     }
 }

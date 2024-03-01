@@ -75,6 +75,9 @@
 								<label  class="input-text qty" id="qty">@item.OrderDate</label>
 						</div>
 					</div>
+							<div class="s_product_text" style="text-align:left;">
+								<a href="#"> <h4 class="fa fa-download" onclick="OrderDetails(@item.OrderID);"><strong> Order Details</strong></h4></a>
+							</div>
 					<div class="s_product_text" style="text-align:right;">
 							<a href="#"> <h4 class="fa fa-download" onclick="InvoiceGenerate(@item.OrderID);" ><strong> Get Invoice</strong></h4></a>
 					</div>
@@ -85,14 +88,20 @@
 			}
 		</div>
 	</div>
+	<div id="OrderDPV"></div>
 	</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 function InvoiceGenerate(id) {
     window.location.href = '/Invoice/Invoice?id=' + id;
 	    var receiptContent = document.querySelector('.receipt-main');
 
 }
-	</script>
 
+	function OrderDetails(id) {
+		window.location.href = '/Order/OrderDetails?id=' + id;
+	}
+	</script>
 
 

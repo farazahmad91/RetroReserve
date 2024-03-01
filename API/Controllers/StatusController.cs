@@ -9,15 +9,23 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class StatusController : ControllerBase
-    { private readonly IStatusService messageBoxService;
+    { private readonly IStatusService _statusService;
         public StatusController(IStatusService messageBoxService)
         {
-            this.messageBoxService = messageBoxService;
+            this._statusService = messageBoxService;
         }
         [HttpGet(nameof(GetStatusList))]
         public IActionResult GetStatusList()
         {
-            var i = messageBoxService.GetStatusList();
+            var i = _statusService.GetStatusList();
+            return Ok(i);
+
+        }
+
+        [HttpGet(nameof(GetStatusForDboy))]
+        public IActionResult GetStatusForDboy(string email)
+        {
+            var i = _statusService.GetStatusForDboy(email);
             return Ok(i);
 
         }

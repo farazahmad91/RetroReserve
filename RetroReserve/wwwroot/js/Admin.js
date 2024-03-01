@@ -1,7 +1,7 @@
 ﻿var ContactId = 0;
 function Status() {
     $.get("/Dashboard/Status").done(function (res) {
-        console.log(res);
+        console.clear();
         $("#deliverdobadge").html(res[0].deliverdOrder);
         $("#newobadge").html(res[0].newOrders);
     }).fail(function () {
@@ -79,3 +79,13 @@ setInterval(updateClock, 1000);
 
 // Initial call to display the clock immediately
 updateClock();
+
+function NewOrderStatusDboy() {
+    $.get("/Employee/DashboardStatus").done(function (res) {
+        $(".new_order").text(res[0].newOrderStatus);
+    }).fail(function () {
+        alert("error");
+    });
+}
+setInterval(NewOrderStatusDboy, 1000);
+

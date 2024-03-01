@@ -39,12 +39,22 @@ namespace RetroReserve.Controllers
             return Json(res);
 
         }
-        public async Task<IActionResult> UpdateOrderStatus(Orders orders)
+        public async Task<IActionResult> UpdateOrderStatus(DeliveredOrder deliveredOrder)
         {
-            var i = await apirequest.Post("Orders/UpdateOrderStatus", orders);
+            var i = await apirequest.Post("Orders/UpdateOrderStatus", deliveredOrder);
             return Json(i);
 
         }
+
+        public async Task<IActionResult> UpdateOrderStatusByDBoy(DeliveredOrder deliveredOrder)
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            deliveredOrder.UserId = email;
+            var i = await apirequest.Post("Orders/UpdateOrderStatusByDBoy", deliveredOrder);
+            return Json(i);
+
+        }
+
         [Route("/OrderHistory")]
         public async Task<IActionResult> OrderHistory()
         {
@@ -53,7 +63,11 @@ namespace RetroReserve.Controllers
             return View(i);
 
         }
-
+        public async Task<IActionResult> OrderDetails(int id)
+        {
+            var i = await apirequest.GetData<List<OrdersReport>>($"Orders/InvoiceByOrderId?id={id}");
+            return PartialView(i);
+        }
         public async Task<IActionResult> OrderChart()
         {
             var i = await apirequest.GetData<List<OrdersReport>>("Orders/GetOrderInChart");
