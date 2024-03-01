@@ -149,11 +149,9 @@
                     processData: false,
                     success: function (result) {
                         Hide_Loader();
-                        if (result.statusCode == -1) {
-                            showerrors(result.responseText);
-
-                        }
-                        showinsertsuccess(result.responseText);
+                        setTimeout(function () {
+                            QAlert(result.statusCode, result.responseText);
+                        }, 1000);
                     },
                    
              
@@ -176,7 +174,9 @@
         if (!isvalidated) {
             msg += "</ul>";
             Hide_Loader();
-            showerrors(msg);
+            setTimeout(function () {
+                QAlert(-1, msg);
+            }, 1000);
         }
 
         return isvalidated;

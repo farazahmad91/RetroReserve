@@ -172,6 +172,37 @@
                     </div>
                 </div>
             </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="password" id="Password" class="form-control" maxlength="15" minlength="15" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key" style="font-size:23px;"></i></span>
+                                    </div>
+                                    <input type="password" id="confirmPassword" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             <br />
                     <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
             <div class="form-group">
@@ -184,7 +215,14 @@
 </div>
 </div>
 <script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        var passwordInput = document.getElementById('Password');
+        var type = passwordInput.getAttribute('type') === 'Password' ? 'text' : 'Password';
+        passwordInput.setAttribute('type', type);
+    });
+
     function AddOrUpdateEmployee() {
+        debugger;
         Show_Loader();
         setTimeout(function () {
             if (validateEmployee()) {
@@ -200,7 +238,9 @@
             AdharNo: $("#AdharNo").val(),
             Address: $("#Address").val(),
             IsActive: $("#IsActive").val(),
+             password : $("#Password").val(),
         };
+                RegisterUser(param.password);
         var Employee = new FormData();
         Employee.append("EmpId", param.EmpId);
         Employee.append("Name", param.Name);
@@ -214,8 +254,7 @@
         Employee.append("Address", param.Address);
         Employee.append("IsActive", param.IsActive);
         Employee.append("ImagePath", $("#Image").prop('files')[0]);
-
-        $.ajax({
+                $.ajax({
             url: '/Employee/AddOrUpdateEmployee',
             type: 'POST',
             data: Employee,
@@ -223,7 +262,9 @@
             processData: false,
             success: function (result) {
                 Hide_Loader();
-                showinsertsuccess("Employee Add Successfully");
+                        setTimeout(function () {
+                            QAlert(result.statusCode, result.responseText);
+                        }, 1000);
             },
             error: function () {
                 Hide_Loader();
@@ -285,11 +326,121 @@
         if (!isvalidated) {
             msg += "</ul>";
             Hide_Loader();
-            showerrors(msg);
+            setTimeout(function () {
+                QAlert(-1, msg);
+            }, 1000);
         }
 
         return isvalidated;
     }
+
+
+
+
+    function generateRandomPassword() {
+        var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+        var digitChars = "0123456789";
+        var specialChars = "#$%&*";
+
+        var getRandomChar = (charSet) => {
+            var index = Math.floor(Math.random() * charSet.length);
+            return charSet.charAt(index);
+        };
+
+        var password = [
+            getRandomChar(uppercaseChars),
+            getRandomChar(lowercaseChars),
+            getRandomChar(digitChars),
+            getRandomChar(specialChars),
+            getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
+            getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
+            getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
+        ].join('');
+
+        return password;
+    }
+    function RegisterUser(password) {
+        debugger;
+        var uname = $("#Name").val();
+        var email = $("#Email").val();
+        var password = password;
+        var confirmPassword = password;
+        var role = 'Employee';
+        const options = {
+            RequireDigit: true,
+            RequiredLength: 5,
+            RequireLowercase: true
+        };
+
+        const pass = generateRandomPassword();
+        console.log(pass);
+        Show_Loader();
+        setTimeout(function () {
+            if (validateUser()) {
+                var param = {
+                    Name: uname,
+                    Email: email,
+                    Adhaar: pass,
+                    Role: role,
+                    Password: password,
+                    ConfirmPassword: confirmPassword,
+                };
+                $.post("/Account/Register", param).done(function (res) {
+                    Hide_Loader();
+                    showinsertsuccess("Register Successful");
+                    if (res == 1) {
+                        showinsertsuccess("Register Successful");
+                    }
+                    else {
+                        Hide_Loader();
+                        showerrors("Invalid Email!!");
+                    }
+
+
+                }).fail(function () {
+                    Hide_Loader();
+                    showerrors("Something went wrong!!");
+                });
+            }
+        }, 1500)
+
+    }
+
+    function validateUser() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#Name").val() === "") {
+            addError("Please enter name");
+        }
+        if ($("#Email").val() === "") {
+            addError("Please enter Email");
+        }
+        if ($("#Role").val() === "") {
+            addError("Please select role!!");
+        }
+        if ($("#Password").val() === "") {
+            addError("Please enter  Password!!");
+        }
+        if ($("#ConfirmPassword").val() === "") {
+            addError("Please enter  confirmPassword!!");
+        }
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            setTimeout(function () {
+                QAlert(-1, msg);
+            }, 1000);
+        }
+
+        return isvalidated;
+    }
+
 
 
     function Show_Loader() {
@@ -319,5 +470,7 @@
         setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
         jQuery("#snackbar3").html(msg);
     }
+
+
 
 </script>

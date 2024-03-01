@@ -17,5 +17,16 @@ namespace API.Repository.Impliments
             return i;
         }
 
+        public IEnumerable<DeliveredOrder> GetStatusForDboy(string email)
+        {
+            var sp = "sp_NewOrderStatusForDboy";
+            var param = new
+            {
+                Email = email,
+            };
+            var i = dapper.GetItemsById<DeliveredOrder>(param,sp);
+            return i;
+        }
+
     }
 }

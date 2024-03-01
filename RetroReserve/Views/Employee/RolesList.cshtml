@@ -94,7 +94,7 @@
          Status: id,
     };
     console.log(param);
-    $.post("/Employee/AddOrUpdateRoles", param).done(function() {
+        $.post("/Employee/UpdateEmpRoleMasterStatus", param).done(function () {
     }).fail(function() {
          alert("error");
 

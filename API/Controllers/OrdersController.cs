@@ -54,9 +54,9 @@ namespace API.Controllers
         }
 
         [HttpPost(nameof(UpdateOrderStatus))]
-        public async Task<IActionResult> UpdateOrderStatus(Orders orders)
+        public async Task<IActionResult> UpdateOrderStatus(DeliveredOrder deliveredOrder)
         {
-            var i = await orderService.UpdateOrderStatus(orders);
+            var i = await orderService.UpdateOrderStatus(deliveredOrder);
             return Ok(i);
         }
         [HttpGet(nameof(GetOrderInChart))]
@@ -69,6 +69,20 @@ namespace API.Controllers
         public IActionResult GetOrderInPieChart()
         {
             var i = orderService.GetOrderInPieChart();
+            return Ok(i);
+        }
+
+        [HttpPost(nameof(UpdateOrderStatusByDBoy))]
+        public async Task<IActionResult> UpdateOrderStatusByDBoy(DeliveredOrder deliveredOrder)
+        {
+            var i = await orderService.UpdateOrderStatusByDBoy(deliveredOrder);
+            return Ok(i);
+        }
+
+        [HttpPost(nameof(OTPVerify))]
+        public async Task<IActionResult> OTPVerify(Orders orders)
+        {
+            var i = await orderService.OTPVerify(orders);
             return Ok(i);
         }
     }

@@ -7,5 +7,6 @@ namespace API.Repository.Interface
         public IEnumerable<EmployeeRoleMaster> GetEmployeeRoleMasterList();
         public EmployeeRoleMaster GetEmployeeRoleById(int id);
         public EmployeeRoleMaster GetEmpSalary(int id);
+        public Task<int> UpdateEmpRoleMasterStatus(EmployeeRoleMaster employeeRoleMaster);
     }
 }

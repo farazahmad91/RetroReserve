@@ -51,5 +51,17 @@ namespace API.Repository.Impliments
             var i = dapper.GetById<EmployeeRoleMaster>(param, sp);
             return i;
         }
+
+        public async Task<int> UpdateEmpRoleMasterStatus(EmployeeRoleMaster employeeRoleMaster)
+        {
+            var sp = "sp_UpdateEmpRoleMasterStatus";
+            var param = new
+            {
+                RoleId = employeeRoleMaster.RoleId,
+                Status = employeeRoleMaster.Status,
+            };
+            var i = await dapper.Insert(param, sp);
+            return i;
+        }
     }
 }

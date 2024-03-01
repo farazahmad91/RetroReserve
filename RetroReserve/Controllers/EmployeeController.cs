@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RetroReserve.Models;
 using Entities;
+using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace RetroReserve.Controllers
 {
@@ -20,6 +22,16 @@ namespace RetroReserve.Controllers
             this.uploadImage = uploadImage;
         }
         [Authorize]
+        public ActionResult Index()
+        {
+            return View();
+        }
+        public async Task<IActionResult> DashboardStatus()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await apirequest.GetData<List<DeliveredOrder>>($"Status/GetStatusForDboy?email={email}");
+            return Json(i);
+        }
         public ActionResult Employee()
         {
             return View();
@@ -42,7 +54,8 @@ namespace RetroReserve.Controllers
         {
             employees.Image = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
             var i = await apirequest.Post("Employee/AddOrUpdateEmployee", employees);
-            return Json(i);
+            var res = JsonConvert.DeserializeObject<Entities.Response>(i);
+            return Json(res);
         }
 
         // GET: EmployeeController/Create
@@ -59,6 +72,13 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<Employees>(($"Employee/GetEmployeeDetailById?id={id}"));
             return PartialView(i);
         }
+
+        public async Task<ActionResult> AssignDboy()
+        {
+            var i = await apirequest.GetData<List<Employees>>("Employee/GetActiveDeliveryBoy");
+            return PartialView(i);
+        }
+
         [Route("/Chefs")]
         public async Task<ActionResult> Chefs()
         {
@@ -82,6 +102,12 @@ namespace RetroReserve.Controllers
         public async Task<ActionResult> AddOrUpdateRoles(EmployeeRoleMaster employeeRoleMaster)
         {
             var i = await apirequest.Post("EmployeeRoleMaster/AddOrUpdateEmployeeRoleMaster", employeeRoleMaster);
+            return Json(i);
+        }
+
+        public async Task<ActionResult> UpdateEmpRoleMasterStatus(EmployeeRoleMaster employeeRoleMaster)
+        {
+            var i = await apirequest.Post("EmployeeRoleMaster/UpdateEmpRoleMasterStatus", employeeRoleMaster);
             return Json(i);
         }
         public async Task<ActionResult> GetEmpSalary(int id)

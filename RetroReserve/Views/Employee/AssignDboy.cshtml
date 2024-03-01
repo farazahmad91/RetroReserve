@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Entities.Employees>
+@{
+    ViewData["Title"] = "AssignDboy";
+    Layout = null;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="AssignOrderModal" role="dialog" data-backdrop="static" data-keyboard="false" style="opacity:1;">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delivery Boy Info</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <section class="vh-100">
+                            <div class="container py-5 h-100">
+                                <div class="row d-flex justify-content-center align-items-center h-100">
+                                    <div class="col col-md-9 col-lg-7 col-xl-5">
+                                        <div class="card" style="border-radius: 15px;">
+                                            <div class="card-body p-4">
+                                                @foreach(var item in Model){
+                                                <div class="d-flex text-black">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="@item.Image"
+                                                             alt="Generic placeholder image" class="img-fluid"
+                                                             style="width: 120px; border-radius: 10px;">
+                                                    </div>
+                                                    
+                                                        <div class="flex-grow-1 ms-3">
+                                                            <h5 class="mb-1">@item.Name</h5>
+                                                            <p class="mb-2 pb-1" style="color: #2b2a2a;">@item.RoleName</p>
+                                                            <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                                                                 style="background-color: #efefef;">
+                                                                @*                                                             <div>
+                                                            <p class="small text-muted mb-1">Articles</p>
+                                                            <p class="mb-0">41</p>
+                                                            </div> *@
+                                                                <div class="px-3">
+                                                                    <p class="small text-muted mb-1">Status</p>
+                                                                    @{
+                                                                        if (@item.IsActive ==1)
+                                                                        {
+                                                                            <p class="mb-0 text-success">Active</p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <p class="mb-0 text-danger">Deactive</p>
+                                                                        }
+                                                                    }
+                                                                    
+                                                                </div>
+                                                                <div>
+                                                                    <p class="small text-muted mb-1">Rating</p>
+                                                                    <p class="mb-0">8.5</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex pt-1">
+                                                                <input type="text"id="orderid" hidden />
+                                                                <input type="text" id="orderstatus" hidden />
+                                                                <input type="text" id="useremail" hidden />
+                                                                <button type="button" class="btn btn-primary flex-grow-1" onclick="UpdateOrderStatus('@item.EmpId','@item.Email');">Assign Now</button>
+                                                            </div>
+                                                        </div> 
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

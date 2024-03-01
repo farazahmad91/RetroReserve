@@ -51,9 +51,9 @@
                             <label>Valid Upto</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-phone" style="font-size:23px;"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt" style="font-size:23px;"></i></span>
                                 </div>
-                                <input type="datetime" asp-for="ValidUpto" class="form-control" />
+                                <input type="date" asp-for="ValidUpto" class="form-control" />
                                 <input type="hidden" asp-for="CoupanId" class="form-control" />
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                 <div class="form-group">
                     <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
                     <button type="button" id="btninsertupdate" onclick="SaveOrUpdateCoupan();" class="btn btn-primary">Save</button>
-                    <a href="/BookingTable/Index" class="btn btn-info float-right" style="text-align:right;">Back To List</a>
+                    <a href="/Coupan" class="btn btn-info float-right" style="text-align:right;">Back To List</a>
                 </div>
             </div>
         </div>
