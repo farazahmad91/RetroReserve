@@ -19,8 +19,12 @@ namespace RetroReserve.Controllers
         [Route("/Dashboard")]
         public async Task<IActionResult> Admin()
         {
-            var i = await apirequest.GetData<List<Status>>("Status/GetStatusList");
-            return View(i);
+            if (User.IsInRole("Admin"))
+            {
+                var i = await apirequest.GetData<List<Status>>("Status/GetStatusList");
+                return View(i);
+            }
+            return BadRequest("Access Denied");
         }
         public async Task<IActionResult> Status()
         {
