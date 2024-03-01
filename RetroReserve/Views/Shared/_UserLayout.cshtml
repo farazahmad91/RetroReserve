@@ -25,6 +25,11 @@
     <link href="~/Ucss/style.css" rel="stylesheet">
 </head>
 <body>
+    <div id="alert-container" style="
+    position: fixed;
+    top: 45px;
+    right: 4px;
+    z-index: 9000"></div>
     <!-- Spinner Start -->
     <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" role="status"></div>
@@ -197,6 +202,7 @@
             </div>
         </div>
     </div>
+ 
     <!-- Footer End -->
     <!-- Copyright Start -->
     <div class="container-fluid copyright bg-dark py-4">
@@ -208,6 +214,7 @@
             </div>
         </div>
     </div>
+
     <!-- Copyright End -->
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
@@ -218,8 +225,8 @@
     <script src="~/Ulib/easing/easing.min.js"></script>
     <script src="~/Ulib/waypoints/waypoints.min.js"></script>
     <script src="~/Ulib/lightbox/js/lightbox.min.js"></script>
-    <script src="~/js/common.js"></script>
     <script src="~/Ulib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/js/common.js"></script>
     <script src="~/js/cart.js"></script>
     <!-- Template Javascript -->
     <script src="~/Ujs/main.js"></script>

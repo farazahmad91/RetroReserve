@@ -24,11 +24,11 @@ namespace RetroReserve.Controllers
         }
 
         [Route("/Payment")]
-        public async Task<ActionResult> Payment()
+        public IActionResult Payment(double messageafterCoupan)
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            var i = await apirequest.GetData<List<Cart>>($"Cart/GetCartCheckOutPrice?id={email}");
-            return PartialView(i);
+            //var email = User.FindFirstValue(ClaimTypes.Email);
+            //var i = await apirequest.GetData<List<Cart>>($"Cart/GetCartCheckOutPrice?id={email}");
+            return PartialView(messageafterCoupan);
         }
 
     }

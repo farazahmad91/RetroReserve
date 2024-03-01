@@ -43,5 +43,12 @@ namespace API.Controllers
             var res = await _offersService.ChangeCoupanStatus(CoupanId);
             return Ok(res);
         }
+
+        [HttpGet(nameof(CheckCoupan) + "/{CoupanName}")]
+        public async Task<IActionResult> CheckCoupan(string CoupanName)
+        {
+            var res = await _offersService.CheckCoupan(CoupanName);
+            return Ok(res);
+        }
     }
 }
