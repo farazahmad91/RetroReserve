@@ -38,22 +38,22 @@
 
                                 foreach (var item in Model)
                                 {
-                                                                                            <tr>
-                                                                                                @{
+                                                                                                <tr>
+                                                                                                    @{
                                             var total = item.Quantity * item.SellingCost;
                                             var price = total;
                                             subtotal += price;
-                                                                                                }
-                                                                                                <th scope="row">
-                                                                                                    <div class="d-flex align-items-center mt-2">
-                                                                                                        <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                                                                                    </div>
-                                                                                                </th>
-                                                                                                <td class="py-5">@item.DishName</td>
-                                                                                                <td class="py-5">@item.SellingCost</td>
-                                                                                                <td class="py-5">@item.Quantity</td>
-                                                                                                <td class="py-5">@total</td>
-                                                                                            </tr>
+                                                                                                    }
+                                                                                                    <th scope="row">
+                                                                                                        <div class="d-flex align-items-center mt-2">
+                                                                                                            <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                                                                        </div>
+                                                                                                    </th>
+                                                                                                    <td class="py-5">@item.DishName</td>
+                                                                                                    <td class="py-5">@item.SellingCost</td>
+                                                                                                    <td class="py-5">@item.Quantity</td>
+                                                                                                    <td class="py-5">@total</td>
+                                                                                                </tr>
                                 }
                             }
 
@@ -118,12 +118,12 @@
                                     if (subtotal >= 500)
                                     {
                                         grandtotal = subtotal + 0;
-                                                                                                <p class="mb-0">Free</p>
+                                                                                                    <p class="mb-0">Free</p>
                                     }
                                     else
                                     {
                                         grandtotal = subtotal + 50;
-                                                                                                <p class="mb-0">50</p>
+                                                                                                    <p class="mb-0">50</p>
                                     }
                                 }
                             </div>
@@ -172,6 +172,7 @@
 
 <script>
     var messageafterCoupan = 0;
+    var totalammount = $("#grandtotal").text();
     
     function handleCheckboxChange(checkboxId, otherCheckboxId) {
         var checkbox = document.getElementById(checkboxId);
@@ -199,7 +200,7 @@
 
     UserAddress();
     function Payment() {
-        $.post("/Payment", { messageafterCoupan: messageafterCoupan })
+        $.post("/Payment", { messageafterCoupan: messageafterCoupan ,totalAmount:totalammount})
             .done(function (res) {
                 $("#PaymentPV").html(res);
                 $("#PaymentModal").modal("show");
@@ -245,8 +246,9 @@
                 var discountPercentage = result.result;
                 var message = `Coupon Applied and ${discountPercentage}% discount applied.`;
                 $("#couponMessage").text(message).addClass("text-success");
-                var totalammount = $("#grandtotal").text();
+                
                  messageafterCoupan = calculatePercentage(discountPercentage, totalammount);
+                console.log(messageafterCoupan);
                 var textmessageafterCoupan = `Coupon Applied Amount ₹${messageafterCoupan} You'll Pay .`
                 $("#grandtotalAfterCoupanApplied").text(textmessageafterCoupan).addClass("text-success")
             } else {
