@@ -59,18 +59,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="text" asp-for="Description" class="form-control" placeholder="Enter Description" />
                             </div>
-                            <input type="text" asp-for="Description" class="form-control" placeholder="Enter Description" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Discount Percentage</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
+                                </div>
+                                <input type="number" asp-for="DiscountPercentage" class="form-control" placeholder="Enter DiscountPercentage" />
+                            </div>
                         </div>
                     </div>
                 </div>
-
+           
 
                 <br />
                 <div class="form-group">

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Entities.Coupan>
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="MyTableBookModal" role="dialog" data-backdrop="static" data-keyboard="false" style="opacity:1;">
+            <div class="modal-dialog modal-lg">
+                <!-- Changed modal-dialog class to modal-lg -->
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-body">
+
+                        <div class="card mb-12">
+                            <div class="card-body">
+                                <h3>Available Coupans</h3>
+                                <div class="content-wrapper">
+                                    <!-- Content Header (Page header) -->
+                                    <section class="content-header">
+                                        <div class="container-fluid">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                </div>
+                                            </div>
+                                        </div><!-- /.container-fluid -->
+                                    </section>
+                                    <div>
+                                        <div class="card" id="snackbar"></div>
+                                        <div class="card" id="snackbar2"></div>
+                                        <div class="card" id="snackbar3"></div>
+                                    </div>
+                                    <div class="container">
+
+                                        <div class="card">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped" id="tbl">
+                                                    <thead style="background-color:#81c408 !important">
+                                                        <tr class="text-nowrap" style="color:#fff !important">
+                                                            <th>Sr No:</th>
+                                                            <th>
+                                                                CoupanName
+                                                            </th>
+                                                            <th>
+                                                                Description
+                                                            </th>
+                                                            <th>
+                                                                ValidUpto
+                                                            </th>
+                                                            <th>Copy</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model == null || !Model.Any())
+                                                        {
+                                                            <tr style="text-align: center;">
+                                                                <td colspan="12" style="text-align: center;">
+                                                                    <label><strong>Reacord Not Found</strong></label>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            var count = 0;
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                if (item.IsActive == 1)
+                                                                {
+                                                                    var i = 0;
+                                                                    count++;
+                                                                    <tr class="text-nowrap">
+
+                                                                        <td>
+                                                                            @count
+                                                                        </td>
+                                                                        <td id="cpn_@item.CoupanId">
+                                                                            @Html.DisplayFor(modelItem => item.CoupanName)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Description)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.ValidUpto)
+                                                                        </td>
+                                                                        <td>
+
+                                                                            <button type="button" onclick="withJquery(@item.CoupanId);" style="font-size: 0;"><i class="fas fa-copy" style="font-size:16px"></i></button>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+
+                                                            }
+
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function withJquery(Id) {
+        var temp = $("<input>");
+        $("body").append(temp);
+        var textToCopy = $('#cpn_' + Id).text().trim();
+        temp.val(textToCopy).select();
+        document.execCommand("copy");
+        temp.remove();
+        QAlert(1, 'COPIED..');
+    }
+
+</script>                              

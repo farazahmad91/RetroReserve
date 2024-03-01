@@ -8,5 +8,6 @@ namespace API.Repository.Interface
         public Task<Data.Response> SaveOrUpdateCoupan(Coupan coupan);
         public Task<Coupan> AddOrEditCoupan(int Id);
         public Task<Data.Response> ChangeCoupanStatus(int CoupanId);
+        public Task<Data.Response<string>> CheckCoupan(string CoupanName);
     }
 }

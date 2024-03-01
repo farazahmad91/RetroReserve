@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Entities.DynamicCartValue>
+﻿@model double 
 @{
     decimal shipingcharge = 0;
     decimal grandtotal = 0;
@@ -20,29 +20,7 @@
 
                     <div class="modal-body">
 
-                        @{
-                            decimal total = 0;
-
-                            foreach (var item in Model)
-                            {
-                                var price = item.SellingCost;
-                                total += price;
-                            }
-
-                        }
-                        @{
-
-                            shipingcharge = 0;
-
-                            if (total >= 500)
-                            {
-                                grandtotal = total + 0;
-                            }
-                            else
-                            {
-                                grandtotal = total + 50;
-                            }
-                        }
+                       
                         <div id="paytm-checkoutjs" class="ptm-own-element">
                             <div id="paytm-app" class="paytm-wrapper ptm-pos-r  " data-id="paytm-checkout-app-1707197692978">
                                 <div id="checkout-home" class=" ptm-main 0 false">
@@ -58,7 +36,7 @@
                                                     <div class="ptm-select-txt ptm-select-sticky xs-ptm-hidden ptm-body-bg">
                                                         <div class="ptm-pd-8">
                                                             <div class="ptm-paytxtlbl ptm-body-color">Select an option to pay</div><span class="ptm-select-amount ptm-pos-r ptm-body-color">
-                                                                <div class="rupee-symbol ptm-body-color">₹</div>@grandtotal
+                                                                <div class="rupee-symbol ptm-body-color">₹</div>@Model
                                                             </span>
                                                         </div>
                                                     </div>
@@ -109,7 +87,7 @@
                                                             option to pay
                                                         </span>
                                                     </div><span class="ptm-select-amount ptm-pos-r ptm-body-color">
-                                                        <div class="rupee-symbol ptm-body-color">₹</div>@grandtotal
+                                                        <div class="rupee-symbol ptm-body-color">₹</div>@Model
                                                     </span>
                                                 </div>
                                             </div>

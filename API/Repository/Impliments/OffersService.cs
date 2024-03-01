@@ -1,4 +1,5 @@
-﻿using API.Repository.Interface;
+﻿using API.Data;
+using API.Repository.Interface;
 using Entities;
 
 namespace API.Repository.Impliments
@@ -41,6 +42,7 @@ namespace API.Repository.Impliments
                     coupan.CoupanName,
                     coupan.Description,
                     coupan.ValidUpto,
+                    coupan.DiscountPercentage,
                     coupan.IsActive,
                 });
                 return res;
@@ -89,6 +91,29 @@ namespace API.Repository.Impliments
             catch (Exception ex)
             {
                 res.ResponseText=ex.Message;
+                return res;
+                throw;
+            }
+        }
+
+        public async Task<Data.Response<string>> CheckCoupan(string CoupanName)
+        {
+            var res = new Data.Response<string>()
+            {
+                StatusCode = ResponseStatus.FAILED,
+                ResponseText = "Invalid Coupan Or Coupan Expires"
+            };
+            try
+            {
+                res = await _service.GetAsync<Data.Response<string>>("Proc_CheckCoupon", new
+                {
+                    _CouponName = CoupanName,
+                });
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ResponseText = ex.Message;
                 return res;
                 throw;
             }

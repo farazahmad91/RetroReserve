@@ -18,6 +18,7 @@ namespace Entities
         public string Description { get; set; }
 
         public string ValidUpto { get; set; }
+        public int DiscountPercentage { get; set; }
 
         public int IsActive { get; set; } = 1;
     }

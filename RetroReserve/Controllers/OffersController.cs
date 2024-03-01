@@ -38,7 +38,6 @@ namespace RetroReserve.Controllers
         {
             return View();
         }
-
         public async Task<IActionResult> CoupanList()
         {
             var list = await apirequest.GetData<IEnumerable<Coupan>>("Offers/CoupanList");
@@ -50,7 +49,6 @@ namespace RetroReserve.Controllers
             res = await apirequest.GetData<API.Data.Response>($"Offers/ChangeCoupanStatus/{CoupanId}");
             return Json(res);
         }
-
         public async Task<IActionResult> AddOrEditCoupan(int CoupanId)
         {
             var res = await apirequest.GetData<Coupan>($"Offers/AddOrEditCoupan/{CoupanId}");
@@ -60,6 +58,16 @@ namespace RetroReserve.Controllers
         {
             var i = await apirequest.Post("Offers/SaveOrUpdateCoupan", Coupand);
             var res = JsonConvert.DeserializeObject<API.Data.Response>(i);
+            return Json(res);
+        }
+        public async Task<IActionResult> CoupanListPv()
+        {
+            var list = await apirequest.GetData<IEnumerable<Coupan>>("Offers/CoupanList");
+            return PartialView(list);
+        }
+        public async Task<IActionResult> CheckCoupan(string CoupanName)
+        {
+            var res = await apirequest.GetData<API.Data.Response<string>>($"Offers/CheckCoupan/{CoupanName}");
             return Json(res);
         }
     }

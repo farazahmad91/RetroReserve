@@ -6,7 +6,7 @@
     ViewData["Title"] = "Checkout";
     Layout = "_UserLayout";
 }
-
+<div id="PaymentPV"></div>
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Checkout</h1>
@@ -35,28 +35,28 @@
                         </thead>
                         <tbody>
                             @{
-                                
+
                                 foreach (var item in Model)
                                 {
-                                                            <tr>
-                                                                @{
+                                                                                            <tr>
+                                                                                                @{
                                             var total = item.Quantity * item.SellingCost;
                                             var price = total;
                                             subtotal += price;
-                                                                }
-                                                                <th scope="row">
-                                                                    <div class="d-flex align-items-center mt-2">
-                                                                        <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                                                    </div>
-                                                                </th>
-                                                                <td class="py-5">@item.DishName</td>
-                                                                <td class="py-5">@item.SellingCost</td>
-                                                                <td class="py-5">@item.Quantity</td>
-                                                                <td class="py-5">@total</td>
-                                                            </tr>
+                                                                                                }
+                                                                                                <th scope="row">
+                                                                                                    <div class="d-flex align-items-center mt-2">
+                                                                                                        <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                                                                    </div>
+                                                                                                </th>
+                                                                                                <td class="py-5">@item.DishName</td>
+                                                                                                <td class="py-5">@item.SellingCost</td>
+                                                                                                <td class="py-5">@item.Quantity</td>
+                                                                                                <td class="py-5">@total</td>
+                                                                                            </tr>
                                 }
                             }
-                           
+
                             <tr>
                                 <th scope="row">
                                 </th>
@@ -74,13 +74,19 @@
                         </tbody>
                     </table>
                 </div>
-                
-                </div>
-            <div class="mt-5">
-                <input type="text" class="border-0 border-bottom rounded py-3" placeholder="Coupon Code">
-                <button class="btn border-secondary rounded-pill text-primary" type="button">Apply Coupon</button>
+
             </div>
-    </div>
+            <div class="mt-5">
+                <input type="text" class="border-0 border-bottom rounded py-3" placeholder="Coupon Code" id="coupancode">
+                <button class="btn border-secondary rounded-pill text-primary" type="button" onclick="checkcoupan()">Apply Coupon</button>
+                <button class="btn border-secondary rounded-pill text-primary" type="button" style="margin-left: 50%" onclick="coupanpv()">
+                    Show Available
+                    Coupon
+                </button>
+            </div>
+           
+        </div>
+        <span id="couponMessage"></span>
         <div class="row">
             <div class="col-md-5">
                 <br />
@@ -112,12 +118,12 @@
                                     if (subtotal >= 500)
                                     {
                                         grandtotal = subtotal + 0;
-                                                                <p class="mb-0">Free</p>
+                                                                                                <p class="mb-0">Free</p>
                                     }
                                     else
                                     {
                                         grandtotal = subtotal + 50;
-                                                                <p class="mb-0">50</p>
+                                                                                                <p class="mb-0">50</p>
                                     }
                                 }
                             </div>
@@ -142,7 +148,8 @@
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Grand Total</h5>
-                        <p class="mb-0 pe-4">@grandtotal</p>
+                        <p class="mb-0 pe-4" id="grandtotal">@grandtotal</p>
+                        <p class="mb-0 pe-4" id="grandtotalAfterCoupanApplied"></p>
                     </div>
                     <div style="text-align:center;">
                         <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" href="#" id="btncash">Proceed to checkout</a>
@@ -154,13 +161,18 @@
             </div>
         </div>
     </div>
-    <div id="PaymentPV"></div>
+    
+    <div id="CoupanPV"></div>
 </div>
+
 <!-- Checkout Page End -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
+    var messageafterCoupan = 0;
+    
     function handleCheckboxChange(checkboxId, otherCheckboxId) {
         var checkbox = document.getElementById(checkboxId);
         var otherCheckbox = document.getElementById(otherCheckboxId);
@@ -187,7 +199,7 @@
 
     UserAddress();
     function Payment() {
-        $.post("/Payment")
+        $.post("/Payment", { messageafterCoupan: messageafterCoupan })
             .done(function (res) {
                 $("#PaymentPV").html(res);
                 $("#PaymentModal").modal("show");
@@ -212,6 +224,43 @@
         $("#btnonline").show();
     }
 
-   
+    var coupanpv = () => {
+        $.post("/Offers/CoupanListPv")
+            .done((result) => {
+                $("#CoupanPV").html(result);
+                $("#MyTableBookModal").modal("show");
+            })
+            .fail((error) => {
+                console.error("Error fetching coupon list:", error);
+                // Handle the error, e.g., display an error message to the user
+            });
+    }
+
+
+    var checkcoupan = () => {
+
+        var CoupanName = $("#coupancode").val();
+        $.post("/Offers/CheckCoupan", { CoupanName: CoupanName }).done((result) => {
+            if (result.statusCode === 1) {
+                var discountPercentage = result.result;
+                var message = `Coupon Applied and ${discountPercentage}% discount applied.`;
+                $("#couponMessage").text(message).addClass("text-success");
+                var totalammount = $("#grandtotal").text();
+                 messageafterCoupan = calculatePercentage(discountPercentage, totalammount);
+                var textmessageafterCoupan = `Coupon Applied Amount ₹${messageafterCoupan} You'll Pay .`
+                $("#grandtotalAfterCoupanApplied").text(textmessageafterCoupan).addClass("text-success")
+            } else {
+                var errorMessage = result.responseText || "Invalid coupon code.";
+                $("#couponMessage").text(errorMessage).addClass("text-danger");
+            }
+        });
+    };
+        var calculatePercentage = (discountPercentage, totalammount) => {
+        debugger;
+        var ammountAfterCoupanApplied = (discountPercentage / 100) * totalammount;
+        var ammountpay = totalammount - ammountAfterCoupanApplied;
+        var messageafterCoupan =ammountpay;
+        return messageafterCoupan;
+    }
 
 </script>
