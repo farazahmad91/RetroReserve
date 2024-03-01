@@ -17,11 +17,10 @@ namespace RetroReserve.Controllers
         }
         [Authorize]
         [Route("/Cart")]
-        public async Task<ActionResult> Cart(string id)
+        public async Task<ActionResult> Cart()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
-            id = email;
-            var i = await apirequest.GetData<List<Cart>>($"Cart/GetCartValueById?id={id}");
+            var i = await apirequest.GetData<List<Cart>>($"Cart/GetCartValueById?id={email}");
             return View(i);
         }
 

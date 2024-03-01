@@ -1,12 +1,14 @@
 ﻿@model IEnumerable<Entities.OrdersReport>
 
 @{
+    string statustext;
+    string badge;
     var count = 0;
     string hide;
     ViewData["Title"] = "NewOrder";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -26,199 +28,204 @@
     </section>
     <div class="container">
         <div class="card">
-        <div class="table-responsive">
-        <table class="table table-striped">
-            <thead style="background-color:#17a2b8!important;">
-                <tr>
-                    <th>Sr No:</th>
-                    <th>
-                        User Id
-                    </th>
-                    <th>
-                        Dish Name
-                    </th>
-                    <th>
-                        Dish Image
-                    </th>
-                    <th>
-                       Quantity
-                    </th>
-                    <th>
-                        Order Date
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model == null || !Model.Any())
+            <div class="table-responsive">
+                <table class="table table-striped" id="DOrder">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>Sr No:</th>
+                            <th>
+                                Dish Name
+                            </th>
+                            <th>
+                                Dish Image
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr style="text-align: center;">
+                                <td colspan="12" style="text-align: center;">
+                                    <label><strong>Reacord Not Found</strong></label>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
                             {
-                                <tr style="text-align: center;">
-                                    <td colspan="12" style="text-align: center;">
-                                        <label><strong>Reacord Not Found</strong></label>
-                                    </td>
-                                </tr>
-                            }
-                            else
-                            {
-                @foreach (var item in Model)
-                {
 
-                    count++;
-                    <tr>
-                           <input type="text" hidden id="hdn_@item.OrderID"/>
-                          <td>
-                           @count
-                        </td>
-                        <td>
-                         
-                            @Html.DisplayFor(modelItem => item.UserId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DishName)
-                        </td>
-                        <td>
-                            <img class="img-fluid rounded-circle" src="@item.DishImage" alt="Dishes" style="width:110px;height:70px;">
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DishQuantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OrderDate)
-                        </td>
-                        <td>
+                                count++;
+                                <tr>
+                                    <input type="text" hidden id="hdn_@item.OrderID" />
+                                    <td>
+                                        @count
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DishName)
+                                    </td>
+                                    <td>
+                                        <img class="img-fluid rounded-circle" src="@item.DishImage" alt="Dishes" style="width:110px;height:70px;">
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DishQuantity)
+                                    </td>
+                                    <td>
+
+                                        @{
+                                            statustext = "";
+                                            badge = "";
+                                            if (@item.Status == 1)
+                                            {
+
+                                                badge = "badge badge-warning";
+                                                statustext = "Prepared";
+
+                                            }
+                                            else if (@item.Status == 2)
+                                            {
+
+                                                badge = "badge badge-info";
+                                                statustext = "Shipped";
+                                            }
+                                            else if (@item.Status == 3)
+                                            {
+
+                                                badge = "badge badge-danger";
+                                                statustext = "Cancelled";
+                                            }
+                                        }
+                                        <label class="@badge">@statustext</label>
+                                    </td>
+                                    <td>
                                         @{
                                             hide = "";
                                             string colorStyle = "";
                                             string classbadge = "";
-                                            if (@item.Status == 0)
+                                            if (@item.Status == 1)
                                             {
 
                                                 classbadge = "badge badge-warning";
                                             }
-                                            else if (@item.Status == 1)
-                                            {
-                                                classbadge = "badge badge-primary";
-                                }
-                                 else if (@item.Status == 3)
-                                {
-                                  
-                                    classbadge = "badge badge-info";
-                                }
-                                  else if (@item.Status == 4)
-                                {
-                                  
-                                    classbadge = "badge badge-danger";
-                                }
-                                  else
-                                {
-                                    
-                                      classbadge = "badge badge-primary";
-                                }
-                            }
-                          <input type="datetime-local" hidden id="deliverdtime" />
-                           <select id="payment" class="@classbadge" style="colorStyle" asp-for="@item.Status" onchange="UpdateOrderStatus(@item.OrderID,this.value);">
-                                            @if (@item.Status == 0)
-                                            {
-                                                <option value="0" style="display: none;">Disapprove</option>
-                                                <option value="1">Approved</option>
-                                                <option value="2" style="display: none;">Prepared</option>
-                                                <option value="3" style="display: none;">Wait</option>
-                                                <option value="4" style="display: none;">Cancelled</option>
-                                                <option value="5" style="display: none;">Delivered</option>
-                                            }
-                                            else if (@item.Status == 1)
-                                            {
-                                                <option value="0" style="display: none;">Disapprove</option>
-                                                <option value="1" style="display: none;">Approved</option>
-                                                <option value="2">Prepared</option>
-                                                <option value="3" style="display: none;">Wait</option>
-                                                <option value="4" style="display: none;">Cancelled</option>
-                                                <option value="5" style="display: none;">Delivered</option>
-                                            }
                                             else if (@item.Status == 2)
                                             {
-                                                <option value="0" style="display: none;">Disapprove</option>
-                                                <option value="1" style="display: none;">Approved</option>
-                                                <option value="2" style="display: none;">Prepared</option>
-                                                <option value="3">Wait</option>
-                                                <option value="4">Cancelled</option>
-                                                <option value="5">Delivered</option>
+                                                classbadge = "badge badge-info";
                                             }
                                             else if (@item.Status == 3)
                                             {
-                                                <option value="0" style="display: none;">Disapprove</option>
-                                                <option value="1" style="display: none;">Approved</option>
-                                                <option value="2" style="display: none;">Prepared</option>
-                                                <option value="3" style="display: none;">Wait</option>
-                                                <option value="4">Cancelled</option>
-                                                <option value="5">Delivered</option>
+
+                                                classbadge = "badge badge-danger";
                                             }
-                                            else if (@item.Status == 4)
-                                            {
-                                                <option value="0" style="display: none;">Disapprove</option>
-                                                <option value="1" style="display: none;">Approved</option>
-                                                <option value="2" style="display: none;">Prepared</option>
-                                                <option value="3" style="display: none;">Wait</option>
-                                                <option value="4">Cancelled</option>
-                                                <option value="5" style="display: none;">Delivered</option>
+
+                                        }
+
+                                        <input type="datetime-local" hidden id="deliverdtime" />
+                                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                        <select id="or_Status" class="@classbadge" style="colorStyle" asp-for="@item.Status" onchange="DboyDetails('@item.OrderID', this.value,'@item.UserId');">
+                                            @{
+                                                if (@item.Status == 0 || @item.Status == 1)
+                                                {
+                                                                <option value="1">Processed</option>
+                                                                <option value="2">En Route</option>
+                                                }
+                                                else if (@item.Status == 2)
+                                                {
+                                                                <option value="2">En Route</option>
+                                                                <option value="3">Cancelled</option>
+                                                                <option value="4">Delivered</option>
+                                                }
+                                                else if (@item.Status == 3)
+                                                {
+                                                                <option value="3" disabled style="color:red;">Cancelled</option>
+                                                }
                                             }
-                           </select>
-                        </td>
-                    </tr>
-                }}
-            </tbody>
-        </table>
-          </div>
-          </div>
+                                        </select>
+                                    </td>
+                                </tr>
+                            }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="ActiveDBoyPV"></div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- DataTables CSS and JS -->
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
 <script>
-      function formatDate(date) {
-      const options = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-      return new Intl.DateTimeFormat('en-US', options).format(date);
+    jQuery(document).ready(function ($) {
+        $("#DOrder").DataTable();
+    });
+    function formatDate(date) {
+        const options = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Intl.DateTimeFormat('en-US', options).format(date);
     }
 
-    // Get the current date and time
+
     const currentDate = new Date();
 
-    // Format the current date and time
     const formattedDate = formatDate(currentDate);
 
-    // Set the value of the input element to the formatted date and time
-    document.getElementById("deliverdtime").value = formattedDate; 
-    
-    
-    // Update the hidden field with the final count
-    document.getElementById("itemCountBadge").value = @count;
+    document.getElementById("deliverdtime").value = formattedDate;
 
-    // Display the count wherever needed
-    document.getElementById("itemCountBadge").innerText = document.getElementById("itemCountBadge").value;
+    function UpdateOrderStatus(empid, email) {
+        debugger;
+        const currentDate = new Date();
+        const formattedDate = formatDate(currentDate);
+        let data = {
+            orderId: $("#orderid").val(),
+            Status: $("#orderstatus").val(),
+            UserId: $("#useremail").val(),
+            Email:email,
+            EmpId:empid,
+            DeliverDate: Status == 4 ? formattedDate : '',
+        };
 
+        $.post('/Order/UpdateOrderStatus', data)
+            .done(function (res) {
+                Hide_Loader();
+                window.location.href = "/NewOrder";
+            })
+            .fail(function () {
+                // Handle the failure case
+                alert("Failed to update order status");
+            });
+    }
 
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
 
- function UpdateOrderStatus(OrderId,selectedValue) {
-       var tableno = $("#tableno").val();
-     var email = $("#Email").val();
-       let data = {
-           orderId : OrderId,
-        Status: selectedValue, 
-        DeliverDate:formattedDate,
-        Email:email,
-        TableId:tableno
-    };
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
 
-    $.post('/Order/UpdateOrderStatus', data)
-        .done(function(res) {
-            window.location.href = "/NewOrder";
-        })
-        .fail(function() {
-            // Handle the failure case
-            alert("Failed to add Dish");
-        });
-    
-}
-
+    function DboyDetails(Id,Status,email) {
+        debugger;
+        $.post("/Employee/AssignDboy")
+            .done(function (res) {
+                $("#ActiveDBoyPV").html(res);
+                $("#AssignOrderModal").modal("show");
+                $("#orderid").val(Id);
+                $("#useremail").val(email);
+                $("#orderstatus").val(Status);
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
 </script>
 

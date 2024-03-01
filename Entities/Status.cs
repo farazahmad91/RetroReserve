@@ -18,5 +18,6 @@ namespace Entities
         public string NewMessageDate { get; set; }
 
     }
+ 
 
  }

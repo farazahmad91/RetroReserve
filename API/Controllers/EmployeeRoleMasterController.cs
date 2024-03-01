@@ -45,5 +45,12 @@ namespace API.Controllers
             return Ok(i);
         }
 
+        [HttpPost(nameof(UpdateEmpRoleMasterStatus))]
+        public async Task<IActionResult> UpdateEmpRoleMasterStatus(EmployeeRoleMaster employeeRoleMaster)
+        {
+            var i = await employeeRoleMasterService.UpdateEmpRoleMasterStatus(employeeRoleMaster);
+            return Ok(i);
+
+        }
     }
 }

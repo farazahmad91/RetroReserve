@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Entities.Foodkart>
 
 @{
-  var count = 0;
+    var count = 0;
     ViewData["Title"] = "AllItemList";
     Layout = null;
 }
@@ -29,113 +29,112 @@
         <div class="card" id="snackbar3"></div>
     </div>
     <div class="container">
-    <button type="button" class="btn btn-primary" onclick="EditMenu();">Create New Menu</button>
+        <button type="button" class="btn btn-primary" onclick="EditMenu();">Create New Menu</button>
         <button type="button" class="btn btn-info float-right" onclick="TeaKart();"> TeaKart</button>
-    <br />  <br />
+        <br />  <br />
         <div class="card">
-        <div class="table-responsive">
-        <table class="table table-striped">
-            <thead style="background-color:#17a2b8!important;">
-            <tr>
-                <th>Sr No:</th>
-                <th>
-               Name
-                </th>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>Sr No:</th>
+                            <th>
+                                Name
+                            </th>
                             <th>
                                 Category
                             </th>
-                <th>
-                   Image
-                </th>
-                <th>
-                  AddDate 
-                </th>
-                <th>
-                  Status
-                </th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-             @if (Model == null || !Model.Any())
+                            <th>
+                                Image
+                            </th>
+                            <th>
+                                AddDate
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="12" style="text-align: center;">
+                                    <label><strong>Reacord Not Found</strong></label>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
                             {
+                                count++;
                                 <tr>
-                                    <td colspan="12" style="text-align: center;">
-                                        <label><strong>Reacord Not Found</strong></label>
+                                    <td>@count</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DishName)
                                     </td>
-                                </tr>
-                            }
-                            else
-                            {
-            @foreach (var item in Model)
-            {
-             count++;
-                    <tr>
-                        <td>@count</td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DishName)
-                </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DishCategoryName)
                                     </td>
-                <td>
-                                    <a class="fancybox" href="@item.DishName" data-fancybox data-caption="@item.DishName">
-                                        <img class="img-fluid rounded-circle" src="@item.DishImage" onerror="this.onerror=null;this.src='/images/noimage.jpg'" alt="No Image Found" style="width:85px;height:74px;">
-                                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DishAddDate)
-                </td>
-               <td>
-    @{
-        var ckb = @item.DishStatus == 0 ? "unchecked" : "checked";
-    }
+                                    <td>
+                                        <a class="fancybox" href="@item.DishName" data-fancybox data-caption="@item.DishName">
+                                            <img class="img-fluid rounded-circle" src="@item.DishImage" onerror="this.onerror=null;this.src='/images/noimage.jpg'" alt="No Image Found" style="width:85px;height:74px;">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DishAddDate)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var ckb = @item.DishStatus == 0 ? "unchecked" : "checked";
+                                        }
 
-    <div class="col-md-12">
-        <div class="form-group">
-            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.DishId" onclick="UpdateFoodKartStatus(@item.DishId);" @ckb>
-                <label class="custom-control-label" for="customSwitch3_@item.DishId">Available</label>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                    <input type="checkbox" class="custom-control-input" id="customSwitch3_@item.DishId" onclick="UpdateFoodKartStatus(@item.DishId);" @ckb>
+                                                    <label class="custom-control-label" for="customSwitch3_@item.DishId">Available</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="AddVarient(@item.DishId)"><span class="fa fa-plus" style="color:#007bff;"></span> Add Varient</a>
+                                                <a class="dropdown-item" onclick="EditFoodKart(@item.DishId)"><span class="fas fa-edit" style="color: Blue"></span> Edit Menu</a>
+
+                                                <a class="dropdown-item" href="/VarientDetails"><i class="fas fa-info-circle" style="color: darkgreen"></i> V Details</a>
+                                                <a class="dropdown-item" href="@Url.Action("Delete", new { id=item.DishId })" onclick="deleteSubjectdata('@item.DishId');"><i class="fas fa-trash-alt" style="color: red"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</td>
-
-               <td>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Actions
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" onclick="AddVarient(@item.DishId)"><span class="fa fa-plus" style="color:#007bff;"></span> Add Varient</a>
-            <a class="dropdown-item" onclick="EditFoodKart(@item.DishId)"><span class="fas fa-edit" style="color: Blue"></span> Edit Menu</a>
-
-                                                <a class="dropdown-item" href="/VarientDetails"><i class="fas fa-info-circle" style="color: darkgreen"></i> V Details</a>
-            <a class="dropdown-item" href="@Url.Action("Delete", new { id=item.DishId })" onclick="deleteSubjectdata('@item.DishId');"><i class="fas fa-trash-alt" style="color: red"></i> Delete</a>
-        </div>
-    </div>
-</td>
-
-            </tr>
-            }}
-        </tbody>
-    </table>
-      </div>
-    </div>
-    </div>
-    </div>
+</div>
 <script>
-function EditFoodKart(DishId) {
-                let param = {
-         DishId: DishId,
-     };
-            $.post("/Menu/EditMenu",param).done(function (res) {
-                $("#PartialView").html(res);
-            }).fail(function () {
-                alert("errror");
-            })
-}
-
+    function EditFoodKart(DishId) {
+        let param = {
+            DishId: DishId,
+        };
+        $.post("/Menu/EditMenu", param).done(function (res) {
+            $("#PartialView").html(res);
+        }).fail(function () {
+            alert("errror");
+        })
+    }
 
     function EditVarient(DishId) {
         let param = {
@@ -157,7 +156,7 @@ function EditFoodKart(DishId) {
             alert("errror");
         })
     }
-    
+
     function UpdateFoodKartStatus(DishId) {
         var id = $("#customSwitch3_" + DishId).prop("checked");
         if (id == true) {

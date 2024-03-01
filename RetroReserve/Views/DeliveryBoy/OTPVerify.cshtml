@@ -1,0 +1,169 @@
+﻿@{
+    ViewData["Title"] = "OTPVerify";
+    Layout = null;
+}
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="OTPVerifyModal" role="dialog" data-backdrop="static" data-keyboard="false" style="opacity: 1;">
+            <div class="modal-dialog">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container mt-5">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="card" style="padding-top: 10px;">
+                                        <div class="text-center o-hide">OTP Verification</div>
+                                        <div class="text-center c-hide" style="display: none;">Reason for cancellation</div>
+                                        <div class="text-center d-hide" style="display: none; color:darkgreen;">OTP is valid please click on deliverd</div>
+                                        <div class="card-body">
+                                            <div class="form-group" style="padding-bottom: 0px;">
+                                                <input type="text" class="form-control" id="V_otp" name="otp" placeholder="Enter OTP" required>
+                                                <input type="text" class="form-control" id="txtcancelled" style="display: none;" placeholder="Reason for cancellation" name="otp" required>
+                                            </div>
+                                            <input type="text" id="orderid" hidden>
+                                            <input type="text" id="empid" hidden>
+                                            <input type="text" id="selectedvalue" hidden>
+                                            <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                            <input type="button" class="btn btn-success w-100" id="btnverify" onclick="OTPVerify();" value="Verify OTP">
+                                            <input type="button" class="btn btn-primary w-100" id="btndelivered" onclick="UpdateOrderStatusByDBoy();" style="display: none;" value="Delivered">
+                                            <input type="button" class="btn btn-danger w-100" id="btncancelled" onclick="UpdateOrderStatusByDBoy();" style="display: none;" value="Cancelled">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function OTPVerify() {
+        debugger;
+        if (validateotp()) {
+            Show_Loader();
+            setTimeout(function () {
+                var data = {
+                    OrderId: $("#orderid").val(),
+                    OTP: $("#V_otp").val(),
+                };
+                $.post('/DeliveryBoy/OTPVerification', data)
+                    .done(function (result) {
+                        Hide_Loader();
+                        setTimeout(function () {
+                            if (result && result.statusCode && result.responseText) {
+                                QAlert(result.statusCode, result.responseText);
+                                if (result.statusCode == 1) {
+                                    $("#btnverify").hide();
+                                    $(".o-hide").hide();
+                                    $(".d-hide").show();
+                                    $("#V_otp").hide();
+                                    $("#btndelivered").show();
+                                }
+                                $(".o-hide")
+                                    .html("Invalid OTP")
+                                    .addClass("text-danger")
+                                    .delay(400); 
+                                 
+
+                            } else {
+                                alert("Invalid result format");
+                            }
+                        }, 1000);
+                    })
+                    .fail(function () {
+                        Hide_Loader();
+                        alert("Failed to update order status");
+                    });
+            }, 1000);
+        }
+    }
+
+
+    function onload() {
+        debugger;
+        var i = $("#selectedvalue").val();
+        if (i == 5) {
+            $(".o-hide").hide();
+            $(".c-hide").show();
+            $("#btnverify").hide();
+            $("#btndelivered").hide();
+            $("#btncancelled").show();
+            $("#V_otp").hide();
+            $("#txtcancelled").show();
+        }
+    }
+
+
+
+
+    function formatDate(date) {
+        const options = { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Intl.DateTimeFormat('en-US', options).format(date);
+    }
+
+    const currentDate = new Date();
+    const formattedDate = formatDate(currentDate);
+    currentDate = formattedDate;
+
+    function UpdateOrderStatusByDBoy() {
+        debugger;
+        const currentDate = new Date();
+        const formattedDate = formatDate(currentDate);
+        var reason = $("#txtcancelled").val();
+        var status = $("#selectedvalue").val();
+        let data = {
+            OrderId: $("#orderid").val(),
+            Status: status,
+            EmpId: $("#empid").val(),
+            cancellation_Reason: status == 5 ? reason : '',
+            };
+        $.post('/Order/UpdateOrderStatusByDBoy', data)
+            .done(function (res) {
+                Hide_Loader();
+                window.location.href = "/DeliveryBoy/MyOrder";
+            })
+            .fail(function () {
+                alert("Failed to update order status");
+            });
+    }
+
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+
+    function validateotp() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#V_otp").val() === "") {
+            addError("Please OTP");
+        }
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            setTimeout(function () {
+                QAlert(-1, msg);
+            }, 1000);
+        }
+
+        return isvalidated;
+    }
+
+</script>

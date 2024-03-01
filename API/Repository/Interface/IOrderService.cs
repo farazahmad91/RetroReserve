@@ -10,9 +10,11 @@ namespace API.Repository.Interface
         public Orders GetOrderById(int id);
         public IEnumerable<OrdersReport> GetOrderList();
         public IEnumerable<OrdersReport> DeliverdOrderReport();
-        public  Task<int> UpdateOrderStatus(Orders orders);
+        public Task<Response> UpdateOrderStatus(DeliveredOrder deliveredOrder);
         public IEnumerable<OrdersReport> GetOrderInChart();
         public IEnumerable<OrdersReport> GetOrderInPieChart();
+        public Task<Response> UpdateOrderStatusByDBoy(DeliveredOrder deliveredOrder);
+        public Task<Data.Response> OTPVerify(Orders orders);
     }
    
 }
