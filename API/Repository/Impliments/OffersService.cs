@@ -17,7 +17,7 @@ namespace API.Repository.Impliments
         {
             try
             {
-                var list =  _service.GetAll<Coupan>("select * from tbl_Coupan");
+                var list = _service.GetAll<Coupan>("select * from tbl_Coupan");
                 return list;
             }
             catch (Exception ex)
@@ -75,8 +75,8 @@ namespace API.Repository.Impliments
         {
             var res = new Data.Response()
             {
-                 ResponseText="FAILED TO UPDATE STATUS",
-                 StatusCode = Data.ResponseStatus.FAILED,
+                ResponseText = "FAILED TO UPDATE STATUS",
+                StatusCode = Data.ResponseStatus.FAILED,
             };
             try
             {
@@ -90,7 +90,7 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText=ex.Message;
+                res.ResponseText = ex.Message;
                 return res;
                 throw;
             }
@@ -109,11 +109,39 @@ namespace API.Repository.Impliments
                 {
                     _CouponName = CoupanName,
                 });
+                if (res.Result == null)
+                {
+                    res.Result = "0";
+                }
                 return res;
             }
             catch (Exception ex)
             {
                 res.ResponseText = ex.Message;
+                return res;
+                throw;
+            }
+        }
+
+
+        public async Task<Data.Response> DeleteCoupan(int CoupanId)
+        {
+            var res = new Data.Response()
+            {
+                ResponseText = "Failed To Delete",
+                StatusCode = ResponseStatus.FAILED,
+            };
+            try
+            {
+                res = await _service.GetAsync<Data.Response>("Proc_DeleteCoupan", new
+                {
+                    _CoupanId = CoupanId,
+                });
+               return res;
+            }
+            catch (Exception ex)
+            {
+                res.ResponseText += ex.Message;
                 return res;
                 throw;
             }

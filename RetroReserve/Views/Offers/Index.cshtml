@@ -24,10 +24,9 @@
                 CoupanId: CoupanId,
                 IsActive: id,
             };
-            console.log(param);
             $.post("/Offers/ChangeCoupanStatus", param).done(function (result) {
                 debugger;
-                console.log(result);
+                
                 loadData();
                 QAlert(result.statusCode, result.responseText);
 
@@ -68,5 +67,13 @@
                 });
         };
 
+        var DeleteCoupan = (Id) => {
+            $.post("/Offers/DeleteCoupan", { CoupanId: Id }).done((result) => {
+                loadData();
+                setTimeout(function () {
+                    QAlert(result.statusCode, result.responseText);
+                }, 80);
+            })
+        }
     </script>
 }

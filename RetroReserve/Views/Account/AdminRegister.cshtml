@@ -96,7 +96,7 @@
         };
 
         const pass = generateRandomPassword();
-        console.log(pass);
+        
         Show_Loader();
         setTimeout(function () {
             if (validateUser()) {
@@ -109,7 +109,7 @@
                     ConfirmPassword: confirmPassword,
                 };
                 $.post("/Account/Register", param).done(function (res) {
-                    console.log(res);
+                    
                     Hide_Loader();
                     showinsertsuccess("Register Successful");
                 }).fail(function () {

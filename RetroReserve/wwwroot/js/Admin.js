@@ -13,7 +13,7 @@ Status();
 
 function NewMessage1() {
     $.get("/ContactUS/GetNewMessageNotification").done(function (res) {
-        console.log(res);
+        
 
         // Assuming you want to append the dropdown menu to a specific element, replace "#dropdownContainer" with the actual selector.
         var dropdownMenu = $('<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"></div>');

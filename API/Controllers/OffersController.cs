@@ -30,10 +30,10 @@ namespace API.Controllers
             return Ok(res); 
         }
 
-        [HttpPost(nameof(AddOrEditCoupan)+"/{CoupanId}")]
-        public async Task<IActionResult> AddOrEditCoupan(int Id)
+        [HttpGet(nameof(AddOrEditCoupan)+"/{CoupanId}")]
+        public async Task<IActionResult> AddOrEditCoupan(int CoupanId)
         {
-            var res = await _offersService.AddOrEditCoupan(Id);
+            var res = await _offersService.AddOrEditCoupan(CoupanId);
             return Ok(res);
         }
 
@@ -50,5 +50,13 @@ namespace API.Controllers
             var res = await _offersService.CheckCoupan(CoupanName);
             return Ok(res);
         }
+
+        [HttpGet(nameof(DeleteCoupan) + "/{CoupanId}")]
+        public async Task<IActionResult> DeleteCoupan(int CoupanId)
+        {
+            var res = await _offersService.DeleteCoupan(CoupanId);
+            return Ok(res);
+        }
+
     }
 }

@@ -26,7 +26,6 @@ namespace RetroReserve.Controllers
         [Route("/Payment")]
         public IActionResult Payment(double messageafterCoupan,double totalAmount)
         {
-           
             if(messageafterCoupan > 0)
             {
                 return PartialView(messageafterCoupan);

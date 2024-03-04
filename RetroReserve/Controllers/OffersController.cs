@@ -44,7 +44,7 @@ namespace RetroReserve.Controllers
             return PartialView(list);
         }
         public async Task<IActionResult> ChangeCoupanStatus(int CoupanId)
-        {
+        { 
             var res = new API.Data.Response();
             res = await apirequest.GetData<API.Data.Response>($"Offers/ChangeCoupanStatus/{CoupanId}");
             return Json(res);
@@ -68,6 +68,11 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> CheckCoupan(string CoupanName)
         {
             var res = await apirequest.GetData<API.Data.Response<string>>($"Offers/CheckCoupan/{CoupanName}");
+            return Json(res);
+        }
+        public async Task<IActionResult> DeleteCoupan(int CoupanId)
+        {
+            var res = await apirequest.GetData<API.Data.Response<string>>($"Offers/DeleteCoupan/{CoupanId}");
             return Json(res);
         }
     }

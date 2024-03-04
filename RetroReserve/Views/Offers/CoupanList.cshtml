@@ -110,7 +110,8 @@
                                                 Actions
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" onclick="UpdateStatus(@item.CoupanId)"><span class="fas fa-edit" style="color: Blue"></span>Completed</a>
+                                                <a class="dropdown-item" onclick="AddOrEditCoupan(@item.CoupanId)"><span class="fas fa-edit" style="color: Blue"></span>Edit</a>
+                                                <a class="dropdown-item" onclick="DeleteCoupan(@item.CoupanId)"><span class="fas fa-trash" style="color: Blue"></span>Delete</a>
                                                 @*<a class="dropdown-item" onclick="EmpDetails(@item.TableId)"><i class="fas fa-info-circle" style="color: darkgreen"></i></a>*@
                                             </div>
                                         </div>
