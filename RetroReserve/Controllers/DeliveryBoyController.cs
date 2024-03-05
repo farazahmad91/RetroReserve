@@ -31,5 +31,10 @@ namespace RetroReserve.Controllers
             var res = JsonConvert.DeserializeObject<Entities.Response>(i);
             return Json(res);
         }
+        [Route("/_Review")]
+        public IActionResult DBoyReview()
+        {
+            return PartialView();
+        }
     }
 }

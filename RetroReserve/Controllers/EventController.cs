@@ -49,7 +49,7 @@ namespace RetroReserve.Controllers
         }
         public async Task<ActionResult> AddOrUpdateEvent(Event _event, IFormFile ImagePath)
         {
-            _event.eventImage = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            _event.eventImage = uploadImage.Image(ImagePath);
             var i = await apirequest.Post("Event/AddOrUpdateEvent", _event);
             return Json(i);
         }

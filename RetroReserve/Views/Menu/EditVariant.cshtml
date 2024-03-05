@@ -84,7 +84,12 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-sort-amount-up" style="font-size:23px;"></i></span>
                                             </div>
-                                            <input type="text" asp-for="DishQuantity" class="form-control" />
+                                            <select class="form-control" asp-for="DishQuantity">
+                                                <option value="">:: Select dish quantity ::</option>
+                                                <option value="Full">:: Full ::</option>
+                                                <option value="Half">:: Half ::</option>
+                                                <option value="Quarter">:: Quarter ::</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

@@ -166,6 +166,35 @@ namespace API.Repository.Impliments
             }
         }
 
+        public async Task<Response> AddorUpdateDboyReview(DboyReview dboyReview)
+        {
+            var res = new Response()
+            {
+                ResponseText = "Failed To Save",
+                StatusCode = -1,
+            };
 
+            try
+            {
+                var sp = "sp_AddOrUpdateDboyReview";
+                var param = new
+                {
+                    DboyRId = dboyReview.DboyRId,
+                    DboyId = dboyReview.DboyId,
+                    Comment = dboyReview.Comment,
+                    Status = dboyReview.Status,
+                    Rating = dboyReview.Rating,
+                };
+                res = await _dapper.GetAsync<Response>(sp, param);
+
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ResponseText = ex.Message;
+                res.StatusCode = -1;
+                return res;
+            }
+        }
     }
 }

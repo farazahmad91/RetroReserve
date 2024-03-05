@@ -10,7 +10,7 @@ namespace API.Repository.Interface
         public Reviews GetProductReviewById(int id);
 
         //Application Reviews
-
+        public Task<Response> AddorUpdateDboyReview(DboyReview dboyReview);
         public Task<Response> AddorUpdateAppReview(AppReviews aReview);
         public Task<int> ApproveAReviewStatus(AppReviews aReview);
         public IEnumerable<AppReviews> GetAReviewList();

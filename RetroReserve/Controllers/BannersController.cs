@@ -28,7 +28,7 @@ namespace RetroReserve.Controllers
         }
         public async Task<IActionResult> AddOrUpdateBanner(Banners banners, IFormFile ImagePath)
         {
-            banners.BannerImage = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            banners.BannerImage = uploadImage.Image(ImagePath);
             var i = await _apirequest.Post("Banners/AddorUpdateBanner", banners);
             var res = JsonConvert.DeserializeObject<Entities.Response>(i);
             return Json(res);

@@ -252,7 +252,7 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> UpdateUserProfileImg(UserProfile userProfile, IFormFile ImagePath)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
-            userProfile.Image = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            userProfile.Image = uploadImage.Image(ImagePath);
             userProfile.Email = email;
             var i= await _apirequest.Post("UserProfile/UpdateUserProfileImg", userProfile);
             return Json(i);

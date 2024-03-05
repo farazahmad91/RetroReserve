@@ -52,7 +52,7 @@ namespace RetroReserve.Controllers
         [Authorize]
         public async Task<ActionResult> AddOrUpdateEmployee(Employees employees, IFormFile ImagePath)
         {
-            employees.Image = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            employees.Image = uploadImage.Image(ImagePath);
             var i = await apirequest.Post("Employee/AddOrUpdateEmployee", employees);
             var res = JsonConvert.DeserializeObject<Entities.Response>(i);
             return Json(res);

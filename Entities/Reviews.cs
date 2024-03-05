@@ -30,4 +30,14 @@ namespace Entities
         public int Status { get; set; }
         public DateTime AReviewDate { get; set; }
     }
+
+    public class DboyReview
+    {
+        public int DboyRId { get; set; }
+        public int DboyId { get; set; }
+        public string Comment { get; set; }
+        public int Rating { get; set; }
+        public int Status { get; set; }
+        public DateTime ReviewOn { get; set; }
+    }
 }

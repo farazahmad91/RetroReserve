@@ -27,7 +27,9 @@
                                             <input type="text" id="orderid" hidden>
                                             <input type="text" id="empid" hidden>
                                             <input type="text" id="selectedvalue" hidden>
-                                            <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                            <div id="loader_spinner" style="display: none;" class="limg">
+                                                <img src="~/img/otp-scanner.gif" alt="Loading..." style="width:100px; height:100px; border-radius:50%;" class="justify-content-center overlay-spinner" />
+                                            </div>
                                             <input type="button" class="btn btn-success w-100" id="btnverify" onclick="OTPVerify();" value="Verify OTP">
                                             <input type="button" class="btn btn-primary w-100" id="btndelivered" onclick="UpdateOrderStatusByDBoy();" style="display: none;" value="Delivered">
                                             <input type="button" class="btn btn-danger w-100" id="btncancelled" onclick="UpdateOrderStatusByDBoy();" style="display: none;" value="Cancelled">
@@ -81,7 +83,7 @@
                         Hide_Loader();
                         alert("Failed to update order status");
                     });
-            }, 1000);
+            }, 4000);
         }
     }
 
@@ -137,11 +139,11 @@
 
 
     function Show_Loader() {
-        jQuery(".overlay-spinner").show();
+        jQuery(".limg").show();
     }
 
     function Hide_Loader() {
-        jQuery(".overlay-spinner").hide();
+        jQuery(".limg").hide();
     }
 
     function validateotp() {

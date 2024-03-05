@@ -33,14 +33,14 @@ namespace RetroReserve.Controllers
         [Authorize]
         public async Task<ActionResult> AddOrUpdateMenu(Foodkart foodkart, IFormFile ImagePath)
         {
-            foodkart.DishImage = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            foodkart.DishImage = uploadImage.Image(ImagePath);
             var i = await apirequest.Post("Foodkart/AddOrUpdateFoodKart", foodkart);
             return Json(i);
         }
         [Authorize]
         public async Task<ActionResult> AddOrUpdateVariant(Foodkart foodkart, IFormFile ImagePath)
         {
-            foodkart.DishImage = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            foodkart.DishImage = uploadImage.Image(ImagePath);
             var i = await apirequest.Post("Foodkart/AddOrUpdateVariant", foodkart);
             return Json(i);
         }
@@ -68,9 +68,9 @@ namespace RetroReserve.Controllers
             return PartialView(i);
         }
         [Route("/VarientDetails")]
-        public async Task<ActionResult> VarientDetails()
+        public async Task<ActionResult> VarientDetails(int id)
         {
-            var i = await apirequest.GetData<List<Foodkart>>("Category/GetDishVarientList");
+            var i = await apirequest.GetData<List<Foodkart>>(($"Foodkart/GetFoodVarientdetailsById?Id={id}"));
             return PartialView(i);
         }
         public async Task<ActionResult> EditVariant(int Id)
