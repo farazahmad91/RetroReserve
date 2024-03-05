@@ -58,6 +58,18 @@ namespace API.Repository.Impliments
             var i = dapper.GetById<Foodkart>(param, sp);
             return i;
         }
+
+        public IEnumerable<Foodkart> GetFoodVarientdetailsById(int id)
+        {
+            var sp = "Select * From tbl_Variant where DishId = @id";
+            var param = new
+            {
+                Id = id,
+
+            };
+            var i = dapper.GetItemsById<Foodkart>(param, sp);
+            return i;
+        }
         public async Task<int> UpdateFoodVarientStatus(Foodkart foodkart)
         {
             var sp = "sp_UpdateFoodVarientStatus";

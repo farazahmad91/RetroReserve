@@ -1,6 +1,6 @@
 ﻿@model Entities.AppReviews
 @{
-    ViewData["Title"] = "InsertAReview";
+    ViewData["Title"] = "Review";
     Layout = "_UserLayout";
 }
 
@@ -23,7 +23,7 @@
     }
 </style>
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Reviewing the Application</h1>
+    <h1 class="text-center text-white display-6">Kindly Provide Your Evaluation of Our Delivery Personnel</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="/Home">Home</a></li>
         <li class="breadcrumb-item active text-white">Review</li>
@@ -34,17 +34,17 @@
     <br />
     <div class="row g-4 justify-content-center">
         <div class="col-lg-6">
-        <div class="col-lg-12">
+            <div class="col-lg-12">
                 <div class="border-bottom rounded my-4" style="text-align:center;">
-                <textarea name="" asp-for="Comment" class="form-control border-0" cols="30" rows="3" placeholder="Your Review *" spellcheck="true"></textarea>
+                    <textarea name="" asp-for="Comment" class="form-control border-0" cols="30" rows="3" placeholder="Your Review *" spellcheck="true"></textarea>
+                </div>
             </div>
-        </div>
 
-    </div>
-    <div class="float-right" style="text-align:center;">
+        </div>
+        <div class="float-right" style="text-align:center;">
             <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4  rounded-pill text-white" onclick="ReviewIt();">Sent Review</button>
+        </div>
     </div>
-</div>
 </div>
 <div class="container">
     <div class="row">
@@ -63,6 +63,7 @@
                                 <div class="container" style="text-align:center;">
                                     <h5><strong>We value your experience</strong></h5>
                                     <p>Please rate your satisfaction:</p>
+
                                     <div class="stars">
                                         <i class="fa fa-star" data-value="1" onclick="AddAReview(1);"></i>
                                         <i class="fa fa-star" data-value="2" onclick="AddAReview(2);"></i>

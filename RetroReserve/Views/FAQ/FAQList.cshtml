@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Entities.FAQ>
+
+@{
+    ViewData["Title"] = "FAQList";
+    Layout = "_AdminLayout";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Manage FAQ</a></li>
+                        <li class="breadcrumb-item active">FAQ</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div>
+        <div class="card" id="snackbar"></div>
+        <div class="card" id="snackbar2"></div>
+        <div class="card" id="snackbar3"></div>
+    </div>
+    <div class="container">
+        <button type="button" class="btn btn-primary" onclick="CreateOrEdit(0);"> Add FAQ</button>
+        <br />
+        <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FAQId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Quest)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Answers)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedOn)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="4" style="text-align:center;">
+                                    <div style="text-align:center;"> <h3><strong>data not available</strong></h3></div>
+                                </td>
+
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FAQId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quest)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Answers)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="CreateOrEdit(@item.FAQId)"><span class="fas fa-edit" style="color: Blue"></span> Edit</a>
+                                                <a class="dropdown-item" href="@Url.Action("Delete", new { id=item.FAQId })" onclick="deleteSubjectdata('@item.FAQId');"><i class="fas fa-trash-alt" style="color: red"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="FAQPV"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function CreateOrEdit(Id) {
+        debugger;
+        var param = {
+            id: Id
+        };
+        $.post('/FAQ/CreateOrEdit', param).done(function (res) {
+            $("#FAQPV").html(res);
+            $("#FAQModal").modal("show");
+        }).fail(function () {
+            alert("fail");
+        });
+    }
+
+
+</script>

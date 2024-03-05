@@ -97,5 +97,13 @@ namespace API.Controllers
             return Ok(i);
 
         }
+
+        [HttpGet(nameof(GetFoodVarientdetailsById))]
+        public IActionResult GetFoodVarientdetailsById(int id)
+        {
+            var i = foodKartService.GetFoodVarientdetailsById(id);
+            return Ok(i);
+
+        }
     }
 }

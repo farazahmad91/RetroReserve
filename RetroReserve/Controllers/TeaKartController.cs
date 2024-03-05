@@ -20,7 +20,7 @@ namespace RetroReserve.Controllers
         }
         public async Task<ActionResult> AddOrUpdateTeaKart(TeaKart teaKart, IFormFile ImagePath)
         {
-            teaKart.TeaImage = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            teaKart.TeaImage = uploadImage.Image(ImagePath);
             var i = await apirequest.Post("TeaKart/AddOrUpdateTeaKart", teaKart);
             return Json(i);
         }

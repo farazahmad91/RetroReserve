@@ -87,5 +87,5 @@ function NewOrderStatusDboy() {
         alert("error");
     });
 }
-setInterval(NewOrderStatusDboy, 1000);
+NewOrderStatusDboy();
 

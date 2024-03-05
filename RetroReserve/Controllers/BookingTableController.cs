@@ -52,7 +52,7 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> SaveOrUpdateTable(BookingTableVM2 bookingTable,IFormFile ImagePath)
         {
 
-            bookingTable.Image = uploadImage.Image(ImagePath, webHostEnvironment.WebRootPath);
+            bookingTable.Image = uploadImage.Image(ImagePath);
             var i = await apirequest.Post("BookingTable/SaveOrUpdateTable", bookingTable);
             var res =  JsonConvert.DeserializeObject<API.Data.Response>(i); 
             return Json(res);

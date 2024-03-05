@@ -1,0 +1,130 @@
+﻿@model Entities.FAQ
+@{
+    ViewData["Title"] = "CreateOrEdit";
+    Layout = null;
+}
+<div class="modal fade" id="FAQModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div>
+                        <div class="card" id="snackbar"></div>
+                        <div class="card" id="snackbar2"></div>
+                        <div class="card" id="snackbar3"></div>
+                    </div>
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="card-title text-uppercase"><Strong><i class="fas fa-hamburger"></i> Event Info</Strong></h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Questions</label>
+                                            <div class="input-group">
+                                                <input type="text" hidden asp-for="FAQId" class="form-control" />
+                                                <textarea asp-for="Quest" class="form-control"></textarea>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-question" style="font-size:23px;"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Answer</label>
+                                            <div class="input-group">
+                                                <textarea asp-for="Answers" class="form-control"></textarea>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-reply" style="font-size:23px;"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                <div class="form-group">
+                                    <button type="submit" id="btnubmit" onclick="AddFAQ();" class="btn btn-primary">Submit</button>
+                                    <a href="/Event-Details" class="btn btn-primary" style="text-align:right;">Back To List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    const AddFAQ = ()=> 
+    {
+        Show_Loader();
+        setTimeout(function () {
+        if (validateFAQ()) {
+            var param =
+            {
+                FAQId: $("#FAQId").val(),
+                Quest: $("#Quest").val(),
+                Answers: $("#Answers").val(),
+            };
+                $.post('/FAQ/UpsertFAQ', param).done(function (result) {
+                Hide_Loader();
+                setTimeout(function () {
+                    QAlert(result.statusCode, result.responseText);
+                }, 1000);
+            }).fail(function () {
+                    Hide_Loader();
+                alert("error");
+            });
+
+        }
+        }, 1000);
+    
+    }
+    function validateFAQ() {
+        let isvalidated = true;
+        let msg = "<ul>";
+
+        function addError(message) {
+            msg += `<li>${message}</li>`;
+            isvalidated = false;
+        }
+        if ($("#Quest").val() === "") {
+            addError("Please enter quest");
+        }
+        if ($("#Answers").val() === "") {
+            addError("Please enter answer");
+        }
+        if (!isvalidated) {
+            msg += "</ul>";
+            Hide_Loader();
+            setTimeout(function () {
+                QAlert(-1, msg);
+            }, 1000);
+        }
+
+        return isvalidated;
+    }
+
+
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
+</script>
+

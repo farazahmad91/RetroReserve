@@ -32,8 +32,13 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-user" style="font-size:23px;"></i></span>
                                                 </div>
-                                                <input type="text" asp-for="BannerName" class="form-control" />
-
+                                                <select class="form-control" asp-for="BannerName">
+                                                    <option value="">:: Select Banner Name ::</option>
+                                                    <option value="BannerName1">:: BannerName1 ::</option>
+                                                    <option value="BannerName2">:: BannerName2 ::</option>
+                                                    <option value="BannerName3">:: BannerName3 ::</option>
+                                                    <option value="EventBanner">:: EventBanner ::</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -169,7 +174,19 @@
             isvalidated = false;
         }
         if ($("#BannerName").val() === "") {
-            addError("Please enter banner name");
+            addError("Please select banner name");
+        }
+        if ($("#BannerOfferName").val() === "") {
+            addError("Please enter BannerOffer Name");
+        }
+        if ($("#BannerName").val() === "") {
+            addError("Please enter Offer");
+        }
+        if ($("#BannerName").val() === "") {
+            addError("Please enter Product Link");
+        }
+        if ($("#BannerName").val() === "") {
+            addError("Please enter Description");
         }
         if (!isvalidated) {
             msg += "</ul>";
