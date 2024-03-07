@@ -34,17 +34,17 @@
     <br />
     <div class="row g-4 justify-content-center">
         <div class="col-lg-6">
-        <div class="col-lg-12">
+            <div class="col-lg-12">
                 <div class="border-bottom rounded my-4" style="text-align:center;">
-                <textarea name="" asp-for="Comment" class="form-control border-0" cols="30" rows="3" placeholder="Your Review *" spellcheck="true"></textarea>
+                    <textarea name="" asp-for="Comment" class="form-control border-0" cols="30" rows="3" placeholder="Your Review *" spellcheck="true"></textarea>
+                </div>
             </div>
-        </div>
 
-    </div>
-    <div class="float-right" style="text-align:center;">
+        </div>
+        <div class="float-right" style="text-align:center;">
             <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4  rounded-pill text-white" onclick="ReviewIt();">Sent Review</button>
+        </div>
     </div>
-</div>
 </div>
 <div class="container">
     <div class="row">
@@ -53,7 +53,6 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-body">
-
                         <div class="card mb-12">
                             <div class="card-body">
                                 <div>
@@ -164,4 +163,3 @@
         jQuery("#snackbar5").html(msg);
     }
 </script>
-

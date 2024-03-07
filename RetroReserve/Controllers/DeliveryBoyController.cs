@@ -36,5 +36,21 @@ namespace RetroReserve.Controllers
         {
             return PartialView();
         }
+        [Route("/AddorUpdateDboyReview")]
+        public async Task<IActionResult> AddorUpdateDboyReview(DboyReview dboyReview)
+        {
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            dboyReview.Email = email;
+            var i = await _aPIrequest.Post("Reviews/AddorUpdateDboyReview", dboyReview);
+            var res = JsonConvert.DeserializeObject<Entities.Response>(i);
+            return Json(res);
+        }
+        [Route("Reviews_")]
+        public async Task<IActionResult> ShowReview()
+        {
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await _aPIrequest.GetData<List<DboyReview>>($"Reviews/GetDboyReviewList?email={email}");
+            return PartialView(i);
+        }
     }
 }

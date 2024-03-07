@@ -151,24 +151,24 @@
                                 @{
                                     if (Model.FirstOrDefault()?.Status == 2)
                                     {
-                                        <div class="text-end">
-                                            <p class="far fa-clock mb-0 badge badge-warning bg-warning"> Expected Arrival : <span>30 Minute</span></p>
-                                            <p class="fa fa-motorcycle mb-0 badge badge-warning bg-info"> Delivery By : <span class="font-weight-bold">Faraz Ahmad</span></p>
-                                            <a href="tel:989878766" class="	fas fa-mobile-alt mb-0 badge badge-warning bg-info"> Call: 989878766</a>
-                                        </div>
+                                                        <div class="text-end">
+                                                            <p class="far fa-clock mb-0 badge badge-warning bg-warning"> Expected Arrival : <span>30 Minute</span></p>
+                                                            <p class="fa fa-motorcycle mb-0 badge badge-warning bg-info"> Delivery By : <span class="font-weight-bold">Faraz Ahmad</span></p>
+                                                            <a href="tel:989878766" class="	fas fa-mobile-alt mb-0 badge badge-warning bg-info"> Call: 989878766</a>
+                                                        </div>
                                     }
                                     else if (Model.FirstOrDefault()?.Status == 4)
                                     {
-                                        <h1 class="badge badge-success bg-info far fa-comment" onclick="location.href='/_Review'"> Feedback</h1>
-                                        <h1 class="badge badge-success bg-success fa fa-check-circle"> Deliverd</h1>
+                                            <h1 class="badge badge-success bg-info far fa-comment" onclick="ReviewModal('@Model.FirstOrDefault()?.DboyId','@Model.FirstOrDefault()?.OrderID');"> Feedback</h1>
+                                                        <h1 class="badge badge-success bg-success fa fa-check-circle"> Deliverd</h1>
                                     }
                                     else if (Model.FirstOrDefault()?.Status == 5)
                                     {
-                                        <h1 class="fa fa-times badge badge-danger bg-danger"> Cancelled</h1>
+                                                        <h1 class="fa fa-times badge badge-danger bg-danger"> Cancelled</h1>
                                     }
                                     else
                                     {
-                                        <h1 class="badge badge-warning bg-warning">Expected Arrival: 30 Minute</h1>
+                                                        <h1 class="badge badge-warning bg-warning">Expected Arrival: 30 Minute</h1>
 
                                     }
 
@@ -182,7 +182,7 @@
                                 for (var i = 1; i <= 4; i++)
                                 {
                                     var stepClass = i <= (status ?? 0) ? "active" : "";
-                                    <li class="step0 @stepClass text-center" id="step@(i)"></li>
+                                                    <li class="step0 @stepClass text-center" id="step@(i)"></li>
                                 }
                             }
                         </ul>
@@ -207,69 +207,69 @@
                             @{
                                 if (Model.FirstOrDefault()?.Status == 4)
                                 {
-                                    <div class="d-lg-flex align-items-center">
-                                        <i class="fa-3x me-lg-4 mb-3 mb-lg-0 fa fa-check-circle text-success"> 
-                                       </i>
-                                        <div>
-                                            <p class="fw-bold mb-1">Order</p>
-                                            <p class="fw-bold mb-0">En Route</p>
-                                        </div>
-                                    </div>
+                                                    <div class="d-lg-flex align-items-center">
+                                                        <i class="fa-3x me-lg-4 mb-3 mb-lg-0 fa fa-check-circle text-success"> 
+                                                       </i>
+                                                        <div>
+                                                            <p class="fw-bold mb-1">Order</p>
+                                                            <p class="fw-bold mb-0">En Route</p>
+                                                        </div>
+                                                    </div>
                                 }
                                 else if (Model.FirstOrDefault()?.Status == 5)
                                 {
-                                    <div class="d-lg-flex align-items-center">
-                                        <i> <img src="~/img/ordercancelled.gif" style="width:80px;height:80px;" alt="" /></i>
-                                        <div>
-                                            <p class="fw-bold mb-1">Order</p>
-                                            <p class="fw-bold mb-0">En Route</p>
-                                        </div>
-                                    </div>
+                                                    <div class="d-lg-flex align-items-center">
+                                                        <i> <img src="~/img/ordercancelled.gif" style="width:80px;height:80px;" alt="" /></i>
+                                                        <div>
+                                                            <p class="fw-bold mb-1">Order</p>
+                                                            <p class="fw-bold mb-0">En Route</p>
+                                                        </div>
+                                                    </div>
                                 }
                                 else
                                 {
-                                    <div class="d-lg-flex align-items-center">
-                                        <i> <img src="~/img/orderplaced.gif" style="width:80px;height:80px;" alt="" /></i>
-                                        <div>
-                                            <p class="fw-bold mb-1">Order</p>
-                                            <p class="fw-bold mb-0">En Route</p>
-                                        </div>
-                                    </div>
+                                                    <div class="d-lg-flex align-items-center">
+                                                        <i> <img src="~/img/orderplaced.gif" style="width:80px;height:80px;" alt="" /></i>
+                                                        <div>
+                                                            <p class="fw-bold mb-1">Order</p>
+                                                            <p class="fw-bold mb-0">En Route</p>
+                                                        </div>
+                                                    </div>
                                 }
 
                            
-                                @if (Model.FirstOrDefault()?.Status == 5)
+                                                @if (Model.FirstOrDefault()?.Status == 5)
                                 {
-                                    <div class="d-lg-flex align-items-center">
-                                        <i class="fa fa-times fa-3x me-lg-4 mb-3 mb-lg-0  text-danger"></i>
-                                        <div>
-                                            <p class="fw-bold mb-1">Order</p>
-                                            <p class="fw-bold mb-0">Cancelled</p>
-                                            <p class="fw-bold mb-0">@Model.FirstOrDefault()?.DeliverDate</p>
-                                        </div>
-                                    </div>
+                                                    <div class="d-lg-flex align-items-center">
+                                                        <i class="fa fa-times fa-3x me-lg-4 mb-3 mb-lg-0  text-danger"></i>
+                                                        <div>
+                                                            <p class="fw-bold mb-1">Order</p>
+                                                            <p class="fw-bold mb-0">Cancelled</p>
+                                                            <p class="fw-bold mb-0">@Model.FirstOrDefault()?.DeliverDate</p>
+                                                        </div>
+                                                    </div>
                                 }
                                 else if (Model.FirstOrDefault()?.Status == 4)
                                 {
-                                    <div class="d-lg-flex align-items-center">
-                                            <i> <img src="~/img/deliveredor.gif" style="width:80px;height:80px;" alt="" /></i>
-                                        <div>
-                                            <p class="fw-bold mb-1">Order</p>
-                                            <p class="fw-bold mb-0">Delivered</p>
-                                            <p class="fw-bold mb-0">@Model.FirstOrDefault()?.DeliverDate</p>
-                                        </div>
-                                    </div>
+                                                    <div class="d-lg-flex align-items-center">
+                                                            <i> <img src="~/img/deliveredor.gif" style="width:80px;height:80px;" alt="" /></i>
+                                                        <div>
+                                                            <p class="fw-bold mb-1">Order</p>
+                                                            <p class="fw-bold mb-0">Delivered</p>
+                                                            <p class="fw-bold mb-0">@Model.FirstOrDefault()?.DeliverDate</p>
+                                                        </div>
+                                                    </div>
                                 }
                                 else
                                 {
-                                    <div class="d-lg-flex align-items-center">
-                                        <i class="fa-3x me-lg-4 mb-3 mb-lg-0 fa fa-spinner fa-spin text-warning"></i>
-                                        <div>
-                                            <p class="fw-bold mb-1">Order</p>
-                                            <p class="fw-bold mb-0">Delivered</p>
-                                            <p class="fw-bold mb-0">@Model.FirstOrDefault()?.DeliverDate</p>
-                                        </div>
-                                    </div>
+                                                    <div class="d-lg-flex align-items-center">
+                                                        <i class="fa-3x me-lg-4 mb-3 mb-lg-0 fa fa-spinner fa-spin text-warning"></i>
+                                                        <div>
+                                                            <p class="fw-bold mb-1">Order</p>
+                                                            <p class="fw-bold mb-0">Delivered</p>
+                                                            <p class="fw-bold mb-0">@Model.FirstOrDefault()?.DeliverDate</p>
+                                                        </div>
+                                                    </div>
                                 }
                             }
                         </div>
@@ -280,6 +280,21 @@
         </div>
     </div>
 </section>
+<div id="DboyReviewPV"></div>
+
+<script>
+    function ReviewModal(dboyid,orderid) 
+    {
+        $.post('/_Review').done(function (res) {
+            $("#DboyReviewPV").html(res);
+            $("#DboyComment").modal("show");
+            $("#orderid").val(orderid);
+            $("#dboyid").val(dboyid);
+        }).fail(function () {
+            alert("error review");
+        });
+    }
+</script>
 
 
 

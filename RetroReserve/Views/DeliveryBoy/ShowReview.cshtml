@@ -1,0 +1,256 @@
+﻿@model IEnumerable<Entities.DboyReview>
+
+@{
+    ViewData["Title"] = "";
+    Layout = null;
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+
+.heading {
+  font-size: 25px;
+  margin-right: 25px;
+}
+
+.fa {
+  font-size: 25px;
+}
+
+.checked {
+  color: orange;
+}
+
+/* Three column layout */
+.side {
+  float: left;
+  width: 15%;
+  margin-top:10px;
+}
+
+.middle {
+  margin-top:10px;
+  float: left;
+  width: 70%;
+}
+
+/* Place text to the right */
+.right {
+  text-align: right;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* The bar container */
+.bar-container {
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+
+/* Individual bars */
+.bar-5 {width: 60%; height: 18px; background-color: #04AA6D;}
+.bar-4 {width: 30%; height: 18px; background-color: #2196F3;}
+.bar-3 {width: 10%; height: 18px; background-color: #00bcd4;}
+.bar-2 {width: 4%; height: 18px; background-color: #ff9800;}
+.bar-1 {width: 15%; height: 18px; background-color: #f44336;}
+
+/* Responsive layout - make the columns stack on top of each other instead of next to each other */
+@@media (max-width: 400px) {
+  .side, .middle {
+    width: 100%;
+  }
+  .right {
+    display: none;
+  }
+}
+</style>
+
+<div class="row">
+        <section class="col-lg-6 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-hamburger"></i>
+                        Special Dishes
+                    </h3>
+                    <div class="card-tools">
+                        <ul class="nav nav-pills ml-auto">
+                            <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </ul>
+                    </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+
+                    <div class="tab-content p-0">
+                        <span class="heading">User Rating</span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <p>4.1 average based on 254 reviews.</p>
+                        <hr style="border:3px solid #f1f1f1">
+
+                        <!-- Morris chart - Sales -->
+                        <div class="chart tab-pane active" id="revenue-chart"
+                             style="position: relative; height: 300px;">
+                            <div class="col-md-12">
+                                <div class="progress-group">
+                                   5 Star
+                                    <span class="float-right"><b>160</b>/200</span>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                                <br />
+                                <div class="progress-group">
+                                4 Star
+                                    <span class="float-right"><b>310</b>/400</span>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <br />
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                <span class="progress-text">3 Star</span>
+                                    <span class="float-right"><b>480</b>/800</span>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="progress-group">
+                                2 Star
+                                    <span class="float-right"><b>250</b>/500</span>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                        </div>
+                    </div>
+                </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><strong>Add Or Update Employee</strong></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Employee Details</a></li>
+                        <li class="breadcrumb-item active">Manage Employee</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+<div class="container">
+        <span class="heading">User Rating</span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <p>4.1 average based on 254 reviews.</p>
+        <hr style="border:3px solid #f1f1f1">
+
+        <div class="row">
+            <div class="side">
+                <div>5 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-5"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>150</div>
+            </div>
+            <div class="side">
+                <div>4 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-4"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>63</div>
+            </div>
+            <div class="side">
+                <div>3 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-3"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>15</div>
+            </div>
+            <div class="side">
+                <div>2 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-2"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>6</div>
+            </div>
+            <div class="side">
+                <div>1 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-1"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>20</div>
+            </div>
+        </div>
+</div>
+</div> *@
+
