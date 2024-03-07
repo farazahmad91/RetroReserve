@@ -8,6 +8,8 @@ using API.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Entities.Extension;
+using Entities;
 
 namespace API.Controllers
 {
@@ -33,7 +35,7 @@ namespace API.Controllers
 
         public async Task<IActionResult> Registration(RegisterViewModel model)
         {
-            var response = new Response()
+            var response = new Data.Response()
             {
                 ResponseText = "Failed To Register",
                 StatusCode = ResponseStatus.FAILED,
@@ -74,9 +76,11 @@ namespace API.Controllers
             var roleDetails = await userManager.GetRolesAsync(userexists);
             var cliamList = new List<Claim>
             {
-                  new Claim("Email",model.Email),
-                new Claim(ClaimTypes.NameIdentifier,userexists.Id),
+               
                 new Claim(ClaimTypes.Role, roleDetails.FirstOrDefault()??""),
+                new Claim(ClaimTypes.Name, userexists.UserName),
+                new Claim("UserId", userexists.Id.ToString()),
+           
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthSettings:Secretkey"]));
             var token = new JwtSecurityToken(
@@ -100,6 +104,42 @@ namespace API.Controllers
                 Role = roleDetails.FirstOrDefault(),
             };
             return Ok(response);
+        }
+
+     
+        [HttpPost(nameof(ChangePassword))]
+        public async Task<IActionResult> ChangePassword(ChangePassword passwordReq)
+        {
+            var response = new Data.Response
+            {
+                ResponseText = "An error has occured try after sometime!",
+                StatusCode = ResponseStatus.FAILED
+            };
+            try
+            {
+               
+                var user = await userManager.FindByEmailAsync   (User.GetLoggedInUserName());
+                var checkPassword = await userManager.CheckPasswordAsync(user, passwordReq.CurrentPassword);
+                if (!checkPassword)
+                {
+                    response.ResponseText = "Invalid current password!";
+                    return BadRequest(response);
+                }
+                var result = await userManager.ChangePasswordAsync(user, passwordReq.CurrentPassword, passwordReq.NewPassword);
+                if (!result.Succeeded)
+                {
+                    response.ResponseText = "Something went wrong try after sometime!";
+                    return BadRequest(response);
+                }
+                response.ResponseText = "Password has been changed successfully!";
+                response.StatusCode = ResponseStatus.SUCCESS;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }
