@@ -1,4 +1,4 @@
-﻿
+﻿@model Entities.DboyOrderSummary
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_EmployeeLayout";
@@ -19,9 +19,9 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>10</h3>
+                            <h3>@Model.TodayOrder</h3>
 
-                            <p>Today Deliverd Orders</p>
+                            <p>Active Orders</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-shopping-cart"></i>
@@ -34,7 +34,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>50<sup style="font-size: 20px"></sup></h3>
+                            <h3>@Model.DeliveredOrder<sup style="font-size: 20px"></sup></h3>
 
                             <p>Total Deliverd Orders</p>
                         </div>
@@ -49,12 +49,12 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>Good</h3>
+                            <h3>@Model.CancelledOrder</h3>
 
-                            <p>My Performance</p>
+                            <p>Total Cancelled Order</p>
                         </div>
                         <div class="icon">
-                            <i class="fas fa-thumbs-up"></i>
+                            <i class="fa fa-close"></i>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -64,9 +64,8 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3> 5500.0</h3>
-
-                            <p>Monthly Earning</p>
+                            <h3> @Model.Commition</h3>
+                            <p>Monthly Commition</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-rupee"></i>
@@ -723,7 +722,6 @@
     <script>
         function Rating() 
         {
-            debugger;
             $.post('/Reviews_').done(function (res) {
                 $("#ratingPV").html(res);
             }).fail(function () {
@@ -732,6 +730,17 @@
 
         }
         Rating();
+
+        // function DboyOrderSummary() {
+        //     $.post('/DeliveryBoy/DboyOrderSummary').done(function (res) {
+        //         $("#deliverdorder").val(res.deliveredOrder);
+        //         console.log(res);
+        //     }).fail(function () {
+
+        //     });
+
+        // }
+        // DboyOrderSummary();
     </script>
 }
 

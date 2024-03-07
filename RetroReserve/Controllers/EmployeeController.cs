@@ -22,9 +22,14 @@ namespace RetroReserve.Controllers
             this.uploadImage = uploadImage;
         }
         [Authorize]
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            var i = apirequest.GetData<Employees>($"Employee/GetDboyIdByEmail?email={email}");
+            int Id = i.Result.EmpId;
+
+            var res = await apirequest.GetData<DboyOrderSummary>($"Employee/DboyOrderSummary?id={Id}");
+            return View(res);
         }
         public async Task<IActionResult> DashboardStatus()
         {

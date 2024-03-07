@@ -42,4 +42,20 @@ namespace Entities
         public string? Email { get; set; }
         public DateTime ReviewOn { get; set; }
     }
+    public class DboyReviewStatistics
+    {
+        public int Rating { get; set; }
+        public int TotalRating { get; set; }
+        public float Percentage { get; set; }
+        public int AllRecords { get; set; }
+        public float AverageRating { get; set; }
+    }
+    public class DboyOrderSummary
+    {
+        public int TodayOrder { get; set; }
+        public int DeliveredOrder { get; set; }
+        public int CancelledOrder { get; set; }
+        public decimal Commition { get; set; }
+    }
+
 }

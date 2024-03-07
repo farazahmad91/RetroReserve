@@ -185,6 +185,7 @@ namespace API.Repository.Impliments
                     Status = dboyReview.Status,
                     Rating = dboyReview.Rating,
                     OrderId = dboyReview.OrderId,
+                    Email=dboyReview.Email,
                 };
                 res = await _dapper.GetAsync<Response>(sp, param);
 
@@ -206,6 +207,17 @@ namespace API.Repository.Impliments
                 Email = email,
             };
             var i = _dapper.GetItemsById<DboyReview>(param, sp);
+            return i;
+        }
+
+        public IEnumerable<DboyReviewStatistics> GetDboyReviewStatistics(int id)
+        {
+            var sp = "sp_GetDboyReviewStatisticsById";
+            var param = new
+            {
+                EmpId = id,
+            };
+            var i = _dapper.GetItemsById<DboyReviewStatistics>(param, sp);
             return i;
         }
     }

@@ -98,5 +98,12 @@ namespace API.Controllers
             var i = _review.GetDboyReviewList(email);
             return Ok(i);
         }
+
+        [HttpGet(nameof(GetDboyReviewStatistics))]
+        public IActionResult GetDboyReviewStatistics(int id)
+        {
+            var i = _review.GetDboyReviewStatistics(id);
+            return Ok(i);
+        }
     }
 }

@@ -61,7 +61,22 @@
                                     @Html.DisplayFor(modelItem => item.AssignOn)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.DeliveredOrCancelledOn)
+                                    @{
+                                        var txtdate = "";
+                                        var cls = "";
+                                        @if (item.DeliveredOrCancelledOn == null)
+                                        {
+                                            txtdate = "Active Order";
+                                            cls = "blink text-green";
+                                        }
+                                        else
+                                        {
+                                            txtdate = @item.DeliveredOrCancelledOn;
+                                            cls = "";
+                                        }
+                                        <label class="@cls">@txtdate</label>
+                                   }
+                                    
                                 </td>
                                 <td>
                                     @{

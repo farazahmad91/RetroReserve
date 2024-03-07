@@ -80,5 +80,19 @@ namespace API.Controllers
             var i = employeeService.GetOrderListByDboy(email);
             return Ok(i);
         }
+
+        [HttpGet(nameof(GetDboyIdByEmail))]
+        public IActionResult GetDboyIdByEmail(string email)
+        {
+            var i = employeeService.GetDboyIdByEmail(email);
+            return Ok(i);
+        }
+
+        [HttpGet(nameof(DboyOrderSummary))]
+        public IActionResult DboyOrderSummary(int id)
+        {
+            var i = employeeService.DboyOrderSummary(id);
+            return Ok(i);
+        }
     }
 }

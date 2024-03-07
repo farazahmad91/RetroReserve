@@ -49,8 +49,17 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> ShowReview()
         {
             string email = User.FindFirstValue(ClaimTypes.Email);
-            var i = await _aPIrequest.GetData<List<DboyReview>>($"Reviews/GetDboyReviewList?email={email}");
-            return PartialView(i);
+            var i = _aPIrequest.GetData<Employees>($"Employee/GetDboyIdByEmail?email={email}");
+            int Id = i.Result.EmpId;
+            
+            var res = await _aPIrequest.GetData<List<DboyReviewStatistics>>($"Reviews/GetDboyReviewStatistics?id={Id}");
+            return PartialView(res);
         }
+
+
+        //public async Task<IActionResult> DboyOrderSummary()
+        //{
+           
+        //}
     }
 }
