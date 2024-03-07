@@ -154,5 +154,27 @@ namespace API.Repository.Impliments
             var i = dapper.GetItemsById<DeliveredOrder>(param, sp);
             return i;
         }
+
+        public Employees GetDboyIdByEmail(string email)
+        {
+            var sp = "sp_GetDboyIdByEmail";
+            var param = new
+            {
+             Email =email,
+            };
+            var i = dapper.GetById<Employees>(param,sp);
+            return i;
+        }
+
+        public DboyOrderSummary DboyOrderSummary(int id)
+        {
+            var sp = "sp_DboyOrderSummary";
+            var param = new
+            {
+                EmpId = id,
+            };
+            var i = dapper.GetById<DboyOrderSummary>(param, sp);
+            return i;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Entities.DboyReview>
+﻿@model IEnumerable<Entities.DboyReviewStatistics>
 
 @{
     ViewData["Title"] = "";
@@ -78,8 +78,8 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        <i class="fas fa-hamburger"></i>
-                        Special Dishes
+                    <i class="fa fa-comments-o"></i>
+                        FeedBack
                     </h3>
                     <div class="card-tools">
                         <ul class="nav nav-pills ml-auto">
@@ -91,57 +91,43 @@
                 </div><!-- /.card-header -->
                 <div class="card-body">
 
-                    <div class="tab-content p-0">
-                        <span class="heading">User Rating</span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <p>4.1 average based on 254 reviews.</p>
+                <div class="tab-content p-0">
+                    <span class="heading">User Rating</span>
+                    @if (Model.Any())
+                    {
+                        var averageRating = Model.First().AverageRating;
+                        var totalStars = 5;
+                        var checkedStars = (int)Math.Round(averageRating);
+
+                        for (var i = 0; i < totalStars; i++)
+                        {
+                            <span class="fa fa-star @(i < checkedStars ? "checked" : "")"></span>
+                        }
+
+                        <p>@Model.First().AverageRating average based on @Model.First().AllRecords reviews.</p>
+                    }
+                    else
+                    {
+                        <p>No reviews available.</p>
+                    }
                         <hr style="border:3px solid #f1f1f1">
 
                         <!-- Morris chart - Sales -->
                         <div class="chart tab-pane active" id="revenue-chart"
-                             style="position: relative; height: 300px;">
+                             style="position: relative; height: 350px;">
                             <div class="col-md-12">
+                            @foreach(var item in Model)
+                            {
                                 <div class="progress-group">
-                                   5 Star
-                                    <span class="float-right"><b>160</b>/200</span>
+                                    @item.Rating Star
+                                    <span class="float-right"><b>@item.TotalRating</b>/@item.AllRecords</span>
                                     <div class="progress">
-                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                                <!-- /.progress-group -->
-                                <br />
-                                <div class="progress-group">
-                                4 Star
-                                    <span class="float-right"><b>310</b>/400</span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                        <div class="progress-bar bar-@item.Rating" style="width: @item.Percentage%"></div>
                                     </div>
                                 </div>
                                 <br />
-                                <!-- /.progress-group -->
-                                <div class="progress-group">
-                                <span class="progress-text">3 Star</span>
-                                    <span class="float-right"><b>480</b>/800</span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" style="width: 60%"></div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="progress-group">
-                                2 Star
-                                    <span class="float-right"><b>250</b>/500</span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" style="width: 50%"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                            }
+                            <br />
                         </div>
                     </div>
                 </div><!-- /.card-body -->
@@ -149,108 +135,3 @@
             <!-- /.card -->
         </section>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@* <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1><strong>Add Or Update Employee</strong></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Employee Details</a></li>
-                        <li class="breadcrumb-item active">Manage Employee</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-<div class="container">
-        <span class="heading">User Rating</span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <p>4.1 average based on 254 reviews.</p>
-        <hr style="border:3px solid #f1f1f1">
-
-        <div class="row">
-            <div class="side">
-                <div>5 star</div>
-            </div>
-            <div class="middle">
-                <div class="bar-container">
-                    <div class="bar-5"></div>
-                </div>
-            </div>
-            <div class="side right">
-                <div>150</div>
-            </div>
-            <div class="side">
-                <div>4 star</div>
-            </div>
-            <div class="middle">
-                <div class="bar-container">
-                    <div class="bar-4"></div>
-                </div>
-            </div>
-            <div class="side right">
-                <div>63</div>
-            </div>
-            <div class="side">
-                <div>3 star</div>
-            </div>
-            <div class="middle">
-                <div class="bar-container">
-                    <div class="bar-3"></div>
-                </div>
-            </div>
-            <div class="side right">
-                <div>15</div>
-            </div>
-            <div class="side">
-                <div>2 star</div>
-            </div>
-            <div class="middle">
-                <div class="bar-container">
-                    <div class="bar-2"></div>
-                </div>
-            </div>
-            <div class="side right">
-                <div>6</div>
-            </div>
-            <div class="side">
-                <div>1 star</div>
-            </div>
-            <div class="middle">
-                <div class="bar-container">
-                    <div class="bar-1"></div>
-                </div>
-            </div>
-            <div class="side right">
-                <div>20</div>
-            </div>
-        </div>
-</div>
-</div> *@
-

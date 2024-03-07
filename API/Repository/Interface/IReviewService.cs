@@ -21,5 +21,6 @@ namespace API.Repository.Interface
 
         public Task<Response> AddorUpdateDboyReview(DboyReview dboyReview);
         public IEnumerable<DboyReview> GetDboyReviewList(string email);
+        public IEnumerable<DboyReviewStatistics> GetDboyReviewStatistics(int id);
     }
 }
