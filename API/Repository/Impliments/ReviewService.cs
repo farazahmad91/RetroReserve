@@ -165,7 +165,7 @@ namespace API.Repository.Impliments
                 return res;
             }
         }
-
+        // DBoy Reviews
         public async Task<Response> AddorUpdateDboyReview(DboyReview dboyReview)
         {
             var res = new Response()
@@ -184,6 +184,7 @@ namespace API.Repository.Impliments
                     Comment = dboyReview.Comment,
                     Status = dboyReview.Status,
                     Rating = dboyReview.Rating,
+                    OrderId = dboyReview.OrderId,
                 };
                 res = await _dapper.GetAsync<Response>(sp, param);
 
@@ -195,6 +196,17 @@ namespace API.Repository.Impliments
                 res.StatusCode = -1;
                 return res;
             }
+        }
+
+        public IEnumerable<DboyReview> GetDboyReviewList(string email)
+        {
+            var sp = "sp_GetDBoyReview";
+            var param = new
+            {
+                Email = email,
+            };
+            var i = _dapper.GetItemsById<DboyReview>(param, sp);
+            return i;
         }
     }
 }

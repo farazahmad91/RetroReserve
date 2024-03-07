@@ -14,6 +14,7 @@ namespace Entities
         public string? UserId { get; set; }
 		public int OrderID { get; set; }
         public int DishId { get; set; }
+        public int DboyId { get; set; }
         public string? OrderDescription { get; set; }
         public int Quantity { get; set; }
         public string? DishQuantity { get; set; }

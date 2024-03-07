@@ -15,6 +15,8 @@ namespace API.Controllers
             this._review = productReviewService;
         }
 
+        // Dishes Reviews
+
         [HttpPost(nameof(AddorUpdateProductReview))]
         public async Task<IActionResult> AddorUpdateProductReview(Reviews productReview)
         {
@@ -41,6 +43,10 @@ namespace API.Controllers
             var i = _review.GetProductReviewById(id);
             return Ok(i);
         }
+
+        // Application Reviews
+
+
         [HttpPost(nameof(AddorUpdateAppReview))]
         public async Task<IActionResult> AddorUpdateAppReview(AppReviews appReviews)
         {
@@ -75,6 +81,22 @@ namespace API.Controllers
             var res = new Response();
             res = await _review.CheckUserReview(email);
             return Ok(res);
+        }
+
+        // DBoy Reviews
+
+        [HttpPost(nameof(AddorUpdateDboyReview))]
+        public async Task<IActionResult> AddorUpdateDboyReview(DboyReview dboyReview)
+        {
+            var i = await _review.AddorUpdateDboyReview(dboyReview);
+            return Ok(i);
+        }
+
+        [HttpGet(nameof(GetDboyReviewList))]
+        public IActionResult GetDboyReviewList(string email)
+        {
+            var i = _review.GetDboyReviewList(email);
+            return Ok(i);
         }
     }
 }

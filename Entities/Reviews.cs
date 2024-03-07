@@ -35,9 +35,11 @@ namespace Entities
     {
         public int DboyRId { get; set; }
         public int DboyId { get; set; }
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         public int Rating { get; set; }
         public int Status { get; set; }
+        public int OrderId { get; set; }
+        public string? Email { get; set; }
         public DateTime ReviewOn { get; set; }
     }
 }
