@@ -78,8 +78,6 @@ namespace API.Repository.Impliments
             }
         }
 
-
-
         public async Task<Data.Response> _ChangeStatusTable(BookingTableVM2 bookingTableVM)
         {
             var res = new Data.Response();
