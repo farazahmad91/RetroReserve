@@ -1,4 +1,5 @@
-﻿var ContactId = 0;
+﻿
+var ContactId = 0;
 function Status() {
     $.get("/Dashboard/Status").done(function (res) {
         console.clear();
@@ -99,23 +100,63 @@ var ChangePassword = () => {
 }
 
 var SaveChangePassword = () => {
-    debugger;
-    let obj = {
-        CurrentPassword: $("#CurrentPassword").val(),
-        NewPassword: $("#NewPassword").val(),
-    }
-    var ConfirmPassword = $("#ConfirmPassword").val();
-    if (obj.NewPassword != ConfirmPassword) {
-        $('#passwordMismatch').show();
-        return false
-    }
-    $.post("/Account/SaveChangePassword", obj).done((result) => {
-        QAlert(result.statusCode, result.responseText);
-        $('#alert-container').css('z-index', 9000);
-        if (result.statusCode == 1) {
-            $('#exampleModalCenter').modal('hide');
+    if (validateInputs()) {
+        let obj = {
+            CurrentPassword: $("#CurrentPassword").val(),
+            NewPassword: $("#NewPassword").val(),
         }
-    }).fail((result) => {
-        QAlert(result.statusCode, result.responseText);
-    })
+        var ConfirmPassword = $("#ConfirmPassword").val();
+        if (obj.NewPassword != ConfirmPassword) {
+            $('#passwordMismatch').show();
+            return false
+        }
+        $('#passwordMismatch').hide();
+        $.post("/Account/SaveChangePassword", obj).done((result) => {
+            QAlert(result.statusCode, result.responseText);
+            $('#alert-container').css('z-index', 9000);
+            if (result.statusCode == 1) {
+                $('#exampleModalCenter').modal('hide');
+            }
+        }).fail((result) => {
+            QAlert(result.statusCode, result.responseText);
+        })
+    }
+}
+
+function validateInputs() {
+    let isValid = false;
+    $('input:required, select:required').removeClass("is-invalid");
+    $('input:required, select:required').addClass("is-valid");
+    $('input:required, textarea:required').addClass("is-valid");
+    let inputs = $('input:required, select:required,textarea:required');
+    let filteredInputs = inputs.filter(function () {
+        let currentEle = $(this);
+        let value = currentEle.val();
+        if (this.tagName.toUpperCase() === 'INPUT' && this.type.toUpperCase() === 'NUMBER' && this.min && value) {
+            return parseInt(value) < parseInt(this.min);
+        }
+        else {
+            return value === "";
+        }
+    });
+
+    if (filteredInputs.length > 0) {
+        filteredInputs.each(function () {
+            isValid = false;
+            var input = $(this);
+            if (input[0].required) {
+                if (input[0].value != '') {
+                    input.removeClass("is-invalid");
+                    input.addClass("is-valid");
+                }
+                else {
+                    input.addClass("is-invalid");
+                }
+            }
+        });
+    }
+    else {
+        isValid = true;
+    }
+    return isValid;
 }
