@@ -10,6 +10,7 @@ using Entities;
 using Newtonsoft.Json;
 using API.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Entities.Extension;
 
 namespace RetroReserve.Controllers
 {
@@ -110,6 +111,38 @@ namespace RetroReserve.Controllers
             catch (Exception ex)
             {
             }
+        }
+
+       
+        public async Task<IActionResult> ChangePassword()
+        {
+            return PartialView();
+        }
+
+        public async Task<IActionResult> SaveChangePassword(ChangePassword changePassword)
+        {
+            var res = new API.Data.Response()
+            {
+                ResponseText="Failed To Change Password",
+                StatusCode = API.Data.ResponseStatus.FAILED
+            };
+            try
+            {
+                var apiRes = await AppWebRequest.O.PostAsync($"{_BaseUrl}/api/Account/ChangePassword", JsonConvert.SerializeObject(changePassword), User.GetLoggedInUserToken());
+                if (apiRes != null)
+                {
+                    res = JsonConvert.DeserializeObject<API.Data.Response>(apiRes.Result);
+                }
+                return Json(res);
+            }
+            catch (Exception ex)
+            {
+                res.ResponseText = ex.Message;
+                res.StatusCode = API.Data.ResponseStatus.FAILED;
+                return Json(res);
+                throw;
+            }
+          
         }
         public void SendEmail(string email, string password)
         {

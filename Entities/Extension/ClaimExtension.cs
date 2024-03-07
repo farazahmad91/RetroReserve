@@ -1,25 +1,24 @@
 ﻿using System.Security.Claims;
 
+
 namespace Entities.Extension
 {
     public static class ClaimExtension
     {
         public static T GetLoggedInUserId<T>(this ClaimsPrincipal principal)
         {
-            var loggedInUserIdClaim = principal.FindFirst("UserId");
-            var loggedInUserId = loggedInUserIdClaim != null ? loggedInUserIdClaim.Value : null;
-
+            var loggedInUserId = principal.FindFirst("UserId");
             if (typeof(T) == typeof(string))
             {
-                return (T)Convert.ChangeType(loggedInUserId, typeof(T)) ?? default;
+                return (T)Convert.ChangeType(loggedInUserId, typeof(T));
             }
             else if (typeof(T) == typeof(int) || typeof(T) == typeof(long))
             {
-                return loggedInUserId != null ? (T)Convert.ChangeType(loggedInUserId, typeof(T)) : default;
+                return loggedInUserId != null ? (T)Convert.ChangeType(loggedInUserId, typeof(T)) : (T)Convert.ChangeType(0, typeof(T));
             }
             else
             {
-                throw new ArgumentException("Invalid type provided");
+                throw new Exception("Invalid type provided");
             }
         }
 

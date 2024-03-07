@@ -26,6 +26,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -52,6 +53,7 @@
                     @{
                         var nameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
                         var name = nameClaim != null ? nameClaim.Value : "Guest";
+                        
                     }
                     <label class="nav-link">Welcome @name </label>
                 </li>
@@ -91,14 +93,17 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div class="dropdown-divider"></div>
+                        <a onclick="ChangePassword()" class="dropdown-item">
+                            <i class="fa fa-sign-out"></i>Change Password
+                        </a>
                         <a href="/Account/Logout" class="dropdown-item">
-                            <i class="fa fa-sign-out"></i> Log Out
+                            <i class="fa fa-sign-out"></i>Log Out
                         </a>
                     </div>
                 </li>
             </ul>
         </nav>
-
+        <div id="changePasswordPv"></div>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -107,7 +112,7 @@
 
                 <span class="brand-text font-weight-light"><h3><Strong> <i class='fas fa-utensils' style='color:red'></i> RetroReserve</h3></Strong></span>
             </a>
-
+            
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
@@ -526,6 +531,9 @@
     <script src="~/plugins/chart.js/Chart.min.js"></script>
     <!-- Sparkline -->
     <script src="~/plugins/sparklines/sparkline.js"></script>
+   @*  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> *@
     <!-- daterangepicker -->
     <script src="~/plugins/moment/moment.min.js"></script>
     <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
@@ -547,6 +555,8 @@
     </script>
     <script src="~/js/admin.js"></script>
     <script src="~/dist/js/pages/dashboard.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

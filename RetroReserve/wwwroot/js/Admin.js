@@ -13,7 +13,7 @@ Status();
 
 function NewMessage1() {
     $.get("/ContactUS/GetNewMessageNotification").done(function (res) {
-        
+
 
         // Assuming you want to append the dropdown menu to a specific element, replace "#dropdownContainer" with the actual selector.
         var dropdownMenu = $('<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"></div>');
@@ -29,7 +29,7 @@ function NewMessage1() {
             $(".totalmessage").html(message.newMessage);
 
         });
-       
+
         // Add the dropdown divider and "See All Messages" link
         dropdownMenu.append('<div class="dropdown-divider"></div>');
         dropdownMenu.append('<a href="/Inbox" class="dropdown-item dropdown-footer">See All Messages</a>');
@@ -44,19 +44,19 @@ NewMessage1();
 
 function UpdateNewMessageNotify(ContactId) {
     debugger;
-        var data = {
-            ContactId: ContactId,
-            status: 1,
-        };
+    var data = {
+        ContactId: ContactId,
+        status: 1,
+    };
 
-        $.post('/ContactUS/UpdateContactUsStatus', data)
-            .done(function (res) {
-                
-            })
-            .fail(function () {
-                // Handle the failure case
-                alert("Failed update");
-            });
+    $.post('/ContactUS/UpdateContactUsStatus', data)
+        .done(function (res) {
+
+        })
+        .fail(function () {
+            // Handle the failure case
+            alert("Failed update");
+        });
 
 }
 
@@ -89,3 +89,33 @@ function NewOrderStatusDboy() {
 }
 NewOrderStatusDboy();
 
+
+var ChangePassword = () => {
+
+    $.post("/Account/ChangePassword").done((result) => {
+        $("#changePasswordPv").html(result);
+        $('#exampleModalCenter').modal('show');
+    })
+}
+
+var SaveChangePassword = () => {
+    debugger;
+    let obj = {
+        CurrentPassword: $("#CurrentPassword").val(),
+        NewPassword: $("#NewPassword").val(),
+    }
+    var ConfirmPassword = $("#ConfirmPassword").val();
+    if (obj.NewPassword != ConfirmPassword) {
+        $('#passwordMismatch').show();
+        return false
+    }
+    $.post("/Account/SaveChangePassword", obj).done((result) => {
+        QAlert(result.statusCode, result.responseText);
+        $('#alert-container').css('z-index', 9000);
+        if (result.statusCode == 1) {
+            $('#exampleModalCenter').modal('hide');
+        }
+    }).fail((result) => {
+        QAlert(result.statusCode, result.responseText);
+    })
+}
