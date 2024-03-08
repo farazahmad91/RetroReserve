@@ -1,0 +1,22 @@
+﻿
+<div id="partialView">
+</div>
+<div id="add2"></div>
+@section Scripts {
+    <script>
+        var loadData = () => {
+            $.post("/Account/UserList").done((result) => {
+                $("#partialView").html(result);
+            });
+        }
+        loadData();
+
+        var AddOrEditUser = () => {
+            $.post("/Account/AdminRegister").done((result) => {
+                console.log(result);
+                $("#add2").html(result);
+                $('#exampleModalCenter').modal('show');
+            })
+        }
+    </script>
+}
