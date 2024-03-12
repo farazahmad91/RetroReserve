@@ -253,7 +253,7 @@ namespace RetroReserve.Controllers
 
                 if (apiResponse.ResponseText == "Already Exist" & apiResponse != null)
                 {
-                    // User has a review, redirect to login
+                    // User has a review, redirect to login 
                     string returnUrl = "/Account/Login";
                     await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                     HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
@@ -285,7 +285,7 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> UpdateUserProfileImg(UserProfile userProfile, IFormFile ImagePath)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
-            userProfile.Image = uploadImage.Image(ImagePath);
+            userProfile.Image = uploadImage.Image(ImagePath); 
             userProfile.Email = email;
             var i= await _apirequest.Post("UserProfile/UpdateUserProfileImg", userProfile);
             return Json(i);
