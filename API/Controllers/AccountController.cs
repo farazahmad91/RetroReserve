@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using Entities.Extension;
 using Entities;
+using API.Repository.Interface;
 
 namespace API.Controllers
 {
@@ -22,13 +23,15 @@ namespace API.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration configuration;
         private readonly IUserService _userservice;
-        public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IUserService userservice)
+        private readonly IDapperService dapperService;
+        public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IUserService userservice, IDapperService dapperService)
         {
             _signInManager = signInManager;
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.configuration = configuration;
             _userservice = userservice;
+            this.dapperService = dapperService;
         }
 
         [HttpPost(nameof(Registration))]
@@ -43,14 +46,9 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _userservice.RegisterAsync(model);
-                if (result.StatusCode == ResponseStatus.SUCCESS)
-                {
-                    response.ResponseText = result.ResponseText;
-                    response.StatusCode = result.StatusCode;
-                }
-                return Ok(response);
+                return Ok(result);
             }
-            return BadRequest(response);
+            return Ok(response);
         }
 
         [HttpPost(nameof(Login))]
@@ -137,9 +135,18 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }
+
+        [HttpPost(nameof(AllUser))]
+        public async Task<IActionResult> AllUser()
+        {
+            string query = "SELECT U.Id,U.Name,  U.UserName,  U.Email,   R.Name AS Role FROM  AspNetUsers U JOIN   AspNetUserRoles UR ON U.Id = UR.UserId JOIN   AspNetRoles R ON UR.RoleId = R.Id";
+            var list =  dapperService.GetAll<User>(query);
+            return Ok(list);
+        }
+
+      
     }
 }

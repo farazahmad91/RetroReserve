@@ -197,9 +197,24 @@ namespace RetroReserve.Controllers
         }
         [Route("/Register")]
         [HttpGet]
-        public IActionResult AdminRegister()
+        public IActionResult Index()
         {
-            return View();
+            return View();  
+        }
+        public async Task<IActionResult> UserList()
+        {
+            var list = new List<User>();
+             var apiRes = await AppWebRequest.O.PostAsync($"{_BaseUrl}/api/Account/AllUser", null, User.GetLoggedInUserToken());
+            if (apiRes.Result != null)
+            {
+                list = JsonConvert.DeserializeObject<List<User>>(apiRes.Result);
+            }
+            return PartialView(list);
+        }
+        public async Task<IActionResult> AdminRegister()
+        {
+          
+            return PartialView();
         }
 
         [HttpGet]
@@ -210,37 +225,45 @@ namespace RetroReserve.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            var res = new API.Data.Response()
+            {
+                ResponseText="Failed To Register User",
+                StatusCode = API.Data.ResponseStatus.FAILED
+            };
             if (ModelState.IsValid)
             {
                 try
                 {
                     var apiRes = await AppWebRequest.O.PostAsync($"{_BaseUrl}/api/Account/Registration", JsonConvert.SerializeObject(model));
-
                  
                     if (apiRes.Result != null)
                     {
-                        _apirequest.Post("UserProfile/AddUserProfileDetails", model);
-                        SendEmail(model.Email, model.Password);
-                        return Json(1);
+                        res = JsonConvert.DeserializeObject<API.Data.Response>(apiRes.Result);
+                   
+                        if(res.StatusCode == API.Data.ResponseStatus.SUCCESS)
+                        {
+                            _apirequest.Post("UserProfile/AddUserProfileDetails", model);
+                            SendEmail(model.Email, model.Password);
+                        }
+                        return Json(res);
 
                     }
                     else
                     {
-                        
                         var errorMessage = $"Registration failed with status code: {apiRes.HttpStatusCode}, Message: {apiRes.HttpMessage}";
-                        return BadRequest(errorMessage);
+                        return Json(errorMessage);
                     }
                 }
                 catch (Exception ex)
                 {
                    
-                    return BadRequest($"Registration failed. Exception: {ex.Message}");
+                    return Json($"Registration failed. Exception: {ex.Message}");
                 }
             }
             else
             {
                 
-                return BadRequest("Invalid request! Please check the provided data.");
+                return Json("Invalid request! Please check the provided data.");
             }
         }
         public async Task<IActionResult> Logout()

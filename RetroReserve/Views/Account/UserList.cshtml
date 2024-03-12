@@ -1,0 +1,105 @@
+﻿@model IEnumerable< API.Entities.User>
+@{
+
+    Layout = null;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>User</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">All User</a></li>
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+   <div id="AddUserForm"></div>
+    <div class="container">
+        <button class="btn btn-primary" onclick="AddOrEditUser(0)">Add User</button>
+        <br />  <br />
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped" id="tbl">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr class="text-nowrap">
+                            <th>Sr No:</th>
+                            <th>
+                               Name
+                            </th>
+                            <th>
+                                UserName
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>Role</th>
+                            
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr style="text-align: center;">
+                                <td colspan="12" style="text-align: center;">
+                                    <label><strong>Reacord Not Found</strong></label>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            var count = 0;
+                            @foreach (var item in Model)
+                            {
+
+                                var i = 0;
+                                count++;
+                                <tr class="text-nowrap">
+
+                                    <td>
+                                        @count
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Role)
+                                    </td>
+                                   
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" onclick="AddOrEditUser(@item.Id)"><span class="fas fa-edit" style="color: Blue"></span>Edit</a>
+                                                <a class="dropdown-item" onclick="DeleteCoupan(@item.Id)"><span class="fas fa-trash" style="color: Blue"></span>Delete</a>
+                                                @*<a class="dropdown-item" onclick="EmpDetails(@item.TableId)"><i class="fas fa-info-circle" style="color: darkgreen"></i></a>*@
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

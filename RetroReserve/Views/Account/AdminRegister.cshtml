@@ -1,185 +1,93 @@
 ﻿@using RetroReserve.Models;
 @model RegisterVM
-@{
-    ViewData["Title"] = "AdminRegister";
-    Layout = "_AdminLayout";
-}
-<div class="content-wrapper">
-    <!-- Your content goes here -->
-        <div class="row d-flex align-items-center justify-content-center">
-            <div class="col-md-4 card p-3">
-                <div>
-                    <div class="card" id="snackbar">Data Saved Successfully</div>
-                    <div class="card" id="snackbar2">Data Updated Successfully</div>
-                    <div class="card" id="snackbar3">Deleted.</div>
-                </div>
-                <h2 class="text-center text-info">Register</h2>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="mb-1">
                     <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
+                    <input asp-for="Name" class="form-control" placeholder="Enter Your Name" required />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="mb-1">
                     <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
+                    <input asp-for="Email" class="form-control" placeholder="Enter Your Email" required />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="mb-1">
                     <label asp-for="Role" class="control-label"></label>
-                    <select class="form-control" asp-for="Role">
+                    <select class="form-control" asp-for="Role" required>
                         <option value="">:: Select Role ::</option>
                         <option value="super_admin">Super Admin </option>
                         <option value="Admin"> Admin </option>
-                    <option value="Employee"> Employee </option>
+                        <option value="Employee"> Employee </option>
                         <option value="User"> User </option>
                     </select>
                     <span asp-validation-for="Role" class="text-danger"></span>
                 </div>
                 <div class="mb-1">
                     <label asp-for="Password" class="control-label"></label>
-                    <input asp-for="Password" class="form-control" />
+                    <input asp-for="Password" class="form-control" type="text" placeholder="Enter Password" required />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>            <div class="mb-1">
                     <label asp-for="ConfirmPassword" class="control-label"></label>
-                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <input asp-for="ConfirmPassword" class="form-control" type="text" placeholder="Enter Password" required />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
-            <br />
-                <div class="row">
-                    
-                    <div class="col-4">
-                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-                    <input type="submit" value="Register" onclick="RegisterUser();" class="btn btn-primary btn-lg float-center" />
-                    </div>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="RegisterUser()">Save</button>
             </div>
         </div>
     </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</div>
+
+
 <script>
 
-    function generateRandomPassword() {
-        var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        var lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-        var digitChars = "0123456789";
-        var specialChars = "#$%&*";
 
-        var getRandomChar = (charSet) => {
-            var index = Math.floor(Math.random() * charSet.length);
-            return charSet.charAt(index);
-        };
-
-        var password = [
-            getRandomChar(uppercaseChars),
-            getRandomChar(lowercaseChars),
-            getRandomChar(digitChars),
-            getRandomChar(specialChars),
-            getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
-            getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
-            getRandomChar(uppercaseChars + lowercaseChars + digitChars + specialChars),
-        ].join('');
-
-        return password;
-    }
     function RegisterUser() {
         var uname = $("#Name").val();
         var email = $("#Email").val();
         var password = $("#Password").val();
         var confirmPassword = $("#ConfirmPassword").val();
         var role = $("#Role").val();
-        const options = {
-            RequireDigit: true,
-            RequiredLength: 5,
-            RequireLowercase: true
-        };
-
-        const pass = generateRandomPassword();
-        
-        Show_Loader();
-        setTimeout(function () {
-            if (validateUser()) {
-                var param = {
-                    Name: uname,
-                    Email: email,
-                    Adhaar: pass,
-                    Role: role,
-                    Password: password,
-                    ConfirmPassword: confirmPassword,
-                };
-                $.post("/Account/Register", param).done(function (res) {
-                    
-                    Hide_Loader();
-                    showinsertsuccess("Register Successful");
-                }).fail(function () {
-                    Hide_Loader();
-                    showerrors("Something went wrong!!");
-                });
-            }
-        }, 1500)
-
+        if (validateInputs()) {
+            var param = {
+                Name: uname,
+                Email: email,
+                Adhaar: 'f$52@g7#',
+                Role: role,
+                Password: password,
+                ConfirmPassword: confirmPassword,
+            };
+            $.post("/Account/Register", param).done(function (result) {
+                QAlert(result.statusCode, result.responseText);
+                $('#alert-container').css('z-index', 9000);
+                if (result.statusCode == 1) {
+                 
+                    $('#exampleModalCenter').modal('hide');
+                    setTimeout(function () {
+                        loadData();
+                    },1000)
+                }
+            }).fail((result) => {
+                QAlert(result.statusCode, result.responseText);
+            })
+        }
     }
 
-    function validateUser() {
-        let isvalidated = true;
-        let msg = "<ul>";
-
-        function addError(message) {
-            msg += `<li>${message}</li>`;
-            isvalidated = false;
-        }
-        if ($("#Name").val() === "") {
-            addError("Please enter name");
-        }
-        if ($("#Email").val() === "") {
-            addError("Please enter Email");
-        }
-        if ($("#Role").val() === "") {
-            addError("Please select role!!");
-        }
-        if ($("#Password").val() === "") {
-            addError("Please enter  Password!!");
-        }
-        if ($("#ConfirmPassword").val() === "") {
-            addError("Please enter  confirmPassword!!");
-        }
-        if (!isvalidated) {
-            msg += "</ul>";
-            Hide_Loader();
-            showerrors(msg);
-        }
-
-        return isvalidated;
-    }
-
-
-    function Show_Loader() {
-        jQuery(".overlay-spinner").show();
-    }
-
-    function Hide_Loader() {
-        jQuery(".overlay-spinner").hide();
-    }
-    function showinsertsuccess(msg) {
-        var x = document.getElementById("snackbar");
-        x.className = "show";
-        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
-        jQuery("#snackbar").html(msg);
-    }
-
-    function showupdatesuccess(msg) {
-        var x = document.getElementById("snackbar2");
-        x.className = "show2";
-        setTimeout(function () { x.className = x.className.replace("show2", ""); }, 4000);
-        jQuery("#snackbar2").html(msg);
-    }
-
-    function showerrors(msg) {
-        var x = document.getElementById("snackbar3");
-        x.className = "show3";
-        setTimeout(function () { x.className = x.className.replace("show3", ""); }, 4000);
-        jQuery("#snackbar3").html(msg);
-    }
 </script>
 
