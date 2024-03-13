@@ -57,7 +57,7 @@ namespace RetroReserve.Controllers
         }
 
 
-        public IActionResult SalaryInfo()
+        public IActionResult MySalaryInfo()
         {
             return View();
         }

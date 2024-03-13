@@ -30,7 +30,7 @@
     </div>
     <div class="container">
         <button type="button" class="btn btn-primary" onclick="EditMenu();">Create New Menu</button>
-        <button type="button" class="btn btn-info float-right" onclick="TeaKart();"> TeaKart</button>
+        <button type="button" class="btn btn-info float-right" onclick="TeaKart();"> Tea/Desserts</button>
         <br />  <br />
         <div class="card">
             <div class="table-responsive">
@@ -90,7 +90,6 @@
                                         @{
                                             var ckb = @item.DishStatus == 0 ? "unchecked" : "checked";
                                         }
-
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -100,7 +99,6 @@
                                             </div>
                                         </div>
                                     </td>
-
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,13 +107,11 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" onclick="AddVarient(@item.DishId)"><span class="fa fa-plus" style="color:#007bff;"></span> Add Varient</a>
                                                 <a class="dropdown-item" onclick="EditFoodKart(@item.DishId)"><span class="fas fa-edit" style="color: Blue"></span> Edit Menu</a>
-
                                                 <a class="dropdown-item" onclick="VarientDetails(@item.DishId)"><i class="fas fa-info-circle" style="color: darkgreen"></i> V Details</a>
                                                 <a class="dropdown-item" href="@Url.Action("Delete", new { id=item.DishId })" onclick="deleteSubjectdata('@item.DishId');"><i class="fas fa-trash-alt" style="color: red"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
-
                                 </tr>
                             }
                            }
@@ -212,9 +208,6 @@
             alert("errror");
         })
     }
-
-
-
     function showinsertsuccess(msg) {
         var x = document.getElementById("snackbar");
         x.className = "show";

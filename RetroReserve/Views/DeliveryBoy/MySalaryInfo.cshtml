@@ -1,12 +1,10 @@
 ﻿@model IEnumerable<Entities.Employees>
 
 @{
-    ViewData["Title"] = "EmpSalary";
-    Layout = "_AdminLayout";
+    ViewData["Title"] = "MySalaryInfo";
+    Layout = "_EmployeeLayout";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-
-
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -26,11 +24,11 @@
         </div><!-- /.container-fluid -->
     </section>
     <div class="container">
-       
+
         <div class="card">
             <div class="table-responsive">
                 <br />
-                <table class="table table-striped" style="margin:5px;" id="emptable">
+                <table class="table table-striped" style="margin:5px;" id="mysalarytable">
                     <thead style="background-color:#17a2b8!important;">
                         <tr>
                             <th>Name</th>
@@ -38,7 +36,6 @@
                             <th>Image</th>
                             <th>Salary</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,16 +51,6 @@
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Salary)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Actions
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" onclick="PaySalary(@item.Salary,@item.EmpId,@item.RoleId)"><span class="fa fa-rupee" style="color: Blue"></span> Pay Salary</a>
-                                        </div>
-                                    </div>
-                                </td>
                             </tr>
                         }
                     </tbody>
@@ -77,22 +64,10 @@
 </script>
 <script>
     jQuery(document).ready(function ($) {
-        $("#emptable").DataTable();
+        $("#mysalarytable").DataTable();
     });
 
-    function PaySalary(amount,id,role) {
-        $.post("Employee/PaymentGateway")
-            .done(function (res) {
-                $("#PayPV").html(res);
-                $("#EmpPaymentModal").modal("show");
-                $("#empsalary").append(amount);
-                $("#empid").val(id);
-                $("#emprole").val(role);
-            })
-            .fail(function () {
-                alert("error");
-            });
-    }
-
 </script>
+
+
 
