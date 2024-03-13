@@ -89,7 +89,7 @@
         $.post('/Account/UpdateUserProfile', data)
             .done(function (res) {
                     Hide_Loader();
-                    success("Updated successfully!!.");
+                    QAlert(1, 'Updated successful');
                 window.location.href = "/Profile";
             })
             .fail(function (res) {

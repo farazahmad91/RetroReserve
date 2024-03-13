@@ -120,5 +120,26 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<EmployeeRoleMaster>(($"EmployeeRoleMaster/GetEmpSalary?id={id}"));
             return Json(i);
         }
+
+        [Route("/Salary")]
+        public async Task<ActionResult> EmpSalary()
+        {
+            var i = await apirequest.GetData<List<Employees>>("Employee/GetEmployeeList");
+            return PartialView(i);
+        }
+
+        public IActionResult PaymentGateway()
+        {
+            //var i = await apirequest.GetData<List<Employees>>("Employee/GetEmployeeList");
+            return PartialView();
+        }
+
+        public async Task<ActionResult> AddEmpSalary(Employees employees)
+        {
+
+            var res = await apirequest.Post("Employee/AddEmpSalary", employees);
+            var i = JsonConvert.DeserializeObject<Entities.Response>(res);
+            return Json(i);
+        }
     }
 }

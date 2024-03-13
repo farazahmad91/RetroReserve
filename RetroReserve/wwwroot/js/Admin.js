@@ -83,6 +83,7 @@ updateClock();
 function NewOrderStatusDboy() {
     $.get("/Employee/DashboardStatus").done(function (res) {
         $(".new_order").text(res[0].newOrderStatus);
+        $(".ontime").text(res[0].assignOn);
     }).fail(function () {
         alert("error");
     });

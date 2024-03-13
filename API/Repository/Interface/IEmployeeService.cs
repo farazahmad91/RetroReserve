@@ -11,6 +11,7 @@ namespace API.Repository.Interface
         public Task<int> UpdateEmployeeStatus(Employees employees);
         public int DeleteEmployee(int id);
         public Employees GetEmployeeDetailById(int id);
+        public Task<Response> AddEmpSalary(Employees employees);
 
         #endregion
 

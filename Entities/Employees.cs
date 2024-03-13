@@ -21,6 +21,7 @@ namespace Entities
         public string? AdharNo { get; set; }
         public string? Address { get; set; }
         public int IsActive { get; set; }
+        public int Status { get; set; }
     }
     public class EmployeesVM : Employees
     {
