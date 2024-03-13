@@ -66,6 +66,13 @@ namespace API.Controllers
             var i = employeeService.GetChefs();
             return Ok(i);
         }
+        [HttpPost(nameof(AddEmpSalary))]
+        public async Task<IActionResult> AddEmpSalary(Employees employees)
+        {
+            var i = await employeeService.AddEmpSalary(employees);
+            return Ok(i);
+        }
+
 
         [HttpGet(nameof(GetActiveDeliveryBoy))]
         public IActionResult GetActiveDeliveryBoy()

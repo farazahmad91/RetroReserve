@@ -176,5 +176,34 @@ namespace API.Repository.Impliments
             var i = dapper.GetById<DboyOrderSummary>(param, sp);
             return i;
         }
+
+        public async Task<Response> AddEmpSalary(Employees employees)
+        {
+            var res = new Response()
+            {
+                ResponseText = "Failed To Save",
+                StatusCode = -1,
+            };
+            try
+            {
+                var sp = "sp_AddEmpSalary";
+                var param = new
+                {
+                    EmpId = employees.EmpId,
+                    RoleId = employees.RoleId,
+                };
+                employeeRoleMasterService.GetEmployeeRoleMasterList();
+                res = await dapper.GetAsync<Response>(sp, param);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ResponseText = ex.Message;
+                res.StatusCode = -1;
+                return res;
+            }
+
+
+        }
     }
 }

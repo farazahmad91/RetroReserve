@@ -10,7 +10,7 @@
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Profile</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item active text-white">Profile</li>
     </ol>
 </div>
@@ -29,11 +29,11 @@
                             @{
                                 if (@Model.Image != "")
                                 {
-                                    <img src="@Model.Image" id="output" width="200" />
+                                        <img src="@Model.Image" id="output" width="200" />
                                 }
                                 else
                                 {
-                                    <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" />
+                                        <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" />
 
                                 }
                             }
@@ -70,13 +70,13 @@
                             </div>
                             <div class="col-sm-6">
                                     @{
-                                        @if (@Model.BirthDay != "")
+                                            @if (@Model.BirthDay != "")
                                         {
-                                            <p class="text-muted mb-0">@Model.BirthDay</p>
+                                                <p class="text-muted mb-0">@Model.BirthDay</p>
                                         }
                                         else
                                         {
-                                            <p class="text-muted mb-0">Please add birthday</p>
+                                                <p class="text-muted mb-0">Please add birthday</p>
 
                                         }
                                     }
@@ -92,11 +92,11 @@
                                     @{
                                         if (@Model.Phone != "")
                                         {
-                                            <p class="text-muted mb-0">@Model.Phone</p>
+                                                <p class="text-muted mb-0">@Model.Phone</p>
                                         }
                                         else
                                         {
-                                            <p class="text-muted mb-0">Please add Phone no.</p>
+                                                <p class="text-muted mb-0">Please add Phone no.</p>
 
                                         }
                                     }
@@ -150,6 +150,7 @@ else
                 console.log('Image updated successfully:', data);
                 // Optionally update the image source on the client side
                 document.getElementById('output').src = `/uploads/${data.NewImagePath}`;
+                window.location.href = "/Profile";
             })
             .catch(error => console.error('Error updating image:', error));
     }

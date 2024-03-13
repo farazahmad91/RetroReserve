@@ -12910,8 +12910,8 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
   font-weight: 300;
   padding: 2px 4px;
   position: absolute;
-  right: 5px;
-  top: 9px;
+  right: -2px;
+  top: 7px;
 }
 
 .btn-navbar {

@@ -170,6 +170,7 @@
         ShowBanner1();
         function ShowBanner2() {
             $.post("/Banners/ShowBanner2").done(function (res) {
+                console.log(res);
                 $("#PVBannerShow2").html(res);
             }).fail(function () {
                 alert("errror");

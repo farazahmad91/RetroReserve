@@ -8,7 +8,11 @@
     @foreach (var item in Model)
     {
         <div class="carousel-item @(item == Model.First() ? "active" : "") rounded">
-            <img src="@item.BannerImage" class="img-fluid w-100 h-100 bg-secondary rounded" alt="Slide Image">
+            <video class="img-fluid w-100 h-100 bg-secondary rounded" controls autoplay>
+                <source src="@item.BannerImage" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
             <a href="@item.ProductLink" class="btn px-4 py-2 text-white rounded">@item.BannerOfferName</a>
         </div>
     }

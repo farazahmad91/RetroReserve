@@ -57,9 +57,9 @@ namespace RetroReserve.Controllers
         }
 
 
-        //public async Task<IActionResult> DboyOrderSummary()
-        //{
-           
-        //}
+        public IActionResult SalaryInfo()
+        {
+            return View();
+        }
     }
 }

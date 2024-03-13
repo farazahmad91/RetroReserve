@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Entities.Employees>
+
+@{
+    ViewData["Title"] = "EmpSalary";
+    Layout = "_AdminLayout";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><strong>Employee Salary</strong></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Employee Salary</a></li>
+                        <li class="breadcrumb-item active">Manage Salary</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+       
+        <div class="card">
+            <div class="table-responsive">
+                <br />
+                <table class="table table-striped" style="margin:5px;" id="emptable">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Image</th>
+                            <th>Salary</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>
+                                    <a class="fancybox" href="@item.Image" data-fancybox data-caption="@item.Name">
+                                        <img src="@item.Image" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="90px" height="50px" />
+                                    </a>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Salary)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" onclick="PaySalary(@item.Salary,@item.EmpId,@item.RoleId)"><span class="fa fa-rupee" style="color: Blue"></span> Pay Salary</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="PayPV"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+</script>
+<script>
+    jQuery(document).ready(function ($) {
+        $("#emptable").DataTable();
+    });
+
+    function PaySalary(amount,id,role) {
+        $.post("Employee/PaymentGateway")
+            .done(function (res) {
+                $("#PayPV").html(res);
+                $("#EmpPaymentModal").modal("show");
+                $("#empsalary").append(amount);
+                $("#empid").val(id);
+                $("#emprole").val(role);
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+
+</script>
+
