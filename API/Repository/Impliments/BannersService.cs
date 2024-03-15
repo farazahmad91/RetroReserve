@@ -1,5 +1,6 @@
 ﻿using API.Repository.Interface;
 using Entities;
+using System.Collections.Generic;
 
 namespace API.Repository.Impliments
 {
@@ -38,63 +39,189 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrUpdateBanner",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddorUpdateBanner",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
             }
         }
 
         public IEnumerable<Banners> BannersList()
         {
-            var sp = "sp_GetBannerList";
-            var i = _dapper.GetAll<Banners>(sp);
-            return i;
+            IEnumerable <Banners> res = new List<Banners>();
+            try
+            {
+                var sp = "sp_GetBannerList";
+                var i = _dapper.GetAll<Banners>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "BannersList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetBannerList",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public Banners BannersListById(int id)
         {
-            var sp = "sp_getBannerById";
-            var param = new
+            Banners res = new Banners();
+            try
             {
-                BannerId = id,
-            };
-            var i = _dapper.GetById<Banners>(param,sp);
-            return i;
+                var sp = "sp_getBannerById";
+                var param = new
+                {
+                    BannerId = id,
+                };
+                var i = _dapper.GetById<Banners>(param, sp);
+                res =i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "BannersListById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_getBannerById",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
 
         public async Task<int> UpdateBannerStatus(Banners banners)
         {
-            var sp = "sp_UpdateBannerStatus";
-            var param = new
+            int res = 0;
+            try
             {
-                BannerId = banners.BannerId,
-                Status = banners.Status,
-            };
-            var i = await _dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_UpdateBannerStatus";
+                var param = new
+                {
+                    BannerId = banners.BannerId,
+                    Status = banners.Status,
+                };
+                var i = await _dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateBannerStatus",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateBannerStatus",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<Banners> ShowBanner1()
         {
-            var sp = "sp_GetBanner1";
-            var i = _dapper.GetAll<Banners>(sp);
-            return i;
+            IEnumerable <Banners> res = new List<Banners>();
+            try
+            {
+                var sp = "sp_GetBanner1";
+                var i = _dapper.GetAll<Banners>(sp);
+                res=i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "ShowBanner1",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetBanner1",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<Banners> ShowBanner2()
         {
-            var sp = "sp_GetBanner2";
-            var i = _dapper.GetAll<Banners>(sp);
-            return i;
+            IEnumerable<Banners> res = new List<Banners>();
+            try
+            {
+                var sp = "sp_GetBanner2";
+                var i = _dapper.GetAll<Banners>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "ShowBanner2",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetBanner2",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<Banners> ShowBanner3()
         {
-            var sp = "sp_GetBanner3";
-            var i = _dapper.GetAll<Banners>(sp);
-            return i;
+            IEnumerable<Banners> res = new List<Banners>();
+            try
+            {
+                var sp = "sp_GetBanner3";
+                var i = _dapper.GetAll<Banners>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "ShowBanner3",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetBanner3",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<Banners> EventBanner()
         {
-            var sp = "sp_GetEventBanner";
-            var i = _dapper.GetAll<Banners>(sp);
-            return i;
+            IEnumerable<Banners> res = new List<Banners>();
+            try
+            {
+                var sp = "sp_GetEventBanner";
+                var i = _dapper.GetAll<Banners>(sp);
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "EventBanner",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEventBanner",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
     }
 }
