@@ -1,5 +1,6 @@
 ﻿using API.Repository.Interface;
 using Entities;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 
 namespace API.Repository.Impliments
@@ -7,9 +8,11 @@ namespace API.Repository.Impliments
     public class ReviewService : IReviewService
     {
         private readonly IDapperService _dapper;
+    
         public ReviewService(IDapperService dapper)
         {
             this._dapper = dapper;
+  
         }
 
         //Product Reviews
@@ -42,39 +45,95 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddorUpdateProductReview",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddorUpdateProductReview",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
             }
         }
 
         public IEnumerable<Reviews> GetProductReviewList()
         {
-            var sp = "sp_GetProductReviewList";
-            var i = _dapper.GetAll<Reviews>(sp);
-            return i;
+            IEnumerable <Reviews> res = new List<Reviews>();
+            try
+            {
+                var sp = "sp_GetProductReviewList";
+                var i = _dapper.GetAll<Reviews>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetProductReviewList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetProductReviewList",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public Reviews GetProductReviewById(int id)
         {
-            var sp = "sp_GetProductReviewListById";
-            var param = new
+            Reviews res = new Reviews();
+            try
             {
-                ReviewId = id,
-            };
-            var i = _dapper.GetById<Reviews>(param, sp);
-            return i;
+                var sp = "sp_GetProductReviewListById";
+                var param = new
+                {
+                    ReviewId = id,
+                };
+                var i = _dapper.GetById<Reviews>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetProductReviewById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetProductReviewListById",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
 
         public async Task<int> ApproveProductReview(Reviews productReview)
         {
-            var sp = "sp_ApproveProductReview";
-            var param = new
+            int i = 0;
+            try
             {
-                ReviewId = productReview.ReviewId,
-                Status = productReview.Status,
-            };
-            var i = await _dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_ApproveProductReview";
+                var param = new
+                {
+                    ReviewId = productReview.ReviewId,
+                    Status = productReview.Status,
+                };
+                 i = await _dapper.Insert(param, sp);
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "ApproveProductReview",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_ApproveProductReview",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return i;
+            }
         }
 
         //Application Reviews
@@ -105,39 +164,96 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddorUpdateAppReview",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddorUpdateAReview",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
             }
         }
 
         public async Task<int> ApproveAReviewStatus(AppReviews aReview)
         {
-            var sp = "sp_ApproveAReview";
-            var param = new
+            var i = 0;
+            try
             {
-                AReviewId = aReview.AReviewId,
-                Status = aReview.Status,
-            };
-            var i = await _dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_ApproveAReview";
+                var param = new
+                {
+                    AReviewId = aReview.AReviewId,
+                    Status = aReview.Status,
+                };
+                 i = await _dapper.Insert(param, sp);
+                return i;
+            }
+            catch (Exception ex)
+            {
+
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "ApproveAReviewStatus",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_ApproveAReview",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return i;
+            }
         }
 
         public IEnumerable<AppReviews> GetAReviewList()
         {
-            var sp = "sp_GetAReviewList";
-            var i = _dapper.GetAll<AppReviews>(sp);
-            return i;
+            IEnumerable <AppReviews> res = new List<AppReviews>();
+            try
+            {
+                var sp = "sp_GetAReviewList";
+                var i = _dapper.GetAll<AppReviews>(sp);
+                res= i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetAReviewList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetAReviewList",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public AppReviews GetAReviewById(int id)
-        {
-            var sp = "sp_GetAReviewListById";
-            var param = new
+        { 
+            AppReviews res = new AppReviews();
+            try
             {
-                ReviewId = id,
-            };
-            var i = _dapper.GetById<AppReviews>(param, sp);
-            return i;
+                var sp = "sp_GetAReviewListById";
+                var param = new
+                {
+                    ReviewId = id,
+                };
+                var i = _dapper.GetById<AppReviews>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetAReviewById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetAReviewListById",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public async Task<Response> CheckUserReview(String email)
         {
@@ -160,8 +276,14 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "CheckUserReview",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_CheckUserAReview",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
             }
         }
@@ -193,32 +315,76 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddorUpdateDboyReview",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddOrUpdateDboyReview",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
             }
         }
 
         public IEnumerable<DboyReview> GetDboyReviewList(string email)
         {
-            var sp = "sp_GetDBoyReview";
-            var param = new
+            IEnumerable <DboyReview> res = new List<DboyReview>();
+            try
             {
-                Email = email,
-            };
-            var i = _dapper.GetItemsById<DboyReview>(param, sp);
-            return i;
+                var sp = "sp_GetDBoyReview";
+                var param = new
+                {
+                    Email = email,
+                };
+                var i = _dapper.GetItemsById<DboyReview>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetDboyReviewList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetDBoyReview",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<DboyReviewStatistics> GetDboyReviewStatistics(int id)
         {
             var sp = "sp_GetDboyReviewStatisticsById";
-            var param = new
+            IEnumerable<DboyReviewStatistics> res = new List<DboyReviewStatistics>();
+
+            try
             {
-                EmpId = id,
-            };
-            var i = _dapper.GetItemsById<DboyReviewStatistics>(param, sp);
-            return i;
+                var param = new
+                {
+                    EmpId = id,
+                };
+                var i = _dapper.GetItemsById<DboyReviewStatistics>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+
+                var error = new Response
+                {
+                   ClassName = GetType().Name,
+                   FunctionName = "GetDboyReviewStatistics",
+                   ResponseText = ex.Message,
+                    Proc_Name = "sp_GetDboyReviewStatisticsById",
+                };
+               var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
+         
         }
     }
 }
