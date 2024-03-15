@@ -1,10 +1,12 @@
 using API.Extension;
 using API.Repository.Impliments;
 using API.Repository.Interface;
+using Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var ConnectionString = builder.Configuration.GetConnectionString("Default");
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 ServiceCollectionExtension.RegisterService(builder.Services, builder.Configuration);
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IDapperService, DapperService>();
@@ -28,6 +30,7 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IOffersService, OffersService>();	
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped <IFAQService, FAQService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
