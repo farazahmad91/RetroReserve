@@ -2,6 +2,7 @@
 using API.Repository.Interface;
 using Entities;
 using System.Net.Mail;
+using Response = Entities.Response;
 
 namespace API.Repository.Impliments
 {
@@ -47,34 +48,53 @@ namespace API.Repository.Impliments
 
         public async Task<BookingTableVM2> GetByIdTable(int Id)
         {
+            BookingTableVM2 res = new BookingTableVM2();
             try
             {
-                var res = await dapperService.GetAsync<BookingTableVM2>("SELECT * FROM  TBL_TABLEBYADMIN WHERE TableId=@Id", new
+                var i = await dapperService.GetAsync<BookingTableVM2>("SELECT * FROM  TBL_TABLEBYADMIN WHERE TableId=@Id", new
                 {
                     Id = Id
                 }, System.Data.CommandType.Text);
-                return res;
+                res = i;
+                return i;
             }
             catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetByIdTable",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Inline Query",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
         public async Task<IEnumerable<BookingTableVM2>> AllTable()
         {
-            var res = new Data.Response();
+            IEnumerable<BookingTableVM2> res = new List<BookingTableVM2>();
+           
             try
             {
 
                 var list = dapperService.GetAll<BookingTableVM2>("SELECT * FROM TBL_TABLEBYADMIN");
+                res= list;
                 return list;
             }
             catch (Exception ex)
             {
 
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AllTable",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Inline Query",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
@@ -94,8 +114,15 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "_ChangeStatusTable",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_ChnageTableStatus",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
@@ -129,23 +156,41 @@ namespace API.Repository.Impliments
             catch (Exception ex)
             {
 
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "TableBookByUser",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_AddBookingForUser",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
         public async Task<IEnumerable<BookingTableByUser>> AllBookedTable()
         {
-            var res = new Data.Response();
+            IEnumerable<BookingTableByUser> res = new List<BookingTableByUser>();
+
+
             try
             {
 
                 var list = dapperService.GetAll<BookingTableByUser>("SELECT * FROM tbl_UserBookingTable");
+                res = list;
                 return list;
             }
             catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AllBookedTable",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Inline Query",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
@@ -175,10 +220,17 @@ namespace API.Repository.Impliments
 			{
 				SmtpServer.Send(mail);
 			}
-			catch
+			catch(Exception ex)
 			{
-				throw;
-			}
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "Contactmessage",
+                    ResponseText = ex.Message,
+                    Proc_Name = "",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+            }
 		}
 
         public async Task<Data.Response> UpdateStatusBookedTable(int BookingId)
@@ -195,40 +247,68 @@ namespace API.Repository.Impliments
             catch (Exception ex)
             {
 
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateStatusBookedTable",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_UpdateStatusBookedTable",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
         public IEnumerable<BookingTableByUser> BookingDetails()
         {
-            var res = new Data.Response();
+            IEnumerable<BookingTableByUser> res = new List<BookingTableByUser>();
+
+
             try
             {
 
                 var list =  dapperService.GetAll<BookingTableByUser>("SELECT * FROM tbl_BookingTableDetail");
+                res=list;
                 return list;
             }
             catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "BookingDetails",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Inline Query",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
         public BookingTableByUser DetailsOnSearch(int id)
         {
-            var sp = "SELECT * FROM tbl_BookingTableDetail where BookingId=@id";
+            BookingTableByUser res = new BookingTableByUser();
             try
             {
+                var sp = "SELECT * FROM tbl_BookingTableDetail where BookingId=@id";
                 var param = new 
                 { id };
                 var list = dapperService.GetById<BookingTableByUser>(param,sp);
+                res=list;
                 return list;
             }
             catch (Exception ex)
             {
 
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "DetailsOnSearch",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Inline Query",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
             }
         }
 
