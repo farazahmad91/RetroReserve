@@ -60,7 +60,7 @@
                                             Actions
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" onclick="PaySalary(@item.Salary,@item.EmpId,@item.RoleId)"><span class="fa fa-rupee" style="color: Blue"></span> Pay Salary</a>
+                                            <a class="dropdown-item" onclick="PaySalary(@item.Salary,@item.EmpId,@item.RoleId,@item.Name,@item.Email)"><span class="fa fa-rupee" style="color: Blue"></span> Pay Salary</a>
                                         </div>
                                     </div>
                                 </td>
@@ -80,7 +80,7 @@
         $("#emptable").DataTable();
     });
 
-    function PaySalary(amount,id,role) {
+    function PaySalary(amount,id,role,name,email) {
         $.post("Employee/PaymentGateway")
             .done(function (res) {
                 $("#PayPV").html(res);
@@ -88,6 +88,8 @@
                 $("#empsalary").append(amount);
                 $("#empid").val(id);
                 $("#emprole").val(role);
+                $("#name").val(name);
+                $("#email").val(email);
             })
             .fail(function () {
                 alert("error");

@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using API.Repository.Impliments;
+using API.Repository.Interface;
+using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -13,10 +15,11 @@ namespace API.Controllers
     public class PGController : ControllerBase
     {
         private readonly StripeSettings _stripeSettings;
-
-        public PGController(IOptions<StripeSettings> stripesettings)
+        private readonly IDapperService _dapper;
+        public PGController(IOptions<StripeSettings> stripesettings, IDapperService dapper)
         {
             _stripeSettings = stripesettings.Value;
+            _dapper = dapper;
         }
 
         [HttpPost(nameof(CreatCheckOutSession)+"/{ammount}")]
@@ -62,7 +65,14 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "CreatCheckOutSession",
+                    ResponseText = ex.Message,
+                    Proc_Name = "",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 throw;
             }
         }

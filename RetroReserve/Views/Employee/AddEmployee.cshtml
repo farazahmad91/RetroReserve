@@ -240,7 +240,10 @@
             IsActive: $("#IsActive").val(),
              password : $("#Password").val(),
         };
-                RegisterUser(param.password);
+                if (param.EmpId <=0 )
+                {
+                    RegisterUser(param.password);
+                }
         var Employee = new FormData();
         Employee.append("EmpId", param.EmpId);
         Employee.append("Name", param.Name);
@@ -336,7 +339,6 @@
 
 
 
-
     function generateRandomPassword() {
         var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
@@ -362,6 +364,7 @@
     }
     function RegisterUser(password) {
         debugger;
+        var uname = $("#Name").val();
         var uname = $("#Name").val();
         var email = $("#Email").val();
         var password = password;

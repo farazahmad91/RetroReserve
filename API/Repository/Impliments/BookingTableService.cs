@@ -39,10 +39,15 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = ResponseStatus.FAILED;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "SaveOrUpdateTable",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_SaveOrUpdateTable",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
                 return res;
-                throw;
             }
         }
 

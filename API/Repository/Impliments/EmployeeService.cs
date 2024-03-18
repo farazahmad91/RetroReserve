@@ -12,11 +12,14 @@ namespace API.Repository.Impliments
         
         private readonly IDapperService dapper;
         private readonly IEmployeeRoleMasterService employeeRoleMasterService;
-        public EmployeeService(IDapperService dapper, IEmployeeRoleMasterService employeeRoleMasterService)
+		private readonly IEmailSenderService _EmailSender;
+		public EmployeeService(IDapperService dapper, IEmployeeRoleMasterService employeeRoleMasterService, IEmailSenderService EmailSender)
         {
             this.dapper = dapper;
            this.employeeRoleMasterService = employeeRoleMasterService;
-        }
+            this._EmailSender =EmailSender;
+
+		}
         public async Task<Response> AddOrUpdateEmployee(Employees employees)
         {
             var res = new Response()
@@ -48,8 +51,14 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrUpdateEmployee",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddOrUpdateEmployees",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
                 return res;
             }
             
@@ -194,16 +203,59 @@ namespace API.Repository.Impliments
                 };
                 employeeRoleMasterService.GetEmployeeRoleMasterList();
                 res = await dapper.GetAsync<Response>(sp, param);
+                string Subject = "test";
+				string Msg = "testing";
+				if (res.StatusCode==1)
+                {
+                    _EmailSender.SendEmail(employees.Email,Subject,Msg);
+
+				}
                 return res;
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddEmpSalary",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddEmpSalary",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
                 return res;
             }
 
 
+        }
+
+        public IEnumerable<Employees> GetEmployeeSalaryDetailById(int id)
+        {
+            IEnumerable<Employees> res = new List<Employees>();
+            try
+            {
+                string sp = "sp_GetEmpSalarydetailById";
+
+                var param = new
+                {
+                    EmpId = id
+                };
+
+                var i = dapper.GetItemsById<Employees>(param, sp);
+                res = i;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetEmployeeSalaryDetailById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEmpSalarydetailById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
     }
 }

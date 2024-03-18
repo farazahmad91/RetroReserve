@@ -12,7 +12,7 @@ namespace API.Repository.Interface
         public int DeleteEmployee(int id);
         public Employees GetEmployeeDetailById(int id);
         public Task<Response> AddEmpSalary(Employees employees);
-
+        public IEnumerable<Employees> GetEmployeeSalaryDetailById(int id);
         #endregion
 
         #region Deliveryboy
