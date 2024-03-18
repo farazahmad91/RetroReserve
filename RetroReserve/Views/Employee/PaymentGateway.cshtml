@@ -232,6 +232,8 @@
 </div>
 <div>
     <input type="text" id="empid" />
+    <input type="text" id="name" />
+    <input type="text" id="email" />
     <input type="text" id="emprole" />
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -240,6 +242,8 @@
         var param =
         {
             EmpId: $("#empid").val(),
+            Name: $("#name").val(),
+            Email: $("#email").val(),
             RoleId: $("#emprole").val(),
         };
         $.post("Employee/AddEmpSalary", param)

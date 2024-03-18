@@ -10,9 +10,9 @@ namespace RetroReserve.Controllers
     public class DeliveryBoyController : Controller
     {
         private readonly APIrequest _aPIrequest;
-        public DeliveryBoyController()
+        public DeliveryBoyController(APIrequest aPIrequest)
         {
-            _aPIrequest = new APIrequest();
+            _aPIrequest = aPIrequest;
         }
         public async Task<IActionResult> MyOrder()
         {
@@ -56,10 +56,14 @@ namespace RetroReserve.Controllers
             return PartialView(res);
         }
 
-
-        public IActionResult MySalaryInfo()
+        [Route("MySalaryInfo")]
+        public async Task<IActionResult> MySalaryInfo()
         {
-            return View();
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            var i = _aPIrequest.GetData<Employees>($"Employee/GetDboyIdByEmail?email={email}");
+            int Id = i.Result.EmpId;
+            var res = await _aPIrequest.GetData<List<Employees>>($"Employee/GetEmployeeSalaryDetailById?id={Id}");
+            return View(res);
         }
     }
 }

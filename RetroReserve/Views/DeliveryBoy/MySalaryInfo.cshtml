@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Entities.Employees>
 
 @{
+    int count = 0;
     ViewData["Title"] = "MySalaryInfo";
     Layout = "_EmployeeLayout";
 }
@@ -31,17 +32,22 @@
                 <table class="table table-striped" style="margin:5px;" id="mysalarytable">
                     <thead style="background-color:#17a2b8!important;">
                         <tr>
+                            <th>Sr.</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Image</th>
                             <th>Salary</th>
                             <th>Status</th>
+                            <th>Credit On</th>
                         </tr>
                     </thead>
                     <tbody>
+                        
                         @foreach (var item in Model)
                         {
+                            count += 1;
                             <tr>
+                                <td>@count</td>
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                 <td>
@@ -50,7 +56,24 @@
                                     </a>
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Salary)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>
+                                    @{
+                                        var sText = "";
+                                        var sClass = "";
+                                        @if (item.Status==1)
+                                        {
+                                            sText = "Credited";
+                                            sClass = "badge badge-success";
+                                        }
+                                        else
+                                        {
+                                            sText = "Not Credit";
+                                            sClass = "badge badge-Danger";
+                                        }
+                                    }
+                                    <label class="@sClass">@sText</label>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.CreditOn)</td>
                             </tr>
                         }
                     </tbody>

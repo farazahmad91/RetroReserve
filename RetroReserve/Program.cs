@@ -1,9 +1,12 @@
+using Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using RetroReserve.Models;
+using Stripe;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+BaseAPIUrl baseAPIUrl = new BaseAPIUrl();
+builder.Configuration.Bind(baseAPIUrl);
 builder.Services.AddScoped<APIrequest>();
 builder.Services.AddScoped<UploadImage>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>

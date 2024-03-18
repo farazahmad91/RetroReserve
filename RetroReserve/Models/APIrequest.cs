@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Entities;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -7,17 +9,22 @@ namespace RetroReserve.Models
 {
     public class APIrequest
     {
-        private readonly string BaseUrl;
-        public APIrequest()
+        private readonly string _BaseUrl;
+
+        //public APIrequest(IConfiguration configuration)
+        //{
+        //    _BaseUrl = configuration.GetSection("BaseAPIUrl").GetValue<string>("Url");
+        //}
+        public APIrequest(BaseAPIUrl baseAPIUrl)
         {
-            BaseUrl = "https://localhost:7291/api/";
+            _BaseUrl = baseAPIUrl.Url;
         }
         public async Task<T> GetData<T>(string relativeUrl)
         {
             using (HttpClient httpClient = new HttpClient())
             {
 
-                httpClient.BaseAddress = new Uri(BaseUrl);
+                httpClient.BaseAddress = new Uri(_BaseUrl);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -37,7 +44,7 @@ namespace RetroReserve.Models
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(BaseUrl);
+                httpClient.BaseAddress = new Uri(_BaseUrl);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -60,7 +67,7 @@ namespace RetroReserve.Models
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(BaseUrl);
+                httpClient.BaseAddress = new Uri(_BaseUrl);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -82,7 +89,7 @@ namespace RetroReserve.Models
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(BaseUrl);
+                httpClient.BaseAddress = new Uri(_BaseUrl);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -112,7 +119,7 @@ namespace RetroReserve.Models
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(BaseUrl);
+                httpClient.BaseAddress = new Uri(_BaseUrl);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = await httpClient.DeleteAsync(relativeUrl);
@@ -120,5 +127,7 @@ namespace RetroReserve.Models
                 return response.IsSuccessStatusCode;
             }
         }
+
+   
     }
 }

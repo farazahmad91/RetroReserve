@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities
+﻿namespace Entities
 {
     public class Employees
     {
@@ -22,6 +16,7 @@ namespace Entities
         public string? Address { get; set; }
         public int IsActive { get; set; }
         public int Status { get; set; }
+        public string? CreditOn { get; set; }
     }
     public class EmployeesVM : Employees
     {

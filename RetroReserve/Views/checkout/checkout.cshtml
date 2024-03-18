@@ -202,6 +202,7 @@
     function Payment() {
         $.post("/Payment", { messageafterCoupan: messageafterCoupan ,totalAmount:totalammount})
             .done(function (res) {
+                console.log(res);
                 window.location.href = res;
             })
             .fail(function () {

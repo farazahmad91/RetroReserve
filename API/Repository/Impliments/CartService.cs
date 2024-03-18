@@ -1,5 +1,6 @@
 ﻿using API.Repository.Interface;
 using Entities;
+using System.Collections.Generic;
 namespace API.Repository.Impliments
 {
     public class CartService : ICartService
@@ -11,78 +12,196 @@ namespace API.Repository.Impliments
         }
         public async Task<int> AddOrUpdateCartValue(Cart cartValue)
         {
-            var sp = "sp_AddOrUpdateCartValue";
-            var param = new
+            int res = 0;
+            try
             {
-                UserID = cartValue.UserID,
-                Id = cartValue.Id,
-                Quantity = cartValue.Quantity,
-                Status = cartValue.Status,
-                message = cartValue.message,
-            };
-            var i = await dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_AddOrUpdateCartValue";
+                var param = new
+                {
+                    UserID = cartValue.UserID,
+                    Id = cartValue.Id,
+                    Quantity = cartValue.Quantity,
+                    Status = cartValue.Status,
+                    message = cartValue.message,
+                };
+                var i = await dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrUpdateCartValue",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddOrUpdateCartValue",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public int DeleteCart(int id)
         {
-            var sp = "sp_DeleteCartValue";
-            var param = new
+            var res = 0;
+            try
             {
-                CartId = id,
-            };
-            return dapper.Delete(param, sp);
+                var sp = "sp_DeleteCartValue";
+                var param = new
+                {
+                    CartId = id,
+                };
+                var i = dapper.Delete(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "DeleteCart",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_DeleteCartValue",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<Cart> GetCartValueById(string id)
         {
-            var sp = "sp_GetCartValueById";
-            var param = new
+            IEnumerable<Cart> res = new List<Cart>();
+            try
             {
-                UserID = id,
-            };
-            var i = dapper.GetItemsById<Cart>(param, sp);
-            return i;
+                var sp = "sp_GetCartValueById";
+                var param = new
+                {
+                    UserID = id,
+                };
+                var i = dapper.GetItemsById<Cart>(param, sp);
+                res = i;    
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetCartValueById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetCartValueById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public Cart GetQtyInCart(string id)
-        {
-            var sp = "sp_GetNumberInCartItem";
-            var param = new
+        {  Cart res = new Cart();    
+            try
             {
-                UserID = id,
-            };
-            var i = dapper.GetById<Cart>(param, sp);
-            return i;
+                var sp = "sp_GetNumberInCartItem";
+                var param = new
+                {
+                    UserID = id,
+                };
+                var i = dapper.GetById<Cart>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex) 
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetQtyInCart",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetNumberInCartItem",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<Cart> GetCartValueList()
         {
-            var sp = "sp_CartValueById";
-            var i = dapper.GetAll<Cart>(sp);
-            return i;
+            IEnumerable <Cart> res = new List<Cart>();  
+            try
+            {
+                var sp = "sp_CartValueById";
+                var i = dapper.GetAll<Cart>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetCartValueList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_CartValueById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<Cart> GetCartCheckOutPrice(string id)
         {
-            var sp = "sp_CartCheckOutById";
-            var param = new
+            IEnumerable<Cart> res = new List<Cart>();
+            try
             {
-                UserID = id,
-            };
-            var i = dapper.GetItemsById<Cart>(param, sp);
-            return i;
+                var sp = "sp_CartCheckOutById";
+                var param = new
+                {
+                    UserID = id,
+                };
+                var i = dapper.GetItemsById<Cart>(param, sp);
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetCartCheckOutPrice",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_CartCheckOutById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public async Task<int> QtyUpdateInCart(CartQTY cartQTY)
         {
-            var sp = "sp_DishQtyUpdateInCartValue";
-            var param = new
+            var res = 0;
+            try
             {
-             CartId = cartQTY.CartId,
-             Quantity = cartQTY.Quantity,
-            };
-            var i = await dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_DishQtyUpdateInCartValue";
+                var param = new
+                {
+                    CartId = cartQTY.CartId,
+                    Quantity = cartQTY.Quantity,
+                };
+                var i = await dapper.Insert(param, sp);
+                res= i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "QtyUpdateInCart",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_DishQtyUpdateInCartValue",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
     }
 }

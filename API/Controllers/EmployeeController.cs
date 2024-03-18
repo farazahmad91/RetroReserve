@@ -101,5 +101,12 @@ namespace API.Controllers
             var i = employeeService.DboyOrderSummary(id);
             return Ok(i);
         }
+
+        [HttpGet(nameof(GetEmployeeSalaryDetailById))]
+        public IActionResult GetEmployeeSalaryDetailById(int id)
+        {
+            var i = employeeService.GetEmployeeSalaryDetailById(id);
+            return Ok(i);
+        }
     }
 }
