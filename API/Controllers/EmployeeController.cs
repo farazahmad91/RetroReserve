@@ -108,5 +108,12 @@ namespace API.Controllers
             var i = employeeService.GetEmployeeSalaryDetailById(id);
             return Ok(i);
         }
+
+        [HttpGet(nameof(GetDBoyCommitionById))]
+        public IActionResult GetDBoyCommitionById(int id)
+        {
+            var i = employeeService.GetDBoyCommitionById(id);
+            return Ok(i);
+        }
     }
 }

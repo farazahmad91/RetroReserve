@@ -11,14 +11,14 @@ namespace RetroReserve.Models
     {
         private readonly string _BaseUrl;
 
-        //public APIrequest(IConfiguration configuration)
-        //{
-        //    _BaseUrl = configuration.GetSection("BaseAPIUrl").GetValue<string>("Url");
-        //}
-        public APIrequest(BaseAPIUrl baseAPIUrl)
+        public APIrequest(IConfiguration configuration)
         {
-            _BaseUrl = baseAPIUrl.Url;
+            _BaseUrl = configuration.GetSection("BaseAPIUrl").GetValue<string>("Url");
         }
+        //public APIrequest(BaseAPIUrl baseAPIUrl)
+        //{
+        //    _BaseUrl = baseAPIUrl.Url;
+        //}
         public async Task<T> GetData<T>(string relativeUrl)
         {
             using (HttpClient httpClient = new HttpClient())

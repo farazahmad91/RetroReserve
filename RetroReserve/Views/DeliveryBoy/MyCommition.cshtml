@@ -1,0 +1,130 @@
+﻿@model IEnumerable<Entities.DeliveredOrder>
+
+@{
+    int count = 0;
+    ViewData["Title"] = "MyCommition";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><strong>Commitions</strong></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Commitions</a></li>
+                        <li class="breadcrumb-item active">Manage Commitions</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="container">
+
+        <div class="card">
+            <div class="table-responsive">
+                <br />
+                <table class="table table-striped" style="margin:5px;" id="mysalarytable">
+                    <thead style="background-color:#17a2b8!important;">
+                        <tr>
+                            <th>Sr.</th>
+                            <th>Email</th>
+                            <th>Order Assign On </th>
+                            <th>Order Delivered / Canceled Date</th>
+                            <th>Commition</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            count += 1;
+                            <tr>
+                                <td>@count</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AssignOn)</td>
+                                <td>
+                                    @{
+                                        var dText = "";
+                                        var dClass = "";
+                                        @if (item.DeliveredOrCancelledOn == null)
+                                        {
+                                            dText = "Pending";
+                                            dClass = "badge badge-warning";
+                                        }
+                                        else
+                                        {
+                                            dText = @item.DeliveredOrCancelledOn;
+                                            dClass = "";
+                                        }
+                                    }
+                                    <label class="@dClass">@dText</label>
+                                
+                                </td>
+                                <td>
+                                    @{
+                                        var cText = "";
+                                        var cClass = "";
+                                        @if (item.CommitionEarning == null)
+                                        {
+                                            cText = "₹ 0.0";
+                                            cClass = "badge badge-info";
+                                        }
+                                        else
+                                        {
+                                            cText = "₹ " + item.CommitionEarning;
+                                            cClass = "badge badge-primary";
+                                        }
+                                    }
+                                    <label class="@cClass">@cText</label>
+                                <td>
+                                    @{
+                                        var sText = "";
+                                        var sClass = "";
+                                        @if (item.Status == 4)
+                                        {
+                                            sText = "Delivered";
+                                            sClass = "badge badge-success";
+                                        }
+                                        else if (item.Status == 5)
+                                        {
+                                            sText = "Cancelled";
+                                            sClass = "badge badge-danger";
+                                        }
+                                       else 
+                                        {
+                                            sText = "Pending";
+                                            sClass = "badge badge-warning";
+                                        }
+                                    }
+                                    <label class="@sClass">@sText</label>
+                                </td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="PayPV"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+</script>
+<script>
+    jQuery(document).ready(function ($) {
+        $("#mysalarytable").DataTable();
+    });
+
+</script>
+
+
+
+
+

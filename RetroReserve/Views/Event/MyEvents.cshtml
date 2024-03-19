@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Entities.EventBooking>
+@{
+    ViewData["Title"] = "MyEvents";
+    Layout = "_UserLayout";
+}
+
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">All Booking</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+        <li class="breadcrumb-item active text-white">My Events</li>
+    </ol>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Booking No</th>
+                        <th scope="col">Event Name</th>
+                        <th scope="col"> Event Date</th>
+                        <th scope="col"> No. of Peoples</th>
+                        <th scope="col"> Booking Date</th>
+                        <th scope="col">Event Price</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" style="text-align:center;">
+                                <img src="~/img/ctable.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                <div style="text-align:center;"> <h3><strong>No Bookings Found</strong></h3></div>
+                                <p style="font-size: 16px; color: #666;">It looks like you haven't made any table bookings yet. Explore our available table and reserve your table to enjoy a memorable experience.</p>
+                                <br>
+                                <div class="text-left"> <a class="btn btn-primary" href="/Events">Discover Events - Back to Events</a></div>
+                            </td>
+                        </tr>
+
+
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    <label><strong>RREB-@item.eventBookingId</strong></label>
+                                </td>
+                                <td>
+                                    <label><strong>@item.eventName</strong></label>
+                                </td>
+                                <td>
+                                    <label><strong>@item.eventDate</strong></label>
+                                </td>
+                                <td>
+                                    <label><strong>@item.TotalGuest</strong></label>
+                                </td>
+                                <td>
+                                    <label><strong>@item.BookingDate</strong></label>
+                                </td>
+                                <td>
+                                    <label><strong>@item.eventPrice</strong></label>
+                                </td>
+                                <td>
+                                    @{
+                                        var sText = "";
+                                        var sStyle = "";
+
+                                        if (item.eventBookingStatus == 1)
+                                        {
+                                            sText = "Complete";
+                                            sStyle = "background-color:green; color:white; border-radius:30% 0% 30% 0%; padding:2px;";
+                                        }
+                                        else
+                                        {
+                                            sText = "Pending";
+                                            sStyle = "background-color:yellowgreen; color:white; border-radius:30% 0% 30% 0%; padding:2px;";
+                                        }
+                                    }
+
+                                    <label style="@sStyle">@sText</label>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+

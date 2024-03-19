@@ -44,8 +44,10 @@ namespace Entities
         public string? UserId { get; set; }
         public int EmpId { get; set; }
         public string? AssignOn { get; set; }
+        public string? CommitionEarning { get; set; }
         public string? DeliveredOrCancelledOn { get; set; }
         public int Status { get; set; }
+        public string? Email { get; set; }
         public string? cancellation_Reason { get; set; }
         public int NewOrderStatus { get; set; }
     }

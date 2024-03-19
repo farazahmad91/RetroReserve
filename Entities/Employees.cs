@@ -17,6 +17,7 @@
         public int IsActive { get; set; }
         public int Status { get; set; }
         public string? CreditOn { get; set; }
+       
     }
     public class EmployeesVM : Employees
     {
@@ -24,4 +25,6 @@
 
         public IEnumerable<Employees> Employee { get; set; }
     }
+
+
 }

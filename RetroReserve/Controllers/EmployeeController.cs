@@ -63,7 +63,6 @@ namespace RetroReserve.Controllers
             return Json(res);
         }
 
-        // GET: EmployeeController/Create
 
         [Authorize]
         public async Task<ActionResult> UpdateEmployeeStatus(Employees employees)
@@ -141,5 +140,6 @@ namespace RetroReserve.Controllers
             var i = JsonConvert.DeserializeObject<Entities.Response>(res);
             return Json(i);
         }
+
     }
 }

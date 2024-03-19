@@ -14,6 +14,7 @@ namespace RetroReserve.Controllers
         {
             _aPIrequest = aPIrequest;
         }
+        [Route("/MyOrder")]
         public async Task<IActionResult> MyOrder()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
@@ -63,6 +64,16 @@ namespace RetroReserve.Controllers
             var i = _aPIrequest.GetData<Employees>($"Employee/GetDboyIdByEmail?email={email}");
             int Id = i.Result.EmpId;
             var res = await _aPIrequest.GetData<List<Employees>>($"Employee/GetEmployeeSalaryDetailById?id={Id}");
+            return View(res);
+        }
+
+        [Route("/MyCommition")]
+        public async Task<ActionResult> MyCommition(Employees employees)
+        {
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            var i = _aPIrequest.GetData<Employees>($"Employee/GetDboyIdByEmail?email={email}");
+            int Id = i.Result.EmpId;
+            var res = await _aPIrequest.GetData<List<DeliveredOrder>>($"Employee/GetDBoyCommitionById?id={Id}");
             return View(res);
         }
     }

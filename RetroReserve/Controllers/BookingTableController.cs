@@ -6,6 +6,7 @@ using Entities;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using Entities.Extension;
+using System.Security.Claims;
 
 namespace RetroReserve.Controllers
 {
@@ -33,7 +34,7 @@ namespace RetroReserve.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult BookTableSchedule()
         {
             return PartialView();
@@ -102,6 +103,13 @@ namespace RetroReserve.Controllers
             var apiRes = await apirequest.Post($"BookingTable/UpdateStatusBookedTable/{BookingId}",null);
             res = JsonConvert.DeserializeObject<API.Data.Response>(apiRes);
             return Json(res);
+        }
+        [Route("/MyTables")]
+        public async Task<IActionResult> MyTables()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var list = await apirequest.GetData<List<BookingTableByUser>>($"BookingTable/BookingDetailsById?email={email}");
+            return View(list);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿<div class="container">
+﻿@using System.Security.Claims;
+<div class="container">
     <div class="row">
         <div class="modal fade" id="MyTableBookModal" role="dialog" data-backdrop="static" data-keyboard="false" style="opacity:1;">
             <div class="modal-dialog modal-lg">
@@ -13,8 +14,14 @@
                                 <h3>Retro Reserve</h3>
                                 <div class="row">
                                     <div class="col-sm-3">
+                                        @{
+                                            
+                                            var emailClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+                                            var email = emailClaim != null ? emailClaim.Value : "";
+
+                                        }
                                             <label for="email" class="form-label">Email:</label>
-                                            <input class="form-control" type="email" required placeholder="Enter Your Email" id="email" style="border-radius:unset" />
+                                        <input class="form-control" type="email" id="email" value="@email" readonly style="border-radius:unset" />
                                    
                                     </div>
                                     <div class="col-sm-3">
@@ -92,10 +99,9 @@
                                     </p>
                                     <p>
                                         RestroReserve is dedicated to providing you with an exceptional dining experience. We've partnered with OpenTable to offer free, secure, and instantly confirmed online reservations.
-                                        <a href="https://opentable.com" target="_blank">Learn More</a>
                                     </p>
                                     <p>
-                                        <a href="https://signin.opentable.com" target="_blank">Sign in</a>
+                                        <a href="#" target="_blank">Sign in</a>
                                     </p>
                                 </div>
 

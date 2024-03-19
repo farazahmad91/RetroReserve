@@ -41,15 +41,12 @@ namespace Entities
     {
         public int? BookingId { get; set; }
         public int TableId { get; set;}
-
         public int NoOfPeople { get; set; }
         public string BookingDate { get; set; }
-
         public string BookingTime { get; set; }
-
         public string Email { get; set; }
         public string  Name { get; set; }
-
+        public int Status { get; set; }
         public string? Entryon{ get; set; }
     }
 

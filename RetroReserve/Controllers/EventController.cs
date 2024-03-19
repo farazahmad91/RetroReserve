@@ -101,5 +101,12 @@ namespace RetroReserve.Controllers
 			var i = await apirequest.GetData<Event>(($"Event/GetEventPrice?id={id}"));
 			return Json(i);
 		}
-	}
+        [Route("/MyEvents")]
+        public async Task<ActionResult> MyEvents()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var i = await apirequest.GetData<List<EventBooking>>($"Event/EventDetailsById?email={email}");
+            return View(i);
+        }
+    }
 }
