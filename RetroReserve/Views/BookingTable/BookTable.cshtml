@@ -166,34 +166,44 @@
                     Email: $("#email").val(),
                     Name: $("#name").val()
                 };
-                $.post("/BookingTable/TableBookByUser", obj)
-                    .done(function (result) {
-                        Hide_Loader();
-                        if (result.statusCode == 1) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: result.responseText
-                            });
-                        }
-                        else {
+                if (obj.Email=="") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please log before booking!'
+                    });
+                }
+                else 
+                {
+                    $.post("/BookingTable/TableBookByUser", obj)
+                        .done(function (result) {
+                            Hide_Loader();
+                            if (result.statusCode == 1) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: result.responseText
+                                });
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: result.responseText
+                                });
+                            }
+
+                            $("#MyTableBookModal").modal("hide");
+                        })
+                        .fail(function (result) {
+                            Hide_Loader();
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
                                 text: result.responseText
                             });
-                        }
-                    
-                        $("#MyTableBookModal").modal("hide");
-                    })
-                    .fail(function (result) {
-                        Hide_Loader();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: result.responseText
                         });
-                    });
+                }
             }, 1000);
         }
     }

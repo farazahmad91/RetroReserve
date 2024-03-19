@@ -317,5 +317,33 @@ namespace API.Repository.Impliments
             }
         }
 
+
+        public IEnumerable<BookingTableByUser> BookingDetailsById(string email)
+        {
+            IEnumerable<BookingTableByUser> res = new List<BookingTableByUser>();
+            try
+            {
+                var sp = "sp_BookingDetailsById";
+                var param = new
+                {
+                  Email =email
+                };
+                var list = dapperService.GetItemsById<BookingTableByUser>(param,sp);
+                res = list;
+                return list;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "BookingDetailsById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_BookingDetailsById",
+                };
+                var _ = new ErrorLogService(dapperService).Error(error);
+                return res;
+            }
+        }
     }
 }

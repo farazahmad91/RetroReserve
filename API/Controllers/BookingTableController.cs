@@ -77,5 +77,12 @@ namespace API.Controllers
             var i = bookingTableService.DetailsOnSearch(id);
             return Ok(i);
         }
+
+        [HttpGet(nameof(BookingDetailsById))]
+        public IActionResult BookingDetailsById(string email)
+        {
+            var i = bookingTableService.BookingDetailsById(email);
+            return Ok(i);
+        }
     }
 }

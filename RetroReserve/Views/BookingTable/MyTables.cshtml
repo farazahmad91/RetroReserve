@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Entities.BookingTableByUser>
+@{
+    ViewData["Title"] = "MyTables";
+    Layout = "_UserLayout";
+}
+
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">All Booking</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+        <li class="breadcrumb-item active text-white">My Tables</li>
+    </ol>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Booking No</th>
+                        <th scope="col">Table No</th>
+                        <th scope="col"> Event Date</th>
+                        <th scope="col"> No. of Peoples</th>
+                        <th scope="col"> Booking Date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" style="text-align:center;">
+                                <img src="~/img/ctable.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                <div style="text-align:center;"> <h3><strong>No Bookings Found</strong></h3></div>
+                                <p style="font-size: 16px; color: #666;">It looks like you haven't made any table bookings yet. Explore our available table and reserve your table to enjoy a memorable experience.</p>
+                                <br>
+                                <div class="text-left"> <a class="btn btn-primary" href="/Events">Discover Events - Back to Events</a></div>
+                            </td>
+                        </tr>
+
+
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    <label>@item.BookingId</label>
+                                </td>
+                                <td>
+                                    <label>@item.TableId</label>
+                                </td>
+                                <td>
+                                    <label>@item.BookingDate</label>
+                                </td>
+                                <td>
+                                    <label>@item.NoOfPeople</label>
+                                </td>
+                                <td>
+                                    <label>@item.Entryon</label>
+                                </td>
+                                <td>
+                                    <label>@item.Status</label>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+</div>
+

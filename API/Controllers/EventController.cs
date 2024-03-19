@@ -97,5 +97,13 @@ namespace API.Controllers
             return Ok(i);
 
         }
+
+        [HttpGet(nameof(EventDetailsById))]
+        public IActionResult EventDetailsById(string email)
+        {
+            var i = _eventService.EventDetailsById(email);
+            return Ok(i);
+
+        }
     }
 }

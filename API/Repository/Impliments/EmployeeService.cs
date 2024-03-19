@@ -257,5 +257,35 @@ namespace API.Repository.Impliments
                 return res;
             }
         }
+
+        public IEnumerable<DeliveredOrder> GetDBoyCommitionById(int id)
+        {
+            IEnumerable<DeliveredOrder> res = new List<DeliveredOrder>();
+            try
+            {
+                string sp = "sp_GetDBoyCommitionById";
+
+                var param = new
+                {
+                    EmpId = id
+                };
+
+                var i = dapper.GetItemsById<DeliveredOrder>(param, sp);
+                res = i;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetDBoyCommitionById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetDBoyCommitionById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace API.Repository.Interface
         public IEnumerable<DeliveredOrder> GetOrderListByDboy(string email);
         public Employees GetDboyIdByEmail(string email);
         public DboyOrderSummary DboyOrderSummary(int id);
+        public IEnumerable<DeliveredOrder> GetDBoyCommitionById(int id);
 
         #endregion
 

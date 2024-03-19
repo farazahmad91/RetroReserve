@@ -2,6 +2,7 @@
 using Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Claims;
 using System.Web.Providers.Entities;
@@ -198,5 +199,33 @@ namespace API.Repository.Impliments
 			var i = dapper.GetById<EventVM>(param, sp);
 			return i;
 		}
-	}
+
+        public IEnumerable<EventBooking> EventDetailsById(string email)
+        {
+            IEnumerable <EventBooking> res = new List<EventBooking>();  
+            try
+            {
+                var sp = "sp_EventDetailsById";
+                var param = new
+                {
+                    UserID = email,
+                };
+                var i = dapper.GetItemsById<EventBooking>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "EventDetailsById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_EventDetailsById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
+        }
+    }
 }
