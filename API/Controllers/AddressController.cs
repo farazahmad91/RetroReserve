@@ -48,5 +48,12 @@ namespace API.Controllers
             var i = _addressService.GetAddressById(id);
             return Ok(i);
         }
+
+        [HttpPost(nameof(RemoveAddress))]
+        public async Task<IActionResult> RemoveAddress(Address address)
+        {
+            int i = await _addressService.RemoveAddress(address);
+            return Ok(i);
+        }
     }
 }

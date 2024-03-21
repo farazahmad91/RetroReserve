@@ -15,6 +15,7 @@ namespace API.Repository.Interface
         public IEnumerable<OrdersReport> GetOrderInPieChart();
         public Task<Response> UpdateOrderStatusByDBoy(DeliveredOrder deliveredOrder);
         public Task<Data.Response> OTPVerify(Orders orders);
+        public Task<Response> ResendOTP(DeliveredOrder deliveredOrder);
     }
    
 }

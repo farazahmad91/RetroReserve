@@ -19,6 +19,7 @@ namespace Entities
         public string? PostalCode { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? UpdatedAt { get; set; }
+        public int Status { get; set; }
     }
 
     public class State

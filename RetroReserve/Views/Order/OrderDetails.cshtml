@@ -141,7 +141,7 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12">
                 <div class="card card-stepper text-black" style="border-radius: 16px;">
-                    <div class="text-end"><h4 class="far fa-comment" data-bs-toggle="tooltip" title="FeedBack!"></h4> </div>
+                    <div class="text-end"> </div>
                     <div class="card-body p-5">
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <div>
@@ -193,19 +193,38 @@
                                 <i class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
                                 <div>
                                     <p class="fw-bold mb-1">Order</p>
-                                    <p class="fw-bold mb-0">Processed</p>
+                                    
                                     <p class="fw-bold mb-0">@Model.FirstOrDefault()?.ProcessedDate</p>
                                 </div>
                             </div>
-                            <div class="d-lg-flex align-items-center">
-                                <i class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                                <div>
-                                    <p class="fw-bold mb-1">Order</p>
-                                    <p class="fw-bold mb-0">Shipped</p>
-                                </div>
-                            </div>
                             @{
-                                if (Model.FirstOrDefault()?.Status == 4)
+                                if (Model.FirstOrDefault()?.Status == 1)
+                                {
+                                    <div class="d-lg-flex align-items-center">
+                                        <i>
+                                            <img src="~/img/cooking.gif" style="width:80px;height:80px;" alt="" />
+                                        </i>
+                                        <div>
+                                            <p class="fw-bold mb-1">Order</p>
+                                            <p class="fw-bold mb-0">Prepare</p>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-lg-flex align-items-center">
+                                        <i class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                                        <div>
+                                            <p class="fw-bold mb-1">Order</p>
+                                            <p class="fw-bold mb-0">Shipped</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                           
+                            @{
+                                
+                              if (Model.FirstOrDefault()?.Status == 4)
                                 {
                                                     <div class="d-lg-flex align-items-center">
                                                         <i class="fa-3x me-lg-4 mb-3 mb-lg-0 fa fa-check-circle text-success"> 
@@ -226,7 +245,16 @@
                                                         </div>
                                                     </div>
                                 }
-                                else
+                                else if (Model.FirstOrDefault()?.Status == 1)
+                                {
+                                    <div class="d-lg-flex align-items-center">
+                                        <i> <img src="~/img/waitgif.gif" style="width:80px;height:80px;" alt="" /></i>
+                                        <div>
+                                          
+                                        </div>
+                                    </div>
+                                }
+                                else 
                                 {
                                                     <div class="d-lg-flex align-items-center">
                                                         <i> <img src="~/img/orderplaced.gif" style="width:80px;height:80px;" alt="" /></i>

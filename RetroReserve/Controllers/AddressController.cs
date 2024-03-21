@@ -79,5 +79,11 @@ namespace RetroReserve.Controllers
             var i = await _apirequest.GetData<List<Address>>("Banners/ShowBanner1");
             return PartialView(i);
         }
+
+        public async Task<IActionResult> RemoveAddress(Address address)
+        {
+            var i = await _apirequest.Post("Address/RemoveAddress", address);
+            return Json(i);
+        }
     }
 }

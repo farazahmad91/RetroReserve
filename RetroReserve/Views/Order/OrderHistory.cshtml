@@ -58,7 +58,7 @@
 				<div class="col-lg-6">
 					<div class="">
 						<div class="single-prd-item">
-							<img src="@item.DishImage" alt="img" class="img-fluid rounded-circle" style="width:200px;height:200px;">
+									<img src="@item.DishImage" alt="img" class="img-fluid rounded-circle" onclick="OrderDetails(@item.OrderID);" style="width:200px;height:200px;">
 						</div>
 					</div>
 				</div>
@@ -75,12 +75,13 @@
 								<label  class="input-text qty" id="qty">@item.OrderDate</label>
 						</div>
 					</div>
-							<div class="s_product_text" style="text-align:left;">
-								<a href="#"> <h4 class="fa fa-download" onclick="OrderDetails(@item.OrderID);"><strong> Order Details</strong></h4></a>
-							</div>
+							
 					<div class="s_product_text" style="text-align:right;">
-							<a href="#"> <h4 class="fa fa-download" onclick="InvoiceGenerate(@item.OrderID);" ><strong> Get Invoice</strong></h4></a>
-					</div>
+							<a href="#"> <h6 class="fa fa-download" onclick="InvoiceGenerate(@item.OrderID);" ><strong> Get Invoice</strong></h6></a>
+								<div class="s_product_text" style="text-align:right;">
+									<a href="#"> <h6 class="fa fa-info-circle text-info" onclick="OrderDetails(@item.OrderID);"><strong> Order Details</strong></h6></a>
+								</div>
+						</div>
 				</div>
 			</div>
 			<hr />

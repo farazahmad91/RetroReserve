@@ -27,8 +27,8 @@ namespace RetroReserve.Controllers
             return View(i);
         }
 
-        [Route("/Payment")]
-        public async Task<IActionResult> Payment(double messageafterCoupan, double totalAmount)
+        
+        public async Task<IActionResult> Pay(double messageafterCoupan, double totalAmount)
         {
             string ammount = "";
             
@@ -64,8 +64,15 @@ namespace RetroReserve.Controllers
         {
             return View();
         }
-
-
+        [Route("/Payment")]
+        public IActionResult Payment(double messageafterCoupan, double totalAmount)
+        {
+            if (messageafterCoupan > 0)
+            {
+                return PartialView(messageafterCoupan);
+            }
+            return PartialView(totalAmount);
+        }
 
 
     }

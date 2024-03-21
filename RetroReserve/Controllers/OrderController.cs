@@ -78,5 +78,15 @@ namespace RetroReserve.Controllers
             var i = await apirequest.GetData<List<OrdersReport>>("Orders/GetOrderInPieChart");
             return PartialView(i);
         }
+
+        public async Task<IActionResult> ResendOTP(DeliveredOrder deliveredOrder)
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            deliveredOrder.UserId = email;
+            var i = await apirequest.Post("Orders/ResendOTP", deliveredOrder);
+            var res = JsonConvert.DeserializeObject<Entities.Response>(i);
+            return Json(res);
+
+        }
     }
 }
