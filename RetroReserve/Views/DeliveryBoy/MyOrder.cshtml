@@ -48,6 +48,9 @@
                             <th>
                                 <label>Action</label>
                             </th>
+                            <th>
+                                <label>OTP</label>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,6 +146,18 @@
                                         }
                                     </select>
                                 </td>
+                                <td>
+                                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                    @{
+                                      
+                                        if (@item.Status == 2)
+                                        {
+                                            <lable onclick="ResendOTP(@item.OrderId)" class="badge badge-primary">Resend OTP</lable>
+                                        }
+                                       
+                                    }
+
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -193,5 +208,31 @@
                 alert("error");
             });
     }
+    function ResendOTP(orderid) {
+   
+        let data = {
+            orderId: orderid,
+        };
 
+        $.post('/Order/ResendOTP', data)
+            .done(function (res) {
+                Hide_Loader();
+                setTimeout(function () {
+                    QAlert(res.statusCode, res.responseText);
+                }, 1000);
+                window.location.href = "/MyOrder";
+            })
+            .fail(function () {
+                Hide_Loader();
+                alert("Failed to update order status");
+            });
+    }
+
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
+
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
 </script>

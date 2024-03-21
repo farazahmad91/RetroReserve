@@ -85,5 +85,12 @@ namespace API.Controllers
             var i = await orderService.OTPVerify(orders);
             return Ok(i);
         }
+
+        [HttpPost(nameof(ResendOTP))]
+        public async Task<IActionResult> ResendOTP(DeliveredOrder deliveredOrder)
+        {
+            var i = await orderService.ResendOTP(deliveredOrder);
+            return Ok(i);
+        }
     }
 }

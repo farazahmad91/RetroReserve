@@ -28,7 +28,7 @@
                             <a href="#" class="nav-link dropdown-toggle fa fa-ellipsis-v text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;" data-bs-toggle="dropdown"></a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0 bg-white border-0 float-end">
                                 <a class="dropdown-item fa fa-edit" style="width:20px;" onclick="EditAddress(@item.AddressId);"></a>
-                                <a class="dropdown-item fas fa-trash-alt" style="color:black; width:20px;"></a>
+                                <a class="dropdown-item fas fa-trash-alt" style="color:black; width:20px;" onclick="RemoveAddress(@item.AddressId);"></a>
                             </div>
                         </div>
 
@@ -66,6 +66,19 @@ else
 
 
 <script>
+    function RemoveAddress(Id) {
+
+        let param = {
+            AddressId: Id,
+            Status:'0',
+        };
+        $.post("/Address/RemoveAddress", param).done(function (res) {
+            alert("done");
+        }).fail(function () {
+            alert("errror");
+        })
+    }
+
     function EditAddress(Id) {
 
         let param = {

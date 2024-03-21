@@ -2,7 +2,7 @@
 {
     public class Response
     {
-        public string ResponseText { get; set; }
+        public string? ResponseText { get; set; }
 
         public ResponseStatus StatusCode { get; set; }
     }
@@ -15,12 +15,12 @@
 
     public class RespnseToken :Response
     {
-        public string Token { get; set; }
+        public string? Token { get; set; }
         public DateTime ? Expiretoken { get; set; }
     }
     public class Response<T>
     {
-        public string ResponseText { get; set; }
+        public string? ResponseText { get; set; }
 
         public ResponseStatus StatusCode { get; set; }
 

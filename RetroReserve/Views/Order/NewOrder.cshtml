@@ -43,6 +43,9 @@
                                 Quantity
                             </th>
                             <th>
+                                Order Date-Time
+                            </th>
+                            <th>
                                 Status
                             </th>
                             <th>
@@ -78,6 +81,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DishQuantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrderDate)
                                     </td>
                                     <td>
 
@@ -183,6 +189,7 @@
 
     function UpdateOrderStatus(empid, email) {
         debugger;
+       
         const currentDate = new Date();
         const formattedDate = formatDate(currentDate);
         let data = {
@@ -200,7 +207,7 @@
                 window.location.href = "/NewOrder";
             })
             .fail(function () {
-                // Handle the failure case
+                Hide_Loader();
                 alert("Failed to update order status");
             });
     }
@@ -214,9 +221,10 @@
     }
 
     function DboyDetails(Id,Status,email) {
-        debugger;
+       
         $.post("/Employee/AssignDboy")
             .done(function (res) {
+                Hide_Loader();
                 $("#ActiveDBoyPV").html(res);
                 $("#AssignOrderModal").modal("show");
                 $("#orderid").val(Id);
@@ -224,8 +232,11 @@
                 $("#orderstatus").val(Status);
             })
             .fail(function () {
+                Hide_Loader();
                 alert("error");
             });
     }
+
+  
 </script>
 

@@ -256,5 +256,53 @@ namespace API.Repository.Impliments
             }
             
         }
+
+        public async Task<Response> ResendOTP(DeliveredOrder deliveredOrder)
+        {
+            var res = new Response()
+            {
+                ResponseText = "Failed To Save",
+                StatusCode = -1,
+            };
+            try
+            {
+                var sp = "sp_ResendOTP";
+                var param = new
+                {
+                    OrderID = deliveredOrder.OrderId,
+                    OTP = GenerateOTP(),
+                };
+                string bookingEmail = deliveredOrder.UserId;
+                string subject = "";
+                string body = "";
+                if (deliveredOrder.Status == 2)
+                {
+                    subject = "Notification of Shipped Order";
+                    body = $"Dear Valued Customer,\n\nWe are pleased to inform you that your order has been successfully shipped. You can expect to receive it within the next 30 minutes and kindly utilize the provided OTP for verification. Your OTP Is {param.OTP}.\n\nWe look forward to serving you and providing an unforgettable dining experience. If you have any special requests or questions, feel free to reach out to us.\n\nThank you for choosing us. We appreciate your trust and can't wait to welcome you!\n\nBest regards,\nThe RetroReserve Team";
+
+                }
+                res = await dapper.GetAsync<Response>(sp, param);
+
+                if (res.StatusCode == 1)
+                {
+                    emailSenderService.SendEmail(bookingEmail, subject, body);
+                }
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "ResendOTP",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_ResendOTP",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
+
+        }
     }
 }

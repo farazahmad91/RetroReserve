@@ -12,5 +12,6 @@ namespace API.Repository.Interface
         public IEnumerable<State> StateList();
         public IEnumerable<City> CityList();
         public IEnumerable<Address> FullAddressList();
+        public Task<int> RemoveAddress(Address address);
     }
 }

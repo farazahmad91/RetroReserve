@@ -1,4 +1,302 @@
-﻿@model IEnumerable<Entities.Cart>
+﻿
+@model IEnumerable<Entities.Cart>
+@{
+    decimal subtotal = 0;
+    decimal shipingcharge = 0;
+    decimal grandtotal = 0;
+    ViewData["Title"] = "Checkout";
+    Layout = "_UserLayout";
+}
+<div id="PaymentPV"></div>
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Checkout</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Checkout</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+<!-- Checkout Page Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Products</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+
+                                foreach (var item in Model)
+                                {
+                                                                                                    <tr>
+                                                                                                        @{
+                                            var total = item.Quantity * item.SellingCost;
+                                            var price = total;
+                                            subtotal += price;
+                                                                                                        }
+                                                                                                        <th scope="row">
+                                                                                                            <div class="d-flex align-items-center mt-2">
+                                                                                                                <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                                                                            </div>
+                                                                                                        </th>
+                                                                                                        <td class="py-5">@item.DishName</td>
+                                                                                                        <td class="py-5">@item.SellingCost</td>
+                                                                                                        <td class="py-5">@item.Quantity</td>
+                                                                                                        <td class="py-5">@total</td>
+                                                                                                    </tr>
+                                }
+                            }
+
+                            <tr>
+                                <th scope="row">
+                                </th>
+                                <td class="py-5"></td>
+                                <td class="py-5"></td>
+                                <td class="py-5">
+                                    <p class="mb-0 text-dark py-3">Subtotal</p>
+                                </td>
+                                <td class="py-5">
+                                    <div class="py-3 border-bottom border-top">
+                                        <p class="mb-0 text-dark">@subtotal</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="mt-5">
+                <input type="text" class="border-0 border-bottom rounded py-3" placeholder="Coupon Code" id="coupancode">
+                <button class="btn border-secondary rounded-pill text-primary" type="button" onclick="checkcoupan()">Apply Coupon</button>
+                <button class="btn border-secondary rounded-pill text-primary" type="button" style="margin-left: 50%" onclick="coupanpv()">
+                    Show Available
+                    Coupon
+                </button>
+            </div>
+           
+        </div>
+        <span id="couponMessage"></span>
+        <div class="row">
+            <div class="col-md-5">
+                <br />
+                <div class="bg-light rounded card">
+                    <div class="p-4">
+                        <h4 style="text-align:center;"><strong>Address Details</strong></h4>
+                        <hr />
+                        <div id="UserAddressPV"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <br />
+                <div class="bg-light rounded card">
+                    <div class="p-4">
+                        <h4 style="text-align:center;"><strong>Checkout Details</strong></h4>
+                        <hr />
+                        <div class="d-flex justify-content-between mb-4">
+                            <h5 class="mb-0 me-4 ">Subtotal:</h5>
+                            <p class="mb-0 subtotal-prize">@subtotal</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-0 me-4">Shipping Charge</h5>
+                            <div class="">
+                                @{
+
+                                    shipingcharge = 0;
+
+                                    if (subtotal >= 500)
+                                    {
+                                        grandtotal = subtotal + 0;
+                                                                                                        <p class="mb-0">Free</p>
+                                    }
+                                    else
+                                    {
+                                        grandtotal = subtotal + 50;
+                                                                                                        <p class="mb-0">50</p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                            <div class="col-12">
+                                <div class="form-check text-start my-3">
+                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="payment1" onchange="handleCheckboxChange('payment1', 'payment2'); BtnOnCash();" name="Delivery" value="CASH">
+                                    <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 text-center align-items-center justify-content-center py-3">
+                            <div class="col-12">
+                                <div class="form-check text-start my-3">
+                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="payment2" onchange="handleCheckboxChange('payment2', 'payment1'); BtnOnOnline();" name="Delivery" value="ONLINE">
+                                    <label class="form-check-label" for="Delivery-1">Online Payment</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                        <h5 class="mb-0 ps-4 me-4">Grand Total</h5>
+                        <p class="mb-0 pe-4" id="grandtotal">@grandtotal</p>
+                        <p class="mb-0 pe-4" id="grandtotalAfterCoupanApplied"></p>
+                    </div>
+                    <div style="text-align:center;">
+                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" href="#" id="btncash">Proceed to checkout</a>
+                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" onclick="Payment();" id="btnonline">Proceed to checkout</a>
+
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="CoupanPV"></div>
+</div>
+
+<!-- Checkout Page End -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    var messageafterCoupan = 0;
+    var totalammount = $("#grandtotal").text();
+    
+    function handleCheckboxChange(checkboxId, otherCheckboxId) {
+        var checkbox = document.getElementById(checkboxId);
+        var otherCheckbox = document.getElementById(otherCheckboxId);
+
+        if (checkbox.checked) {
+            BtnOnCash();
+            otherCheckbox.checked = false;
+        } else if (otherCheckbox.checked) {
+            BtnOnOnline();
+        } else {
+            btnhide();
+        }
+    }
+
+    function UserAddress() {
+        $.post("/Address/CheckoutAddress")
+            .done(function (res) {
+                $("#UserAddressPV").html(res);
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+
+    UserAddress();
+    function Payment() {
+        $.post("/Payment", { messageafterCoupan: messageafterCoupan ,totalAmount:totalammount})
+            .done(function (res) {
+                $("#PaymentPV").html(res);
+                $("#PaymentModal").modal("show");
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+
+    function btnhide() {
+        $("#btncash").hide();
+        $("#btnonline").hide();
+    }
+    btnhide();
+    function BtnOnCash() {
+        $("#btncash").show();
+        $("#btnonline").hide();
+    }
+
+    function BtnOnOnline() {
+        $("#btncash").hide();
+        $("#btnonline").show();
+    }
+
+    var coupanpv = () => {
+        $.post("/Offers/CoupanListPv")
+            .done((result) => {
+                $("#CoupanPV").html(result);
+                $("#MyTableBookModal").modal("show");
+            })
+            .fail((error) => {
+                console.error("Error fetching coupon list:", error);
+                // Handle the error, e.g., display an error message to the user
+            });
+    }
+
+
+    var checkcoupan = () => {
+
+        var CoupanName = $("#coupancode").val();
+        $.post("/Offers/CheckCoupan", { CoupanName: CoupanName }).done((result) => {
+            if (result.statusCode === 1) {
+                var discountPercentage = result.result;
+                var message = `Coupon Applied and ${discountPercentage}% discount applied.`;
+                $("#couponMessage").text(message).addClass("text-success");
+                 messageafterCoupan = calculatePercentage(discountPercentage, totalammount);
+                var textmessageafterCoupan = `Coupon Applied Amount ₹${messageafterCoupan} You'll Pay .`
+                $("#grandtotalAfterCoupanApplied").text(textmessageafterCoupan).addClass("text-success")
+            } else {
+                var errorMessage = result.responseText || "Invalid coupon code.";
+                $("#couponMessage").text(errorMessage).addClass("text-danger");
+                setTimeout(function () {
+                    window.location.href = window.location.href;
+                },2000)
+              
+            }
+        });
+    };
+        var calculatePercentage = (discountPercentage, totalammount) => {
+        debugger;
+        var ammountAfterCoupanApplied = (discountPercentage / 100) * totalammount;
+        var ammountpay = totalammount - ammountAfterCoupanApplied;
+        var messageafterCoupan =ammountpay;
+        return messageafterCoupan;
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<Entities.Cart>
 @{
     decimal subtotal = 0;
     decimal shipingcharge = 0;
@@ -197,10 +495,9 @@
                 alert("error");
             });
     }
-
     UserAddress();
     function Payment() {
-        $.post("/Payment", { messageafterCoupan: messageafterCoupan ,totalAmount:totalammount})
+        $.post("c/Payment")
             .done(function (res) {
                 console.log(res);
                 window.location.href = res;
@@ -209,6 +506,17 @@
                 alert("error");
             });
     }
+
+    // function Payment() {
+    //     $.post("/Payment", { messageafterCoupan: messageafterCoupan ,totalAmount:totalammount})
+    //         .done(function (res) {
+    //             console.log(res);
+    //             window.location.href = res;
+    //         })
+    //         .fail(function () {
+    //             alert("error");
+    //         });
+    // }
 
     function btnhide() {
         $("#btncash").hide();
@@ -268,3 +576,6 @@
     }
 
 </script>
+ *@
+
+

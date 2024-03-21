@@ -206,7 +206,8 @@ namespace API.Repository.Impliments
             }
         }
         public async Task<int> UpdatePostalCodeStatus(PostalCodes postalcode)
-        { int res = 0;
+        { 
+            int res = 0;
             try
             {
                 var sp = "sp_UpdatePostalStatus";
@@ -228,6 +229,35 @@ namespace API.Repository.Impliments
                     FunctionName = "UpdatePostalCodeStatus",
                     ResponseText = ex.Message,
                     Proc_Name = "sp_UpdatePostalStatus",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
+        }
+
+        public async Task<int> RemoveAddress(Address address)
+        {
+            int res = 0;
+            try
+            {
+                var sp = "sp_UpdateStatus";
+                var param = new
+                {
+                    AddressId = address.AddressId,
+                };
+                var i = await _dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "RemoveAddress",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateStatus",
                 };
                 var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
