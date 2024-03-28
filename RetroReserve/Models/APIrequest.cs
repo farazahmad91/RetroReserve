@@ -1,7 +1,7 @@
-﻿using Entities;
-using Microsoft.Extensions.Options;
+﻿using API.Repository.Impliments;
+using API.Repository.Interface;
+using Entities;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -9,11 +9,13 @@ namespace RetroReserve.Models
 {
     public class APIrequest
     {
+        
         private readonly string _BaseUrl;
-
-        public APIrequest(IConfiguration configuration)
+        private readonly IDapperService _dapper;
+        public APIrequest(IConfiguration configuration, IDapperService dapper)
         {
             _BaseUrl = configuration.GetSection("BaseAPIUrl").GetValue<string>("Url");
+            this._dapper=dapper;
         }
         //public APIrequest(BaseAPIUrl baseAPIUrl)
         //{
@@ -30,32 +32,25 @@ namespace RetroReserve.Models
 
                 HttpResponseMessage response = await httpClient.GetAsync(relativeUrl);
 
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<T>(responseContent);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = await response.Content.ReadAsStringAsync();
+                        return JsonConvert.DeserializeObject<T>(responseContent);
+                    }
                 }
-
-                return default(T);
-            }
-        }
-
-        public async Task<T> GetMultipleDataById<T>(string relativeUrl, params object[] parameters)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.BaseAddress = new Uri(_BaseUrl);
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                // string queryString = string.Join("&", parameters.Select(p => $"id={Uri.EscapeDataString(p.ToString())}"));
-
-                HttpResponseMessage response = await httpClient.GetAsync(relativeUrl);
-
-                if (response.IsSuccessStatusCode)
+                catch (Exception ex)
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<T>(responseContent);
+
+                    var error = new Entities.Response
+                    {
+                        ClassName = GetType().Name,
+                        FunctionName = "GetData",
+                        ResponseText = ex.Message,
+                        Proc_Name = "",
+                    };
+                    var _ = new ErrorLogService(_dapper).Error(error);
                 }
 
                 return default(T);
@@ -63,27 +58,6 @@ namespace RetroReserve.Models
         }
 
 
-        public async Task<T> GetMultipleParameter<T>(string relativeUrl, params object[] parameters)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.BaseAddress = new Uri(_BaseUrl);
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                string queryString = string.Join("&", parameters.Select((param, index) => $"param{index}={param}"));
-
-                HttpResponseMessage response = await httpClient.GetAsync($"{relativeUrl}?{queryString}");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<T>(responseContent);
-                }
-
-                return default(T);
-            }
-        }
 
         public async Task<string> Post(string relativeUrl, object data)
         {
@@ -107,7 +81,15 @@ namespace RetroReserve.Models
                 }
                 catch (Exception ex)
                 {
-
+                    var error = new Entities.Response
+                    {
+                        ClassName = GetType().Name,
+                        FunctionName = "Post",
+                        ResponseText = ex.Message,
+                        Proc_Name = "",
+                    };
+                    var _ = new ErrorLogService(_dapper).Error(error);
+                    
                 }
 
                 
@@ -127,7 +109,5 @@ namespace RetroReserve.Models
                 return response.IsSuccessStatusCode;
             }
         }
-
-   
     }
 }

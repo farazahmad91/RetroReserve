@@ -48,6 +48,7 @@ namespace Entities
         public string? DeliveredOrCancelledOn { get; set; }
         public int Status { get; set; }
         public string? Email { get; set; }
+        public string? UserEmail { get; set; }
         public string? cancellation_Reason { get; set; }
         public int NewOrderStatus { get; set; }
     }

@@ -15,7 +15,7 @@ namespace RetroReserve.Controllers
         {
             this.apirequest = apirequest;
         }
-        // GET: OffersController
+        [Route("/Offer")]
         public ActionResult Offer()
         {
             return View();

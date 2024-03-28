@@ -1,5 +1,6 @@
 ﻿using API.Repository.Interface;
 using Entities;
+using Stripe;
 
 namespace API.Repository.Impliments
 {
@@ -34,52 +35,126 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrUpdateUserProfile",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddOrUpdateUProfile",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
             }
         }
 
         public IEnumerable<UserProfile> UserProfileList()
         {
-            var sp = "sp_GetUserProfileList";
-            var i = _dapper.GetAll<UserProfile>(sp);
-            return i;
+            IEnumerable<UserProfile> res = new List<UserProfile>();
+            try
+            {
+                var sp = "sp_GetUserProfileList";
+                var i = _dapper.GetAll<UserProfile>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UserProfileList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetUserProfileList",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public UserProfile UserProfileListByEmail(string email)
         {
-            var sp = "sp_GetUserProfileByemail";
-            var param = new
+            UserProfile res = new UserProfile();
+            try
             {
-                Email = email,
-            };
-            var i = _dapper.GetById<UserProfile>(param, sp);
-            return i;
+                var sp = "sp_GetUserProfileByemail";
+                var param = new
+                {
+                    Email = email,
+                };
+                var i = _dapper.GetById<UserProfile>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UserProfileListByEmail",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetUserProfileByemail",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
 
         public async Task<int> UpdateUserProfileImg(UserProfile userProfile)
         {
-            var sp = "sp_UpdateUserImageByEmail";
-            var param = new
+            var res = 0;
+            try
             {
-               Email = userProfile.Email,
-                Image = userProfile.Image,
-            };
-            var i = await _dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_UpdateUserImageByEmail";
+                var param = new
+                {
+                    Email = userProfile.Email,
+                    Image = userProfile.Image,
+                };
+                var i = await _dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateUserProfileImg",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateUserImageByEmail",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
 
         public async Task<int> UpdateUserProfile(UserProfile userProfile)
         {
-            var sp = "sp_UpdateUserProfileById";
-            var param = new
+            var res = 0;
+            try
             {
-                UId = userProfile.UId,
-                BirthDay = userProfile.BirthDay,
-                Phone = userProfile.Phone,
-            };
-            var i = await _dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_UpdateUserProfileById";
+                var param = new
+                {
+                    UId = userProfile.UId,
+                    BirthDay = userProfile.BirthDay,
+                    Phone = userProfile.Phone,
+                };
+                var i = await _dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateUserProfile",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateUserProfileById",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
     }
 }

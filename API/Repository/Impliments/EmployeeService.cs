@@ -67,16 +67,25 @@ namespace API.Repository.Impliments
 
         public int DeleteEmployee(int id)
         {
-            var sp = "sp_DeleteEmployee";
-            var param = new
+            try
             {
-                EmpId = id,
-            };
-            return dapper.Delete(param, sp);
+                var sp = "sp_DeleteEmployee";
+                var param = new
+                {
+                    EmpId = id,
+                };
+                return dapper.Delete(param, sp);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public EmployeesVM GetEmployeeById(int id)
         {
+            EmployeesVM resp = new EmployeesVM();
             try
             {
                 string storedProcedureName = "sp_GetEmployeeById";
@@ -93,17 +102,26 @@ namespace API.Repository.Impliments
                     employeesVM = res;
                 }
                 employeesVM.employeeRoleMaster = employeeRoleMasterService.GetEmployeeRoleMasterList();
+                resp = employeesVM;
                 return employeesVM;
             }
             catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetEmployeeById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEmployeeById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return resp;
             }
         }
 
         public Employees GetEmployeeDetailById(int id)
         {
+            Employees res = new Employees();
             try
             {
                 string sp = "sp_GetEmployeeDetailsById";
@@ -113,77 +131,205 @@ namespace API.Repository.Impliments
                     EmpId = id
                 };
 
-                var res = dapper.GetById<Employees>(param, sp);
-                return res;
+                var i = dapper.GetById<Employees>(param, sp);
+                res = i;
+                return i;
             }
             catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetEmployeeDetailById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEmployeeDetailsById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
             }
         }
         public async Task<int> UpdateEmployeeStatus(Employees employees)
         {
-            var sp = "sp_UpdateEmployeeStatus";
-            var param = new
+            var res = 0;
+            try
             {
-                EmpId = employees.EmpId,
-                IsActive = employees.IsActive,
-            };
-            var i = await dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_UpdateEmployeeStatus";
+                var param = new
+                {
+                    EmpId = employees.EmpId,
+                    IsActive = employees.IsActive,
+                };
+                var i = await dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateEmployeeStatus",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateEmployeeStatus",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public  IEnumerable<Employees> GetEmployeeList()
         {
-            var sp = "sp_GetEmployeeList";
-            var i =  dapper.GetAll<Employees>(sp);
-            return i;
+            IEnumerable<Employees> res = new List<Employees>();
+            try
+            {
+                var sp = "sp_GetEmployeeList";
+                var i = dapper.GetAll<Employees>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetEmployeeList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEmployeeList",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
+
         }
         public IEnumerable<Employees> GetChefs()
         {
-            var sp = "sp_Chefs";
-            var i = dapper.GetAll<Employees>(sp);
-            return i;
+            IEnumerable<Employees> res = new List<Employees>();
+            try
+            {
+                var sp = "sp_Chefs";
+                var i = dapper.GetAll<Employees>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetChefs",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_Chefs",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<Employees> GetActiveDeliveryBoy()
         {
-            var sp = "sp_GetActiveDeliveryBoy";
-            var i = dapper.GetAll<Employees>(sp);
-            return i;
+            IEnumerable<Employees> res = new List<Employees>();
+            try
+            {
+                var sp = "sp_GetActiveDeliveryBoy";
+                var i = dapper.GetAll<Employees>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetActiveDeliveryBoy",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetActiveDeliveryBoy",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<DeliveredOrder> GetOrderListByDboy(string email)
         {
+            IEnumerable<DeliveredOrder> res = new List<DeliveredOrder>();
             var sp = "sp_GetOrderListByDboy";
-            var param = new
+            try
             {
-                Email = email,
-            };
-            var i = dapper.GetItemsById<DeliveredOrder>(param, sp);
-            return i;
+                var param = new
+                {
+                    Email = email,
+                };
+                var i = dapper.GetItemsById<DeliveredOrder>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetOrderListByDboy",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetOrderListByDboy",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public Employees GetDboyIdByEmail(string email)
         {
-            var sp = "sp_GetDboyIdByEmail";
-            var param = new
+            Employees res = new Employees();
+            try
             {
-             Email =email,
-            };
-            var i = dapper.GetById<Employees>(param,sp);
-            return i;
+                var sp = "sp_GetDboyIdByEmail";
+                var param = new
+                {
+                    Email = email,
+                };
+                var i = dapper.GetById<Employees>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetDboyIdByEmail",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetDboyIdByEmail",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public DboyOrderSummary DboyOrderSummary(int id)
         {
-            var sp = "sp_DboyOrderSummary";
-            var param = new
+            DboyOrderSummary res = new DboyOrderSummary();
+            try
             {
-                EmpId = id,
-            };
-            var i = dapper.GetById<DboyOrderSummary>(param, sp);
-            return i;
+                var sp = "sp_DboyOrderSummary";
+                var param = new
+                {
+                    EmpId = id,
+                };
+                var i = dapper.GetById<DboyOrderSummary>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "DboyOrderSummary",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_DboyOrderSummary",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public async Task<Response> AddEmpSalary(Employees employees)

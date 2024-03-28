@@ -54,72 +54,180 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "BookingOrder",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_OrderBooking",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
                 return res;
             }
         }
         public Orders Getconfirmdatashow(int id)
         {
-            var sp = "sp_confirmdatashow";
-            var param = new
+            Orders res = new Orders();
+            try
             {
-                UserId = id,
+                var sp = "sp_confirmdatashow";
+                var param = new
+                {
+                    UserId = id,
 
-            };
-            var i = dapper.GetById<Orders>(param, sp);
-            return i;
+                };
+                var i = dapper.GetById<Orders>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "Getconfirmdatashow",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_confirmdatashow",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public Orders GetOrderById(int id)
         {
-            var sp = "sp_GetOnlineOrderById";
-            var param = new
+            Orders res = new Orders();
+            try
             {
-                OrderID = id,
+                var sp = "sp_GetOnlineOrderById";
+                var param = new
+                {
+                    OrderID = id,
 
-            };
-            var i = dapper.GetById<Orders>(param, sp);
-            return i;
+                };
+                var i = dapper.GetById<Orders>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetOrderById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetOnlineOrderById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<OrdersReport> OrderHistory(string id)
         {
-            var sp = "sp_OrderHistory";
-            var param = new
+            IEnumerable<OrdersReport> res = new List<OrdersReport>();
+            try
             {
-                UserId = id,
+                var sp = "sp_OrderHistory";
+                var param = new
+                {
+                    UserId = id,
 
-            };
-            var i = dapper.GetItemsById <OrdersReport>(param, sp);
-            return i;
+                };
+                var i = dapper.GetItemsById<OrdersReport>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "OrderHistory",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_OrderHistory",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
+            
         }
         public IEnumerable<OrdersReport> InvoiceByOrderId(int id)
         {
-            var sp = "sp_InvoiceByOrderId";
-            var param = new
+            IEnumerable<OrdersReport> res = new List<OrdersReport>();
+            try
             {
-                OrderID = id,
+                var sp = "sp_InvoiceByOrderId";
+                var param = new
+                {
+                    OrderID = id,
 
-            };
-            var i = dapper.GetItemsById<OrdersReport>(param, sp);
-            return i;
+                };
+                var i = dapper.GetItemsById<OrdersReport>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "InvoiceByOrderId",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_InvoiceByOrderId",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<OrdersReport> GetOrderList()
         {
-            var sp = "sp_OrderReport";
-            var i = dapper.GetAll<OrdersReport>(sp);
-            return i;
+            IEnumerable<OrdersReport> res = new List<OrdersReport>();
+            try
+            {
+                var sp = "sp_OrderReport";
+                var i = dapper.GetAll<OrdersReport>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetOrderList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_OrderReport",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<OrdersReport> DeliverdOrderReport()
         {
-            var sp = "sp_DeliverdOrderReport";
-            var i = dapper.GetAll<OrdersReport>(sp);
-            return i;
+            IEnumerable<OrdersReport> res = new List<OrdersReport>();
+            try
+            {
+                var sp = "sp_DeliverdOrderReport";
+                var i = dapper.GetAll<OrdersReport>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "DeliverdOrderReport",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_DeliverdOrderReport",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public async Task<Response> UpdateOrderStatus(DeliveredOrder deliveredOrder)
-        {
+        { 
             var res = new Response()
             {
                 ResponseText = "Failed To Save",
@@ -134,6 +242,7 @@ namespace API.Repository.Impliments
                     Status = deliveredOrder.Status,
                     EmpId = deliveredOrder.EmpId,
                     Email = deliveredOrder.Email,
+                    UserEmail= deliveredOrder.UserId,
                     OTP = GenerateOTP(),
                 };
                 string bookingEmail = deliveredOrder.UserId;
@@ -155,24 +264,63 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateOrderStatus",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateOrderStatus",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
                 return res;
             }
           
         }
         public IEnumerable<OrdersReport> GetOrderInChart()
         {
-            var sp = "sp_GetOrderInChart";
-            var i = dapper.GetAll<OrdersReport>(sp);
-            return i;
+            IEnumerable<OrdersReport> res = new List<OrdersReport>();
+            try
+            {
+                var sp = "sp_GetOrderInChart";
+                var i = dapper.GetAll<OrdersReport>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetOrderInChart",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetOrderInChart",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<OrdersReport> GetOrderInPieChart()
         {
-            var sp = "sp_GettotalOrderByMonth";
-            var i = dapper.GetAll<OrdersReport>(sp);
-            return i;
+            IEnumerable<OrdersReport> res = new List<OrdersReport>();
+            try
+            {
+                var sp = "sp_GettotalOrderByMonth";
+                var i = dapper.GetAll<OrdersReport>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetOrderInPieChart",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GettotalOrderByMonth",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public Task<Response> AddOrder(Orders orders)
@@ -223,9 +371,14 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateOrderStatusByDBoy",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateOrderStatusByDBoy",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
                 return res;
             }
 
@@ -250,8 +403,14 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = Data.ResponseStatus.FAILED;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "OTPVerify",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_VerifyOTP",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
                 return res;
             }
             
@@ -272,15 +431,12 @@ namespace API.Repository.Impliments
                     OrderID = deliveredOrder.OrderId,
                     OTP = GenerateOTP(),
                 };
-                string bookingEmail = deliveredOrder.UserId;
+                string bookingEmail = deliveredOrder.UserEmail;
                 string subject = "";
                 string body = "";
-                if (deliveredOrder.Status == 2)
-                {
-                    subject = "Notification of Shipped Order";
-                    body = $"Dear Valued Customer,\n\nWe are pleased to inform you that your order has been successfully shipped. You can expect to receive it within the next 30 minutes and kindly utilize the provided OTP for verification. Your OTP Is {param.OTP}.\n\nWe look forward to serving you and providing an unforgettable dining experience. If you have any special requests or questions, feel free to reach out to us.\n\nThank you for choosing us. We appreciate your trust and can't wait to welcome you!\n\nBest regards,\nThe RetroReserve Team";
+                    subject = "Your Order OTP";
+                    body = $"Dear Valued Customer,\r\n\r\nWe're thrilled to inform you that your order has been successfully dispatched. Expect its arrival within the next 30 minutes. Please use the OTP provided below for verification:\r\n\r\nOTP: {{param.OTP}}\r\n\r\nWe're eagerly looking forward to providing you with an exceptional dining experience. Should you have any questions or special requests, feel free to reach out to us.\r\n\r\nThank you for choosing us. Your trust is invaluable, and we can't wait to welcome you soon!\r\n\r\nBest Regards,\r\nThe RetroReserve Team";
 
-                }
                 res = await dapper.GetAsync<Response>(sp, param);
 
                 if (res.StatusCode == 1)
