@@ -1,6 +1,9 @@
 ﻿using API.Data;
 using API.Repository.Interface;
 using Entities;
+using Stripe;
+using System.Collections.Generic;
+using Response = Entities.Response;
 
 namespace API.Repository.Impliments
 {
@@ -15,6 +18,7 @@ namespace API.Repository.Impliments
 
         public async Task<IEnumerable<Coupan>> GetCoupans()
         {
+            IEnumerable<Coupan> res = new List<Coupan>();
             try
             {
                 var list = _service.GetAll<Coupan>("select * from tbl_Coupan");
@@ -22,8 +26,15 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetCoupans",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Inline Query",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
+                return res;
             }
         }
 
@@ -49,25 +60,41 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "SaveOrUpdateCoupan",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_SaveOrUpdateCoupan",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
                 return res;
-                throw;
             }
         }
 
         public async Task<Coupan> AddOrEditCoupan(int Id)
         {
+            Coupan res = new Coupan();
             try
             {
-                var res = await _service.GetAsync<Coupan>("SELECT * FROM tbl_Coupan WHERE CoupanId= @Id", new
+                var i = await _service.GetAsync<Coupan>("SELECT * FROM tbl_Coupan WHERE CoupanId= @Id", new
                 {
                     Id = Id,
                 }, System.Data.CommandType.Text);
-                return res;
+                res = i;
+                return i;
             }
             catch (Exception ex)
             {
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrEditCoupan",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Inline Query",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
+                return res;
             }
         }
 
@@ -90,9 +117,15 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "ChangeCoupanStatus",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_ChangeCoupanStatus",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
                 return res;
-                throw;
             }
         }
 
@@ -117,9 +150,15 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "CheckCoupan",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_CheckCoupon",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
                 return res;
-                throw;
             }
         }
 
@@ -141,9 +180,53 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText += ex.Message;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "DeleteCoupan",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_DeleteCoupan",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
                 return res;
-                throw;
+            }
+        }
+
+        public async Task<Response> AddOrUpdateOffer(Offer offer)
+        {
+            var res = new Response
+            {
+                StatusCode = -1,
+                ResponseText= "something wrong!"
+            };
+
+            try
+            {
+                var sp = "Proc_SaveOrUpdateOffer";
+                var param = new
+                {
+                    OfferId = offer.OfferId,
+                    OfferName = offer.OfferName,
+                    OfferImage = offer.OfferImage,
+                    Description = offer.Description,
+                    ValidUpto = offer.ValidUpto,
+                    Discount = offer.Discount,
+                };
+                var i = await _service.GetAsync<Response>(sp, param);
+                res = i;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrUpdateOffer",
+                    ResponseText = ex.Message,
+                    Proc_Name = "Proc_SaveOrUpdateOffer",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
+                return res;
             }
         }
     }

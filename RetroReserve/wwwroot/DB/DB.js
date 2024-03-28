@@ -5629,3 +5629,52 @@ BEGIN
 SELECT - 1 AS StatusCode, 'OTP not provided' AS ResponseText;
 END
 END
+
+
+CREATE TABLE tbl_Offer(
+    OfferId INT PRIMARY KEY identity(1, 1),
+    OfferName VARCHAR(100),
+    OfferImage VARCHAR(255),
+    Description VARCHAR(255),
+    ValidUpto varchar(100),
+    Discount VARCHAR(50),
+    CreatedOn datetime default getdate(),
+    Status int
+);
+
+
+CREATE PROCEDURE Proc_SaveOrUpdateOffer
+@OfferId INT,
+    @OfferName VARCHAR(100),
+        @OfferImage VARCHAR(255),
+            @Description VARCHAR(255),
+                @ValidUpto VARCHAR(100),
+                    @Discount VARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        IF EXISTS(SELECT 1 FROM tbl_Offer WHERE OfferId = @OfferId)
+BEGIN
+            UPDATE tbl_Offer
+            SET OfferName = @OfferName,
+    OfferImage = CASE WHEN @OfferImage IS NOT NULL AND @OfferImage != '' THEN @OfferImage ELSE OfferImage END,
+        Description = @Description,
+        ValidUpto = @ValidUpto,
+        Discount = @Discount
+            WHERE OfferId = @OfferId;
+
+            SELECT 1 AS StatusCode, 'Offer updated successfully' AS ResponseText;
+END
+ELSE
+BEGIN
+            INSERT INTO tbl_Offer(OfferName, OfferImage, Description, ValidUpto, Discount)
+VALUES(@OfferName, @OfferImage, @Description, @ValidUpto, @Discount);
+
+            SELECT 1 AS StatusCode, 'Offer added successfully' AS ResponseText;
+END
+    END TRY
+    BEGIN CATCH
+SELECT - 1 AS StatusCode, 'Error: ' + ERROR_MESSAGE() AS ResponseText;
+    END CATCH
+END;
+

@@ -33,8 +33,14 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddFaq",
+                    ResponseText = ex.Message,
+                    Proc_Name = "InsertFAQ",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;
 
             }
@@ -43,12 +49,30 @@ namespace API.Repository.Impliments
 
         public IEnumerable<FAQ> FAQList()
         {
-            var sp = "sp_GetFAQ";
-            var i = _dapper.GetAll<FAQ>(sp);
-            return i;
+            IEnumerable<FAQ> res = new List<FAQ>();
+            try
+            {
+                var sp = "sp_GetFAQ";
+                var i = _dapper.GetAll<FAQ>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "FAQList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetFAQ",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
         public FAQ FAQListById(int id)
         {
+            FAQ res = new FAQ();
             try
             {
                 var sp = "sp_GetFAQById";
@@ -57,26 +81,51 @@ namespace API.Repository.Impliments
                     FAQId = id,
                 };
                 var i = _dapper.GetById<FAQ>(param, sp);
+                res = i;
                 return i;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "FAQListById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetFAQById",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
             }
             
         }
 
         public async Task<int> UpdateFAQStatus(FAQ fAQ)
         {
-            var sp = "sp_GetFAQStatusUpdate";
-            var param = new
+            var res = 0;
+            try
             {
-                FAQId = fAQ.FAQId,
-                Status = fAQ.Status,
-            };
-            var i = await _dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_GetFAQStatusUpdate";
+                var param = new
+                {
+                    FAQId = fAQ.FAQId,
+                    Status = fAQ.Status,
+                };
+                var i = await _dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateFAQStatus",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetFAQStatusUpdate",
+                };
+                var _ = new ErrorLogService(_dapper).Error(error);
+                return res;
+            }
         }
     }
 }

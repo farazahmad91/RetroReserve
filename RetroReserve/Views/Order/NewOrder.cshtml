@@ -140,18 +140,18 @@
                                             @{
                                                 if (@item.Status == 0 || @item.Status == 1)
                                                 {
-                                                                <option value="1">Processed</option>
-                                                                <option value="2">En Route</option>
+                                                                    <option value="1">Processed</option>
+                                                                    <option value="2">En Route</option>
                                                 }
                                                 else if (@item.Status == 2)
                                                 {
-                                                                <option value="2">En Route</option>
-                                                                <option value="3">Cancelled</option>
-                                                                <option value="4">Delivered</option>
+                                                                    <option value="2">En Route</option>
+                                                                    <option value="3">Cancelled</option>
+                                                                    <option value="4">Delivered</option>
                                                 }
                                                 else if (@item.Status == 3)
                                                 {
-                                                                <option value="3" disabled style="color:red;">Cancelled</option>
+                                                                    <option value="3" disabled style="color:red;">Cancelled</option>
                                                 }
                                             }
                                         </select>
@@ -189,27 +189,29 @@
 
     function UpdateOrderStatus(empid, email) {
         debugger;
-       
+        Show_Loader();
+        setTimeout(function () {
         const currentDate = new Date();
         const formattedDate = formatDate(currentDate);
         let data = {
-            orderId: $("#orderid").val(),
-            Status: $("#orderstatus").val(),
-            UserId: $("#useremail").val(),
-            Email:email,
-            EmpId:empid,
-            DeliverDate: Status == 4 ? formattedDate : '',
-        };
+                orderId: $("#orderid").val(),
+                    Status: $("#orderstatus").val(),
+                        UserId: $("#useremail").val(),
+                            Email: email,
+                                EmpId: empid,
+                                    DeliverDate: Status == 4 ? formattedDate : '',
+            };
 
-        $.post('/Order/UpdateOrderStatus', data)
-            .done(function (res) {
-                Hide_Loader();
-                window.location.href = "/NewOrder";
-            })
-            .fail(function () {
-                Hide_Loader();
-                alert("Failed to update order status");
-            });
+            $.post('/Order/UpdateOrderStatus', data)
+                .done(function (res) {
+                    Hide_Loader();
+                    window.location.href = "/NewOrder";
+                })
+                .fail(function () {
+                    Hide_Loader();
+                    alert("Failed to update order status");
+                });
+           },1500)
     }
 
     function Show_Loader() {

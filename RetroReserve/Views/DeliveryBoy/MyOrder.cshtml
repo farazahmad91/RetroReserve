@@ -152,7 +152,7 @@
                                       
                                         if (@item.Status == 2)
                                         {
-                                            <lable onclick="ResendOTP(@item.OrderId)" class="badge badge-primary">Resend OTP</lable>
+                                            <lable onclick="ResendOTP('@item.OrderId','@item.UserEmail')" class="badge badge-primary">Resend OTP</lable>
                                         }
                                        
                                     }
@@ -208,10 +208,11 @@
                 alert("error");
             });
     }
-    function ResendOTP(orderid) {
-   
+    function ResendOTP(orderid,uEmail) {
+        Show_Loader();
         let data = {
             orderId: orderid,
+            UserEmail: uEmail,
         };
 
         $.post('/Order/ResendOTP', data)

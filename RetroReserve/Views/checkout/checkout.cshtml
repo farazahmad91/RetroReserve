@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<Entities.Cart>
+﻿@model IEnumerable<Entities.Cart>
 @{
     decimal subtotal = 0;
     decimal shipingcharge = 0;
@@ -39,24 +38,25 @@
 
                                 foreach (var item in Model)
                                 {
-                                                                                                    <tr>
-                                                                                                        @{
+                                    <tr>
+                                        @{
                                             var total = item.Quantity * item.SellingCost;
                                             var price = total;
                                             subtotal += price;
-                                                                                                        }
-                                                                                                        <th scope="row">
-                                                                                                            <div class="d-flex align-items-center mt-2">
-                                                                                                                <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                                                                                            </div>
-                                                                                                        </th>
-                                                                                                        <td class="py-5">@item.DishName</td>
-                                                                                                        <td class="py-5">@item.SellingCost</td>
-                                                                                                        <td class="py-5">@item.Quantity</td>
-                                                                                                        <td class="py-5">@total</td>
-                                                                                                    </tr>
+                                        }
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center mt-2">
+                                                <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                            </div>
+                                        </th>
+                                        <td class="py-5">@item.DishName</td>
+                                        <td class="py-5">@item.SellingCost</td>
+                                        <td class="py-5">@item.Quantity</td>
+                                        <td class="py-5">@total</td>
+                                    </tr>
                                 }
                             }
+
 
                             <tr>
                                 <th scope="row">
@@ -85,7 +85,7 @@
                     Coupon
                 </button>
             </div>
-           
+
         </div>
         <span id="couponMessage"></span>
         <div class="row">
@@ -119,12 +119,12 @@
                                     if (subtotal >= 500)
                                     {
                                         grandtotal = subtotal + 0;
-                                                                                                        <p class="mb-0">Free</p>
+                                        <p class="mb-0">Free</p>
                                     }
                                     else
                                     {
                                         grandtotal = subtotal + 50;
-                                                                                                        <p class="mb-0">50</p>
+                                        <p class="mb-0">50</p>
                                     }
                                 }
                             </div>
@@ -162,7 +162,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="CoupanPV"></div>
 </div>
 
@@ -174,7 +174,7 @@
 <script>
     var messageafterCoupan = 0;
     var totalammount = $("#grandtotal").text();
-    
+
     function handleCheckboxChange(checkboxId, otherCheckboxId) {
         var checkbox = document.getElementById(checkboxId);
         var otherCheckbox = document.getElementById(otherCheckboxId);
@@ -201,7 +201,7 @@
 
     UserAddress();
     function Payment() {
-        $.post("/Payment", { messageafterCoupan: messageafterCoupan ,totalAmount:totalammount})
+        $.post("/Payment", { messageafterCoupan: messageafterCoupan, totalAmount: totalammount })
             .done(function (res) {
                 $("#PaymentPV").html(res);
                 $("#PaymentModal").modal("show");
@@ -247,7 +247,7 @@
                 var discountPercentage = result.result;
                 var message = `Coupon Applied and ${discountPercentage}% discount applied.`;
                 $("#couponMessage").text(message).addClass("text-success");
-                 messageafterCoupan = calculatePercentage(discountPercentage, totalammount);
+                messageafterCoupan = calculatePercentage(discountPercentage, totalammount);
                 var textmessageafterCoupan = `Coupon Applied Amount ₹${messageafterCoupan} You'll Pay .`
                 $("#grandtotalAfterCoupanApplied").text(textmessageafterCoupan).addClass("text-success")
             } else {
@@ -255,16 +255,16 @@
                 $("#couponMessage").text(errorMessage).addClass("text-danger");
                 setTimeout(function () {
                     window.location.href = window.location.href;
-                },2000)
-              
+                }, 2000)
+
             }
         });
     };
-        var calculatePercentage = (discountPercentage, totalammount) => {
+    var calculatePercentage = (discountPercentage, totalammount) => {
         debugger;
         var ammountAfterCoupanApplied = (discountPercentage / 100) * totalammount;
         var ammountpay = totalammount - ammountAfterCoupanApplied;
-        var messageafterCoupan =ammountpay;
+        var messageafterCoupan = ammountpay;
         return messageafterCoupan;
     }
 
@@ -382,7 +382,7 @@
                     Coupon
                 </button>
             </div>
-           
+
         </div>
         <span id="couponMessage"></span>
         <div class="row">
@@ -459,7 +459,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="CoupanPV"></div>
 </div>
 
@@ -471,7 +471,7 @@
 <script>
     var messageafterCoupan = 0;
     var totalammount = $("#grandtotal").text();
-    
+
     function handleCheckboxChange(checkboxId, otherCheckboxId) {
         var checkbox = document.getElementById(checkboxId);
         var otherCheckbox = document.getElementById(otherCheckboxId);
@@ -563,7 +563,7 @@
                 setTimeout(function () {
                     window.location.href = window.location.href;
                 },2000)
-              
+
             }
         });
     };

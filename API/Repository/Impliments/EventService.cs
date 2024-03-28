@@ -21,22 +21,39 @@ namespace API.Repository.Impliments
         }
         public async Task<int> AddOrUpdateEvent(Event _event)
         {
-            var sp = "sp_AddOrUpdateEvent";
-            var param = new { 
-                eventID = _event.eventID,
-                eventName= _event.eventName,
-                eventImage= _event.eventImage,
-                eventDescription= _event.eventDescription,
-                eventPrice = _event.eventPrice,
-                eventOffPrice= _event.eventOffPrice,
-                eventLocation= _event.eventLocation,
-                eventOrganizer= _event.eventOrganizer,
-                eventStatus= _event.eventStatus,
-                totalPeople= _event.totalPeople,
-            };
-            var i = await dapper.Insert(param, sp);
-
-            return i;
+            var res = 0;
+            try
+            {
+                var sp = "sp_AddOrUpdateEvent";
+                var param = new
+                {
+                    eventID = _event.eventID,
+                    eventName = _event.eventName,
+                    eventImage = _event.eventImage,
+                    eventDescription = _event.eventDescription,
+                    eventPrice = _event.eventPrice,
+                    eventOffPrice = _event.eventOffPrice,
+                    eventLocation = _event.eventLocation,
+                    eventOrganizer = _event.eventOrganizer,
+                    eventStatus = _event.eventStatus,
+                    totalPeople = _event.totalPeople,
+                };
+                var i = await dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrUpdateEvent",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddOrUpdateEvent",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public int DeleteEvent(int id)
@@ -51,56 +68,156 @@ namespace API.Repository.Impliments
 
         public Event GetEventById(int id)
         {
-            var sp = "sp_GetEventById";
-            var param = new
+            Event res = new Event();
+            try
             {
-                eventID = id
-            };
-
-            var res = dapper.GetById<Event>(param, sp);
-            return res;
+                var sp = "sp_GetEventById";
+                var param = new
+                {
+                    eventID = id
+                };
+                var i = dapper.GetById<Event>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetEventById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEventById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public EventBooking GetBookingEventById(int id)
         {
-            var sp = "sp_GetBookingEventById";
-            var param = new
+            EventBooking res = new EventBooking();
+            try
             {
-                eventBookingId = id
-            };
-
-            var res = dapper.GetById<EventBooking>(param, sp);
-            return res;
+                var sp = "sp_GetBookingEventById";
+                var param = new
+                {
+                    eventBookingId = id
+                };
+                var i = dapper.GetById<EventBooking>(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetBookingEventById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetBookingEventById",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
 
         public IEnumerable<Event> GetEventList()
         {
-            var sp = "sp_GetEvent";
-            var i =  dapper.GetAll<Event>(sp);
-            return i;
+            IEnumerable<Event> res = new List<Event>();
+            try
+            {
+                var sp = "sp_GetEvent";
+                var i = dapper.GetAll<Event>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetEventList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEvent",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<EventBooking> GetBookingEventList()
         {
-            var sp = "sp_GetEventBooking";
-            var i = dapper.GetAll<EventBooking>(sp);
-            return i;
+            IEnumerable<EventBooking> res = new List<EventBooking>();
+            try
+            {
+                var sp = "sp_GetEventBooking";
+                var i = dapper.GetAll<EventBooking>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetBookingEventList",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetEventBooking",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public IEnumerable<EventBooking> NewBookingEventlist()
         {
-            var sp = "sp_GetNewEventBooking";
-            var i = dapper.GetAll<EventBooking>(sp);
-            return i;
+            IEnumerable<EventBooking> res = new List<EventBooking>();
+            try
+            {
+                var sp = "sp_GetNewEventBooking";
+                var i = dapper.GetAll<EventBooking>(sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "NewBookingEventlist",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_GetNewEventBooking",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public async Task<int> UpdateEventStatus(Event _event)
         {
-            var sp = "sp_UpdateEventStatus";
-            var param = new
+            var res = 0;
+            try
             {
-                eventID = _event.eventID,
-                eventStatus = _event.eventStatus,
-            };
-            var i = await dapper.Insert(param, sp);
-            return i;
+                var sp = "sp_UpdateEventStatus";
+                var param = new
+                {
+                    eventID = _event.eventID,
+                    eventStatus = _event.eventStatus,
+                };
+                var i = await dapper.Insert(param, sp);
+                res = i;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "UpdateEventStatus",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_UpdateEventStatus",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
+                return res;
+            }
         }
         public async Task<Response> AddOrUpdateEventBooking(EventBooking eventBooking)
         {
@@ -154,14 +271,20 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-
-                res.ResponseText = ex.Message;
-                res.StatusCode = -1;
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "AddOrUpdateEventBooking",
+                    ResponseText = ex.Message,
+                    Proc_Name = "sp_AddOrUpdateEventBooking",
+                };
+                var _ = new ErrorLogService(dapper).Error(error);
                 return res;
             }
         }
         public async Task<int> UpdateBookingEventStatus(EventBooking eventBooking)
         {
+            var res = 0;
             var sp = "sp_UpdateBookingEventStatus";
             var param = new
             {
@@ -183,6 +306,7 @@ namespace API.Repository.Impliments
         }
         public EventVM GetEventdetailsList()
         {
+            EventVM res = new EventVM();
             var sp = "sp_GetEvent";
             EventVM eventVM = new EventVM();
             eventVM.EventDetails = (IEnumerable<Event>)dapper.GetAll<Event>(sp);
@@ -191,7 +315,8 @@ namespace API.Repository.Impliments
 
 		public EventVM GetEventPrice(int id)
 		{
-			var sp = "sp_GetEventPrice";
+            EventVM res = new EventVM();
+            var sp = "sp_GetEventPrice";
 			var param = new
 			{
 				eventID = id,
