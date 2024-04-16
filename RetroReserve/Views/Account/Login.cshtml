@@ -24,7 +24,10 @@
                     <input type="text" name="username" asp-for="Email" placeholder="Email address">
                 </p>
                 <p>
-                    <input type="password" name="password" asp-for="Password" placeholder="Password">
+                    <div class="password-toggle">
+                        <input type="Password" id="Password" placeholder="Enter your password">
+                        <i class="fa fa-eye-slash" style="color:black;font-size:20px;" id="togglePassword"></i>
+                    </div>
                 </p>
                 <div>
                     <div class="checkboxouter">
@@ -48,48 +51,19 @@
     </div>
 </div>
 
-
-
-@* <div class="row d-flex justify-content-center">
-    <div class=" col-md-3 card p-3">
-        <div>
-            <div class="card" id="snackbar">Data Saved Successfully</div>
-            <div class="card" id="snackbar2">Data Updated Successfully</div>
-            <div class="card" id="snackbar3">Deleted.</div>
-        </div>
-        <h2 class="text-centre text-info">Login</h2>
-            <div asp-validation-summary="ModelOnly"></div>
-            <div class="mb-1">
-                <label asp-for="Email">Email</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="mb-1">
-                <label asp-for="Password">Pasword</label>
-                <input type="password" asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="mb-1 form-check">
-                <label class="form-check-label">
-                    <input asp-for="RememberMe" class="form-check-input" />@Html.DisplayNameFor(a => a.RememberMe)
-                </label>
-
-            </div>
-            <div class="row">
-            <div class="col-sm-8"><a href="/Account/Register" class="text-decoration-none ">Dont Havent Account ?</a></div>
-            </div>
-            <div class="col-4">
-            <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-                <button class="btn btn-primary btn-sm float-end" onclick="LoginUser();">Submit</button>
-            </div>
-    </div>
-</div>
-<br />
-<br />
-<br /> *@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
+    $(document).ready(function () {
+        $("#togglePassword").click(function () {
+            var passwordInput = $("#Password");
+            var type = passwordInput.attr("type") === "password" ? "text" : "password";
+            passwordInput.attr("type", type);
+            $(this).toggleClass("fa-eye fa-eye-slash");
+        });
+    });
+
+
       function LoginUser() {
         document.getElementById("litheader").className = "poweron";
         var uname = $("#Email").val();

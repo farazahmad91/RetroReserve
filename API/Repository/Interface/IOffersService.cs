@@ -10,5 +10,8 @@ namespace API.Repository.Interface
         public Task<Data.Response> ChangeCoupanStatus(int CoupanId);
         public Task<Data.Response<string>> CheckCoupan(string CoupanName);
         public Task<Data.Response> DeleteCoupan(int CoupanId);
+        public Task<Response> AddOrUpdateOffer(Offer offer);
+        public IEnumerable<Offer> GetAllOffer();
+        public Offer GetOfferById(int id);
     }
 }

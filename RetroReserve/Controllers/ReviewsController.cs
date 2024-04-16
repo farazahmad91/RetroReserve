@@ -54,7 +54,7 @@ namespace RetroReserve.Controllers
         public async Task<IActionResult> Testimonial()
         {
           var i = await _apirequest.GetData<List<AppReviews>>("Reviews/GetAReviewList");
-            return View(i);
+            return PartialView(i);
         }
         [Route("/App_Review")]
         public async Task<IActionResult> InsertAReview()

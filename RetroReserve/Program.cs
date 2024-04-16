@@ -6,7 +6,10 @@ using API.Services;
 using Entities;
 using IdentityAPI.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using RetroReserve.Models;
 using Stripe;
 using System.Configuration;
@@ -22,6 +25,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IDapperService, DapperService>();
 builder.Services.AddScoped<APIrequest>();
 builder.Services.AddScoped<UploadImage>();
+builder.Services.AddScoped<ForgotPassword>();
+//builder.Services.AddScoped<UserManager<ApplicationUser>>();
+//builder.Services.AddScoped<SignInManager<ApplicationUser>>();
+
 
 // Configuration
 builder.Configuration.Bind("BaseAPIUrl", new BaseAPIUrl());

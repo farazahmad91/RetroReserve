@@ -119,16 +119,26 @@
 <div id="PVBannerShow2"></div>
     </div>
 </div>
-
 <div class="col-lg-12" id="RecentView">
 </div>
-<!-- Banner Section Start-->
+
+
 <div class="container-fluid banner bg-secondary my-5">
     <div class="container py-5">
         <div id="PVBannerShow3"></div>
     </div>
     <div id="modalVarientPartialView"></div>
 
+</div>
+<!-- Testimonial Section Start-->
+<div class="container-fluid testimonial py-5">
+    <div class="container py-5">
+        <div class="testimonial-header text-center">
+            <h4 class="text-primary">Our Testimonial</h4>
+            <h1 class="display-5 mb-5 text-dark">Our Client Saying!</h1>
+        </div>
+        <div id="Testimonial"></div>
+    </div>
 </div>
 <!-- Banner Section End -->
 <!-- End Specials Section -->
@@ -186,10 +196,15 @@
             })
         }
         ShowBanner3();
-
-
+        function Testimonial() {
+            $.post("/Testimonial").done(function (res) {
+                $("#Testimonial").html(res);
+            }).fail(function () {
+                alert("errror");
+            })
+        }
+        Testimonial();
         function AddCart(Id) {
-            debugger;
             let data = {
                 Id: Id,
             };

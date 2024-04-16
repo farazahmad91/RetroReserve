@@ -128,7 +128,8 @@ namespace RetroReserve.Controllers
             };
             try
             {
-                var apiRes = await AppWebRequest.O.PostAsync($"{_BaseUrl}/api/Account/ChangePassword", JsonConvert.SerializeObject(changePassword), User.GetLoggedInUserToken());
+                var token = User.GetLoggedInUserToken();
+                var apiRes = await AppWebRequest.O.PostAsync($"{_BaseUrl}/api/Account/ChangePassword", JsonConvert.SerializeObject(changePassword),token);
                 if (apiRes != null)
                 {
                     res = JsonConvert.DeserializeObject<API.Data.Response>(apiRes.Result);

@@ -355,3 +355,19 @@ video {
     top: 0;
     left: 0;
 }
+
+.password-toggle {
+    position: relative;
+}
+
+    .password-toggle input {
+        padding-right: 30px; /* Space for icon */
+    }
+
+    .password-toggle #togglePassword {
+        position: absolute;
+        top: 34%;
+        right: 5px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
