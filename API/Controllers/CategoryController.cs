@@ -3,9 +3,11 @@ using API.Repository.Interface;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using API.Repository.Impliments;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase

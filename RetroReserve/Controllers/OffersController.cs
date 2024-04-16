@@ -20,17 +20,25 @@ namespace RetroReserve.Controllers
         {
             return View();
         }
-
-        // GET: OffersController/Details/5
+        [Route("/OffersList")]
         public ActionResult OffersList()
         {
-            return View();
+            var res = apirequest.GetData<List<Offer>>("Offers/GetAllOffer");
+            return View(res);
         }
 
-        // GET: OffersController/Create
-        public ActionResult Create()
+
+        public ActionResult EditOfferList(int id)
         {
-            return View();
+            var res = apirequest.GetData<Offer>($"Offers/GetOfferById?id={id}");
+            return View(res);
+        }
+        [Route("/AddOrUpdateOffer")]
+        public async Task<ActionResult> AddOrUpdateOffer(Offer offer)
+        {
+            var i = await apirequest.Post($"Offers/AddOrUpdateOffer", offer);
+            var res =  JsonConvert.DeserializeObject<API.Data.Response>(i);
+            return Json(res);
         }
 
         [Route("/Coupan")]

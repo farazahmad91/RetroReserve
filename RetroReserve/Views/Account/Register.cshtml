@@ -27,7 +27,10 @@
                     <input type="text" name="username" asp-for="Email" placeholder="Email address">
                 </p>
                 <p>
-                    <input type="password" name="password" asp-for="Password" placeholder="Password">
+                    <div class="password-toggle">
+                        <input type="Password" id="Password" placeholder="Enter your password">
+                        <i class="fa fa-eye-slash" style="color:black;font-size:20px;" id="togglePassword"></i>
+                    </div>
                 </p>
                 <p>
                     <input type="password" name="password" asp-for="ConfirmPassword" placeholder="Confirm Password">
@@ -60,6 +63,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
+    $(document).ready(function () {
+        $("#togglePassword").click(function () {
+            var passwordInput = $("#Password");
+            var type = passwordInput.attr("type") === "password" ? "text" : "password";
+            passwordInput.attr("type", type);
+            $(this).toggleClass("fa-eye fa-eye-slash");
+        });
+    });
 
     function generateRandomPassword() {
     var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

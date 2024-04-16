@@ -58,5 +58,24 @@ namespace API.Controllers
             return Ok(res);
         }
 
+        [HttpPost(nameof(AddOrUpdateOffer))]
+        public async Task<IActionResult> AddOrUpdateOffer(Offer offer)
+        {
+            var res = await _offersService.AddOrUpdateOffer(offer);
+            return Ok(res);
+        }
+        [HttpGet(nameof(GetAllOffer))]
+        public IActionResult GetAllOffer()
+        {
+            var res = _offersService.GetAllOffer();
+            return Ok(res);
+        }
+
+        [HttpGet(nameof(GetOfferById))]
+        public IActionResult GetOfferById(int id)
+        {
+            var res = _offersService.GetOfferById(id);
+         return Ok(res);
+        }
     }
 }

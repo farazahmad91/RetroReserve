@@ -199,7 +199,7 @@ namespace API.Repository.Impliments
                 StatusCode = -1,
                 ResponseText= "something wrong!"
             };
-
+          
             try
             {
                 var sp = "Proc_SaveOrUpdateOffer";
@@ -224,6 +224,57 @@ namespace API.Repository.Impliments
                     FunctionName = "AddOrUpdateOffer",
                     ResponseText = ex.Message,
                     Proc_Name = "Proc_SaveOrUpdateOffer",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
+                return res;
+            }
+        }
+        public IEnumerable<Offer> GetAllOffer()
+        {
+            IEnumerable<Offer> res = new List<Offer>();
+            try
+            {
+                var sp = "proc_GetAllOffer";
+                var i = _service.GetAll<Offer>(sp);
+                i = res;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetAllOffer",
+                    ResponseText = ex.Message,
+                    Proc_Name = "proc_GetAllOffer",
+                };
+                var _ = new ErrorLogService(_service).Error(error);
+                return res;
+            }
+        }
+
+        public Offer GetOfferById(int id)
+        {
+            Offer res = new Offer();
+            try
+            {
+                var sp = "proc_GetOfferById";
+                var param = new
+                {
+                    OfferId = id,
+                };
+                var i = _service.GetById<Offer>(param, sp);
+                i = res;
+                return i;
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    ClassName = GetType().Name,
+                    FunctionName = "GetOfferById",
+                    ResponseText = ex.Message,
+                    Proc_Name = "proc_GetOfferById",
                 };
                 var _ = new ErrorLogService(_service).Error(error);
                 return res;
