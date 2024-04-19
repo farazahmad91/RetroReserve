@@ -5,6 +5,7 @@ using RetroReserve.Models;
 using Entities;
 using System.Security.Claims;
 using System.Web.Providers.Entities;
+using Entities.Extension;
 
 namespace RetroReserve.Controllers
 {
@@ -37,6 +38,8 @@ namespace RetroReserve.Controllers
         public async Task<ActionResult> MenuQty(int DishId)
         {
             var i = await apirequest.GetData<List<Foodkart>>($"Category/GetDishVarientListByDishId?id={DishId}");
+           //var i = await AppWebRequest.O.PostAsync($"Category/GetDishVarientListByDishId/{DishId}", null, User.GetLoggedInUserToken());
+
             return PartialView(i);
         }
     

@@ -38,22 +38,22 @@
 
                                 foreach (var item in Model)
                                 {
-                                    <tr>
-                                        @{
+                                                    <tr>
+                                                        @{
                                             var total = item.Quantity * item.SellingCost;
                                             var price = total;
                                             subtotal += price;
-                                        }
-                                        <th scope="row">
-                                            <div class="d-flex align-items-center mt-2">
-                                                <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                            </div>
-                                        </th>
-                                        <td class="py-5">@item.DishName</td>
-                                        <td class="py-5">@item.SellingCost</td>
-                                        <td class="py-5">@item.Quantity</td>
-                                        <td class="py-5">@total</td>
-                                    </tr>
+                                                        }
+                                                        <th scope="row">
+                                                            <div class="d-flex align-items-center mt-2">
+                                                                <img src="@item.DishImage" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                            </div>
+                                                        </th>
+                                                        <td class="py-5">@item.DishName</td>
+                                                        <td class="py-5">@item.SellingCost</td>
+                                                        <td class="py-5">@item.Quantity</td>
+                                                        <td class="py-5">@total</td>
+                                                    </tr>
                                 }
                             }
 
@@ -119,12 +119,12 @@
                                     if (subtotal >= 500)
                                     {
                                         grandtotal = subtotal + 0;
-                                        <p class="mb-0">Free</p>
+                                                        <p class="mb-0">Free</p>
                                     }
                                     else
                                     {
                                         grandtotal = subtotal + 50;
-                                        <p class="mb-0">50</p>
+                                                        <p class="mb-0">50</p>
                                     }
                                 }
                             </div>
@@ -153,8 +153,8 @@
                         <p class="mb-0 pe-4" id="grandtotalAfterCoupanApplied"></p>
                     </div>
                     <div style="text-align:center;">
-                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" href="#" id="btncash">Proceed to checkout</a>
-                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" onclick="Payment();" id="btnonline">Proceed to checkout</a>
+                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" href="#" id="btncash" onclick="CODcheckoutOrder(0,@grandtotal);">Proceed to checkout</a>
+                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" onclick="Payment(1,@grandtotal);" id="btnonline">Proceed to checkout</a>
 
                     </div>
                     <br />
@@ -172,6 +172,73 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+    function CODcheckoutOrder(t, gt) {
+        debugger;
+        var selectedAddress = document.querySelector('input[name="address"]:checked');
+
+        if (!selectedAddress) {
+            alert("Please select an address before checking out.");
+            return;
+        }
+
+        var payType = (t === 1) ? "Paytm-UPI" : "COD"; // Simplified the payType assignment
+        var payAmount = gt;
+        var param = {
+            AddressId: selectedAddress.value,
+            PaymentType: payType,
+            TotalPrice: payAmount
+        };
+
+        Show_Loader(); // Assuming this function shows some kind of loader
+
+        // Using setTimeout for demonstration purpose, you may adjust this as per your requirements
+        setTimeout(function () {
+            $.post('/Order/BookingOrder', param)
+                .done(function (res) {
+                    Hide_Loader(); // Assuming this function hides the loader
+                    setTimeout(function () {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Order Placed Successful',
+                            icon: 'success',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "/Cart"; // Redirecting to Cart page after successful order placement
+                            }
+                        });
+                    }, 1500);
+                })
+                .fail(function () {
+                    Hide_Loader();
+                    Swal.fire("Error", "Order could not be placed !!", "error");
+                });
+        }, 1500);
+    }
+    // function AddPaymentDetails() {
+    //     debugger;
+    //     var payType = "";
+    //     var Type = $("#payment1").val();
+    //     if (Type == true) {
+    //         payType = "COD";
+    //     }
+    //     else 
+    //     {
+    //         payType = "Paytm-UPI";
+    //     }
+    //     var payAmount = @grandtotal
+    //     var param =
+    //     {
+    //         PaymentType :payType,
+    //         Amount:payAmount
+    //     };
+    //     $.post('/AddPaymentDetails',param).done(function () {
+    //         alert("done");
+    //     }).fail(function () {
+    //         alert("failed");
+    //     });
+
+    // }
+
     var messageafterCoupan = 0;
     var totalammount = $("#grandtotal").text();
 
@@ -200,11 +267,13 @@
     }
 
     UserAddress();
-    function Payment() {
+    function Payment(pt,gt) {
         $.post("/Payment", { messageafterCoupan: messageafterCoupan, totalAmount: totalammount })
             .done(function (res) {
                 $("#PaymentPV").html(res);
                 $("#PaymentModal").modal("show");
+                $("#online").val(pt);
+                $("#gt").val(gt);
             })
             .fail(function () {
                 alert("error");
@@ -261,7 +330,6 @@
         });
     };
     var calculatePercentage = (discountPercentage, totalammount) => {
-        debugger;
         var ammountAfterCoupanApplied = (discountPercentage / 100) * totalammount;
         var ammountpay = totalammount - ammountAfterCoupanApplied;
         var messageafterCoupan = ammountpay;
@@ -568,7 +636,6 @@
         });
     };
         var calculatePercentage = (discountPercentage, totalammount) => {
-        debugger;
         var ammountAfterCoupanApplied = (discountPercentage / 100) * totalammount;
         var ammountpay = totalammount - ammountAfterCoupanApplied;
         var messageafterCoupan =ammountpay;

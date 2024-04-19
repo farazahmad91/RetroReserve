@@ -74,12 +74,17 @@
                                         @if (item.CommitionEarning == null)
                                         {
                                             cText = "₹ 0.0";
-                                            cClass = "badge badge-info";
+                                            cClass = "badge badge-danger";
                                         }
-                                        else
+                                        else if (item.Status == 4)
                                         {
                                             cText = "₹ " + item.CommitionEarning;
                                             cClass = "badge badge-primary";
+                                        }
+                                        else if (item.Status == 5)
+                                        {
+                                            cText = "₹ " + item.CommitionEarning;
+                                            cClass = "badge badge-info";
                                         }
                                     }
                                     <label class="@cClass">@cText</label>

@@ -38,7 +38,9 @@ namespace RetroReserve.Models
                     {
                         string responseContent = await response.Content.ReadAsStringAsync();
                         return JsonConvert.DeserializeObject<T>(responseContent);
+                        
                     }
+                    return default(T);
                 }
                 catch (Exception ex)
                 {
@@ -51,9 +53,10 @@ namespace RetroReserve.Models
                         Proc_Name = "",
                     };
                     var _ = new ErrorLogService(_dapper).Error(error);
+                    return default(T);
                 }
 
-                return default(T);
+                
             }
         }
 

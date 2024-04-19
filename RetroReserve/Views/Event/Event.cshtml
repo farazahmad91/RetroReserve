@@ -98,7 +98,6 @@ else
         })
     }
     function hideInputBox(eventname) {
-        debugger;
         if (eventname == "Birthday ") {
             $(".bname").show();
             $(".cname").hide();
@@ -110,7 +109,6 @@ else
         }
     }
     function BookEvents() {
-        debugger;
         Show_Loader();
         setTimeout(function () {
             if (validateEventBooking()) {
@@ -134,13 +132,12 @@ else
                     alert(res.responseText);
                 }).fail(function () {
                     Hide_Loader();
-                    alert("Something went wrong!!!");
+                    alert("Something went wrong!");
                 });
             }
         }, 1500)
     }
     function OnEventPageload(Id) {
-        debugger;
         var param = {
             id:Id,
         };

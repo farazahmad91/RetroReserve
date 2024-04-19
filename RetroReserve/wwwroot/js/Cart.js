@@ -81,10 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Call the updateCartBadge function initially to set the initial value
         updateCartBadge();
-    });
+});
 
-function checkoutOrder() {
-    debugger;
+
+
+
+
+/*function checkoutOrder() {
     var selectedAddress = document.querySelector('input[name="address"]:checked');
 
     if (!selectedAddress) {
@@ -123,10 +126,9 @@ function checkoutOrder() {
                 Swal.fire("Error", "Order could not be placed !!", "error");
             });
     }, 1500);
-}
+}*/
 
 function DeleteCart(CartId) {
-    debugger;
     Swal.fire({
         title: 'Are you sure you want to delete?',
         showCancelButton: true,
@@ -158,7 +160,6 @@ function DeleteCart(CartId) {
     });
 }
 function AddCart(Id) {
-    debugger;
     let data = {
         Id: Id,
     };

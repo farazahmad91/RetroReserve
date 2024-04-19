@@ -24,6 +24,8 @@ namespace Entities
         public int Status { get; set; }
         public int OTP { get; set; }
         public string? DeliverDate { get; set; }
+        public string? PaymentType { get; set; }
+        public float TotalPrice { get; set; }
     }
     
     public class OrdersReport : Orders

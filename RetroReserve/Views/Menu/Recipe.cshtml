@@ -49,8 +49,6 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function Search() {
-        debugger;
-
         var sinput = $("#res").val();
         $.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${sinput}`).done(function (result) {
             console.log(result);

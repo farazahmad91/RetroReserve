@@ -2,7 +2,6 @@
 var ContactId = 0;
 function Status() {
     $.get("/Dashboard/Status").done(function (res) {
-        console.clear();
         $("#deliverdobadge").html(res[0].deliverdOrder);
         $("#newobadge").html(res[0].newOrders);
     }).fail(function () {
@@ -44,7 +43,6 @@ function NewMessage1() {
 NewMessage1();
 
 function UpdateNewMessageNotify(ContactId) {
-    debugger;
     var data = {
         ContactId: ContactId,
         status: 1,
