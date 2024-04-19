@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -46,6 +46,7 @@ namespace API.Controllers
             return Ok(i);
 
         }
+        //[HttpPost(nameof(GetDishVarientListByDishId)+"/{id}")]
         [HttpGet(nameof(GetDishVarientListByDishId))]
         public IActionResult GetDishVarientListByDishId(int id)
         {

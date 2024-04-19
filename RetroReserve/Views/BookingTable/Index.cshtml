@@ -17,14 +17,12 @@
         loadData();
 
         var AddOrEditTable=(Id)=>{
-            debugger
             $.post("/BookingTable/AddOrEditTable", {Id}).done((res) => {
                 $("#PartialView").html(res);
             })
         }
 
         var SaveOrUpdateTable = () => {
-            debugger
             let obj = {
                 TableId: $("#TableId").val(),
                 TableName: $("#TableName").val(),
@@ -58,7 +56,6 @@
         }
 
         function TableStatus(TableId) {
-            debugger;
             var id = $("#customSwitch3_" + TableId).prop("checked");
             if (id == true) {
                 id = 1;

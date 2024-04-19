@@ -67,7 +67,7 @@
                                     @{
                                         var txtdate = "";
                                         var cls = "";
-                                        @if (item.DeliveredOrCancelledOn == null)
+                                                @if (item.DeliveredOrCancelledOn == null)
                                         {
                                             txtdate = "Active Order";
                                             cls = "blink text-green";
@@ -77,7 +77,7 @@
                                             txtdate = @item.DeliveredOrCancelledOn;
                                             cls = "";
                                         }
-                                        <label class="@cls">@txtdate</label>
+                                                <label class="@cls" style="font-size:12px;">@txtdate</label>
                                    }
                                     
                                 </td>
@@ -131,32 +131,32 @@
                                         @{
                                             if (@item.Status == 2)
                                             {
-                                                        <option value="">Select it</option>
-                                                        <option value="4">Delivered</option>
-                                                        <option value="5">Cancelled</option>
+                                                                <option value="">Select it</option>
+                                                                <option value="4">Delivered</option>
+                                                                <option value="5">Cancelled</option>
                                             }
                                             else if (@item.Status == 4)
                                             {
-                                                <option value="4" disabled style="color:red;">Delivered</option>
+                                                        <option value="4" disabled style="color:red;">Delivered</option>
                                             }
                                             else if (@item.Status == 5)
                                             {
-                                                <option value="5" disabled style="color:green;">Cancelled</option>
+                                                        <option value="5" disabled style="color:green;">Cancelled</option>
                                             }
                                         }
                                     </select>
                                 </td>
                                 <td>
                                     <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-                                    @{
+                                    @* @{
                                       
                                         if (@item.Status == 2)
                                         {
                                             <lable onclick="ResendOTP('@item.OrderId','@item.UserEmail')" class="badge badge-primary">Resend OTP</lable>
                                         }
                                        
-                                    }
-
+                                    } *@
+                                    <div class="ptm-qr-scan" id="qrcode"></div>
                                 </td>
                             </tr>
                         }
@@ -168,7 +168,7 @@
     <div id="OTPPV"></div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <!-- DataTables CSS and JS -->
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
@@ -180,7 +180,6 @@
 
 
     function onload() {
-        debugger;
         var i = $("#selectedvalue").val();
         if (i == 5) {
             jQuery(".o-hide").hide();
@@ -194,7 +193,6 @@
     }
 
     function OTPVerifyByDBoy(orderid,empid,status) {
-        debugger;
         $.post("/DeliveryBoy/OTPVerify")
             .done(function (res) {
                 $("#OTPPV").html(res);
@@ -236,4 +234,42 @@
     function Hide_Loader() {
         jQuery(".overlay-spinner").hide();
     }
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    function EmployeeQR() {
+        $.post('/Employee/EmployeesList')
+            .done(function (res) {
+                var emp = res;
+                if (emp) {
+                    var randomColor = getRandomColor();
+                    try {
+                        var qrcode = new QRCode("qrcode", {
+                            text: emp,
+                            width: 120,
+                            height: 120,
+                            colorDark: randomColor,
+                        });
+                        document.getElementById("qrcode").style.backgroundColor = randomColor;
+                        console.log('QR code generated successfully');
+                    } catch (error) {
+                        console.error('Error generating QR code:', error);
+                    }
+                } else {
+                    console.error('Fetched employee data is empty or undefined.');
+
+                }
+            })
+            .fail(function (xhr, status, error) {
+                console.error('Failed to fetch employee data:', error);
+            });
+    }
+
+
+    EmployeeQR();
 </script>

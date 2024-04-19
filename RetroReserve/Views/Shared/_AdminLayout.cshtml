@@ -55,7 +55,9 @@
                         var name = nameClaim != null ? nameClaim.Value : "Guest";
                         
                     }
-                    <label class="nav-link">Welcome @name </label>
+                    <marquee direction="direction" class="nav-link" behavior="behavior" scrollamount="speed">
+                        <strong>Welcome @name !</strong>
+                    </marquee>
                 </li>
 
 
@@ -209,7 +211,29 @@
                                 </li>
                             </ul>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-rupee"></i>
+                                <p>
+                                   Manage Payment Details
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Payment_" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Payment Detail </p>
+                                    </a>
+                                </li>
+                                @* <li class="nav-item">
+                                    <a href="/Compose" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Compose</p>
+                                    </a>
+                                </li> *@
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-envelope"></i>

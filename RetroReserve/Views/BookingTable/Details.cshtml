@@ -10,7 +10,6 @@
     <script>
 
         function loadData() {
-            debugger;
             $.post("/BookingTable/BookingDetails").done(function (result) {
                 $("#partialView").html(result);
             });

@@ -37,6 +37,8 @@ namespace API.Repository.Impliments
                     OrderID = orders.OrderID,
                     AddressId = orders.AddressId,
                     UserId = orders.UserId,
+                    PaymentType= orders.PaymentType,
+                    Amount= orders.TotalPrice,
                     Status = orders.Status,
                 };
                 string bookingEmail = orders.UserId;

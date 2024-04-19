@@ -28,7 +28,7 @@
                                             <input type="text" id="empid" hidden>
                                             <input type="text" id="selectedvalue" hidden>
                                             <div id="loader_spinner" style="display: none;" class="limg">
-                                                <img src="~/img/otp-scanner.gif" alt="Loading..." style="width:100px; height:100px; border-radius:50%;" class="justify-content-center overlay-spinner" />
+                                                @* <img src="~/img/otp-scanner.gif" alt="Loading..." style="width:100px; height:100px; border-radius:50%;" class="justify-content-center overlay-spinner" /> *@
                                             </div>
                                             <input type="button" class="btn btn-success w-100" id="btnverify" onclick="OTPVerify();" value="Verify OTP">
                                             <input type="button" class="btn btn-primary w-100" id="btndelivered" onclick="UpdateOrderStatusByDBoy();" style="display: none;" value="Delivered">
@@ -47,7 +47,6 @@
 
 <script>
     function OTPVerify() {
-        debugger;
         if (validateotp()) {
             Show_Loader();
             setTimeout(function () {
@@ -89,7 +88,6 @@
 
 
     function onload() {
-        debugger;
         var i = $("#selectedvalue").val();
         if (i == 5) {
             $(".o-hide").hide();
@@ -115,7 +113,6 @@
     currentDate = formattedDate;
 
     function UpdateOrderStatusByDBoy() {
-        debugger;
         const currentDate = new Date();
         const formattedDate = formatDate(currentDate);
         var reason = $("#txtcancelled").val();
@@ -139,11 +136,11 @@
 
 
     function Show_Loader() {
-        jQuery(".limg").show();
+        jQuery(".overlay-spinner").show();
     }
 
     function Hide_Loader() {
-        jQuery(".limg").hide();
+        jQuery(".overlay-spinner").hide();
     }
 
     function validateotp() {

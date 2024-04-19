@@ -11,7 +11,6 @@
         loadData();
 
         function CoupanStatus(CoupanId) {
-            debugger;
             var id = $("#customSwitch3_" + CoupanId).prop("checked");
             if (id == true) {
                 id = 1;
@@ -25,8 +24,6 @@
                 IsActive: id,
             };
             $.post("/Offers/ChangeCoupanStatus", param).done(function (result) {
-                debugger;
-                
                 loadData();
                 QAlert(result.statusCode, result.responseText);
 

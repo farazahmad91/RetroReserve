@@ -210,7 +210,7 @@
                                             </div>
 
                                             <div class="text-center">
-                                                <button type="button" class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" onclick="checkoutOrder();">Proceed to Paymet</button>
+                                                <button type="button" class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" onclick="checkoutOrder(@Model);">Proceed to Paymet</button>
                                             </div>
                                             <div class="ptm-footer ptm-white-bg xs-ptm-hidden" id="checkout-footer">
                                                 <span id="footer-main-content-wrap">
@@ -237,7 +237,63 @@
         </div>
     </div>
 </div>
+<input type="text" id="online" hidden />
+<input type="text" id="gt" hidden />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    function checkoutOrder() {
+        debugger;
+        var selectedAddress = document.querySelector('input[name="address"]:checked');
+
+        if (!selectedAddress) {
+            alert("Please select an address before checking out.");
+            return;
+        }
+        var payType = "";
+        var Type = $("#online").val();
+        if (Type == 1) {
+            payType = "Paytm";
+        }
+        else {
+            payType = "COD";
+        }
+        var payAmount = $("#gt").val();
+        var param = {
+            AddressId: selectedAddress.value,
+            PaymentType: payType,
+            TotalPrice: payAmount
+        };
+
+        Show_Loader();
+        setTimeout(function () {
+            $.post('/Order/BookingOrder', param)
+                .done(function (res) {
+                    Hide_Loader();
+                    alert("Payment Successfully Completed!");
+
+                    Show_Loader();
+
+                    setTimeout(function () {
+                        Hide_Loader();
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Order Placed Successful',
+                            icon: 'success',
+                        }).then((data) => {
+                            window.location.href = "/Cart";
+                        });
+                    }, 1500);
+                })
+                .fail(function () {
+                    Hide_Loader();
+                    Swal.fire("Error", "Order could not be placed !!", "error");
+                });
+        }, 1500);
+    }
+
+   
+
+
     function info() {
         alert("Apologies, but this service is currently unavailable. Please make payment using only the QR code method.");
 
@@ -259,11 +315,11 @@
             text: link,
             width: 125,
             height: 120,
-            colorDark: randomColor, // Change this to color: randomColor,
+            colorDark: randomColor, 
         });
         document.getElementById("qrcode").style.backgroundColor = randomColor;
     }
-
+    
     CreateQR();
     function showinsertsuccess(msg) {
         var x = document.getElementById("snackbar");
@@ -277,11 +333,10 @@
             var selectedValue = radioButton.value;
             console.log(selectedValue);
         } else {
-            console.log("No radio button selected");
+            console.log("Address not selected");
         }
 
     }
-
     function Show_Loader() {
         jQuery(".overlay-spinner").show();
     }

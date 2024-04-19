@@ -76,7 +76,6 @@
                 Password: password,
             };
             $.post("/Account/Login", param).done(function (res) {
-                debugger;
                     Hide_Loader();
                     showinsertsuccess("Login Successful");
                 window.location.href = `${res}`;
