@@ -153,7 +153,8 @@
                         <p class="mb-0 pe-4" id="grandtotalAfterCoupanApplied"></p>
                     </div>
                     <div style="text-align:center;">
-                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" href="#" id="btncash" onclick="CODcheckoutOrder(0,@grandtotal);">Proceed to checkout</a>
+                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                        <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" id="btncash" onclick="CODcheckoutOrder(0,@grandtotal);">Proceed to checkout</a>
                         <a class="btn border-secondary rounded-pill  py-3 w-50  text-primary text-uppercase align-content-center" onclick="Payment(1,@grandtotal);" id="btnonline">Proceed to checkout</a>
 
                     </div>
@@ -173,14 +174,14 @@
 
 <script>
     function CODcheckoutOrder(t, gt) {
-        debugger;
+        
         var selectedAddress = document.querySelector('input[name="address"]:checked');
 
         if (!selectedAddress) {
             alert("Please select an address before checking out.");
             return;
         }
-
+        Show_Loader();
         var payType = (t === 1) ? "Paytm-UPI" : "COD"; // Simplified the payType assignment
         var payAmount = gt;
         var param = {
@@ -189,7 +190,7 @@
             TotalPrice: payAmount
         };
 
-        Show_Loader(); // Assuming this function shows some kind of loader
+      
 
         // Using setTimeout for demonstration purpose, you may adjust this as per your requirements
         setTimeout(function () {
@@ -335,7 +336,13 @@
         var messageafterCoupan = ammountpay;
         return messageafterCoupan;
     }
+    function Show_Loader() {
+        jQuery(".overlay-spinner").show();
+    }
 
+    function Hide_Loader() {
+        jQuery(".overlay-spinner").hide();
+    }
 </script>
 
 

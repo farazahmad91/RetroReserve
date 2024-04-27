@@ -266,8 +266,8 @@ function success(msg) {
 }
 function cartstatus() {
     $.get("/Cart/GetQtyInCart").done(function (res) {
-        var i = $("#cbadge").html(res.quantity);
-        console.log(i);
+        var quantity = res.quantity;
+        $(".cartcount").text(quantity); 
     }).fail(function () {
         alert("error");
     });

@@ -358,7 +358,7 @@ namespace API.Repository.Impliments
 
         public IEnumerable<DboyReviewStatistics> GetDboyReviewStatistics(int id)
         {
-            var sp = "sp_GetDboyReviewStatisticsById";
+            var sp = "sp_GetDboyReviewStatisticsByIds";
             IEnumerable<DboyReviewStatistics> res = new List<DboyReviewStatistics>();
 
             try
@@ -379,7 +379,8 @@ namespace API.Repository.Impliments
                    ClassName = GetType().Name,
                    FunctionName = "GetDboyReviewStatistics",
                    ResponseText = ex.Message,
-                    Proc_Name = "sp_GetDboyReviewStatisticsById",
+                    Proc_Name = "sp_GetDboyReviewStatisticsByIds",
+                    //Proc_Name = "sp_GetDboyReviewStatisticsById",
                 };
                var _ = new ErrorLogService(_dapper).Error(error);
                 return res;

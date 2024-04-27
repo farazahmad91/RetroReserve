@@ -57,114 +57,143 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (Model == null || !Model.Any())
                         {
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OrderId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AssignOn)
-                                </td>
-                                <td>
-                                    @{
-                                        var txtdate = "";
-                                        var cls = "";
-                                                @if (item.DeliveredOrCancelledOn == null)
-                                        {
-                                            txtdate = "Active Order";
-                                            cls = "blink text-green";
-                                        }
-                                        else
-                                        {
-                                            txtdate = @item.DeliveredOrCancelledOn;
-                                            cls = "";
-                                        }
-                                                <label class="@cls" style="font-size:12px;">@txtdate</label>
-                                   }
+                                <td colspan="6" style="text-align:center;">
                                     
+                                    <strong>Data not found!</strong>
+                                    
+                                    <br>
                                 </td>
-                                <td>
-                                    @{
-                                        statustext = "";
-                                        badge = "";
-                                        if (@item.Status == 2)
-                                        {
 
-                                            badge = "badge badge-warning";
-                                            statustext = "Shipped";
-                                        }
-                                        else if (@item.Status == 4)
-                                        {
+                            </tr>
+                        }
+                        else if(Model.FirstOrDefault().DeliveredOrderId==0)
+                        {
+                            <tr>
+                                <td colspan="6" style="text-align:center;">
 
-                                            badge = "badge badge-success";
-                                            statustext = "Delivered";
-                                        }
-                                        else if (@item.Status == 5)
-                                        {
+                                  <strong>Data not found!</strong>
 
-                                            badge = "badge badge-danger";
-                                            statustext = "Cancelled";
-                                        }
-                                    }
-                                    <label class="@badge">@statustext</label>
+                                    <br>
                                 </td>
-                                <td>
-                                    @{
-                                        string colorStyle = "";
-                                        string classbadge = "";
-                                        if (@item.Status ==2)
-                                        {
 
-                                            classbadge = "badge badge-info";
-                                        }
-                                        else if (@item.Status == 4)
-                                        {
+                            </tr>
+                        }
+                        else
+                        {
 
-                                            classbadge = "badge badge-success";
-                                        }
-                                        else if (@item.Status == 5)
-                                        {
-
-                                            classbadge = "badge badge-danger";
-                                        }
-
-                                    }
-                                    <select id="or_Status" class="@classbadge" style="colorStyle" asp-for="@item.Status" onchange="OTPVerifyByDBoy(@item.OrderId,@item.EmpId,this.value);">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrderId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AssignOn)
+                                    </td>
+                                    <td>
                                         @{
+                                            var txtdate = "";
+                                            var cls = "";
+                                            @if (item.DeliveredOrCancelledOn == null)
+                                            {
+                                                txtdate = "Active Order";
+                                                cls = "blink text-green";
+                                            }
+                                            else
+                                            {
+                                                txtdate = @item.DeliveredOrCancelledOn;
+                                                cls = "";
+                                            }
+                                            <label class="@cls" style="font-size:12px;">@txtdate</label>
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @{
+                                            statustext = "";
+                                            badge = "";
                                             if (@item.Status == 2)
                                             {
-                                                                <option value="">Select it</option>
-                                                                <option value="4">Delivered</option>
-                                                                <option value="5">Cancelled</option>
+
+                                                badge = "badge badge-warning";
+                                                statustext = "Shipped";
                                             }
                                             else if (@item.Status == 4)
                                             {
-                                                        <option value="4" disabled style="color:red;">Delivered</option>
+
+                                                badge = "badge badge-success";
+                                                statustext = "Delivered";
                                             }
                                             else if (@item.Status == 5)
                                             {
-                                                        <option value="5" disabled style="color:green;">Cancelled</option>
+
+                                                badge = "badge badge-danger";
+                                                statustext = "Cancelled";
                                             }
                                         }
-                                    </select>
-                                </td>
-                                <td>
-                                    <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-                                    @{
-                                      
-                                        if (@item.Status == 2)
-                                        {
-                                            <lable onclick="ResendOTP('@item.OrderId','@item.UserEmail')" class="badge badge-primary">Resend OTP</lable>
+                                        <label class="@badge">@statustext</label>
+                                    </td>
+                                    <td>
+                                        @{
+                                            string colorStyle = "";
+                                            string classbadge = "";
+                                            if (@item.Status ==2)
+                                            {
+
+                                                classbadge = "badge badge-info";
+                                            }
+                                            else if (@item.Status == 4)
+                                            {
+
+                                                classbadge = "badge badge-success";
+                                            }
+                                            else if (@item.Status == 5)
+                                            {
+
+                                                classbadge = "badge badge-danger";
+                                            }
+
                                         }
-                                       
-                                    } 
-                                </td>
-                            </tr>
+                                        <select id="or_Status" class="@classbadge" style="colorStyle" asp-for="@item.Status" onchange="OTPVerifyByDBoy(@item.OrderId,@item.EmpId,this.value);">
+                                            @{
+                                                if (@item.Status == 2)
+                                                {
+                                                    <option value="">Select it</option>
+                                                    <option value="4">Delivered</option>
+                                                    <option value="5">Cancelled</option>
+                                                }
+                                                else if (@item.Status == 4)
+                                                {
+                                                    <option value="4" disabled style="color:red;">Delivered</option>
+                                                }
+                                                else if (@item.Status == 5)
+                                                {
+                                                    <option value="5" disabled style="color:green;">Cancelled</option>
+                                                }
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
+                                        @{
+
+                                            if (@item.Status == 2)
+                                            {
+                                                <lable onclick="ResendOTP('@item.OrderId','@item.UserEmail')" class="badge badge-primary">Resend OTP</lable>
+                                            }
+
+                                        }
+                                    </td>
+                                </tr>
+                            }
                         }
+
                     </tbody>
                 </table>
             </div>

@@ -41,78 +41,93 @@
                         </tr>
                     </thead>
                     <tbody>
-
-                        @foreach (var item in Model)
+                        @if (Model == null || !Model.Any())
                         {
-                            count += 1;
                             <tr>
-                                <td>@count</td>
-                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                <td>@Html.DisplayFor(modelItem => item.AssignOn)</td>
-                                <td>
-                                    @{
-                                        var dText = "";
-                                        var dClass = "";
-                                        @if (item.DeliveredOrCancelledOn == null)
-                                        {
-                                            dText = "Pending";
-                                            dClass = "badge badge-warning";
-                                        }
-                                        else
-                                        {
-                                            dText = @item.DeliveredOrCancelledOn;
-                                            dClass = "";
-                                        }
-                                    }
-                                    <label class="@dClass">@dText</label>
-                                
+                                <td colspan="6" style="text-align:center;">
+
+                                    <strong>Data not found!</strong>
+
+                                    <br>
                                 </td>
-                                <td>
-                                    @{
-                                        var cText = "";
-                                        var cClass = "";
-                                        @if (item.CommitionEarning == null)
-                                        {
-                                            cText = "₹ 0.0";
-                                            cClass = "badge badge-danger";
-                                        }
-                                        else if (item.Status == 4)
-                                        {
-                                            cText = "₹ " + item.CommitionEarning;
-                                            cClass = "badge badge-primary";
-                                        }
-                                        else if (item.Status == 5)
-                                        {
-                                            cText = "₹ " + item.CommitionEarning;
-                                            cClass = "badge badge-info";
-                                        }
-                                    }
-                                    <label class="@cClass">@cText</label>
-                                <td>
-                                    @{
-                                        var sText = "";
-                                        var sClass = "";
-                                        @if (item.Status == 4)
-                                        {
-                                            sText = "Delivered";
-                                            sClass = "badge badge-success";
-                                        }
-                                        else if (item.Status == 5)
-                                        {
-                                            sText = "Cancelled";
-                                            sClass = "badge badge-danger";
-                                        }
-                                       else 
-                                        {
-                                            sText = "Pending";
-                                            sClass = "badge badge-warning";
-                                        }
-                                    }
-                                    <label class="@sClass">@sText</label>
-                                </td>
-                                
+
                             </tr>
                         }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                count += 1;
+                                <tr>
+                                    <td>@count</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AssignOn)</td>
+                                    <td>
+                                        @{
+                                            var dText = "";
+                                            var dClass = "";
+                                            @if (item.DeliveredOrCancelledOn == null)
+                                            {
+                                                dText = "Pending";
+                                                dClass = "badge badge-warning";
+                                            }
+                                            else
+                                            {
+                                                dText = @item.DeliveredOrCancelledOn;
+                                                dClass = "";
+                                            }
+                                        }
+                                        <label class="@dClass">@dText</label>
+
+                                    </td>
+                                    <td>
+                                        @{
+                                            var cText = "";
+                                            var cClass = "";
+                                            @if (item.CommitionEarning == null)
+                                            {
+                                                cText = "₹ 0.0";
+                                                cClass = "badge badge-danger";
+                                            }
+                                            else if (item.Status == 4)
+                                            {
+                                                cText = "₹ " + item.CommitionEarning;
+                                                cClass = "badge badge-primary";
+                                            }
+                                            else if (item.Status == 5)
+                                            {
+                                                cText = "₹ " + item.CommitionEarning;
+                                                cClass = "badge badge-info";
+                                            }
+                                        }
+                                        <label class="@cClass">@cText</label>
+                                    <td>
+                                            @{
+                                                var sText = "";
+                                                var sClass = "";
+                                                @if (item.Status == 4)
+                                                {
+                                                    sText = "Delivered";
+                                                    sClass = "badge badge-success";
+                                                }
+                                                else if (item.Status == 5)
+                                                {
+                                                    sText = "Cancelled";
+                                                    sClass = "badge badge-danger";
+                                                }
+                                                else
+                                                {
+                                                    sText = "Pending";
+                                                    sClass = "badge badge-warning";
+                                                }
+                                            }
+                                        <label class="@sClass">@sText</label>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                       
                     </tbody>
                 </table>
             </div>
