@@ -42,40 +42,55 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        @foreach (var item in Model)
+                        @if (Model == null || !Model.Any())
                         {
-                            count += 1;
                             <tr>
-                                <td>@count</td>
-                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                <td>
-                                    <a class="fancybox" href="@item.Image" data-fancybox data-caption="@item.Name">
-                                        <img src="@item.Image" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="90px" height="50px" />
-                                    </a>
+                                <td colspan="7" style="text-align:center;">
+
+                                    <strong>Data not found!</strong>
+
+                                    <br>
                                 </td>
-                                <td>@Html.DisplayFor(modelItem => item.Salary)</td>
-                                <td>
-                                    @{
-                                        var sText = "";
-                                        var sClass = "";
-                                        @if (item.Status==1)
-                                        {
-                                            sText = "Credited";
-                                            sClass = "badge badge-success";
-                                        }
-                                        else
-                                        {
-                                            sText = "Not Credit";
-                                            sClass = "badge badge-Danger";
-                                        }
-                                    }
-                                    <label class="@sClass">@sText</label>
-                                </td>
-                                <td>@Html.DisplayFor(modelItem => item.CreditOn)</td>
+
                             </tr>
                         }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                count += 1;
+                                <tr>
+                                    <td>@count</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td>
+                                        <a class="fancybox" href="@item.Image" data-fancybox data-caption="@item.Name">
+                                            <img src="@item.Image" onerror="this.onerror=null;this.src='/images/noimage.jpg'" class="img-fluid rounded-circle" alt="No Image Found" width="90px" height="50px" />
+                                        </a>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Salary)</td>
+                                    <td>
+                                        @{
+                                            var sText = "";
+                                            var sClass = "";
+                                            @if (item.Status==1)
+                                            {
+                                                sText = "Credited";
+                                                sClass = "badge badge-success";
+                                            }
+                                            else
+                                            {
+                                                sText = "Not Credit";
+                                                sClass = "badge badge-Danger";
+                                            }
+                                        }
+                                        <label class="@sClass">@sText</label>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreditOn)</td>
+                                </tr>
+                            }
+                        }
+
                     </tbody>
                 </table>
             </div>
