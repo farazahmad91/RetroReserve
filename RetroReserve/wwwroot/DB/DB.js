@@ -1,6 +1,6 @@
 ﻿USE[master]
 GO
-/****** Object:  Database [RetroReserve]    Script Date: 27-04-2024 10:31:53 ******/
+/****** Object:  Database [RetroReserve]    Script Date: 27-04-2024 17:53:52 ******/
 CREATE DATABASE[RetroReserve]
 CONTAINMENT = NONE
  ON  PRIMARY
@@ -84,7 +84,21 @@ ALTER DATABASE[RetroReserve] SET QUERY_STORE(OPERATION_MODE = READ_WRITE, CLEANU
 GO
 USE[RetroReserve]
 GO
-/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  UserDefinedFunction [dbo].[GetCustomerName]    Script Date: 27-04-2024 17:53:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION[dbo].[GetCustomerName](@Orderid INT)
+RETURNS NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @UserId NVARCHAR(50);
+    SELECT @UserId = UserId FROM tbl_Orders WHERE OrderID = @Orderid;
+    RETURN @UserId;
+END;
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +112,7 @@ CREATE TABLE[dbo].[__EFMigrationsHistory](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetRoleClaims]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[AspNetRoleClaims]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -114,7 +128,7 @@ CREATE TABLE[dbo].[AspNetRoleClaims](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +144,7 @@ CREATE TABLE[dbo].[AspNetRoles](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +160,7 @@ CREATE TABLE[dbo].[AspNetUserClaims](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +177,7 @@ CREATE TABLE[dbo].[AspNetUserLogins](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -178,7 +192,7 @@ CREATE TABLE[dbo].[AspNetUserRoles](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,7 +221,7 @@ CREATE TABLE[dbo].[AspNetUsers](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetUserTokens]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[AspNetUserTokens]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -225,7 +239,7 @@ CREATE TABLE[dbo].[AspNetUserTokens](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[Bookingtable]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[Bookingtable]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -246,7 +260,7 @@ CREATE TABLE[dbo].[Bookingtable](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[Cart]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -263,7 +277,7 @@ CREATE TABLE[dbo].[Cart](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[City]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[City]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -280,7 +294,7 @@ CREATE TABLE[dbo].[City](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[DboyReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[DboyReview]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -300,7 +314,7 @@ CREATE TABLE[dbo].[DboyReview](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[DeliveredOrder]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[DeliveredOrder]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -322,7 +336,7 @@ CREATE TABLE[dbo].[DeliveredOrder](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[DeliveryAddress]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[DeliveryAddress]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -346,7 +360,7 @@ CREATE TABLE[dbo].[DeliveryAddress](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderAmount]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[OrderAmount]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -363,7 +377,7 @@ CREATE TABLE[dbo].[OrderAmount](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[PostalCode]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[PostalCode]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -380,7 +394,7 @@ CREATE TABLE[dbo].[PostalCode](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[State]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[State]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -396,7 +410,7 @@ CREATE TABLE[dbo].[State](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tabledetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[Tabledetails]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -411,7 +425,7 @@ CREATE TABLE[dbo].[Tabledetails](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_AppReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_AppReview]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -430,7 +444,7 @@ CREATE TABLE[dbo].[tbl_AppReview](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_BookingTableDetail]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_BookingTableDetail]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -447,7 +461,7 @@ CREATE TABLE[dbo].[tbl_BookingTableDetail](
     [Status][int] NULL
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_CheckoutAddress]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_CheckoutAddress]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -466,7 +480,7 @@ CREATE TABLE[dbo].[tbl_CheckoutAddress](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_complaint]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_complaint]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -486,7 +500,7 @@ CREATE TABLE[dbo].[tbl_complaint](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_contactus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_contactus]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -506,7 +520,7 @@ CREATE TABLE[dbo].[tbl_contactus](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Coupan]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_Coupan]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -524,7 +538,7 @@ CREATE TABLE[dbo].[tbl_Coupan](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Dishcategory]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_Dishcategory]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -541,7 +555,7 @@ CREATE TABLE[dbo].[tbl_Dishcategory](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_EmployeeRoleMaster]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_EmployeeRoleMaster]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -558,7 +572,7 @@ CREATE TABLE[dbo].[tbl_EmployeeRoleMaster](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_employees]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_employees]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -583,7 +597,7 @@ CREATE TABLE[dbo].[tbl_employees](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_FAQ]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_FAQ]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -600,7 +614,7 @@ CREATE TABLE[dbo].[tbl_FAQ](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY] TEXTIMAGE_ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_feedback]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_feedback]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -618,7 +632,7 @@ CREATE TABLE[dbo].[tbl_feedback](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_foodkart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_foodkart]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -640,7 +654,7 @@ CREATE TABLE[dbo].[tbl_foodkart](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_massagebox]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_massagebox]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -658,7 +672,7 @@ CREATE TABLE[dbo].[tbl_massagebox](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Offer]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_Offer]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -678,7 +692,7 @@ CREATE TABLE[dbo].[tbl_Offer](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_OrderDetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_OrderDetails]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -695,7 +709,7 @@ CREATE TABLE[dbo].[tbl_OrderDetails](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Orders]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_Orders]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -716,7 +730,7 @@ CREATE TABLE[dbo].[tbl_Orders](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_PaymentDetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_PaymentDetails]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -735,7 +749,7 @@ CREATE TABLE[dbo].[tbl_PaymentDetails](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_ProductReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_ProductReview]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -756,7 +770,7 @@ CREATE TABLE[dbo].[tbl_ProductReview](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_RecentView]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_RecentView]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -772,7 +786,7 @@ CREATE TABLE[dbo].[tbl_RecentView](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[TBL_TABLEBYADMIN]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[TBL_TABLEBYADMIN]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -785,7 +799,7 @@ CREATE TABLE[dbo].[TBL_TABLEBYADMIN](
     [IsActive][bit] NULL
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_teakart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_teakart]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -807,7 +821,7 @@ CREATE TABLE[dbo].[tbl_teakart](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_UserBookingTable]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_UserBookingTable]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -823,7 +837,7 @@ CREATE TABLE[dbo].[tbl_UserBookingTable](
     [Email][varchar](50) NULL
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_UserPro_Details]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_UserPro_Details]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -843,7 +857,7 @@ CREATE TABLE[dbo].[tbl_UserPro_Details](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tbl_Variant]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tbl_Variant]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -860,7 +874,7 @@ CREATE TABLE[dbo].[tbl_Variant](
     [DishQuantity][varchar](50) NULL
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tblBannner]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tblBannner]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -882,7 +896,7 @@ CREATE TABLE[dbo].[tblBannner](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tblEmployeeSalary]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tblEmployeeSalary]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -899,7 +913,7 @@ CREATE TABLE[dbo].[tblEmployeeSalary](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tblErrorLog]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tblErrorLog]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -917,7 +931,7 @@ CREATE TABLE[dbo].[tblErrorLog](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tblEvent]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tblEvent]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -940,7 +954,7 @@ CREATE TABLE[dbo].[tblEvent](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[tblEventBooking]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[tblEventBooking]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -966,7 +980,7 @@ CREATE TABLE[dbo].[tblEventBooking](
     )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON[PRIMARY]
 ) ON[PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserPaymentDetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Table [dbo].[UserPaymentDetails]    Script Date: 27-04-2024 17:53:52 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1022,6 +1036,10 @@ INSERT[dbo].[AspNetUserRoles]([UserId], [RoleId]) VALUES(N'f7bbf7fd-a21a-4ff7-aa
 GO
 INSERT[dbo].[AspNetUserRoles]([UserId], [RoleId]) VALUES(N'0717af6f-abdd-42ab-8bfb-02ac169ee799', N'8158da53-5e7d-4c0e-bf60-bbada1c3c114')
 GO
+INSERT[dbo].[AspNetUserRoles]([UserId], [RoleId]) VALUES(N'14fc4b7f-ac8e-4d76-8c28-c7949141d790', N'8158da53-5e7d-4c0e-bf60-bbada1c3c114')
+GO
+INSERT[dbo].[AspNetUserRoles]([UserId], [RoleId]) VALUES(N'2ecc7980-a58b-494a-a617-c49fd4499771', N'8158da53-5e7d-4c0e-bf60-bbada1c3c114')
+GO
 INSERT[dbo].[AspNetUserRoles]([UserId], [RoleId]) VALUES(N'35f83a20-c34b-476e-9966-b3f71a78c8d2', N'8158da53-5e7d-4c0e-bf60-bbada1c3c114')
 GO
 INSERT[dbo].[AspNetUserRoles]([UserId], [RoleId]) VALUES(N'9dd89a89-8a4c-446c-ade4-30673ac3b85c', N'8158da53-5e7d-4c0e-bf60-bbada1c3c114')
@@ -1034,7 +1052,11 @@ INSERT[dbo].[AspNetUsers]([Id], [Name], [Adhaar], [UserName], [NormalizedUserNam
 GO
 INSERT[dbo].[AspNetUsers]([Id], [Name], [Adhaar], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES(N'0b0c8cc2-d877-4477-aff5-7100f16e6607', N'Faraz', N'Gw6&xyL', N'Farazshaikh8960@gmail.com', N'FARAZSHAIKH8960@GMAIL.COM', N'Farazshaikh8960@gmail.com', N'FARAZSHAIKH8960@GMAIL.COM', 1, N'AQAAAAIAAYagAAAAEGuK1qkMeWxl5W2iLyOuyFaLaCh5LEuErTCNujaici58y3cB7MR5Y3i9J7I39zARvg==', N'4EWTVAUFXY4KE5HCKPTE6PLY5IFJIUDB', N'aaf058ab-91d4-402f-a7e7-64414621a428', NULL, 0, 0, NULL, 1, 0)
 GO
+INSERT[dbo].[AspNetUsers]([Id], [Name], [Adhaar], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES(N'14fc4b7f-ac8e-4d76-8c28-c7949141d790', N'Laldhir', N'Zj9*vEW', N'Laldhirrajbhar7897@gmail.com', N'LALDHIRRAJBHAR7897@GMAIL.COM', N'Laldhirrajbhar7897@gmail.com', N'LALDHIRRAJBHAR7897@GMAIL.COM', 1, N'AQAAAAIAAYagAAAAECeB1iM5jR4GKhH6hn50uj1I2CaHd11uQBt0j3rJFUY2uwe6KYsKuyZjVzYPFcbjhg==', N'JULRSKQKOWXAX6UZ2NJVUSCPPQZ3YW42', N'e6648e2c-4e6b-4f33-804c-744b33d9f649', NULL, 0, 0, NULL, 1, 0)
+GO
 INSERT[dbo].[AspNetUsers]([Id], [Name], [Adhaar], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES(N'1f2d7733-7984-4f3b-a7c3-7c50a499c7c4', N'Naved', N'Fd6#ekv', N'Admin3@gmail.com', N'ADMIN3@GMAIL.COM', N'Admin3@gmail.com', N'ADMIN3@GMAIL.COM', 1, N'AQAAAAIAAYagAAAAEFsEyUP4WoPmaBw1+332UV0TB1n+Eq1HifnHGR6PNh9qx3Bbfxjh2tQnYYNx/BDzDA==', N'54R327AQB7EQZGKJJINSEXUUFJ2BJ4IV', N'76f6d285-a685-4def-aa22-106df385b817', NULL, 0, 0, NULL, 1, 0)
+GO
+INSERT[dbo].[AspNetUsers]([Id], [Name], [Adhaar], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES(N'2ecc7980-a58b-494a-a617-c49fd4499771', N'Laldhir', N'Xa5&wgP', N'Laldhir@gmail.com', N'LALDHIR@GMAIL.COM', N'Laldhir@gmail.com', N'LALDHIR@GMAIL.COM', 1, N'AQAAAAIAAYagAAAAECwJXfdSo0K+TX7AijW/5kjNkfEb+lLX3Tn6bx/QyvpLatZwzP2pJU31V8CqykWILA==', N'ZB3YPTP4UDBXDUNT4FDPUDJWKS2BBJ3R', N'1a72d8c3-278e-4f59-8a02-13cf9aaf3757', NULL, 0, 0, NULL, 1, 0)
 GO
 INSERT[dbo].[AspNetUsers]([Id], [Name], [Adhaar], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES(N'35f83a20-c34b-476e-9966-b3f71a78c8d2', N'dfgdfgd', N'Lj8&BDQ', N'raiyyanshaikh97@gmail.com', N'RAIYYANSHAIKH97@GMAIL.COM', N'raiyyanshaikh97@gmail.com', N'RAIYYANSHAIKH97@GMAIL.COM', 1, N'AQAAAAIAAYagAAAAEBYFBgS9qt9Kw3kzutByXSuGIT3Ou3bP2af1EtyXxVapOOWjajmby4rpkBNcYnyAvQ==', N'CGIZMQKED6KFGRMOAJKDX4MTTZERP3HP', N'739f92e6-e8df-47ad-96cd-acf14a2155cc', NULL, 0, 0, NULL, 1, 0)
 GO
@@ -1157,6 +1179,10 @@ GO
 INSERT[dbo].[Cart]([CartId], [UserID], [Id], [Quantity], [CreatedAt]) VALUES(1082, N'farazshaikh08538@gmail.com', 4, 1, CAST(N'2024-02-21T14:42:35.960' AS DateTime))
 GO
 INSERT[dbo].[Cart]([CartId], [UserID], [Id], [Quantity], [CreatedAt]) VALUES(1083, N'farazshaikh08538@gmail.com', 2, 1, CAST(N'2024-02-21T14:42:45.203' AS DateTime))
+GO
+INSERT[dbo].[Cart]([CartId], [UserID], [Id], [Quantity], [CreatedAt]) VALUES(2096, N'Farazshaikh60@gmail.com', 1, 2, CAST(N'2024-04-27T15:59:17.383' AS DateTime))
+GO
+INSERT[dbo].[Cart]([CartId], [UserID], [Id], [Quantity], [CreatedAt]) VALUES(2097, N'Farazshaikh60@gmail.com', 2, 1, CAST(N'2024-04-27T16:03:06.077' AS DateTime))
 GO
 SET IDENTITY_INSERT[dbo].[Cart] OFF
 GO
@@ -1320,17 +1346,17 @@ INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [Re
 GO
 INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(2, 1, N'Good service', 3, 0, CAST(N'2024-03-06T00:00:00.000' AS DateTime), 1001, N'user1@example.com')
 GO
-INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(3, 1, N'Prompt delivery', 3, 0, CAST(N'2024-03-07T00:00:00.000' AS DateTime), 1002, N'user2@example.com')
+INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(3, 4, N'Prompt delivery', 3, 0, CAST(N'2024-03-07T00:00:00.000' AS DateTime), 1002, N'user2@example.com')
 GO
-INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(4, 1, N'Polite driver', 3, 0, CAST(N'2024-03-08T00:00:00.000' AS DateTime), 1003, N'user3@example.com')
+INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(4, 4, N'Polite driver', 3, 0, CAST(N'2024-03-08T00:00:00.000' AS DateTime), 1003, N'user3@example.com')
 GO
-INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(5, 1, N'Late delivery', 3, 0, CAST(N'2024-03-09T00:00:00.000' AS DateTime), 1004, N'user4@example.com')
+INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(5, 4, N'Late delivery', 3, 0, CAST(N'2024-03-09T00:00:00.000' AS DateTime), 1004, N'user4@example.com')
 GO
 INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(6, 1, N'Excellent service', 3, 0, CAST(N'2024-03-10T00:00:00.000' AS DateTime), 1005, N'user5@example.com')
 GO
-INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(7, 1, N'Average experience', 3, 0, CAST(N'2024-03-11T00:00:00.000' AS DateTime), 1006, N'user6@example.com')
+INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(7, 4, N'Average experience', 3, 0, CAST(N'2024-03-11T00:00:00.000' AS DateTime), 1006, N'user6@example.com')
 GO
-INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(8, 1, N'Problem with order', 3, 0, CAST(N'2024-03-12T00:00:00.000' AS DateTime), 1007, N'user7@example.com')
+INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(8, 4, N'Problem with order', 3, 0, CAST(N'2024-03-12T00:00:00.000' AS DateTime), 1007, N'user7@example.com')
 GO
 INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(9, 1, N'Fast delivery', 3, 0, CAST(N'2024-03-13T00:00:00.000' AS DateTime), 1008, N'user8@example.com')
 GO
@@ -1418,35 +1444,39 @@ INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [Re
 GO
 INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(51, 1, N'Delivery issues', 1, 0, CAST(N'2024-03-15T00:00:00.000' AS DateTime), 1010, N'user10@example.com')
 GO
+INSERT[dbo].[DboyReview]([DboyRId], [DboyId], [Comment], [Rating], [Status], [ReviewOn], [OrderId], [Email]) VALUES(52, 4, N'good', 5, 0, CAST(N'2024-04-27T16:58:07.960' AS DateTime), 1118, N'Farazshaikh60@gmail.com')
+GO
 SET IDENTITY_INSERT[dbo].[DboyReview] OFF
 GO
 SET IDENTITY_INSERT[dbo].[DeliveredOrder] ON
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1000, 102, 1, CAST(N'2024-02-28T15:41:25.663' AS DateTime), N'Mar  5 2024  4:56PM', CAST(20.00 AS Decimal(18, 2)), 2, N'farazshaikh660@gmail.com', N'call not receiving ', NULL)
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1000, 102, 1, CAST(N'2024-02-28T15:41:25.663' AS DateTime), N'Apr 27 2024  5:37PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', NULL)
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1001, 105, 1, CAST(N'2024-03-01T16:14:27.980' AS DateTime), N'Apr 20 2024  4:41PM', CAST(5.00 AS Decimal(18, 2)), 2, N'farazshaikh660@gmail.com', N'fgfghg', NULL)
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1001, 105, 1, CAST(N'2024-03-01T16:14:27.980' AS DateTime), N'Apr 27 2024  5:37PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', NULL)
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1002, 105, 1, CAST(N'2024-03-05T18:35:49.527' AS DateTime), N'Apr 20 2024  4:41PM', CAST(5.00 AS Decimal(18, 2)), 2, N'farazshaikh660@gmail.com', N'fgfghg', NULL)
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1002, 105, 1, CAST(N'2024-03-05T18:35:49.527' AS DateTime), N'Apr 27 2024  5:37PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', NULL)
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1003, 106, 1, CAST(N'2024-03-21T15:37:24.870' AS DateTime), NULL, NULL, 2, N'farazshaikh660@gmail.com', NULL, N'farazshaikh08538@gmail.com')
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1003, 106, 1, CAST(N'2024-03-21T15:37:24.870' AS DateTime), N'Apr 27 2024  5:37PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', N'farazshaikh08538@gmail.com')
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1004, 107, 1, CAST(N'2024-03-21T15:42:41.087' AS DateTime), NULL, NULL, 2, N'farazshaikh660@gmail.com', NULL, NULL)
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1004, 107, 1, CAST(N'2024-03-21T15:42:41.087' AS DateTime), N'Apr 27 2024  5:39PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', NULL)
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1005, 108, 1, CAST(N'2024-03-21T15:49:21.863' AS DateTime), N'Mar 21 2024  3:53PM', CAST(20.00 AS Decimal(18, 2)), 2, N'farazshaikh660@gmail.com', NULL, NULL)
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1005, 108, 1, CAST(N'2024-03-21T15:49:21.863' AS DateTime), N'Apr 27 2024  5:37PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', NULL)
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1006, 103, 1, CAST(N'2024-03-27T14:37:18.797' AS DateTime), N'Apr 20 2024  4:39PM', CAST(20.00 AS Decimal(18, 2)), 2, N'farazshaikh660@gmail.com', NULL, N'farazshaikh08538@gmail.com')
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1006, 103, 1, CAST(N'2024-03-27T14:37:18.797' AS DateTime), N'Apr 27 2024  5:36PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', N'farazshaikh08538@gmail.com')
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1007, 101, 1, CAST(N'2024-03-27T14:38:00.370' AS DateTime), N'Apr 20 2024  4:39PM', CAST(5.00 AS Decimal(18, 2)), 2, N'farazshaikh660@gmail.com', N'moka na chahi', NULL)
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1007, 101, 1, CAST(N'2024-03-27T14:38:00.370' AS DateTime), N'Apr 27 2024  5:30PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'fgfhf', NULL)
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1008, 101, 1, CAST(N'2024-03-27T14:38:00.787' AS DateTime), N'Apr 20 2024  4:39PM', CAST(5.00 AS Decimal(18, 2)), 2, N'farazshaikh660@gmail.com', N'moka na chahi', NULL)
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1008, 101, 1, CAST(N'2024-03-27T14:38:00.787' AS DateTime), N'Apr 27 2024  5:30PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'fgfhf', NULL)
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1009, 109, 1, CAST(N'2024-03-27T14:48:46.237' AS DateTime), NULL, NULL, 2, N'farazshaikh660@gmail.com', NULL, N'Farazshaikh60@gmail.com')
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1009, 109, 1, CAST(N'2024-03-27T14:48:46.237' AS DateTime), N'Apr 27 2024  5:39PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', N'Farazshaikh60@gmail.com')
 GO
-INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1010, 102, 1, CAST(N'2024-03-27T15:10:19.583' AS DateTime), NULL, NULL, 2, N'farazshaikh660@gmail.com', NULL, N'farazshaikh08538@gmail.com')
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1010, 102, 1, CAST(N'2024-03-27T15:10:19.583' AS DateTime), N'Apr 27 2024  5:37PM', CAST(5.00 AS Decimal(18, 2)), 5, N'farazshaikh660@gmail.com', N'g', N'farazshaikh08538@gmail.com')
 GO
 INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1011, 115, 1, CAST(N'2024-04-20T16:44:13.780' AS DateTime), N'Apr 20 2024  5:19PM', CAST(20.00 AS Decimal(18, 2)), 4, N'farazshaikh660@gmail.com', NULL, N'Farazshaikh60@gmail.com')
 GO
 INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1012, 116, 1, CAST(N'2024-04-20T16:58:49.830' AS DateTime), N'Apr 20 2024  5:18PM', CAST(20.00 AS Decimal(18, 2)), 4, N'farazshaikh660@gmail.com', NULL, N'Farazshaikh60@gmail.com')
+GO
+INSERT[dbo].[DeliveredOrder]([DeliveredOrderId], [OrderId], [EmpId], [AssignOn], [DeliveredOrCancelledOn], [CommitionEarning], [Status], [Email], [cancellation_Reason], [UserEmail]) VALUES(1013, 1118, 4, CAST(N'2024-04-27T16:51:05.110' AS DateTime), N'Apr 27 2024  4:52PM', CAST(20.00 AS Decimal(18, 2)), 4, N'Laldhirrajbhar7897@gmail.com', NULL, N'Farazshaikh60@gmail.com')
 GO
 SET IDENTITY_INSERT[dbo].[DeliveredOrder] OFF
 GO
@@ -1688,6 +1718,8 @@ INSERT[dbo].[tbl_AppReview]([AReviewId], [UserID], [Name], [Comment], [Rating], 
 GO
 INSERT[dbo].[tbl_AppReview]([AReviewId], [UserID], [Name], [Comment], [Rating], [Status], [AReviewDate]) VALUES(6, N'farazshaikh660@gmail.com', N'Faraz Ahmad', N'gfgfdg', 5, 0, CAST(N'2024-03-01T16:45:06.357' AS DateTime))
 GO
+INSERT[dbo].[tbl_AppReview]([AReviewId], [UserID], [Name], [Comment], [Rating], [Status], [AReviewDate]) VALUES(7, N'Laldhirrajbhar7897@gmail.com', N'Laldhir', N'Nice Application', 5, 0, CAST(N'2024-04-27T17:45:13.097' AS DateTime))
+GO
 SET IDENTITY_INSERT[dbo].[tbl_AppReview] OFF
 GO
 SET IDENTITY_INSERT[dbo].[tbl_BookingTableDetail] ON
@@ -1736,6 +1768,8 @@ SET IDENTITY_INSERT[dbo].[tbl_Coupan] ON
 GO
 INSERT[dbo].[tbl_Coupan]([CoupanId], [CoupanName], [Description], [ValidUpto], [IsActive], [DiscountPercentage]) VALUES(1, N'Holi50', N'dsfsdfsdf', N'26-02-2023', 1, NULL)
 GO
+INSERT[dbo].[tbl_Coupan]([CoupanId], [CoupanName], [Description], [ValidUpto], [IsActive], [DiscountPercentage]) VALUES(1001, N'Laldhir', N'Chicken biryani is a flavorful and aromatic dish that originated in the Indian subcontinent. ', N'2024-04-28', 1, CAST(100.00 AS Decimal(5, 2)))
+GO
 SET IDENTITY_INSERT[dbo].[tbl_Coupan] OFF
 GO
 SET IDENTITY_INSERT[dbo].[tbl_Dishcategory] ON
@@ -1771,6 +1805,8 @@ GO
 SET IDENTITY_INSERT[dbo].[tbl_employees] ON
 GO
 INSERT[dbo].[tbl_employees]([EmpId], [Name], [Email], [RoleId], [Image], [Salary], [Phone], [Gender], [DOB], [AdharNo], [Address], [IsActive], [CreatedOn]) VALUES(1, N'Faraz Ahmad', N'farazshaikh660@gmail.com', 4, N'/img/1835df9d-03dd-4017-8e82-eb2c68d27fc7_atrimg.jpg', CAST(8000.00 AS Decimal(18, 2)), N'97765645432', N'male', N'2024-02-01', N'46546565464', N'hfghfghfghfghfgh', 1, CAST(N'2024-02-28T14:51:57.447' AS DateTime))
+GO
+INSERT[dbo].[tbl_employees]([EmpId], [Name], [Email], [RoleId], [Image], [Salary], [Phone], [Gender], [DOB], [AdharNo], [Address], [IsActive], [CreatedOn]) VALUES(4, N'Laldhir', N'Laldhirrajbhar7897@gmail.com', 4, N'/img/a02a1af8-bf1b-4be2-b472-0768c46ca023_red.jpg', CAST(8000.00 AS Decimal(18, 2)), N'9890379879', N'male', N'2000-07-27', N'5657567547457', N'Azamgarh', 1, CAST(N'2024-04-27T15:52:27.587' AS DateTime))
 GO
 SET IDENTITY_INSERT[dbo].[tbl_employees] OFF
 GO
@@ -1860,29 +1896,33 @@ INSERT[dbo].[tbl_OrderDetails]([OrderDetailID], [OrderID], [DishId], [Quantity],
 GO
 INSERT[dbo].[tbl_OrderDetails]([OrderDetailID], [OrderID], [DishId], [Quantity], [TotalAmount]) VALUES(1013, 117, 11, 1, CAST(120.00 AS Decimal(18, 2)))
 GO
+INSERT[dbo].[tbl_OrderDetails]([OrderDetailID], [OrderID], [DishId], [Quantity], [TotalAmount]) VALUES(2011, 1117, 10, 6, CAST(1380.00 AS Decimal(18, 2)))
+GO
+INSERT[dbo].[tbl_OrderDetails]([OrderDetailID], [OrderID], [DishId], [Quantity], [TotalAmount]) VALUES(2012, 1118, 1, 1, CAST(350.00 AS Decimal(18, 2)))
+GO
 SET IDENTITY_INSERT[dbo].[tbl_OrderDetails] OFF
 GO
 SET IDENTITY_INSERT[dbo].[tbl_Orders] ON 
 GO
 INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(100, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-02-20T15:09:54.357' AS DateTime), NULL, 1, NULL, NULL, 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(101, N'farazshaikh08538@gmail.com', 8, CAST(N'2024-02-20T18:40:02.073' AS DateTime), N'Apr 20 2024  4:39PM', 5, 573172, N'moka na chahi', 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(101, N'farazshaikh08538@gmail.com', 8, CAST(N'2024-02-20T18:40:02.073' AS DateTime), N'Apr 27 2024  5:30PM', 5, 573172, N'fgfhf', 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(102, N'farazshaikh08538@gmail.com', 8, CAST(N'2024-02-20T18:46:26.867' AS DateTime), N'Mar  5 2024  4:56PM', 1, 628209, N'call not receiving ', 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(102, N'farazshaikh08538@gmail.com', 8, CAST(N'2024-02-20T18:46:26.867' AS DateTime), N'Apr 27 2024  5:37PM', 5, 628209, N'g', 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(103, N'farazshaikh08538@gmail.com', 8, CAST(N'2024-02-20T18:54:51.070' AS DateTime), N'Apr 20 2024  4:39PM', 4, 963610, NULL, 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(103, N'farazshaikh08538@gmail.com', 8, CAST(N'2024-02-20T18:54:51.070' AS DateTime), N'Apr 27 2024  5:36PM', 5, 963610, N'g', 1)
 GO
 INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(104, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-02-21T11:30:00.097' AS DateTime), NULL, 1, NULL, NULL, 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(105, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-02-24T10:47:47.767' AS DateTime), N'Apr 20 2024  4:41PM', 5, 702403, N'fgfghg', 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(105, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-02-24T10:47:47.767' AS DateTime), N'Apr 27 2024  5:37PM', 5, 702403, N'g', 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(106, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-21T15:02:49.850' AS DateTime), NULL, 1, 346213, NULL, 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(106, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-21T15:02:49.850' AS DateTime), N'Apr 27 2024  5:37PM', 5, 346213, N'g', 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(107, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-21T15:41:57.923' AS DateTime), NULL, 1, 717528, NULL, 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(107, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-21T15:41:57.923' AS DateTime), N'Apr 27 2024  5:39PM', 5, 717528, N'g', 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(108, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-21T15:47:02.200' AS DateTime), N'Mar 21 2024  3:53PM', 1, 151736, NULL, 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(108, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-21T15:47:02.200' AS DateTime), N'Apr 27 2024  5:37PM', 5, 151736, N'g', 1)
 GO
-INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(109, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-27T14:39:03.807' AS DateTime), NULL, 1, 972320, NULL, 1)
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(109, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-03-27T14:39:03.807' AS DateTime), N'Apr 27 2024  5:39PM', 5, 972320, N'g', 1)
 GO
 INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(110, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-04-19T15:06:05.530' AS DateTime), NULL, 1, NULL, NULL, NULL)
 GO
@@ -1900,6 +1940,10 @@ INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [Deliver
 GO
 INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(117, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-04-20T18:59:12.263' AS DateTime), NULL, 1, NULL, NULL, NULL)
 GO
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(1117, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-04-27T15:20:13.310' AS DateTime), NULL, 1, NULL, NULL, NULL)
+GO
+INSERT[dbo].[tbl_Orders]([OrderID], [UserId], [AddressId], [OrderDate], [DeliverDate], [Status], [OTP], [cancellation_Reason], [DboyId]) VALUES(1118, N'Farazshaikh60@gmail.com', 2, CAST(N'2024-04-27T15:26:21.713' AS DateTime), N'Apr 27 2024  4:52PM', 4, 325324, NULL, 4)
+GO
 SET IDENTITY_INSERT[dbo].[tbl_Orders] OFF
 GO
 SET IDENTITY_INSERT[dbo].[tbl_PaymentDetails] ON 
@@ -1911,6 +1955,10 @@ GO
 INSERT[dbo].[tbl_PaymentDetails]([PaymentId], [OrderId], [UserId], [PaymentType], [Amount], [PaymentOn], [Status]) VALUES(100000002, 116, N'Farazshaikh60@gmail.com', N'COD', 400, CAST(N'2024-04-20T16:56:42.007' AS DateTime), 1)
 GO
 INSERT[dbo].[tbl_PaymentDetails]([PaymentId], [OrderId], [UserId], [PaymentType], [Amount], [PaymentOn], [Status]) VALUES(100000003, 117, N'Farazshaikh60@gmail.com', N'Paytm', 820, CAST(N'2024-04-20T18:59:12.270' AS DateTime), 1)
+GO
+INSERT[dbo].[tbl_PaymentDetails]([PaymentId], [OrderId], [UserId], [PaymentType], [Amount], [PaymentOn], [Status]) VALUES(100001003, 1117, N'Farazshaikh60@gmail.com', N'COD', 1380, CAST(N'2024-04-27T15:20:13.317' AS DateTime), 1)
+GO
+INSERT[dbo].[tbl_PaymentDetails]([PaymentId], [OrderId], [UserId], [PaymentType], [Amount], [PaymentOn], [Status]) VALUES(100001004, 1118, N'Farazshaikh60@gmail.com', N'COD', 400, CAST(N'2024-04-27T15:26:21.717' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT[dbo].[tbl_PaymentDetails] OFF
 GO
@@ -1997,6 +2045,10 @@ GO
 INSERT[dbo].[tbl_UserPro_Details]([UId], [Name], [Email], [Image], [Password], [BirthDay], [Phone], [Createdon]) VALUES(9, N'Faraz Ahmad', N'farazshaikh660@gmail.com', NULL, N'Faraz@11', NULL, NULL, CAST(N'2024-02-28T14:51:59.187' AS DateTime))
 GO
 INSERT[dbo].[tbl_UserPro_Details]([UId], [Name], [Email], [Image], [Password], [BirthDay], [Phone], [Createdon]) VALUES(10, N'Shaikh Faraz', N'farazshaikh91@gmail.com', N'/img/2fd2a77b-5cfa-4665-b690-2080d9b06c5a_6b866464-7f71-48a1-982f-633fa0422d76_atrimg.jpg', N'Faraz@11', N'2024-03-14', N'654756756', CAST(N'2024-03-01T16:51:07.110' AS DateTime))
+GO
+INSERT[dbo].[tbl_UserPro_Details]([UId], [Name], [Email], [Image], [Password], [BirthDay], [Phone], [Createdon]) VALUES(11, N'Laldhir', N'Laldhir@gmail.com', NULL, N'Laldhir@11', NULL, NULL, CAST(N'2024-04-27T15:51:02.983' AS DateTime))
+GO
+INSERT[dbo].[tbl_UserPro_Details]([UId], [Name], [Email], [Image], [Password], [BirthDay], [Phone], [Createdon]) VALUES(12, N'Laldhir', N'Laldhirrajbhar7897@gmail.com', NULL, N'Laldhir@11', NULL, NULL, CAST(N'2024-04-27T15:53:52.043' AS DateTime))
 GO
 SET IDENTITY_INSERT[dbo].[tbl_UserPro_Details] OFF
 GO
@@ -2160,6 +2212,12 @@ INSERT[dbo].[tblErrorLog]([ErrorId], [ClassName], [FunctionName], [ErrorMsg], [P
 GO
 INSERT[dbo].[tblErrorLog]([ErrorId], [ClassName], [FunctionName], [ErrorMsg], [Proc_Name], [CreatedOn]) VALUES(52, N'OrdersService', N'ResendOTP', N'Error sending email', N'sp_ResendOTP', CAST(N'2024-04-20T16:34:55.723' AS DateTime))
 GO
+INSERT[dbo].[tblErrorLog]([ErrorId], [ClassName], [FunctionName], [ErrorMsg], [Proc_Name], [CreatedOn]) VALUES(53, N'OffersService', N'SaveOrUpdateCoupan', N'Procedure or function Proc_SaveOrUpdateCoupan has too many arguments specified.', N'Proc_SaveOrUpdateCoupan', CAST(N'2024-04-27T15:04:53.263' AS DateTime))
+GO
+INSERT[dbo].[tblErrorLog]([ErrorId], [ClassName], [FunctionName], [ErrorMsg], [Proc_Name], [CreatedOn]) VALUES(54, N'UserService', N'RegisterAsync', N'An error occurred while saving the entity changes. See the inner exception for details.', N'', CAST(N'2024-04-27T15:36:04.520' AS DateTime))
+GO
+INSERT[dbo].[tblErrorLog]([ErrorId], [ClassName], [FunctionName], [ErrorMsg], [Proc_Name], [CreatedOn]) VALUES(55, N'ReviewService', N'AddorUpdateDboyReview', N'Procedure or function sp_AddOrUpdateDboyReview has too many arguments specified.', N'sp_AddOrUpdateDboyReview', CAST(N'2024-04-27T16:54:07.873' AS DateTime))
+GO
 SET IDENTITY_INSERT[dbo].[tblErrorLog] OFF
 GO
 SET IDENTITY_INSERT[dbo].[tblEvent] ON 
@@ -2190,7 +2248,7 @@ SET IDENTITY_INSERT[dbo].[tblEventBooking] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_AspNetRoleClaims_RoleId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Index [IX_AspNetRoleClaims_RoleId]    Script Date: 27-04-2024 17:53:53 ******/
 CREATE NONCLUSTERED INDEX[IX_AspNetRoleClaims_RoleId] ON[dbo].[AspNetRoleClaims]
     (
         [RoleId] ASC
@@ -2198,7 +2256,7 @@ CREATE NONCLUSTERED INDEX[IX_AspNetRoleClaims_RoleId] ON[dbo].[AspNetRoleClaims]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [RoleNameIndex]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Index [RoleNameIndex]    Script Date: 27-04-2024 17:53:53 ******/
 CREATE UNIQUE NONCLUSTERED INDEX[RoleNameIndex] ON[dbo].[AspNetRoles]
     (
         [NormalizedName] ASC
@@ -2208,7 +2266,7 @@ WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_AspNetUserClaims_UserId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Index [IX_AspNetUserClaims_UserId]    Script Date: 27-04-2024 17:53:53 ******/
 CREATE NONCLUSTERED INDEX[IX_AspNetUserClaims_UserId] ON[dbo].[AspNetUserClaims]
     (
         [UserId] ASC
@@ -2216,7 +2274,7 @@ CREATE NONCLUSTERED INDEX[IX_AspNetUserClaims_UserId] ON[dbo].[AspNetUserClaims]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_AspNetUserLogins_UserId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Index [IX_AspNetUserLogins_UserId]    Script Date: 27-04-2024 17:53:53 ******/
 CREATE NONCLUSTERED INDEX[IX_AspNetUserLogins_UserId] ON[dbo].[AspNetUserLogins]
     (
         [UserId] ASC
@@ -2224,7 +2282,7 @@ CREATE NONCLUSTERED INDEX[IX_AspNetUserLogins_UserId] ON[dbo].[AspNetUserLogins]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_AspNetUserRoles_RoleId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Index [IX_AspNetUserRoles_RoleId]    Script Date: 27-04-2024 17:53:53 ******/
 CREATE NONCLUSTERED INDEX[IX_AspNetUserRoles_RoleId] ON[dbo].[AspNetUserRoles]
     (
         [RoleId] ASC
@@ -2232,7 +2290,7 @@ CREATE NONCLUSTERED INDEX[IX_AspNetUserRoles_RoleId] ON[dbo].[AspNetUserRoles]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [EmailIndex]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Index [EmailIndex]    Script Date: 27-04-2024 17:53:53 ******/
 CREATE NONCLUSTERED INDEX[EmailIndex] ON[dbo].[AspNetUsers]
     (
         [NormalizedEmail] ASC
@@ -2240,7 +2298,7 @@ CREATE NONCLUSTERED INDEX[EmailIndex] ON[dbo].[AspNetUsers]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UserNameIndex]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  Index [UserNameIndex]    Script Date: 27-04-2024 17:53:53 ******/
 CREATE UNIQUE NONCLUSTERED INDEX[UserNameIndex] ON[dbo].[AspNetUsers]
     (
         [NormalizedUserName] ASC
@@ -2350,16 +2408,28 @@ ON DELETE CASCADE
 GO
 ALTER TABLE[dbo].[AspNetUserTokens] CHECK CONSTRAINT[FK_AspNetUserTokens_AspNetUsers_UserId]
 GO
-/****** Object:  StoredProcedure [dbo].[InsertErrorLog]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[help]    Script Date: 27-04-2024 17:53:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE[dbo].[help]
+    @procname VARCHAR(100)
+AS
+BEGIN 
+    EXEC sp_helptext @procname;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[InsertErrorLog]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE[dbo].[InsertErrorLog]
-    @ClassName VARCHAR(50),
+@ClassName VARCHAR(50),
     @FunctionName VARCHAR(100),
-    @ResponseText VARCHAR(500),
-    @Proc_Name varchar(100)
+        @ResponseText VARCHAR(500),
+            @Proc_Name varchar(100)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -2368,7 +2438,7 @@ BEGIN
 VALUES(@ClassName, @FunctionName, @ResponseText, @Proc_Name);
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[InsertFAQ]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[InsertFAQ]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2400,21 +2470,21 @@ end
 
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_AddBookingForUser]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_AddBookingForUser]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROC[dbo].[Proc_AddBookingForUser]@TableId INT,    @BookingDate VARCHAR(150),        @BookingTime VARCHAR(150),            @NoOfPeople INT,                @Name VARCHAR(50),                    @Email VARCHAR(50)ASBEGIN             IF EXISTS(    SELECT 1           FROM tbl_UserBookingTable           WHERE BookingDate = @BookingDate           AND BookingTime = @BookingTime AND TableId = @TableId)BEGINSELECT - 1 AS StatusCode, 'This time is not available Please Choose Another Time ' AS ResponseTextRETURNENDELSEBEGINdeclare @BookingId int;          INSERT INTO tbl_UserBookingTable(TableId, BookingDate, BookingTime, NoOfPeople, Entryon, Name, Email)VALUES(@TableId, @BookingDate, @BookingTime, @NoOfPeople, GETDATE(), @Name, @Email)		set @BookingId = Scope_Identity();  		INSERT INTO tbl_BookingTableDetail(TableId, BookingDate, BookingTime, NoOfPeople, Entryon, Name, Email)VALUES(@TableId, @BookingDate, @BookingTime, @NoOfPeople, GETDATE(), @Name, @Email)                  SELECT 1 AS StatusCode, 'Your booking has been successfully added' AS ResponseText, @BookingId As ResultRETURNENDEND
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_AddEventBooking]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_AddEventBooking]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 create PROC[dbo].[Proc_AddEventBooking]@eventId INT,    @BookingDate VARCHAR(150),        @BookingTime VARCHAR(150),            @Name VARCHAR(50),                @Email VARCHAR(50)ASBEGIN             IF EXISTS(    SELECT 1           FROM tbl_BookingEvent           WHERE BookingDate = @BookingDate           AND BookingTime = @BookingTime AND eventId = @eventId)BEGINSELECT - 1 AS StatusCode, 'This time is not available Please Choose Another Time ' AS ResponseTextRETURNENDELSEBEGINdeclare @BookingId int;          INSERT INTO tbl_BookingEvent(eventId, BookingDate, BookingTime, Entryon, Name, Email)VALUES(@eventId, @BookingDate, @BookingTime, GETDATE(), @Name, @Email)		set @BookingId = Scope_Identity();  		INSERT INTO tbl_BookingEventDetail(eventId, BookingDate, BookingTime, Entryon, Name, Email)VALUES(@eventId, @BookingDate, @BookingTime, GETDATE(), @Name, @Email)                  SELECT 1 AS StatusCode, 'Your booking has been successfully added' AS ResponseText, @BookingId As ResultRETURNENDEND
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_ChangeCouponStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_ChangeCouponStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2440,14 +2510,14 @@ CASE
     WHERE CoupanId = @ID;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_CheckCoupon]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_CheckCoupon]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 create PROC[dbo].[Proc_CheckCoupon]@_CouponName VARCHAR(50)ASBEGIN       DECLARE @_IsValid BIT;--Check if the coupon exists in the database and is valid      IF EXISTS(SELECT 1 FROM tbl_Coupan WHERE CoupanName = @_CouponName AND IsActive = 1 AND ValidUpto >= GETDATE())BEGIN          SET @_IsValid = 1; --Coupon is valid          SELECT 1 AS StatusCode, 'Coupon is valid' AS ResponseText, DiscountPercentage AS Result          FROM tbl_Coupan          WHERE CoupanName = @_CouponName;ENDELSEBEGIN          SET @_IsValid = 0; --Coupon is not valid          SELECT 0 AS StatusCode, 'Coupon is not valid' AS ResponseText, NULL AS DiscountPercentage;ENDEND
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_ChnageTableStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_ChnageTableStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2463,7 +2533,7 @@ ELSE 'Table inactivated' END AS ResponseText FROM TBL_TABLEBYADMIN WHERE TableId
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[proc_GetAllOffer]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[proc_GetAllOffer]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2474,7 +2544,7 @@ Begin
 select * from tbl_Offer
 End
 GO
-/****** Object:  StoredProcedure [dbo].[proc_GetOfferById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[proc_GetOfferById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2486,14 +2556,23 @@ Begin
 select * from tbl_Offer Where OfferId = @OfferId;
 End
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_SaveOrUpdateCoupan]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_SaveOrUpdateCoupan]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE[dbo].[Proc_SaveOrUpdateCoupan]@CoupanId INT,    @CoupanName VARCHAR(100),        @Description VARCHAR(100),            @ValidUpto VARCHAR(100),                @IsActive BITASBEGIN IF EXISTS(SELECT 1 FROM tbl_Coupan WHERE CoupanId = @CoupanId)BEGINUPDATE tbl_Coupan SET CoupanName = @CoupanName, Description = @Description, IsActive = @IsActive, ValidUpto = @ValidUpto WHERE  CoupanId = @CoupanId SELECT 1 StatusCode, 'COUPAN UPDATED SUCCESSFULLY' ResponseTextRETURNENDELSEBEGIN  INSERT INTO tbl_Coupan(CoupanName, Description, ValidUpto, IsActive)VALUES(@CoupanName, @Description, @ValidUpto, @IsActive);SELECT 1 StatusCode, 'Coupan Added Successfully' ResponseTextRETURNENDEND
+CREATE PROCEDURE[dbo].[Proc_SaveOrUpdateCoupan]
+@CoupanId INT, @CoupanName VARCHAR(100), @Description VARCHAR(100), @ValidUpto VARCHAR(100), @DiscountPercentage decimal(18, 2), @IsActive BIT
+AS  
+BEGIN  IF EXISTS(SELECT 1 FROM tbl_Coupan WHERE CoupanId = @CoupanId)
+BEGIN 
+UPDATE tbl_Coupan SET CoupanName = @CoupanName, Description = @Description, DiscountPercentage = @DiscountPercentage, IsActive = @IsActive, ValidUpto = @ValidUpto 
+WHERE  CoupanId = @CoupanId  SELECT 1 StatusCode, 'COUPAN UPDATED SUCCESSFULLY' ResponseText RETURN  END    ELSE
+BEGIN   
+INSERT INTO tbl_Coupan(CoupanName, Description, ValidUpto, DiscountPercentage, IsActive)
+VALUES(@CoupanName, @Description, @ValidUpto, @DiscountPercentage, @IsActive); SELECT 1 StatusCode, 'Coupan Added Successfully' ResponseText RETURN END END
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_SaveOrUpdateOffer]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_SaveOrUpdateOffer]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2533,7 +2612,7 @@ SELECT - 1 AS StatusCode, 'Error: ' + ERROR_MESSAGE() AS ResponseText;
     END CATCH
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_SaveOrUpdateTable]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_SaveOrUpdateTable]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2572,7 +2651,7 @@ SELECT 1 StatusCode, 'ADDED SUCCESSFULLY' ResponseText
 END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Proc_UpdateStatusBookedTable]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[Proc_UpdateStatusBookedTable]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2587,7 +2666,7 @@ SELECT 1 AS StatusCode, 'Table Status Updated Successfully' AS ResponseText
 RETURN
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddEmpSalary]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddEmpSalary]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2616,7 +2695,7 @@ SELECT - 1 AS StatusCode, 'An error occurred: ' + ERROR_MESSAGE() AS ResponseTex
     END CATCH;
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOnlineOrders]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOnlineOrders]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2647,7 +2726,7 @@ VALUES(@OrderID, @DishId, @Quantity, @TotalAmount);
 END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateAddress]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateAddress]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2691,7 +2770,7 @@ RETURN;
 END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddorUpdateAReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddorUpdateAReview]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2726,7 +2805,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddorUpdateBanner]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddorUpdateBanner]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2768,7 +2847,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateCartValue]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateCartValue]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2808,7 +2887,7 @@ VALUES
 END
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateComplaint]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateComplaint]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2857,7 +2936,7 @@ values(
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateContactus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateContactus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2885,7 +2964,7 @@ values(@UserName, @Email, @subject, @Comment, @status)
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateDboyReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateDboyReview]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2893,39 +2972,40 @@ GO
 CREATE PROCEDURE[dbo].[sp_AddOrUpdateDboyReview]
 @DboyRId INT,
     @DboyId VARCHAR(50),
-        @Comment VARCHAR(255),
-            @Status INT,
-                @Rating INT,
-                    @OrderId INT
+        @Email VARCHAR(50),
+            @Comment VARCHAR(255),
+                @Status INT,
+                    @Rating INT,
+                        @OrderId INT
 AS
-BEGIN      
+BEGIN        
     IF EXISTS(SELECT 1 FROM DboyReview WHERE DboyRId = @DboyRId)
-BEGIN      
+BEGIN        
         UPDATE DboyReview
 SET
 Comment = @Comment,
-    Rating = @Rating      
-        WHERE DboyRId = @DboyRId;      
-      
+    Rating = @Rating        
+        WHERE DboyRId = @DboyRId;        
+        
         SELECT 1 AS StatusCode, 'Updated successfully' AS ResponseText;
 return
-END      
-    ELSE if EXISTS(SELECT 1 FROM DboyReview WHERE OrderId = @OrderId and DboyId = @DboyId)     
-    BEGIN      
+END        
+    ELSE if EXISTS(SELECT 1 FROM DboyReview WHERE OrderId = @OrderId and DboyId = @DboyId)       
+    BEGIN        
        SELECT 1 AS StatusCode, 'Feedback Already Submitted' AS ResponseText;
 return
-END      
+END        
  else
-BEGIN      
-        INSERT INTO DboyReview(DboyId, Comment, Rating, Status, OrderId)
-VALUES(@DboyId, @Comment, @Rating, 0, @OrderId);      
-      
+BEGIN        
+        INSERT INTO DboyReview(DboyId, Comment, Rating, Status, OrderId, Email)
+VALUES(@DboyId, @Comment, @Rating, 0, @OrderId, @Email);        
+        
         SELECT 1 AS StatusCode, 'Saved successfully' AS ResponseText;
 return
 END
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateDishCategory]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateDishCategory]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2953,7 +3033,7 @@ values(@DishCategoryName, @Icon, @Status)
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEmployeeRoleMaster]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEmployeeRoleMaster]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2981,7 +3061,7 @@ values(@RoleName, @Salary, 1)
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEmployees]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEmployees]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3052,7 +3132,7 @@ RETURN
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEvent]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEvent]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3122,7 +3202,7 @@ values(
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEventBooking]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateEventBooking]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3224,7 +3304,7 @@ END
 END
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateFeedback]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateFeedback]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3252,7 +3332,7 @@ values(@TableId, @CustId, @FeedbackDescription, @FeedbackStatus)
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateFoodkart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateFoodkart]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3308,7 +3388,7 @@ values(
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateMassagebox]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateMassagebox]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3337,7 +3417,7 @@ values(@Email, @Subject, @Description, 1)
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateOffer]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateOffer]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3393,7 +3473,7 @@ values
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddorUpdateProductReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddorUpdateProductReview]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3430,7 +3510,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateTablesDetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateTablesDetails]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3456,7 +3536,7 @@ end
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateTeakart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateTeakart]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3513,7 +3593,7 @@ values(
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateUProfile]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateUProfile]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3541,7 +3621,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateVariant]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddOrUpdateVariant]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3594,7 +3674,7 @@ values(@DishId,
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_addPaymentDetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_addPaymentDetails]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3608,7 +3688,7 @@ BEGIN
 VALUES(@PaymentType, @Amount, 1);
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddRecentViewdata]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddRecentViewdata]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3625,7 +3705,7 @@ insert into tbl_RecentView(DishId, UserID)
 values(@DishId, @UserID)
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AddTableOrders]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_AddTableOrders]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3653,7 +3733,7 @@ VALUES(@TableId, 1);
 VALUES(@OrderID, @DishId, @Quantity, @TotalAmount);
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ApproveAReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_ApproveAReview]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3668,7 +3748,7 @@ Status = @Status
  where AReviewId = @AReviewId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ApproveProductReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_ApproveProductReview]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3683,7 +3763,7 @@ Status = @Status
  where ReviewId = @ReviewId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_BookingDetailsById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_BookingDetailsById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3698,7 +3778,7 @@ End
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_CartCheckOutById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_CartCheckOutById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3712,7 +3792,7 @@ FROM            dbo.Cart INNER JOIN
 dbo.tbl_Variant ON dbo.Cart.Id = dbo.tbl_Variant.Id   where dbo.Cart.UserID = @UserID;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_CheckUserAReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_CheckUserAReview]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3737,7 +3817,7 @@ return
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Chefs]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_Chefs]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3750,7 +3830,7 @@ FROM            tbl_employees INNER JOIN
                          tbl_EmployeeRoleMaster ON tbl_employees.RoleId = tbl_EmployeeRoleMaster.RoleId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_confirmdatashow]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_confirmdatashow]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3769,7 +3849,7 @@ OFFSET 0 ROWS
 FETCH NEXT 1 ROWS ONLY;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DashboardStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DashboardStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3810,24 +3890,24 @@ TotalEarning = @TotalEarning,
     totalemployee = @TotalEmployee;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DboyOrderSummary]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DboyOrderSummary]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create proc[dbo].[sp_DboyOrderSummary]
+CREATE proc[dbo].[sp_DboyOrderSummary]
 @EmpId int
 As
 Begin
 SELECT
-    (SELECT TOP 1 Status FROM DeliveredOrder WHERE Status = 4 AND EmpId = @EmpId) AS DeliveredOrder,
-        (SELECT TOP 1 Status FROM DeliveredOrder WHERE Status = 5 AND EmpId = @EmpId) AS CancelledOrder,
+    (SELECT Count(*) FROM DeliveredOrder WHERE Status = 4 AND EmpId = @EmpId) AS DeliveredOrder,
+        (SELECT Count(*) FROM DeliveredOrder WHERE Status = 5 AND EmpId = @EmpId) AS CancelledOrder,
             (SELECT TOP 1 Status FROM DeliveredOrder WHERE Status = 2 AND EmpId = @EmpId AND CAST(AssignOn AS DATE) = CAST(GETDATE() AS DATE)) AS TodayOrder,
                 (SELECT SUM(CommitionEarning) FROM DeliveredOrder WHERE EmpId = @EmpId) AS Commition;
 
 End
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteCartValue]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteCartValue]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3839,7 +3919,7 @@ begin
 delete FROM Cart WHERE CartId = @CartId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteComplaint]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteComplaint]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3851,7 +3931,7 @@ begin
 delete from tbl_complaint WHERE ComplaintId = @ComplaintId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteEmployee]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteEmployee]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3863,7 +3943,7 @@ begin
 delete from tbl_employees where EmpId = @EmpId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteFeedback]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteFeedback]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3875,7 +3955,7 @@ begin
 delete from tbl_feedback where FeedbackId = @FeedbackId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteFoodkart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteFoodkart]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3887,7 +3967,7 @@ begin
 delete from tbl_foodkart where DishId = @DishId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteMassage]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteMassage]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3899,7 +3979,7 @@ begin
 delete from tbl_massagebox where MessageId = @MessageId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteOffer]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteOffer]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3911,7 +3991,7 @@ begin
 delete from tbl_offer where OfferId = @OfferId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeleteTeakart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeleteTeakart]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3923,7 +4003,7 @@ begin
 delete from tbl_teakart WHERE TeaId = @TeaId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DeliverdOrderReport]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DeliverdOrderReport]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3951,7 +4031,7 @@ tbl_Orders.Status = 4
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_DishQtyUpdateInCartValue]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_DishQtyUpdateInCartValue]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3963,7 +4043,7 @@ begin
 update Cart set Quantity = @Quantity where CartId = @CartId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_EmployeeRoleMasterList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_EmployeeRoleMasterList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3974,7 +4054,18 @@ begin
 select * from tbl_EmployeeRoleMaster
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_EventDetailsById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_Error]    Script Date: 27-04-2024 17:53:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc[dbo].[sp_Error]
+As
+begin
+select * from tblErrorLog order by ErrorId Desc
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EventDetailsById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3992,7 +4083,7 @@ WHERE Eb.UserID = @UserID;
 
 End
 GO
-/****** Object:  StoredProcedure [dbo].[sp_FoodkartDisplayList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_FoodkartDisplayList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4003,7 +4094,7 @@ begin
 select * from tbl_Variant;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_FullDetailsFoodkartList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_FullDetailsFoodkartList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4016,7 +4107,7 @@ FROM            tbl_foodkart INNER JOIN
                          tbl_Dishcategory ON tbl_foodkart.DishCategoryId = tbl_Dishcategory.DishCategoryId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetActiveDeliveryBoy]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetActiveDeliveryBoy]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4031,7 +4122,7 @@ WHERE dbo.tbl_EmployeeRoleMaster.RoleName = 'Delivery Boy' AND dbo.tbl_employees
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAddressById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAddressById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4043,7 +4134,7 @@ begin
 select * from DeliveryAddress where AddressId = @AddressId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAllAddress]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAllAddress]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4054,7 +4145,7 @@ begin
 select * from DeliveryAddress
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAllAddressByUserId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAllAddressByUserId]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4066,7 +4157,7 @@ begin
 select * from DeliveryAddress where UserId = @UserId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAllDishCategoryList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAllDishCategoryList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4077,7 +4168,7 @@ begin
 select * from tbl_Dishcategory
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAllSentMessage]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAllSentMessage]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4100,7 +4191,7 @@ END
 FROM tbl_massagebox
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAllSentMessageById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAllSentMessageById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4123,7 +4214,7 @@ END
 FROM tbl_massagebox where MessageId = @MessageId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAReviewList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAReviewList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4134,7 +4225,7 @@ begin
 Select * from tbl_AppReview
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetAReviewListById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetAReviewListById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4146,7 +4237,7 @@ begin
 Select * from tbl_AppReview where AReviewId = @AReviewId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetBanner1]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetBanner1]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4158,7 +4249,7 @@ begin
 select * from tblBannner where BannerName = 'BannerName1' and Status = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetBanner2]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetBanner2]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4170,7 +4261,7 @@ begin
 select * from tblBannner where BannerName = 'BannerName2' and Status = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetBanner3]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetBanner3]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4182,7 +4273,7 @@ begin
 select * from tblBannner where BannerName = 'BannerName3' and Status = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_getBannerById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_getBannerById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4198,7 +4289,7 @@ select * from tblBannner where BannerId = @BannerId
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetBannerList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetBannerList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4209,7 +4300,7 @@ begin
 Select * from tblBannner
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetBookingEventById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetBookingEventById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4221,7 +4312,7 @@ begin
 select * from tblEventBooking where eventBookingId = @eventBookingId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetCartValueById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetCartValueById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4236,7 +4327,7 @@ FROM            dbo.Cart INNER JOIN
 dbo.tbl_Variant ON dbo.Cart.Id = dbo.tbl_Variant.Id  where UserID = @UserID;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetCartValueList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetCartValueList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4247,7 +4338,7 @@ begin
 select * from CartValue;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetCategoryById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetCategoryById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4262,7 +4353,7 @@ select * from tbl_Dishcategory where DishCategoryId = @DishCategoryId
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetCityList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetCityList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4273,7 +4364,7 @@ begin
 select * from City;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetComplaintById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetComplaintById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4285,7 +4376,7 @@ begin
 select * from tbl_complaint WHERE ComplaintId = @ComplaintId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetComplaintList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetComplaintList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4296,7 +4387,7 @@ begin
 select * from tbl_complaint;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetContactUsById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetContactUsById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4308,7 +4399,7 @@ begin
 select * from tbl_contactus where ContactId = @ContactId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetContactusList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetContactusList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4319,7 +4410,7 @@ begin
 select * from tbl_contactus;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDBoyCommitionById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDBoyCommitionById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4331,7 +4422,7 @@ Begin
 select * from DeliveredOrder where EmpId = @EmpId;
 End
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDboyIdByEmail]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDboyIdByEmail]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4343,7 +4434,7 @@ Begin
 select EmpId from tbl_employees where Email = @Email;
 End
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDBoyReview]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDBoyReview]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4359,7 +4450,7 @@ BEGIN
 END
  
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDboyReviewStatisticsById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDboyReviewStatisticsById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4384,7 +4475,32 @@ dr.Rating
 dr.Rating DESC;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDishCategoryList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDboyReviewStatisticsByIds]    Script Date: 27-04-2024 17:53:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE[dbo].[sp_GetDboyReviewStatisticsByIds]
+@EmpId INT
+AS
+BEGIN
+SELECT
+dr.Rating,
+    COUNT(dr.DboyRId) AS TotalRating,
+        ROUND(COUNT(dr.DboyRId) * 100.0 / (SELECT COUNT(*) FROM DboyReview WHERE DboyId = @EmpId), 2) AS Percentage,
+            (SELECT COUNT(*) FROM DboyReview WHERE DboyId = @EmpId) AS AllRecords,
+                AVG(dr.Rating) AS AverageRating
+FROM     
+    DboyReview dr
+WHERE
+dr.DboyId = @EmpId    
+GROUP BY
+dr.Rating    
+ORDER BY
+dr.Rating DESC;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetDishCategoryList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4396,7 +4512,7 @@ begin
 select * from tbl_foodkart where DishCategoryId = @DishCategoryId and DishStatus = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDishCategoryListByPrize]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDishCategoryListByPrize]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4413,7 +4529,7 @@ SELECT *
 WHERE DishPrize BETWEEN @MinPrize AND @MaxPrize
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDishCategoryListByPrizeWithCategory]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDishCategoryListByPrizeWithCategory]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4431,7 +4547,7 @@ SELECT *
 WHERE DishPrize BETWEEN @MinPrize AND @MaxPrize and DishCategoryId = @DishCategoryId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDishDetailById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDishDetailById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4447,7 +4563,7 @@ FROM            tbl_foodkart INNER JOIN
                          tbl_Dishcategory ON tbl_foodkart.DishCategoryId = tbl_Dishcategory.DishCategoryId where tbl_foodkart.DishId = @DishId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDishListByPrize]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDishListByPrize]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4467,7 +4583,7 @@ dbo.tbl_Dishcategory ON dbo.tbl_foodkart.DishCategoryId = dbo.tbl_Dishcategory.D
 WHERE SellingCost BETWEEN 0 AND @SellingCost  and dbo.tbl_foodkart.DishStatus = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDishVarientList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDishVarientList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4484,7 +4600,7 @@ dbo.tbl_Variant ON dbo.tbl_foodkart.DishId = dbo.tbl_Variant.DishId;
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetDishVarientListByDishId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetDishVarientListByDishId]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4502,7 +4618,7 @@ dbo.tbl_Variant ON dbo.tbl_foodkart.DishId = dbo.tbl_Variant.DishId where  dbo.t
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4514,7 +4630,7 @@ begin
 select * from tbl_employees where EmpId = @EmpId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeDetailsById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeDetailsById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4528,7 +4644,7 @@ FROM            dbo.tbl_employees INNER JOIN
 dbo.tbl_EmployeeRoleMaster ON dbo.tbl_employees.RoleId = dbo.tbl_EmployeeRoleMaster.RoleId where dbo.tbl_employees.EmpId = @EmpId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4540,7 +4656,7 @@ begin
 select * from tbl_employees;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeRoleById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeRoleById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4552,7 +4668,7 @@ begin
 select * from tbl_EmployeeRoleMaster where RoleId = @RoleId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeRoleMasterById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeRoleMasterById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4564,7 +4680,7 @@ begin
 select * FROM tbl_EmployeeRoleMaster WHERE RoleId = @RoleId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeRoleMasterList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmployeeRoleMasterList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4575,7 +4691,7 @@ begin
 select * from tbl_EmployeeRoleMaster;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmpSalary]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmpSalary]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4587,7 +4703,7 @@ begin
 select Salary from tbl_EmployeeRoleMaster  where  Roleid = @RoleId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEmpSalarydetailById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEmpSalarydetailById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4617,7 +4733,7 @@ WHERE  empsalary.EmpId = @EmpId;
 
 End
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEvent]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEvent]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4628,7 +4744,7 @@ begin
 select * from tblEvent
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEventBanner]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEventBanner]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4640,7 +4756,7 @@ begin
 select * from tblBannner where BannerName = 'EventBanner' and Status = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEventBooking]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEventBooking]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4651,7 +4767,7 @@ begin
 select * from tblEventBooking where eventBookingStatus = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEventById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEventById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4663,7 +4779,7 @@ begin
 select * from tblEvent where eventID = @eventID;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetEventPrice]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetEventPrice]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4675,7 +4791,7 @@ begin
 select eventOffPrice from tblEvent  where  eventID = @eventID
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFAQ]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFAQ]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4686,7 +4802,7 @@ begin
 select * from tbl_FAQ
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFAQById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFAQById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4698,7 +4814,7 @@ begin
 select * from tbl_FAQ where FAQId = @FAQId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFAQStatusUpdate]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFAQStatusUpdate]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4711,7 +4827,7 @@ begin
 Update tbl_FAQ set Status = @Status where FAQId = @FAQId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFeedbackById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFeedbackById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4723,7 +4839,7 @@ begin
 select * from tbl_feedback where FeedbackId = @FeedbackId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFeedbackList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFeedbackList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4734,7 +4850,7 @@ begin
 select * from tbl_feedback;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFoodkartById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFoodkartById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4746,7 +4862,7 @@ begin
 select * from tbl_foodkart where DishId = @DishId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFoodkartList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFoodkartList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4760,7 +4876,7 @@ FROM            tbl_foodkart INNER JOIN
                          tbl_Dishcategory ON tbl_foodkart.DishCategoryId = tbl_Dishcategory.DishCategoryId where tbl_foodkart.DishStatus = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFoodOnSearch]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFoodOnSearch]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4792,7 +4908,7 @@ AND
     (@DishCategoryName IS NULL OR dc.DishCategoryName LIKE '%' + @DishCategoryName + '%') and fk.DishStatus = 1;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetFoodVarientById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetFoodVarientById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4804,7 +4920,7 @@ begin
 Select * From tbl_Variant where Id = @Id;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetMassageById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetMassageById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4816,7 +4932,7 @@ begin
 select * from tbl_massagebox where MessageId = @MessageId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetMassageList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetMassageList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4827,7 +4943,7 @@ begin
 select * from tbl_massagebox;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetNewEventBooking]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetNewEventBooking]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4842,7 +4958,7 @@ FROM            dbo.tblEvent INNER JOIN
 dbo.tblEventBooking ON dbo.tblEvent.eventID = dbo.tblEventBooking.eventID
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetNumberInCartItem]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetNumberInCartItem]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4854,7 +4970,7 @@ begin
 select count(*) as Quantity FROM Cart WHERE UserID = @UserID;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetOfferById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetOfferById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4866,7 +4982,7 @@ begin
 select * from tbl_offer where OfferId = @OfferId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetOfferList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetOfferList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4877,7 +4993,7 @@ begin
 select * from tbl_offer;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetOnlineOrderById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetOnlineOrderById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4889,7 +5005,7 @@ begin
 select * from  tbl_Orders where  OrderId = @OrderId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetOnlineOrderList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetOnlineOrderList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4900,7 +5016,7 @@ begin
 select * from  tbl_OnlineOrders
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetOrderInChart]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetOrderInChart]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4916,7 +5032,7 @@ GROUP BY tbl_Variant.VName
 ORDER BY Total_Orders DESC;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetOrderListByDboy]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetOrderListByDboy]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4931,7 +5047,7 @@ full JOIN dbo.tbl_employees ON dbo.DeliveredOrder.EmpId = dbo.tbl_employees.EmpI
 WHERE dbo.tbl_employees.Email = @Email;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetPaymentDetail]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetPaymentDetail]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4942,7 +5058,7 @@ BEGIN
 Select * from tbl_PaymentDetails;
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetPaymentDetailById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetPaymentDetailById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4954,7 +5070,7 @@ BEGIN
 Select * from tbl_PaymentDetails  where PaymentId = @PaymentId;
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetProductReviewList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetProductReviewList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4965,7 +5081,7 @@ begin
 Select * from tbl_ProductReview
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetProductReviewListById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetProductReviewListById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4977,7 +5093,7 @@ begin
 Select * from tbl_ProductReview  where ReviewId = @ReviewId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetRecentViewById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetRecentViewById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5003,7 +5119,7 @@ INNER JOIN
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetRelatedProduct]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetRelatedProduct]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5018,7 +5134,7 @@ dbo.tbl_Dishcategory ON dbo.tbl_foodkart.DishCategoryId = dbo.tbl_Dishcategory.D
                           where dbo.tbl_Dishcategory.DishCategoryId = @DishCategoryId and dbo.tbl_foodkart.DishStatus = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetShowBannerData]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetShowBannerData]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5029,7 +5145,7 @@ begin
 Select * from tblBannner where Status = 1;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetSpecialDish]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetSpecialDish]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5058,7 +5174,7 @@ ORDER BY
     Totalbook DESC;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetStateList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetStateList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5069,7 +5185,7 @@ begin
 select * from State;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetTabledetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetTabledetails]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5080,7 +5196,7 @@ begin
 select * from Tabledetails
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetTableOrdersById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetTableOrdersById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5092,7 +5208,7 @@ begin
 select * from  TableOrders where OrderId = @OrderId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetTableOrdersList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetTableOrdersList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5103,7 +5219,7 @@ begin
 select * from  TableOrders
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetTablesDetails]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetTablesDetails]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5114,7 +5230,7 @@ begin
 select * from tbl_AvailableTablesDetails
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetTeakartById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetTeakartById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5126,7 +5242,7 @@ begin
 select * FROM tbl_teakart WHERE TeaId = @TeaId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetTeakartList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetTeakartList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5137,7 +5253,7 @@ begin
 select * from tbl_teakart;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GettotalOrderByMonth]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GettotalOrderByMonth]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5154,7 +5270,7 @@ GROUP BY
 FORMAT(OrderDate, 'MMMM yyyy');
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetUserProfileByemail]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetUserProfileByemail]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5166,7 +5282,7 @@ begin
 select * from tbl_UserPro_Details where Email = @Email;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetUserProfileList]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetUserProfileList]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5177,7 +5293,7 @@ begin
 select * from tbl_UserPro_Details
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_InvoiceByOrderId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_InvoiceByOrderId]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5209,7 +5325,7 @@ tbl_OrderDetails.OrderID = @OrderID;
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Listcartvalue]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_Listcartvalue]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5221,7 +5337,7 @@ begin
 select * from vw_cartvalue
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_NewMessageNotify]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_NewMessageNotify]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5246,7 +5362,7 @@ FROM tbl_contactus
 WHERE Status = 0 order by ContactDate desc
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_NewOrderStatusForDboy]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_NewOrderStatusForDboy]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5258,7 +5374,7 @@ begin
 Select count(DeliveredOrderId) as NewOrderStatus from DeliveredOrder where Status = 2  and  Email = @Email;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_OnlineOrders]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_OnlineOrders]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5297,7 +5413,7 @@ END
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_OrderBooking]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_OrderBooking]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5333,7 +5449,7 @@ VALUES(@OrderID, @UserId, @PaymentType, @Amount, 1);
 Return
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_OrderDetailsByOrderId]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_OrderDetailsByOrderId]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5363,7 +5479,7 @@ tbl_OrderDetails.OrderID = @OrderID;
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_OrderHistory]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_OrderHistory]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5385,15 +5501,15 @@ tbl_Orders.UserId,
     tbl_Orders.OrderDate,
     tbl_Orders.Status
 FROM
-tbl_Orders        
-INNER JOIN tbl_OrderDetails ON tbl_Orders.OrderID = tbl_OrderDetails.OrderID        
+tbl_Orders          
+INNER JOIN tbl_OrderDetails ON tbl_Orders.OrderID = tbl_OrderDetails.OrderID          
 INNER JOIN tbl_foodkart ON tbl_OrderDetails.DishId = tbl_foodkart.DishId
 WHERE
-tbl_Orders.UserId = @UserId;
+tbl_Orders.UserId = @UserId order by tbl_OrderDetails.OrderID desc;
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_OrderReport]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_OrderReport]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5423,7 +5539,7 @@ ORDER BY tbl_Orders.OrderDate DESC;
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ResendOTP]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_ResendOTP]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5446,7 +5562,7 @@ SELECT - 1 AS StatusCode, 'OTP not provided' AS ResponseText;
 END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_status]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_status]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5522,7 +5638,7 @@ TotalEarning = @TotalEarning,
     NewMessageDate = @NewMessageDate; --Added NewMessageDate in the SELECT list
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_TableBooking]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_TableBooking]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5561,7 +5677,7 @@ VALUES(
 return
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_tableStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_tableStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5594,7 +5710,7 @@ deliverdOrder = @deliverdOrder,
     NewMessage = @NewMessage
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateBannerStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateBannerStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5613,7 +5729,7 @@ where BannerId = @BannerId
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateBookingEventStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateBookingEventStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5629,7 +5745,7 @@ BEGIN
     WHERE eventBookingId = @eventBookingId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateCategoryStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateCategoryStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5648,7 +5764,7 @@ where DishCategoryId = @DishCategoryId
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateContactUsStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateContactUsStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5664,7 +5780,7 @@ BEGIN
     WHERE ContactId = @ContactId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateEmployeeStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateEmployeeStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5683,7 +5799,7 @@ where EmpId = @EmpId
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateEmpRoleMasterStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateEmpRoleMasterStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5699,7 +5815,7 @@ Status = @Status
 WHERE RoleId = @RoleId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateEventStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateEventStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5717,7 +5833,7 @@ where eventID = @eventID
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateFoodkartStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateFoodkartStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5736,7 +5852,7 @@ where DishId = @DishId
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateFoodVarientStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateFoodVarientStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5754,7 +5870,7 @@ where Id = @Id
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateOrderStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateOrderStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5787,7 +5903,7 @@ SELECT - 1 AS StatusCode, 'Not Updated' AS ResponseText;
 END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateOrderStatusByDBoy]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateOrderStatusByDBoy]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5840,7 +5956,7 @@ return
 END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdatePostalStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdatePostalStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5859,7 +5975,7 @@ where postal_id = @postal_id
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5872,7 +5988,7 @@ update DeliveryAddress set Status = 0 where AddressId = @AddressId;
 
 End
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateTeakartStatus]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateTeakartStatus]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5891,7 +6007,7 @@ where TeaId = @TeaId
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateUserImageByEmail]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateUserImageByEmail]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5907,7 +6023,7 @@ update tbl_UserPro_Details set
 where Email = @Email;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateUserProfileById]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateUserProfileById]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5924,7 +6040,7 @@ update tbl_UserPro_Details set
 where UId = @UId;
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sp_VerifyOTP]    Script Date: 27-04-2024 10:31:54 ******/
+/****** Object:  StoredProcedure [dbo].[sp_VerifyOTP]    Script Date: 27-04-2024 17:53:53 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
