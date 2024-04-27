@@ -437,7 +437,7 @@ namespace API.Repository.Impliments
                 string subject = "";
                 string body = "";
                     subject = "Your Order OTP";
-                    body = $"Dear Valued Customer,\r\n\r\nWe're thrilled to inform you that your order has been successfully dispatched. Expect its arrival within the next 30 minutes. Please use the OTP provided below for verification:\r\n\r\nOTP: {{param.OTP}}\r\n\r\nWe're eagerly looking forward to providing you with an exceptional dining experience. Should you have any questions or special requests, feel free to reach out to us.\r\n\r\nThank you for choosing us. Your trust is invaluable, and we can't wait to welcome you soon!\r\n\r\nBest Regards,\r\nThe RetroReserve Team";
+                    body = $"Dear Valued Customer,\r\n\r\nWe're thrilled to inform you that your order has been successfully dispatched. Expect its arrival within the next 30 minutes. Please use the OTP provided below for verification:\r\n\r\nOTP: {param.OTP}\r\n\r\nWe're eagerly looking forward to providing you with an exceptional dining experience. Should you have any questions or special requests, feel free to reach out to us.\r\n\r\nThank you for choosing us. Your trust is invaluable, and we can't wait to welcome you soon!\r\n\r\nBest Regards,\r\nThe RetroReserve Team";
 
                 res = await dapper.GetAsync<Response>(sp, param);
 

@@ -1,24 +1,18 @@
-﻿@model IEnumerable<Entities.Event>
+﻿
+@model IEnumerable<Entities.Event>
 @{
     ViewData["Title"] = "Book Event";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
 </script>
-<div class="page-header col-md-12">
-    <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
-       <div id="EventBannerPV"></div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Event Booking</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active text-white">Events</li>
+    </ol>
 </div>
-<br />
 <!-- ======= Book A Table Section ======= -->
 @if (Model == null || !Model.Any())
 {
@@ -36,7 +30,7 @@ else
     <div class="container-fluid fruite py-5">
         <div class="container py-5">
             <div class="tab-class text-center">
-                <h2><strong>Recently Viewed</strong></h2>
+                <h2><strong>Available Event</strong></h2>
                 <br />
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane fade show p-0 active">
@@ -98,6 +92,7 @@ else
         })
     }
     function hideInputBox(eventname) {
+        debugger;
         if (eventname == "Birthday ") {
             $(".bname").show();
             $(".cname").hide();
@@ -109,6 +104,7 @@ else
         }
     }
     function BookEvents() {
+        debugger;
         Show_Loader();
         setTimeout(function () {
             if (validateEventBooking()) {
@@ -132,12 +128,13 @@ else
                     alert(res.responseText);
                 }).fail(function () {
                     Hide_Loader();
-                    alert("Something went wrong!");
+                    alert("Something went wrong!!!");
                 });
             }
         }, 1500)
     }
     function OnEventPageload(Id) {
+        debugger;
         var param = {
             id:Id,
         };
@@ -239,4 +236,3 @@ else
 
     CreateQR();
 </script>
-

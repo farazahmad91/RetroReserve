@@ -126,7 +126,7 @@
         $.post('/Order/UpdateOrderStatusByDBoy', data)
             .done(function (res) {
                 Hide_Loader();
-                window.location.href = "/DeliveryBoy/MyOrder";
+                window.location.href = "/MyOrder";
             })
             .fail(function () {
                 alert("Failed to update order status");
