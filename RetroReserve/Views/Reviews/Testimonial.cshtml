@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<Entities.AppReviews>
 @{
     ViewData["Title"] = "Testimonial";
-    Layout = null;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Testimonial</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+        <li class="breadcrumb-item active text-white">Testimonial</li>
+    </ol>
+</div>
 
 <div class="owl-carousel testimonial-carousel">
     @foreach (var item in Model)

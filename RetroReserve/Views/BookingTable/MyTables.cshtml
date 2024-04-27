@@ -7,7 +7,7 @@
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">All Booking</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item active text-white">My Tables</li>
     </ol>
 </div>
@@ -48,22 +48,28 @@
 
                             <tr>
                                 <td>
-                                    <label>@item.BookingId</label>
+                                    <label><strong>RRTBId-@item.BookingId</strong></label>
                                 </td>
                                 <td>
-                                    <label>@item.TableId</label>
+                                    <label><strong>RRTNO-@item.TableId</strong></label>
                                 </td>
                                 <td>
-                                    <label>@item.BookingDate</label>
+                                    <label><strong>@item.BookingDate</strong></label>
                                 </td>
                                 <td>
-                                    <label>@item.NoOfPeople</label>
+                                    <label><strong>P-@item.NoOfPeople</strong></label>
                                 </td>
                                 <td>
-                                    <label>@item.Entryon</label>
+                                    <label><strong>@item.Entryon</strong></label>
                                 </td>
                                 <td>
-                                    <label>@item.Status</label>
+                                    @{
+                                        var Status = @item.Status == 1 ? "1" : "0";
+                                        var txt = Status == "1" ? "Successful" : "Pending";
+                                        var sty = Status == "1" ? "background-color:green; color:white; border-radius:30% 0% 30% 0%; padding:2px;" : "background-color:orange; color:white; border-radius:30% 0% 30% 0%; padding:2px;";
+
+                                    }
+                                    <label style="@sty"><strong>@txt</strong></label>
                                 </td>
                             </tr>
                         }

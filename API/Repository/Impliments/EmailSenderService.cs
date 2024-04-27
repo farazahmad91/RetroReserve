@@ -27,8 +27,7 @@ namespace API.Repository.Impliments
             }
             catch (Exception ex)
             {
-                // Handle specific exceptions or log the error for debugging
-                throw new Exception("Error sending email", ex);
+                throw new Exception("email not send", ex);
             }
         }
 

@@ -37,6 +37,9 @@
                                 <label>Name</label>
                             </th>
                             <th>
+                                <label>Order Id</label>
+                            </th>
+                            <th>
                                 <label>Order Assign</label>
                             </th>
                             <th>
@@ -59,6 +62,9 @@
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderId)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.AssignOn)
@@ -148,15 +154,14 @@
                                 </td>
                                 <td>
                                     <div id="loader_spinner" style="display: none;" class="overlay-spinner"></div>
-                                    @* @{
+                                    @{
                                       
                                         if (@item.Status == 2)
                                         {
                                             <lable onclick="ResendOTP('@item.OrderId','@item.UserEmail')" class="badge badge-primary">Resend OTP</lable>
                                         }
                                        
-                                    } *@
-                                    <div class="ptm-qr-scan" id="qrcode"></div>
+                                    } 
                                 </td>
                             </tr>
                         }
@@ -207,6 +212,7 @@
             });
     }
     function ResendOTP(orderid,uEmail) {
+        debugger;
         Show_Loader();
         let data = {
             orderId: orderid,
