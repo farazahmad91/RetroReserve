@@ -14,7 +14,8 @@ namespace RetroReserve.Models
         private readonly IDapperService _dapper;
         public APIrequest(IConfiguration configuration, IDapperService dapper)
         {
-            _BaseUrl = configuration.GetSection("BaseAPIUrl").GetValue<string>("Url");
+            //_BaseUrl = "http://restroapi.runasp.net";
+            _BaseUrl = "https://localhost:7291/";
             this._dapper=dapper;
         }
         //public APIrequest(BaseAPIUrl baseAPIUrl)
@@ -23,6 +24,7 @@ namespace RetroReserve.Models
         //}
         public async Task<T> GetData<T>(string relativeUrl)
         {
+            string apiUrl = "api/" + relativeUrl;
             using (HttpClient httpClient = new HttpClient())
             {
 
@@ -30,7 +32,7 @@ namespace RetroReserve.Models
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await httpClient.GetAsync(relativeUrl);
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
                 try
                 {
@@ -64,6 +66,7 @@ namespace RetroReserve.Models
 
         public async Task<string> Post(string relativeUrl, object data)
         {
+            string apiUrl = "api/" + relativeUrl;
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(_BaseUrl);
@@ -73,7 +76,7 @@ namespace RetroReserve.Models
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 try
                 {
-                    using (HttpResponseMessage response = await httpClient.PostAsync(relativeUrl, content))
+                    using (HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content))
                     {
                         if (response.IsSuccessStatusCode)
                         {
@@ -104,10 +107,11 @@ namespace RetroReserve.Models
         {
             using (HttpClient httpClient = new HttpClient())
             {
+                string apiUrl = "api/" + relativeUrl;
                 httpClient.BaseAddress = new Uri(_BaseUrl);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await httpClient.DeleteAsync(relativeUrl);
+                HttpResponseMessage response = await httpClient.DeleteAsync(apiUrl);
 
                 return response.IsSuccessStatusCode;
             }
