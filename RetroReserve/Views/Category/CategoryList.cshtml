@@ -95,6 +95,7 @@
     }
 
     function UpdateCategoryStatus(Id) {
+       debugger
         var id = $("#customSwitch3_" + Id).prop("checked");
         if (id == true) {
             id = 1;
@@ -113,6 +114,7 @@
             confirmButtonText: 'Yes, Update it!'
         }).then((result) => {
             if (result.isConfirmed) {
+                debugger;
                 $.ajax({
                     url: '/Category/UpdateCategoryStatus',
                     type: 'POST',

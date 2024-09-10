@@ -17,23 +17,23 @@ namespace API.Controllers
         }
 
         [HttpPost(nameof(AddUserProfileDetails))]
-        public IActionResult AddUserProfileDetails(UserProfile userProfile)
+        public async Task<IActionResult> AddUserProfileDetails(UserProfile userProfile)
         {
-            var i = _userProfileService.AddOrUpdateUserProfile(userProfile);
+            var i = await _userProfileService.AddOrUpdateUserProfile(userProfile);
             return Ok(i);
         }
 
         [HttpGet(nameof(UserProfileList))]
-        public IActionResult UserProfileList()
+        public  IActionResult UserProfileList()
         {
-            var i = _userProfileService.UserProfileList();
+            var i =  _userProfileService.UserProfileList();
             return Ok(i);
         }
 
         [HttpGet(nameof(UserProfileListByEmail))]
         public IActionResult UserProfileListByEmail(string email)
         {
-            var i = _userProfileService.UserProfileListByEmail(email);
+            var i =  _userProfileService.UserProfileListByEmail(email);
             return Ok(i);
         }
 
