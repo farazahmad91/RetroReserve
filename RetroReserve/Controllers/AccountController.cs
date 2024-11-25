@@ -19,15 +19,16 @@ namespace RetroReserve.Controllers
         private readonly APIrequest _apirequest;
         public string myIP, hostName;
         private readonly string _BaseUrl;
-        private readonly IWebHostEnvironment webHostEnvironment;
+		private readonly IBaseUrl _baseUrl;
+		private readonly IWebHostEnvironment webHostEnvironment;
         private readonly UploadImage uploadImage;
-        public AccountController(APIrequest aPIrequest, IWebHostEnvironment webHostEnvironment, UploadImage uploadImage)
+        public AccountController(APIrequest aPIrequest, IWebHostEnvironment webHostEnvironment, UploadImage uploadImage, IBaseUrl baseUrl)
         {
             this._apirequest = aPIrequest;
-            _BaseUrl = "https://localhost:7291";
             this.webHostEnvironment = webHostEnvironment; 
             this.uploadImage = uploadImage;
-        }
+			_BaseUrl = baseUrl.GetBaseUrl();
+		}
         [HttpGet]
         public IActionResult Login()
         {
@@ -67,9 +68,7 @@ namespace RetroReserve.Controllers
                 identity.AddClaim(new Claim(ClaimTypes.Email, authenticateResponse.Result.Email));
 				identity.AddClaim(new Claim(ClaimTypes.Name, authenticateResponse.Result.Name));
 				identity.AddClaim(new Claim("UserId", authenticateResponse.Result.UserId.ToString()));
-
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
-
                 if (authenticateResponse.Result.Role == "Admin")
                 {
                     string redirectUrl = "/Dashboard";
@@ -95,7 +94,7 @@ namespace RetroReserve.Controllers
             {
                 // Log the exception or handle it appropriately
                 loginVm.message = "An error occurred while processing the login request.";
-                return BadRequest(loginVm);
+                return Json(loginVm);
             }
         }
 

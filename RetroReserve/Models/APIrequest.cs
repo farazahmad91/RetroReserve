@@ -11,17 +11,13 @@ namespace RetroReserve.Models
     {
         
         private readonly string _BaseUrl;
-        private readonly IDapperService _dapper;
-        public APIrequest(IConfiguration configuration, IDapperService dapper)
+        private readonly IBaseUrl _baseUrl;
+		private readonly IDapperService _dapper;
+        public APIrequest(IConfiguration configuration, IDapperService dapper, IBaseUrl baseUrl)
         {
-            //_BaseUrl = "http://restroapi.runasp.net";
-            _BaseUrl = "https://localhost:7291/";
             this._dapper=dapper;
+			_BaseUrl = baseUrl.GetBaseUrl();
         }
-        //public APIrequest(BaseAPIUrl baseAPIUrl)
-        //{
-        //    _BaseUrl = baseAPIUrl.Url;
-        //}
         public async Task<T> GetData<T>(string relativeUrl)
         {
             string apiUrl = "api/" + relativeUrl;

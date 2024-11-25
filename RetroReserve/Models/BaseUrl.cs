@@ -13,11 +13,11 @@
 			string baseUrl = "";
 			if (_webHostEnvironment.IsDevelopment())
 			{
-				baseUrl = "https://localhost:7079";
+				baseUrl = "https://localhost:7291";
 			}
 			else
 			{
-				baseUrl = "http://dcsapi.runasp.net";
+				baseUrl = "http://restroapi.runasp.net";
 			}
 			return baseUrl;
 		}
