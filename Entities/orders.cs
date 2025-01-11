@@ -27,7 +27,6 @@ namespace Entities
         public string? PaymentType { get; set; }
         public float TotalPrice { get; set; }
     }
-    
     public class OrdersReport : Orders
     {
         public string? DishName { get; set; }

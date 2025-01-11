@@ -14,10 +14,6 @@ namespace API.Repository.Interface
         public IEnumerable<BookingTableByUser> BookingDetails();
         public BookingTableByUser DetailsOnSearch(int id);
         public IEnumerable<BookingTableByUser> BookingDetailsById(string email);
-
-
     }
-
-
 }
 
