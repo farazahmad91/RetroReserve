@@ -15,6 +15,8 @@ namespace RetroReserve.Models
         public APIrequest(IConfiguration configuration, IDapperService dapper)
         {
             this._dapper=dapper;
+            //_BaseUrl = "http://restroapi.runasp.net";
+            _BaseUrl = "https://localhost:7291/";
         }
         public async Task<T> GetData<T>(string relativeUrl)
         {
