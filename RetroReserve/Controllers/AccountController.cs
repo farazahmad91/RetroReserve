@@ -24,7 +24,7 @@ namespace RetroReserve.Controllers
         public AccountController(APIrequest aPIrequest, IWebHostEnvironment webHostEnvironment, UploadImage uploadImage)
         {
             this._apirequest = aPIrequest;
-            _BaseUrl = "https://localhost:7291";
+            _BaseUrl = "http://restroapi.runasp.net";
             this.webHostEnvironment = webHostEnvironment; 
             this.uploadImage = uploadImage;
         }
@@ -43,7 +43,6 @@ namespace RetroReserve.Controllers
             {
                 return BadRequest(loginVm);
             }
-
             try
             {
                 var apiRes = await AppWebRequest.O.PostAsync($"{_BaseUrl}/api/Account/Login", JsonConvert.SerializeObject(loginRequest));
@@ -60,7 +59,6 @@ namespace RetroReserve.Controllers
                     loginVm.message = authenticateResponse.ResponseText;
                     return BadRequest(loginVm);
                 }
-
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim("Token", authenticateResponse.Result.Token));
                 identity.AddClaim(new Claim(ClaimTypes.Role, authenticateResponse.Result.Role));

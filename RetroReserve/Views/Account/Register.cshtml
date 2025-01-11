@@ -124,7 +124,7 @@
             $.post("/Account/Register", param).done(function (res) {
                     Hide_Loader();
                     showinsertsuccess("Register Successful");
-                if (res == 1) {
+                if (res.statusCode == 1) {
                     window.location.href = "/Account/Login";
                 }
                 else {

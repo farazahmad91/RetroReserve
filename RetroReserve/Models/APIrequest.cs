@@ -14,15 +14,12 @@ namespace RetroReserve.Models
         private readonly IDapperService _dapper;
         public APIrequest(IConfiguration configuration, IDapperService dapper)
         {
-            _BaseUrl = configuration.GetSection("BaseAPIUrl").GetValue<string>("Url");
+            _BaseUrl = "http://restroapi.runasp.net";
             this._dapper=dapper;
         }
-        //public APIrequest(BaseAPIUrl baseAPIUrl)
-        //{
-        //    _BaseUrl = baseAPIUrl.Url;
-        //}
         public async Task<T> GetData<T>(string relativeUrl)
         {
+            string apiUrl = "api/" + relativeUrl;
             using (HttpClient httpClient = new HttpClient())
             {
 
@@ -30,7 +27,7 @@ namespace RetroReserve.Models
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await httpClient.GetAsync(relativeUrl);
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
                 try
                 {
@@ -59,9 +56,6 @@ namespace RetroReserve.Models
                 
             }
         }
-
-
-
         public async Task<string> Post(string relativeUrl, object data)
         {
             using (HttpClient httpClient = new HttpClient())

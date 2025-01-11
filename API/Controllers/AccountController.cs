@@ -35,7 +35,6 @@ namespace API.Controllers
         }
 
         [HttpPost(nameof(Registration))]
-
         public async Task<IActionResult> Registration(RegisterViewModel model)
         {
             var response = new Data.Response()
@@ -88,7 +87,6 @@ namespace API.Controllers
                 expires: DateTime.Now.AddDays(30),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
                 );
-
             string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
             response.StatusCode = ResponseStatus.SUCCESS;
             response.ResponseText = ResponseStatus.SUCCESS.ToString();
